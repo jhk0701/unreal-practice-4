@@ -13,5 +13,7 @@ UCLASS()
 class TOPDOWNRPG_API ADungeonGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	ADungeonGameMode();
 };

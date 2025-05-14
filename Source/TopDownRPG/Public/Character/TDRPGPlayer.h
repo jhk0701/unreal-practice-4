@@ -16,6 +16,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	TObjectPtr<class UCameraComponent> camera;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UPlayerMove> moveComp;
+
 public:
 	ATDRPGPlayer();
 
@@ -24,5 +27,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UCameraComponent* GetCamera() { return camera; }
+
+protected:
+	void Initialize();
 
 };

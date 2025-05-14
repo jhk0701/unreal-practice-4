@@ -2,11 +2,38 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Character/PlayerMove.h"
 
 // Sets default values
 ATDRPGPlayer::ATDRPGPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	
+	Initialize();
+}
+
+// Called when the game starts or when spawned
+void ATDRPGPlayer::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
+// Called every frame
+void ATDRPGPlayer::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
+// Called to bind functionality to input
+void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void ATDRPGPlayer::Initialize()
+{
+	// 서브 컴포넌트 설정
+	moveComp = CreateDefaultSubobject<UPlayerMove>(TEXT("MoveComp"));
 
 	// Mesh 설정
 	// TODO : 각 클래스별 메시 받기
@@ -34,26 +61,5 @@ ATDRPGPlayer::ATDRPGPlayer()
 	camera->SetupAttachment(springArm, springArm->SocketName);
 	camera->SetRelativeRotation(FRotator(-50, 0, 0));
 	camera->bUsePawnControlRotation = false;
-}
-
-// Called when the game starts or when spawned
-void ATDRPGPlayer::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ATDRPGPlayer::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
