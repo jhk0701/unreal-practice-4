@@ -1,7 +1,7 @@
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/PlayerMove.h"
-#include "Character/FollowingCamera.h"
+#include "Character/PlayerAttack.h"
 #include <EnhancedInputComponent.h>
 #include <GameFramework/CharacterMovementComponent.h>
 #include <Components/CapsuleComponent.h>
@@ -40,6 +40,7 @@ void ATDRPGPlayer::Initialize()
 {
 	// 서브 컴포넌트 설정
 	moveComp = CreateDefaultSubobject<UPlayerMove>(TEXT("MoveComp"));
+	attackComp = CreateDefaultSubobject<UPlayerAttack>(TEXT("AttackComp"));
 
 	// Mesh 설정
 	// TODO : 각 클래스별 메시 받기

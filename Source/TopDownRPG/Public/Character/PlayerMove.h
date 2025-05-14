@@ -1,25 +1,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Character/PlayerBaseComponent.h"
 #include "PlayerMove.generated.h"
 
-class ATDRPGPlayer;
-class ATDRPGPlayerController;
-struct FInputActionValue;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class TOPDOWNRPG_API UPlayerMove : public UActorComponent
+UCLASS()
+class TOPDOWNRPG_API UPlayerMove : public UPlayerBaseComponent
 {
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = OwnerComp)
-	TObjectPtr<ATDRPGPlayer> me;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = OwnerComp)
-	TObjectPtr<ATDRPGPlayerController> controller;
-
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = OwnerComp)
 	TObjectPtr<class UCharacterMovementComponent> moveComp;
 
@@ -37,12 +28,11 @@ protected:
 
 public:
 	UPlayerMove();
-
-	virtual void InitializeComponent() override;
+	
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	virtual void SetupInputBinding(class UEnhancedInputComponent* PlayerInputComponent, class ATDRPGPlayerController* InController);
+	
+	virtual void SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
 
 	void InputClick(const FInputActionValue& InputValue);
 

@@ -24,6 +24,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerMove> moveComp;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UPlayerAttack> attackComp;
+
 public:
 	ATDRPGPlayer();
 
