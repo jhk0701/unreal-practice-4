@@ -15,11 +15,11 @@ public:
 	FOnInputBindDelegate OnInputBindDelegate;
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = FollowingCamera)
-	TSubclassOf<class AFollowingCamera> cameraFactory;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	TObjectPtr<class USpringArmComponent> springArm;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = FollowingCamera)
-	TObjectPtr<AFollowingCamera> cameraInst;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	TObjectPtr<class UCameraComponent> camera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerMove> moveComp;

@@ -5,6 +5,8 @@
 #include <EnhancedInputComponent.h>
 #include <GameFramework/CharacterMovementComponent.h>
 #include <Components/CapsuleComponent.h>
+#include <GameFramework/SpringArmComponent.h>
+#include <Camera/CameraComponent.h>
 
 // Sets default values
 ATDRPGPlayer::ATDRPGPlayer()
@@ -18,12 +20,6 @@ ATDRPGPlayer::ATDRPGPlayer()
 void ATDRPGPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if(cameraFactory)
-	{
-		cameraInst = GetWorld()->SpawnActor<AFollowingCamera>(cameraFactory);
-		cameraInst->SetTarget(this);
-	}
 }
 
 // Called every frame
@@ -57,14 +53,26 @@ void ATDRPGPlayer::Initialize()
 	}
 
 	// 충돌체 설정
-	GetCapsuleComponent()->SetCapsuleHalfHeight(90.f);
-	GetCapsuleComponent()->SetCapsuleRadius(20.f);
+	GetCapsuleComponent()->InitCapsuleSize(20.0f, 90.0f);
 
-	// cameraFactory
-	ConstructorHelpers::FClassFinder<AFollowingCamera> tempCam(TEXT("Blueprint'/Game/2-Blueprints/Player/BP_FollowingCamera.BP_FollowingCamera_C'"));
-	if(tempCam.Succeeded())
-	{
-		cameraFactory = tempCam.Class;
-	}
+	// 캐릭터 회전 설정
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationYaw = false;
+	bUseControllerRotationRoll = false;
+
+	GetCharacterMovement()->bOrientRotationToMovement = true; // 캐릭터가 향하는 곳을 바라보도록
+
+	// 카메라
+	springArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	springArm->SetupAttachment(RootComponent);
+	springArm->SetUsingAbsoluteRotation(true); // 캐릭터가 회전해도 카메라 암은 회전하지 않도록 함
+	springArm->TargetArmLength = 500.f;
+	springArm->SocketOffset = FVector(0, 0, 500.f);
+	springArm->bUsePawnControlRotation = false;
+
+	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	camera->SetupAttachment(springArm, springArm->SocketName);
+	camera->SetRelativeRotation(FRotator(-50, 0, 0));
+	camera->bUsePawnControlRotation = false;
 }
 
