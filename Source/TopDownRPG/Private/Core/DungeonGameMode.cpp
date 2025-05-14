@@ -10,3 +10,8 @@ ADungeonGameMode::ADungeonGameMode()
 	PlayerControllerClass = ATDRPGPlayerController::StaticClass();
 	DefaultPawnClass = ATDRPGPlayer::StaticClass();
 }
+
+void ADungeonGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+}

@@ -4,17 +4,22 @@
 #include "GameFramework/Character.h"
 #include "TDRPGPlayer.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnInputBindDelegate, class UEnhancedInputComponent* , class ATDRPGPlayerController* );
+
 UCLASS()
 class TOPDOWNRPG_API ATDRPGPlayer : public ACharacter
 {
 	GENERATED_BODY()
 
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	TObjectPtr<class USpringArmComponent> springArm;
+public:
+	FOnInputBindDelegate OnInputBindDelegate;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	TObjectPtr<class UCameraComponent> camera;
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = FollowingCamera)
+	TSubclassOf<class AFollowingCamera> cameraFactory;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = FollowingCamera)
+	TObjectPtr<AFollowingCamera> cameraInst;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerMove> moveComp;
@@ -27,8 +32,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UCameraComponent* GetCamera() { return camera; }
 
 protected:
 	void Initialize();

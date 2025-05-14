@@ -1,8 +1,10 @@
+#include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
-#include "Components/CapsuleComponent.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Camera/CameraComponent.h"
 #include "Character/PlayerMove.h"
+#include "Character/FollowingCamera.h"
+#include <EnhancedInputComponent.h>
+#include <GameFramework/CharacterMovementComponent.h>
+#include <Components/CapsuleComponent.h>
 
 // Sets default values
 ATDRPGPlayer::ATDRPGPlayer()
@@ -16,6 +18,12 @@ ATDRPGPlayer::ATDRPGPlayer()
 void ATDRPGPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if(cameraFactory)
+	{
+		cameraInst = GetWorld()->SpawnActor<AFollowingCamera>(cameraFactory);
+		cameraInst->SetTarget(this);
+	}
 }
 
 // Called every frame
@@ -28,6 +36,8 @@ void ATDRPGPlayer::Tick(float DeltaTime)
 void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	OnInputBindDelegate.Broadcast(Cast<UEnhancedInputComponent>(PlayerInputComponent), Cast<ATDRPGPlayerController>(GetController()));
 }
 
 void ATDRPGPlayer::Initialize()
@@ -50,16 +60,11 @@ void ATDRPGPlayer::Initialize()
 	GetCapsuleComponent()->SetCapsuleHalfHeight(90.f);
 	GetCapsuleComponent()->SetCapsuleRadius(20.f);
 
-	// 카메라
-	springArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	springArm->SetupAttachment(GetRootComponent());
-	springArm->TargetArmLength = 500.f;
-	springArm->SocketOffset = FVector(0, 0, 500.f);
-	springArm->bUsePawnControlRotation = false;
-
-	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	camera->SetupAttachment(springArm, springArm->SocketName);
-	camera->SetRelativeRotation(FRotator(-50, 0, 0));
-	camera->bUsePawnControlRotation = false;
+	// cameraFactory
+	ConstructorHelpers::FClassFinder<AFollowingCamera> tempCam(TEXT("Blueprint'/Game/2-Blueprints/Player/BP_FollowingCamera.BP_FollowingCamera_C'"));
+	if(tempCam.Succeeded())
+	{
+		cameraFactory = tempCam.Class;
+	}
 }
 

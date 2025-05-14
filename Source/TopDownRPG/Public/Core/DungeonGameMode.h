@@ -16,4 +16,6 @@ class TOPDOWNRPG_API ADungeonGameMode : public AGameModeBase
 
 public:
 	ADungeonGameMode();
+	virtual void BeginPlay() override;
+	
 };

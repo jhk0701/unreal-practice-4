@@ -7,6 +7,8 @@ void ATDRPGPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	bShowMouseCursor = true;
+
 	ULocalPlayer* player = GetLocalPlayer();
 
 	if (!player) 
