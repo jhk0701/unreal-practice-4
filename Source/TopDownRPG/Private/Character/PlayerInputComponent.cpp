@@ -1,18 +1,20 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Character/PlayerBaseComponent.h"
+#include "Character/PlayerInputComponent.h"
 #include "Character/TDRPGPlayer.h"
 
 // Sets default values for this component's properties
-UPlayerBaseComponent::UPlayerBaseComponent()
+UPlayerInputComponent::UPlayerInputComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	bWantsInitializeComponent = true;
 }
 
-void UPlayerBaseComponent::InitializeComponent()
+void UPlayerInputComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
 
-	me = Cast<ATDRPGPlayer>(GetOwner());
+	me->OnInputBindDelegate.AddUObject(this, &UPlayerInputComponent::SetupInputBinding);
 }
+
+

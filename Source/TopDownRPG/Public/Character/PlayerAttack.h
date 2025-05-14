@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/PlayerBaseComponent.h"
+#include "Character/PlayerInputComponent.h"
 #include "PlayerAttack.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UPlayerAttack : public UPlayerBaseComponent
+class TOPDOWNRPG_API UPlayerAttack : public UPlayerInputComponent
 {
 	GENERATED_BODY()
 
@@ -20,4 +20,6 @@ public:
 	virtual void SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
 
 	void InputAttack(const FInputActionValue& InputValue);
+
+	void InvokeAttack();
 };

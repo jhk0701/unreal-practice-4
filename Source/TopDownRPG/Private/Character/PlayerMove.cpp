@@ -14,9 +14,10 @@ void UPlayerMove::BeginPlay()
 	Super::BeginPlay();
 
 	controller = Cast<ATDRPGPlayerController>(me->GetController());
-
 	moveComp = me->GetCharacterMovement();
 	meshComp = Cast<USceneComponent>(me->GetMesh());
+
+	me->OnAttackCalled.AddUObject(this, &UPlayerMove::StopMove);
 }
 
 void UPlayerMove::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -57,6 +58,12 @@ void UPlayerMove::InputClick(const FInputActionValue& InputValue)
 	}
 }
 
+void UPlayerMove::StopMove()
+{
+	Destination = me->GetActorLocation();
+	
+}
+
 void UPlayerMove::Move(float DeltaTime)
 {
 	FVector dir = (Destination - me->GetActorLocation());
@@ -66,3 +73,4 @@ void UPlayerMove::Move(float DeltaTime)
 
 	moveComp->AddInputVector(DeltaTime * Speed * dir.GetSafeNormal());
 }
+

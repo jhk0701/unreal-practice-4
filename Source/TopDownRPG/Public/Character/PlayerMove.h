@@ -1,12 +1,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/PlayerBaseComponent.h"
+#include "Character/PlayerInputComponent.h"
 #include "PlayerMove.generated.h"
 
 
 UCLASS()
-class TOPDOWNRPG_API UPlayerMove : public UPlayerBaseComponent
+class TOPDOWNRPG_API UPlayerMove : public UPlayerInputComponent
 {
 	GENERATED_BODY()
 
@@ -30,12 +30,14 @@ public:
 	UPlayerMove();
 	
 	virtual void BeginPlay() override;
+
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 	virtual void SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
 
 	void InputClick(const FInputActionValue& InputValue);
 
-private:
+	void StopMove();
+
 	void Move(float DeltaTime);
 };

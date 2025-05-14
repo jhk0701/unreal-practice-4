@@ -7,10 +7,6 @@
 #include "PlayerBaseComponent.generated.h"
 
 
-class ATDRPGPlayer;
-class ATDRPGPlayerController;
-struct FInputActionValue;
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TOPDOWNRPG_API UPlayerBaseComponent : public UActorComponent
 {
@@ -18,14 +14,11 @@ class TOPDOWNRPG_API UPlayerBaseComponent : public UActorComponent
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = OwnerComp)
-	TObjectPtr<ATDRPGPlayer> me;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = OwnerComp)
-	TObjectPtr<ATDRPGPlayerController> controller;
+	TObjectPtr<class ATDRPGPlayer> me;
 
 public:	
 	UPlayerBaseComponent();
+
 	virtual void InitializeComponent() override;
-	virtual void SetupInputBinding(class UEnhancedInputComponent* PlayerInputComponent, class ATDRPGPlayerController* InController) {};
 		
 };

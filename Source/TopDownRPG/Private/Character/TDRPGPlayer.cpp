@@ -36,6 +36,7 @@ void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	OnInputBindDelegate.Broadcast(Cast<UEnhancedInputComponent>(PlayerInputComponent), Cast<ATDRPGPlayerController>(GetController()));
 }
 
+
 void ATDRPGPlayer::Initialize()
 {
 	// 서브 컴포넌트 설정
@@ -67,13 +68,18 @@ void ATDRPGPlayer::Initialize()
 	springArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	springArm->SetupAttachment(RootComponent);
 	springArm->SetUsingAbsoluteRotation(true); // 캐릭터가 회전해도 카메라 암은 회전하지 않도록 함
-	springArm->TargetArmLength = 500.f;
-	springArm->SocketOffset = FVector(0, 0, 500.f);
+	springArm->TargetArmLength = 350.0f;
+	springArm->SocketOffset = FVector(0, 0, 600.f);
 	springArm->bUsePawnControlRotation = false;
 
 	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	camera->SetupAttachment(springArm, springArm->SocketName);
-	camera->SetRelativeRotation(FRotator(-50, 0, 0));
+	camera->SetRelativeRotation(FRotator(-60, 0, 0));
 	camera->bUsePawnControlRotation = false;
 }
 
+
+void ATDRPGPlayer::InvokeAttackDelegate()
+{
+	OnAttackCalled.Broadcast();
+}

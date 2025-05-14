@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "TDRPGPlayer.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnUniqueInputDelegate);
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnInputBindDelegate, class UEnhancedInputComponent* , class ATDRPGPlayerController* );
 
 UCLASS()
@@ -13,6 +14,7 @@ class TOPDOWNRPG_API ATDRPGPlayer : public ACharacter
 
 public:
 	FOnInputBindDelegate OnInputBindDelegate;
+	FOnUniqueInputDelegate OnAttackCalled;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
@@ -35,6 +37,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void InvokeAttackDelegate();
 
 protected:
 	void Initialize();
