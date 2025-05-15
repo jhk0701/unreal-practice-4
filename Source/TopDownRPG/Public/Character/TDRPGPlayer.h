@@ -27,6 +27,9 @@ protected:
 	TObjectPtr<class UPlayerStatus> statusComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr <class UPlayerAbility> abilityComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerMove> moveComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
@@ -42,6 +45,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void InvokeAttackDelegate();
+
+	TObjectPtr<UPlayerStatus> GetStatus() { return statusComp; }
 
 protected:
 	void Initialize();

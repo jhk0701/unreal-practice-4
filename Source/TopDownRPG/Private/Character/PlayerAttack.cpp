@@ -5,6 +5,7 @@
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
 #include <EnhancedInputComponent.h>
+#include "Character/PlayerStatus.h"
 
 
 UPlayerAttack::UPlayerAttack()
@@ -27,4 +28,7 @@ void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)
 void UPlayerAttack::InvokeAttack()
 {
 	me->InvokeAttackDelegate(); // 이동 기능은 꺼질 것
+
+	// me->GetStatus()->Stat[EStatus::Health]->Subtract(10);
+	// GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, FString::Printf(TEXT("remain hp : %d"), (int32)me->GetStatus()->Stat[EStatus::Health]->GetCurrentValue()));
 }

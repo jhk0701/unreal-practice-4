@@ -1,6 +1,7 @@
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/PlayerStatus.h"
+#include "Character/PlayerAbility.h"
 #include "Character/PlayerMove.h"
 #include "Character/PlayerAttack.h"
 #include <EnhancedInputComponent.h>
@@ -42,12 +43,14 @@ void ATDRPGPlayer::Initialize()
 {
 	// 서브 컴포넌트 설정
 	statusComp = CreateDefaultSubobject<UPlayerStatus>(TEXT("StatusComp"));
+	abilityComp = CreateDefaultSubobject<UPlayerAbility>(TEXT("AbilityComp"));
 	moveComp = CreateDefaultSubobject<UPlayerMove>(TEXT("MoveComp"));
 	attackComp = CreateDefaultSubobject<UPlayerAttack>(TEXT("AttackComp"));
 
 	// 임시 스탯, 어빌리티 세팅
 	// TODO : 데이터 테이블에서 받아오기
-	statusComp->InitStatus({ EStatus::Health, EStatus::Mana }, {100, 100});
+	statusComp->InitStatus({ EStatus::Hp, EStatus::Mp }, {100, 100});
+	abilityComp->InitAbility({10,10,10});
 
 	// Mesh 설정
 	// TODO : 각 클래스별 메시 받기

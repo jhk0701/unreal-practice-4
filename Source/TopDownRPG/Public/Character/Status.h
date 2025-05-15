@@ -11,6 +11,7 @@ class TOPDOWNRPG_API Status
 
 public:
 	Status(uint32 InitMaxValue);
+	Status(uint32 InitMaxValue, uint32 InitCurrentValue);
 	~Status();
 
 	FOnValueChanged OnValueChanged;
@@ -18,22 +19,14 @@ public:
 	uint32 GetMaxValue() { return maxValue; }
 	uint32 GetCurrentValue() { return curValue; }
 
-	uint32 operator +(const uint32 Value)
-	{
-		curValue = FMath::Min(curValue + Value, maxValue);
-		OnValueChanged.Broadcast(curValue, maxValue);
-		return curValue;
-	}
+	uint32 Add(uint32 Value);
+	uint32 Subtract(uint32 Value);
+	bool TrySubtract(uint32 Value);
 
-	uint32 operator -(const uint32 Value)
-	{
-		curValue = FMath::Max(curValue - Value, uint32(0));
-		OnValueChanged.Broadcast(curValue, maxValue);
-		return curValue;
-	}
-
+	void ChangeMaxValue(uint32 Value);
 
 private:
+	const uint32 zero = 0;
 	uint32 maxValue;
 	uint32 curValue;
 
