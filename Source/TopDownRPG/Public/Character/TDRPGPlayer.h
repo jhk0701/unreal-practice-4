@@ -24,6 +24,9 @@ protected:
 	TObjectPtr<class UCameraComponent> camera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UPlayerStatus> statusComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerMove> moveComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)

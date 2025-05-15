@@ -61,7 +61,6 @@ void UPlayerMove::InputClick(const FInputActionValue& InputValue)
 void UPlayerMove::StopMove()
 {
 	Destination = me->GetActorLocation();
-	
 }
 
 void UPlayerMove::Move(float DeltaTime)
