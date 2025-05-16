@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/CharacterBaseComponent.h"
+#include "Components/ActorComponent.h"
 #include "Character/Status.h"
 #include "CharacterStatus.generated.h"
 
@@ -18,7 +18,7 @@ enum class EStatus : uint8
  * 플레이어 스테이터스 컴포넌트
  */
 UCLASS()
-class TOPDOWNRPG_API UCharacterStatus : public UCharacterBaseComponent
+class TOPDOWNRPG_API UCharacterStatus : public UActorComponent
 {
 	GENERATED_BODY()
 

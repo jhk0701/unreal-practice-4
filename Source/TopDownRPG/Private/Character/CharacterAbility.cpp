@@ -8,6 +8,7 @@
 
 UCharacterAbility::UCharacterAbility()
 {
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UCharacterAbility::InitAbility(const TArray<uint32>& InitValues)

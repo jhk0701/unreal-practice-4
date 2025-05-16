@@ -22,6 +22,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<USkeletalMeshComponent> skinMesh;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UEnemyFSM> stateMachine;
+
 public:
 	ATDRPGEnemy();
 	virtual void BeginPlay() override;

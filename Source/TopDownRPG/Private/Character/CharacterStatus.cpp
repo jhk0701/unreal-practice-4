@@ -7,6 +7,7 @@
 
 UCharacterStatus::UCharacterStatus()
 {
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UCharacterStatus::InitLvAndExp(uint32 InitLv, uint32 InitExp)

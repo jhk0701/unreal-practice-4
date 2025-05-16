@@ -1,6 +1,7 @@
 #include "Character/TDRPGEnemy.h"
 #include "Character/CharacterStatus.h"
 #include "Character/CharacterAbility.h"
+#include "Character/EnemyFSM.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values
@@ -32,19 +33,19 @@ ATDRPGEnemy::ATDRPGEnemy()
 		skinMesh->SetSkeletalMesh(tempMesh.Object);
 		skinMesh->SetRelativeLocationAndRotation(FVector(0,0,-90.f), FRotator(0, -90.0f, 0));
 	}
+
+	stateMachine = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSMComp"));
 }
 
 // Called when the game starts or when spawned
 void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
 void ATDRPGEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 

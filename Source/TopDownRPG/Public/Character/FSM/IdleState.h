@@ -14,4 +14,7 @@ class TOPDOWNRPG_API UIdleState : public UBaseState
 {
 	GENERATED_BODY()
 	
+public:
+	virtual void Enter() override;
+	
 };
