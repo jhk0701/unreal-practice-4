@@ -10,7 +10,17 @@ class TOPDOWNRPG_API ATDRPGEnemy : public APawn
 	GENERATED_BODY()
 
 protected:
-	TObjectPtr<class UCharacterAbility> AbilityComp;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UCharacterStatus> statusComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UCharacterAbility> abilityComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UCapsuleComponent> collider;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<USkeletalMeshComponent> skinMesh;
 
 public:
 	ATDRPGEnemy();

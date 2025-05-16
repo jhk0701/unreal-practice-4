@@ -15,32 +15,6 @@ ATDRPGPlayer::ATDRPGPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
-	Initialize();
-}
-
-// Called when the game starts or when spawned
-void ATDRPGPlayer::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-// Called every frame
-void ATDRPGPlayer::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
-// Called to bind functionality to input
-void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	OnInputBindDelegate.Broadcast(Cast<UEnhancedInputComponent>(PlayerInputComponent), Cast<ATDRPGPlayerController>(GetController()));
-}
-
-
-void ATDRPGPlayer::Initialize()
-{
 	// 서브 컴포넌트 설정
 	statusComp = CreateDefaultSubobject<UCharacterStatus>(TEXT("StatusComp"));
 	abilityComp = CreateDefaultSubobject<UCharacterAbility>(TEXT("AbilityComp"));
@@ -49,8 +23,8 @@ void ATDRPGPlayer::Initialize()
 
 	// 임시 스탯, 어빌리티 세팅
 	// TODO : 데이터 테이블에서 받아오기
-	statusComp->InitStatus({ EStatus::Hp, EStatus::Mp }, {100, 100});
-	abilityComp->InitAbility({10,10,10});
+	statusComp->InitStatus({ EStatus::Hp, EStatus::Mp }, { 100, 100 });
+	abilityComp->InitAbility({ 10,10,10 });
 
 	// Mesh 설정
 	// TODO : 각 클래스별 메시 받기
@@ -87,6 +61,25 @@ void ATDRPGPlayer::Initialize()
 	camera->bUsePawnControlRotation = false;
 }
 
+// Called when the game starts or when spawned
+void ATDRPGPlayer::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
+// Called every frame
+void ATDRPGPlayer::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
+// Called to bind functionality to input
+void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	OnInputBindDelegate.Broadcast(Cast<UEnhancedInputComponent>(PlayerInputComponent), Cast<ATDRPGPlayerController>(GetController()));
+}
 
 void ATDRPGPlayer::InvokeAttackDelegate()
 {

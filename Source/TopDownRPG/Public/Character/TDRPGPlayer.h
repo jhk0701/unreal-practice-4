@@ -45,7 +45,4 @@ public:
 	void InvokeAttackDelegate();
 	TObjectPtr<UCharacterStatus> GetStatus() { return statusComp; }
 
-protected:
-	void Initialize();
-
 };
