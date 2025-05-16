@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/PlayerBaseComponent.h"
-#include "PlayerAbility.generated.h"
+#include "Character/CharacterBaseComponent.h"
+#include "CharacterAbility.generated.h"
 
 UENUM(BlueprintType)
 enum class EAbility : uint8
@@ -18,7 +18,7 @@ enum class EAbility : uint8
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UPlayerAbility : public UPlayerBaseComponent
+class TOPDOWNRPG_API UCharacterAbility : public UCharacterBaseComponent
 {
 	GENERATED_BODY()
 
@@ -28,7 +28,7 @@ public:
 	TMap<EAbility, uint32> Ability;
 
 public:
-	UPlayerAbility();
+	UCharacterAbility();
 
 	void InitAbility(const TArray<uint32>& InitValues);
 	uint32 GetAttackPower();

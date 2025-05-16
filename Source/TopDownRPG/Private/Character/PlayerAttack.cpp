@@ -5,7 +5,7 @@
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
 #include <EnhancedInputComponent.h>
-#include "Character/PlayerStatus.h"
+#include "Character/CharacterStatus.h"
 
 
 UPlayerAttack::UPlayerAttack()

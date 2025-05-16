@@ -24,10 +24,10 @@ protected:
 	TObjectPtr<class UCameraComponent> camera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UPlayerStatus> statusComp;
+	TObjectPtr<class UCharacterStatus> statusComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr <class UPlayerAbility> abilityComp;
+	TObjectPtr <class UCharacterAbility> abilityComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerMove> moveComp;
@@ -46,7 +46,7 @@ public:
 
 	void InvokeAttackDelegate();
 
-	TObjectPtr<UPlayerStatus> GetStatus() { return statusComp; }
+	TObjectPtr<UCharacterStatus> GetStatus() { return statusComp; }
 
 protected:
 	void Initialize();

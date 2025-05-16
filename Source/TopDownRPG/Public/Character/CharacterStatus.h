@@ -3,9 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/PlayerBaseComponent.h"
+#include "Character/CharacterBaseComponent.h"
 #include "Character/Status.h"
-#include "PlayerStatus.generated.h"
+#include "CharacterStatus.generated.h"
 
 UENUM(BlueprintType)
 enum class EStatus : uint8
@@ -18,7 +18,7 @@ enum class EStatus : uint8
  * 플레이어 스테이터스 컴포넌트
  */
 UCLASS()
-class TOPDOWNRPG_API UPlayerStatus : public UPlayerBaseComponent
+class TOPDOWNRPG_API UCharacterStatus : public UCharacterBaseComponent
 {
 	GENERATED_BODY()
 
@@ -35,7 +35,7 @@ public:
 	bool bIsDead = false;
 	
 public:
-	UPlayerStatus();
+	UCharacterStatus();
 
 	void InitLvAndExp(uint32 InitLv, uint32 InitExp);
 	void AddExp(uint32 Value) { Exp->Add(Value); }

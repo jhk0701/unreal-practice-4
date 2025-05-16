@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/PlayerBaseComponent.h"
+#include "Character/CharacterBaseComponent.h"
 #include "PlayerInputComponent.generated.h"
 
 
@@ -11,7 +11,7 @@ class ATDRPGPlayerController;
 struct FInputActionValue;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class TOPDOWNRPG_API UPlayerInputComponent : public UPlayerBaseComponent
+class TOPDOWNRPG_API UPlayerInputComponent : public UCharacterBaseComponent
 {
 	GENERATED_BODY()
 

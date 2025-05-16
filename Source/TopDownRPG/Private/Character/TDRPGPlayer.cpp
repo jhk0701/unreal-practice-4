@@ -1,7 +1,7 @@
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
-#include "Character/PlayerStatus.h"
-#include "Character/PlayerAbility.h"
+#include "Character/CharacterStatus.h"
+#include "Character/CharacterAbility.h"
 #include "Character/PlayerMove.h"
 #include "Character/PlayerAttack.h"
 #include <EnhancedInputComponent.h>
@@ -42,8 +42,8 @@ void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 void ATDRPGPlayer::Initialize()
 {
 	// 서브 컴포넌트 설정
-	statusComp = CreateDefaultSubobject<UPlayerStatus>(TEXT("StatusComp"));
-	abilityComp = CreateDefaultSubobject<UPlayerAbility>(TEXT("AbilityComp"));
+	statusComp = CreateDefaultSubobject<UCharacterStatus>(TEXT("StatusComp"));
+	abilityComp = CreateDefaultSubobject<UCharacterAbility>(TEXT("AbilityComp"));
 	moveComp = CreateDefaultSubobject<UPlayerMove>(TEXT("MoveComp"));
 	attackComp = CreateDefaultSubobject<UPlayerAttack>(TEXT("AttackComp"));
 

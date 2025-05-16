@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Character/PlayerAbility.h"
+#include "Character/CharacterAbility.h"
 
 #include "TopDownRPG/TopDownRPG.h" // 디버깅
 
 
-UPlayerAbility::UPlayerAbility()
+UCharacterAbility::UCharacterAbility()
 {
 }
 
-void UPlayerAbility::InitAbility(const TArray<uint32>& InitValues)
+void UCharacterAbility::InitAbility(const TArray<uint32>& InitValues)
 {
 	for (int32 i = 0; i < InitValues.Num(); i++)
 	{
@@ -18,12 +18,12 @@ void UPlayerAbility::InitAbility(const TArray<uint32>& InitValues)
 	}
 }
 
-uint32 UPlayerAbility::GetAttackPower()
+uint32 UCharacterAbility::GetAttackPower()
 {
 	return uint32(100);
 }
 
-uint32 UPlayerAbility::GetDefensePower()
+uint32 UCharacterAbility::GetDefensePower()
 {
 	return uint32(100);
 }

@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Character/PlayerBaseComponent.h"
+#include "Character/CharacterBaseComponent.h"
 #include "Character/TDRPGPlayer.h"
 
 // Sets default values for this component's properties
-UPlayerBaseComponent::UPlayerBaseComponent()
+UCharacterBaseComponent::UCharacterBaseComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	bWantsInitializeComponent = true;
 }
 
-void UPlayerBaseComponent::InitializeComponent()
+void UCharacterBaseComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
 

@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "PlayerBaseComponent.generated.h"
+#include "CharacterBaseComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class TOPDOWNRPG_API UPlayerBaseComponent : public UActorComponent
+class TOPDOWNRPG_API UCharacterBaseComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
@@ -17,7 +17,7 @@ protected:
 	TObjectPtr<class ATDRPGPlayer> me;
 
 public:	
-	UPlayerBaseComponent();
+	UCharacterBaseComponent();
 
 	virtual void InitializeComponent() override;
 		
