@@ -2,16 +2,20 @@
 #include "Character/CharacterStatus.h"
 #include "Character/CharacterAbility.h"
 #include "Character/EnemyFSM.h"
+#include "Character/EnemyAttack.h"
+#include "Character/EnemyMove.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values
 ATDRPGEnemy::ATDRPGEnemy()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	// 서브 컴포넌트 설정
 	statusComp = CreateDefaultSubobject<UCharacterStatus>(TEXT("StatusComp"));
 	abilityComp = CreateDefaultSubobject<UCharacterAbility>(TEXT("AbilityComp"));
+	attackComp = CreateDefaultSubobject<UEnemyAttack>(TEXT("AttackComp"));
+	moveComp = CreateDefaultSubobject<UEnemyMove>(TEXT("MoveComp"));
 
 	// 임시 스탯, 어빌리티 세팅
 	// TODO : 데이터 테이블에서 받아오기
@@ -42,10 +46,3 @@ void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 }
-
-// Called every frame
-void ATDRPGEnemy::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-

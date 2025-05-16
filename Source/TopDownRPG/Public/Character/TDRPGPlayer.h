@@ -13,6 +13,12 @@ class TOPDOWNRPG_API ATDRPGPlayer : public ACharacter
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UCharacterStatus> statusComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr <class UCharacterAbility> abilityComp;
+
 	FOnInputBindDelegate OnInputBindDelegate;
 	FOnUniqueInputDelegate OnAttackCalled;
 
@@ -24,12 +30,6 @@ protected:
 	TObjectPtr<class UCameraComponent> camera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UCharacterStatus> statusComp;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr <class UCharacterAbility> abilityComp;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerMove> moveComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
@@ -38,8 +38,6 @@ protected:
 public:
 	ATDRPGPlayer();
 
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void InvokeAttackDelegate();

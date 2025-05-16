@@ -13,7 +13,7 @@
 // Sets default values
 ATDRPGPlayer::ATDRPGPlayer()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	
 	// 서브 컴포넌트 설정
 	statusComp = CreateDefaultSubobject<UCharacterStatus>(TEXT("StatusComp"));
@@ -61,17 +61,6 @@ ATDRPGPlayer::ATDRPGPlayer()
 	camera->bUsePawnControlRotation = false;
 }
 
-// Called when the game starts or when spawned
-void ATDRPGPlayer::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-// Called every frame
-void ATDRPGPlayer::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
 
 // Called to bind functionality to input
 void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

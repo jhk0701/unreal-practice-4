@@ -13,5 +13,8 @@ UCLASS()
 class TOPDOWNRPG_API UAttackState : public UBaseState
 {
 	GENERATED_BODY()
+
+public:
+	virtual void Enter() override;
 	
 };

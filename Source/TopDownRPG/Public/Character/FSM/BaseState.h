@@ -25,6 +25,6 @@ public:
 	virtual void Initialize(UEnemyFSM* InMachine) { machine = InMachine; };
 
 	virtual void Enter() override {};
-	virtual void Update() override {};
+	virtual void Update(float DeltaTime) override {};
 	virtual void Exit() override {};
 };

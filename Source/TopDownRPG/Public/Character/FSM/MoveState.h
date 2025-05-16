@@ -13,5 +13,8 @@ UCLASS()
 class TOPDOWNRPG_API UMoveState : public UBaseState
 {
 	GENERATED_BODY()
-	
+
+public:
+	virtual void Enter() override;
+	virtual void Update(float DeltaTime) override;
 };

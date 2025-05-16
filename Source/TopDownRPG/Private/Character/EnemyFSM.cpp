@@ -1,6 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Character/EnemyFSM.h"
 #include "Character/TDRPGEnemy.h"
 #include "Character/FSM/IdleState.h"
@@ -41,7 +38,7 @@ void UEnemyFSM::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (curState)
-		curState->Update();
+		curState->Update(DeltaTime);
 }
 
 void UEnemyFSM::Transition(EEnemyState type)
