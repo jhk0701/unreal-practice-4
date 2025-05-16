@@ -13,6 +13,4 @@ UCharacterBaseComponent::UCharacterBaseComponent()
 void UCharacterBaseComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
-
-	me = Cast<ATDRPGPlayer>(GetOwner());
 }

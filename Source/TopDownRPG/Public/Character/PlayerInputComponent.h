@@ -6,7 +6,7 @@
 #include "Character/CharacterBaseComponent.h"
 #include "PlayerInputComponent.generated.h"
 
-
+class ATDRPGPlayer;
 class ATDRPGPlayerController;
 struct FInputActionValue;
 
@@ -18,6 +18,9 @@ class TOPDOWNRPG_API UPlayerInputComponent : public UCharacterBaseComponent
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = OwnerComp)
 	TObjectPtr<ATDRPGPlayerController> controller;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = OwnerComp)
+	TObjectPtr<ATDRPGPlayer> player;
 
 public:	
 	UPlayerInputComponent();

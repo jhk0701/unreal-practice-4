@@ -14,7 +14,8 @@ void UPlayerInputComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
 
-	me->OnInputBindDelegate.AddUObject(this, &UPlayerInputComponent::SetupInputBinding);
+	player = Cast<ATDRPGPlayer>(GetOwner());
+	player->OnInputBindDelegate.AddUObject(this, &UPlayerInputComponent::SetupInputBinding);
 }
 
 

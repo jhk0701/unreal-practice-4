@@ -16,7 +16,6 @@ class TOPDOWNRPG_API UPlayerAttack : public UPlayerInputComponent
 
 public:
 	UPlayerAttack();
-	
 	virtual void SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
 
 	void InputAttack(const FInputActionValue& InputValue);

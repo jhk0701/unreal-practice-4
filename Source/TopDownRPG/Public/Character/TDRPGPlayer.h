@@ -39,13 +39,10 @@ public:
 	ATDRPGPlayer();
 
 	virtual void BeginPlay() override;
-
 	virtual void Tick(float DeltaTime) override;
-
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void InvokeAttackDelegate();
-
 	TObjectPtr<UCharacterStatus> GetStatus() { return statusComp; }
 
 protected:

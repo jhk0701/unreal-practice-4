@@ -12,13 +12,8 @@ class TOPDOWNRPG_API UCharacterBaseComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = OwnerComp)
-	TObjectPtr<class ATDRPGPlayer> me;
-
 public:	
 	UCharacterBaseComponent();
-
 	virtual void InitializeComponent() override;
 		
 };

@@ -14,11 +14,11 @@ void UPlayerMove::BeginPlay()
 {
 	Super::BeginPlay();
 
-	controller = Cast<ATDRPGPlayerController>(me->GetController());
-	moveComp = me->GetCharacterMovement();
-	meshComp = Cast<USceneComponent>(me->GetMesh());
+	controller = Cast<ATDRPGPlayerController>(player->GetController());
+	moveComp = player->GetCharacterMovement();
+	meshComp = Cast<USceneComponent>(player->GetMesh());
 
-	me->OnAttackCalled.AddUObject(this, &UPlayerMove::StopMove);
+	player->OnAttackCalled.AddUObject(this, &UPlayerMove::StopMove);
 }
 
 void UPlayerMove::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -65,7 +65,7 @@ void UPlayerMove::StopMove()
 {
 	bIsWalking = false;
 
-	Destination = me->GetActorLocation();
+	Destination = player->GetActorLocation();
 	moveComp->StopMovementImmediately();
 }
 
@@ -73,7 +73,7 @@ void UPlayerMove::Move(float DeltaTime)
 {
 	if (!bIsWalking) return;
 
-	FVector dir = (Destination - me->GetActorLocation());
+	FVector dir = (Destination - player->GetActorLocation());
 	
 	if (dir.SquaredLength() < ToleranceToDestination * ToleranceToDestination)
 		return;
@@ -89,6 +89,6 @@ void UPlayerMove::InputDodge(const FInputActionValue& InputValue)
 void UPlayerMove::Dodge()
 {
 	StopMove();
-	moveComp->Launch(me->GetActorForwardVector() * DodgePower);
+	moveComp->Launch(player->GetActorForwardVector() * DodgePower);
 }
 

@@ -56,5 +56,5 @@ void UCharacterStatus::CheckPlayerIsDead(uint32 Max, uint32 Current)
 
 void UCharacterStatus::OnPlayerDead()
 {
-	PRINT_LOG(TEXT("Player is dead"));
+	PRINT_LOG(TEXT("is dead"));
 }
