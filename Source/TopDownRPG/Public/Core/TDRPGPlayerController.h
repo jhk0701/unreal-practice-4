@@ -27,6 +27,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
 	TObjectPtr<UInputAction> AttackNormalAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
+	TObjectPtr<UInputAction> DodgeAction;
+
 public:
 	virtual void BeginPlay() override;
 	

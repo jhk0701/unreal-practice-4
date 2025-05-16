@@ -17,6 +17,10 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = OwnerComp)
 	TObjectPtr<USceneComponent> meshComp;
 
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement)
+	bool bIsWalking = false;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
 	float Speed = 100.0f;	// TODO : 스탯 반영하기
 
@@ -26,18 +30,20 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement)
 	FVector Destination;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
+	float DodgePower = 1000.f;
+
 public:
 	UPlayerMove();
 	
 	virtual void BeginPlay() override;
-
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	
 	virtual void SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
 
 	void InputClick(const FInputActionValue& InputValue);
-
 	void StopMove();
-
 	void Move(float DeltaTime);
+
+	void InputDodge(const FInputActionValue& InputValue);
+	void Dodge();
 };

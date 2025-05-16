@@ -3,6 +3,7 @@
 #include "Core/TDRPGPlayerController.h"
 #include <EnhancedInputComponent.h>
 #include <GameFramework/CharacterMovementComponent.h>
+#include <Components/CapsuleComponent.h>
 
 UPlayerMove::UPlayerMove()
 {
@@ -32,6 +33,7 @@ void UPlayerMove::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponen
 	Super::SetupInputBinding(PlayerInputComponent, InController);
 	
 	PlayerInputComponent->BindAction(InController->ClickAction, ETriggerEvent::Started, this, &UPlayerMove::InputClick);
+	PlayerInputComponent->BindAction(InController->DodgeAction, ETriggerEvent::Triggered, this, &UPlayerMove::InputDodge);
 }
 
 void UPlayerMove::InputClick(const FInputActionValue& InputValue)
@@ -55,21 +57,38 @@ void UPlayerMove::InputClick(const FInputActionValue& InputValue)
 		params))
 	{
 		Destination = hitResult.ImpactPoint;
+		bIsWalking = true;
 	}
 }
 
 void UPlayerMove::StopMove()
 {
+	bIsWalking = false;
+
 	Destination = me->GetActorLocation();
+	moveComp->StopMovementImmediately();
 }
 
 void UPlayerMove::Move(float DeltaTime)
 {
+	if (!bIsWalking) return;
+
 	FVector dir = (Destination - me->GetActorLocation());
 	
 	if (dir.SquaredLength() < ToleranceToDestination * ToleranceToDestination)
 		return;
 
 	moveComp->AddInputVector(DeltaTime * Speed * dir.GetSafeNormal());
+}
+
+void UPlayerMove::InputDodge(const FInputActionValue& InputValue)
+{
+	Dodge();
+}
+
+void UPlayerMove::Dodge()
+{
+	StopMove();
+	moveComp->Launch(me->GetActorForwardVector() * DodgePower);
 }
 

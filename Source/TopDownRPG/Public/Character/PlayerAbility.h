@@ -24,6 +24,7 @@ class TOPDOWNRPG_API UPlayerAbility : public UPlayerBaseComponent
 
 public:
 	// 힘, 민첩, 지능
+	UPROPERTY(VisibleAnywhere, Category = Ability)
 	TMap<EAbility, uint32> Ability;
 
 public:

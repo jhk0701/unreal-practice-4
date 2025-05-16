@@ -3,6 +3,9 @@
 
 #include "Character/PlayerAbility.h"
 
+#include "TopDownRPG/TopDownRPG.h" // 디버깅
+
+
 UPlayerAbility::UPlayerAbility()
 {
 }

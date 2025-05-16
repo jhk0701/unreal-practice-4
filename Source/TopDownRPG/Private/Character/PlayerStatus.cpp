@@ -2,7 +2,8 @@
 
 #include "Character/PlayerStatus.h"
 #include "Character/Status.h"
-#include "TopDownRPG/TopDownRPG.h"
+
+#include "TopDownRPG/TopDownRPG.h" // 디버깅
 
 UPlayerStatus::UPlayerStatus()
 {
