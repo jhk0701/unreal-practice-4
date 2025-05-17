@@ -37,7 +37,6 @@ protected:
 
 public:
 	ATDRPGPlayer();
-
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void InvokeAttackDelegate();

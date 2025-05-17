@@ -22,10 +22,6 @@ class TOPDOWNRPG_API UEnemyFSM : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Owner)
-	TObjectPtr<class ATDRPGEnemy> owner;
-
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = State)
 	TObjectPtr<class UBaseState> curState;
@@ -33,12 +29,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = State)
 	TMap<EEnemyState, TObjectPtr<UBaseState>> stateMap;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Owner)
+	TObjectPtr<class ATDRPGEnemy> owner;
+
 public:	
 	UEnemyFSM();
-
+	
 	virtual void InitializeComponent() override;
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void Transition(EEnemyState type);
+	TObjectPtr<ATDRPGEnemy> GetOwnerEnemy();
 };

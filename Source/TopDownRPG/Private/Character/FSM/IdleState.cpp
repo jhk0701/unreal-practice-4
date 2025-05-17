@@ -6,14 +6,24 @@
 #include "Character/TDRPGEnemy.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "Core/DungeonGameMode.h"
+#include "TopDownRPG/TopDownRPG.h"
+
 void UIdleState::Enter()
 {
 	Super::Enter();
 
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("Idle State"));
-
-	// TODO : 하드코딩 제거
-	machine->owner->target = Cast<ATDRPGPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if(machine->GetOwnerEnemy())
+	{
+		// TODO : 하드코딩 제거
+		auto actor = UGameplayStatics::GetActorOfClass(machine->GetWorld(), ATDRPGPlayer::StaticClass());
+		machine->GetOwnerEnemy()->target = Cast<ATDRPGPlayer>(actor);
+		
+		machine->Transition(EEnemyState::Move);
+	}
+	else
+	{
+		PRINT_LOG(TEXT("machine -> owner is null"));
+	}
 	
-	machine->Transition(EEnemyState::Move);
 }

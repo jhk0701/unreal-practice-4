@@ -10,6 +10,9 @@
 #include <GameFramework/SpringArmComponent.h>
 #include <Camera/CameraComponent.h>
 
+#include "Core/DungeonGameMode.h"
+#include "TopDownRPG/TopDownRPG.h"
+
 // Sets default values
 ATDRPGPlayer::ATDRPGPlayer()
 {
@@ -60,7 +63,6 @@ ATDRPGPlayer::ATDRPGPlayer()
 	camera->SetRelativeRotation(FRotator(-60, 0, 0));
 	camera->bUsePawnControlRotation = false;
 }
-
 
 // Called to bind functionality to input
 void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

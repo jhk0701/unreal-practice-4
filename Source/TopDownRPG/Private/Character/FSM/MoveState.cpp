@@ -6,25 +6,33 @@
 #include "Character/TDRPGEnemy.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/EnemyMove.h"
+#include "Kismet/GameplayStatics.h"
+
+#include "TopDownRPG/TopDownRPG.h"
 
 void UMoveState::Enter()
 {
 	Super::Enter();
 
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("Move State"));
+	PRINT_LOG(TEXT("Move Enter"));
 }
 
 void UMoveState::Update(float DeltaTime)
 {
 	Super::Update(DeltaTime);
 
-	FVector dir = machine->owner->target->GetActorLocation() - machine->owner->GetActorLocation();
-	float tolerance = machine->owner->moveComp->ToleranceToTarget;
+	ATDRPGEnemy* owner = machine->GetOwnerEnemy();
+
+	FVector targetLoc = owner->target->GetActorLocation();
+	FVector ownerLoc = owner->GetActorLocation();
+
+	FVector dir = targetLoc - ownerLoc;
+	float tolerance = owner->moveComp->ToleranceToTarget;
 
 	if (dir.SquaredLength() > tolerance * tolerance)
 	{
-		dir = machine->owner->moveComp->Speed * DeltaTime * dir.GetSafeNormal();
-		machine->owner->moveComp->MoveTo(dir);
+		dir = owner->moveComp->Speed * DeltaTime * dir.GetSafeNormal();
+		owner->moveComp->MoveTo(dir);
 	}
 	else
 		machine->Transition(EEnemyState::Attack);

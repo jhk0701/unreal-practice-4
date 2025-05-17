@@ -5,18 +5,12 @@
 #include "Character/FSM/AttackState.h"
 #include "Character/FSM/DeadState.h"
 
+#include "TopDownRPG/TopDownRPG.h"
+
 UEnemyFSM::UEnemyFSM()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 	bWantsInitializeComponent = true;
-
-	stateMap.Add(EEnemyState::Idle,		NewObject<UIdleState>());
-	stateMap.Add(EEnemyState::Move,		NewObject<UMoveState>());
-	stateMap.Add(EEnemyState::Attack,	NewObject<UAttackState>());
-	stateMap.Add(EEnemyState::Dead,		NewObject<UDeadState>());
-
-	for (auto iter = stateMap.CreateIterator(); iter; ++iter)
-		iter->Value->Initialize(this);
 }
 
 void UEnemyFSM::InitializeComponent()
@@ -24,11 +18,20 @@ void UEnemyFSM::InitializeComponent()
 	Super::InitializeComponent();
 
 	owner = Cast<ATDRPGEnemy>(GetOwner());
+	
+	stateMap.Add(EEnemyState::Idle, NewObject<UIdleState>());
+	stateMap.Add(EEnemyState::Move, NewObject<UMoveState>());
+	stateMap.Add(EEnemyState::Attack, NewObject<UAttackState>());
+	stateMap.Add(EEnemyState::Dead, NewObject<UDeadState>());
+
+	for (auto iter = stateMap.CreateIterator(); iter; ++iter)
+		iter->Value->Initialize(this);
 }
 
 void UEnemyFSM::BeginPlay()
 {
 	Super::BeginPlay();
+
 
 	Transition(EEnemyState::Idle);
 }
@@ -49,5 +52,13 @@ void UEnemyFSM::Transition(EEnemyState type)
 	curState = stateMap[type];
 
 	curState->Enter();
+}
+
+TObjectPtr<ATDRPGEnemy> UEnemyFSM::GetOwnerEnemy()
+{
+	if(!owner)
+		owner = Cast<ATDRPGEnemy>(GetOwner());
+
+	return owner;
 }
 
