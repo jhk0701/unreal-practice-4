@@ -12,9 +12,25 @@ class TOPDOWNRPG_API UEnemyAttack : public UActorComponent
 {
 	GENERATED_BODY()
 
+protected:
+	// TODO : 공격 - 스킬들 관리
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
+	bool bIsAttackable = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
+	float curCooldown = 0.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack|Setting")
+	float attackCooldown = 5.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack|Setting")
+	float attackRange = 100.0f;
+
 public:	
 	UEnemyAttack();
 	virtual void BeginPlay() override;
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-		
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	void Attack();
+	bool IsAttackable() { return bIsAttackable; }
+	float GetAttackRange() { return attackRange; }
 };

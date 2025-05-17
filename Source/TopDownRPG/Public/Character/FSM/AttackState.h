@@ -16,5 +16,5 @@ class TOPDOWNRPG_API UAttackState : public UBaseState
 
 public:
 	virtual void Enter() override;
-	
+	virtual void Update(float DeltaTime) override;
 };

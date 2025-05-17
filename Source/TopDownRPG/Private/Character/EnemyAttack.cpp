@@ -3,32 +3,43 @@
 
 #include "Character/EnemyAttack.h"
 
+#include "TopDownRPG/TopDownRPG.h"
+
 // Sets default values for this component's properties
 UEnemyAttack::UEnemyAttack()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
-
-// Called when the game starts
 void UEnemyAttack::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	bIsAttackable = true;
+	curCooldown = .0f;
 }
 
-
-// Called every frame
 void UEnemyAttack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	if (!bIsAttackable)
+	{
+		curCooldown -= DeltaTime;
+		
+		if (curCooldown <= .0f)
+			bIsAttackable = true;
+	}
+}
+
+void UEnemyAttack::Attack()
+{
+	if (!bIsAttackable)
+		return;
+
+	bIsAttackable = false;
+	curCooldown = attackCooldown;
+
+	PRINT_LOG(TEXT("Enemy Attack!"));
 }
 

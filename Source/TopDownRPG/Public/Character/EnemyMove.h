@@ -14,10 +14,7 @@ class TOPDOWNRPG_API UEnemyMove : public UActorComponent
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
-	float ToleranceToTarget = 100.f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
-	float Speed = 1000.0f;
+	float Speed = 500.0f;
 
 public:	
 	UEnemyMove();
