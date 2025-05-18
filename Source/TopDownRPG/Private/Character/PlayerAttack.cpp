@@ -6,6 +6,7 @@
 #include "Character/TDRPGPlayer.h"
 #include "Character/TDRPGEnemy.h"
 #include "Character/CharacterStatus.h"
+#include "Character/CharacterAbility.h"
 #include <EnhancedInputComponent.h>
 #include <Components/SphereComponent.h>
 
@@ -36,9 +37,21 @@ void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)
 
 void UPlayerAttack::InvokeAttack()
 {
-	player->InvokeAttackDelegate(); // 이동 기능은 꺼질 것
+	if (!bIsReady) 
+		return;
 
+	player->InvokeAttackDelegate(); // 이동 기능은 꺼질 것
 	player->hitCollider->Activate();
+	
+	bIsReady = false;
+	GetWorld()->GetTimerManager().SetTimer(
+		cooldownTimer, [this]() 
+		{
+			this->bIsReady = true; 
+		}, 
+		cooldown, 
+		FTimerManagerTimerParameters()
+	);
 }
 
 void UPlayerAttack::OnActorOverlaped(
@@ -55,5 +68,9 @@ void UPlayerAttack::OnActorOverlaped(
 	if(OtherActor && OtherActor->IsA<ATDRPGEnemy>())
 	{
 		PRINT_LOG(TEXT("Actor is enemy"));
+		ATDRPGEnemy* enemy = Cast<ATDRPGEnemy>(OtherActor);
+		int32 damage = player->abilityComp->GetAttackPower();
+
+		enemy->TakeDamage(damage);
 	}
 }
