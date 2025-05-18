@@ -11,5 +11,7 @@ void UEnemyMove::MoveTo(const FVector& Direction)
 	AActor* owner = GetOwner();
 	FVector loc = owner->GetActorLocation() + Direction;
 	owner->SetActorLocation(loc);
+	
+	owner->SetActorRotation(Direction.GetSafeNormal().ToOrientationQuat());
 }
 

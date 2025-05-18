@@ -33,4 +33,6 @@ public:
 	void Attack();
 	bool IsAttackable() { return bIsAttackable; }
 	float GetAttackRange() { return attackRange; }
+
+
 };

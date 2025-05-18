@@ -4,7 +4,9 @@
 #include "Character/EnemyFSM.h"
 #include "Character/EnemyAttack.h"
 #include "Character/EnemyMove.h"
-#include "Components/CapsuleComponent.h"
+#include <Components/CapsuleComponent.h>
+
+#include "TopDownRPG/TopDownRPG.h" // 디버깅용
 
 // Sets default values
 ATDRPGEnemy::ATDRPGEnemy()
@@ -39,10 +41,23 @@ ATDRPGEnemy::ATDRPGEnemy()
 	}
 
 	stateMachine = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSMComp"));
+
+	Tags.Add(GetTag());
 }
 
 // Called when the game starts or when spawned
 void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void ATDRPGEnemy::TakeDamage(int32 Damage)
+{
+	// TODO : 언리얼 데미지 시스템으로 변경
+	statusComp->SubtractStat(EStatus::Hp, Damage);
+}
+
+void ATDRPGEnemy::Die()
+{
+	PRINT_LOG(TEXT("%s is died"), *GetActorNameOrLabel());
 }

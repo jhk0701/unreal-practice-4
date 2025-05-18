@@ -19,6 +19,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr <class UCharacterAbility> abilityComp;
 
+	// 임시 히트박스
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class USphereComponent> hitCollider;
+
 	FOnInputBindDelegate OnInputBindDelegate;
 	FOnUniqueInputDelegate OnAttackCalled;
 
@@ -37,9 +41,15 @@ protected:
 
 public:
 	ATDRPGPlayer();
+	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void InvokeAttackDelegate();
 	TObjectPtr<UCharacterStatus> GetStatus() { return statusComp; }
+
+	void TakeDamage(int32 Damage);
+	void Die();
+
+	const FName GetTag() { return TEXT("Player"); }
 
 };

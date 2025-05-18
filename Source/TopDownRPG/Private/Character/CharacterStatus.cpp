@@ -46,16 +46,12 @@ void UCharacterStatus::InitStatus(const TArray<EStatus>& StatusType, const TArra
 
 void UCharacterStatus::CheckPlayerIsDead(uint32 Max, uint32 Current)
 {
-	if (bIsDead) return;
+	if (bIsDead) 
+		return;
 
 	if (Current <= 0)
 	{
 		bIsDead = true;
-		OnPlayerDead();
+		OnCharacterDead.Broadcast();
 	}
-}
-
-void UCharacterStatus::OnPlayerDead()
-{
-	PRINT_LOG(TEXT("is dead"));
 }

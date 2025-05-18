@@ -7,6 +7,8 @@
 #include "Character/Status.h"
 #include "CharacterStatus.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnStatusEmpty);
+
 UENUM(BlueprintType)
 enum class EStatus : uint8
 {
@@ -33,7 +35,9 @@ public:
 	TMap<EStatus, TUniquePtr<Status>> Stat;
 
 	bool bIsDead = false;
-	
+
+	FOnStatusEmpty OnCharacterDead;
+
 public:
 	UCharacterStatus();
 
@@ -46,5 +50,4 @@ public:
 	bool SubtractStat(EStatus Type, uint32 Value) { return Stat[Type]->TrySubtract(Value); }
 
 	void CheckPlayerIsDead(uint32 Max, uint32 Current);
-	void OnPlayerDead();
 };

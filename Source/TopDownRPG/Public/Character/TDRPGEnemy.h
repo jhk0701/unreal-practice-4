@@ -39,4 +39,8 @@ public:
 	ATDRPGEnemy();
 	virtual void BeginPlay() override;
 
+	void TakeDamage(int32 Damage);
+	void Die();
+
+	const FName GetTag() { return TEXT("Enemy"); }
 };

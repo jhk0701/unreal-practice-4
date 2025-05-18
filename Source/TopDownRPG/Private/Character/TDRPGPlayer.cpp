@@ -5,10 +5,11 @@
 #include "Character/PlayerMove.h"
 #include "Character/PlayerAttack.h"
 #include <EnhancedInputComponent.h>
-#include <GameFramework/CharacterMovementComponent.h>
-#include <Components/CapsuleComponent.h>
-#include <GameFramework/SpringArmComponent.h>
 #include <Camera/CameraComponent.h>
+#include <GameFramework/CharacterMovementComponent.h>
+#include <GameFramework/SpringArmComponent.h>
+#include <Components/CapsuleComponent.h>
+#include <Components/SphereComponent.h>
 
 #include "Core/DungeonGameMode.h"
 #include "TopDownRPG/TopDownRPG.h"
@@ -62,6 +63,21 @@ ATDRPGPlayer::ATDRPGPlayer()
 	camera->SetupAttachment(springArm, springArm->SocketName);
 	camera->SetRelativeRotation(FRotator(-60, 0, 0));
 	camera->bUsePawnControlRotation = false;
+
+	// 임시 히트박스
+	hitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
+	hitCollider->SetRelativeLocation(FVector(0, 100.f, 100.f));
+	hitCollider->SetSphereRadius(50.f);
+	hitCollider->Deactivate();
+
+	Tags.Add(GetTag());
+}
+
+void ATDRPGPlayer::BeginPlay()
+{
+	Super::BeginPlay();
+
+	statusComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
 }
 
 // Called to bind functionality to input
@@ -75,4 +91,14 @@ void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 void ATDRPGPlayer::InvokeAttackDelegate()
 {
 	OnAttackCalled.Broadcast();
+}
+
+void ATDRPGPlayer::TakeDamage(int32 Damage)
+{
+	statusComp->SubtractStat(EStatus::Hp, Damage);
+}
+
+void ATDRPGPlayer::Die()
+{
+	PRINT_LOG(TEXT("%s is died"), *GetActorNameOrLabel());
 }

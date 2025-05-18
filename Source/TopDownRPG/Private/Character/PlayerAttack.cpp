@@ -4,12 +4,22 @@
 #include "Character/PlayerAttack.h"
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
+#include "Character/TDRPGEnemy.h"
 #include "Character/CharacterStatus.h"
 #include <EnhancedInputComponent.h>
+#include <Components/SphereComponent.h>
 
+#include "TopDownRPG/TopDownRPG.h"
 
 UPlayerAttack::UPlayerAttack()
 {
+}
+
+void UPlayerAttack::InitializeComponent()
+{
+	Super::InitializeComponent();
+
+	player->hitCollider->OnComponentBeginOverlap.AddDynamic(this, &UPlayerAttack::OnActorOverlaped);
 }
 
 void UPlayerAttack::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)
@@ -21,7 +31,6 @@ void UPlayerAttack::SetupInputBinding(UEnhancedInputComponent* PlayerInputCompon
 
 void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)
 {
-	GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Blue, TEXT("Player Normal Attack"));
 	InvokeAttack();
 }
 
@@ -29,6 +38,22 @@ void UPlayerAttack::InvokeAttack()
 {
 	player->InvokeAttackDelegate(); // 이동 기능은 꺼질 것
 
-	// me->GetStatus()->Stat[EStatus::Health]->Subtract(10);
-	// GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, FString::Printf(TEXT("remain hp : %d"), (int32)me->GetStatus()->Stat[EStatus::Health]->GetCurrentValue()));
+	player->hitCollider->Activate();
+}
+
+void UPlayerAttack::OnActorOverlaped(
+	UPrimitiveComponent* OverlappedComponent, 
+	AActor* OtherActor, 
+	UPrimitiveComponent* OtherComp, 
+	int32 OtherBodyIndex, 
+	bool bFromSweep, 
+	const FHitResult& SweepResult
+)
+{
+	PRINT_LOG(TEXT("Actor overlaped"));
+		
+	if(OtherActor && OtherActor->IsA<ATDRPGEnemy>())
+	{
+		PRINT_LOG(TEXT("Actor is enemy"));
+	}
 }
