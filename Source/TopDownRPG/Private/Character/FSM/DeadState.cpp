@@ -2,4 +2,13 @@
 
 
 #include "Character/FSM/DeadState.h"
+#include "Character/TDRPGEnemy.h"
+#include "Character/EnemyFSM.h"
 
+
+void UDeadState::Enter()
+{
+	Super::Enter();
+
+	machine->GetOwnerEnemy()->Destroy();
+}

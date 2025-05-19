@@ -3,18 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/FSM/BaseState.h"
-#include "DeadState.generated.h"
+#include "Blueprint/UserWidget.h"
+#include "TDRPGUserWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UDeadState : public UBaseState
+class TOPDOWNRPG_API UTDRPGUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
-public:
-	virtual void Enter() override;
-
 };

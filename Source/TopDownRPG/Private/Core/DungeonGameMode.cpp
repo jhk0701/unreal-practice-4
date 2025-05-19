@@ -2,16 +2,14 @@
 
 
 #include "Core/DungeonGameMode.h"
+#include "Core/DungeonGameState.h"
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
 
+
 ADungeonGameMode::ADungeonGameMode()
 {
+	GameStateClass = ADungeonGameState::StaticClass();
 	PlayerControllerClass = ATDRPGPlayerController::StaticClass();
 	DefaultPawnClass = ATDRPGPlayer::StaticClass();
-}
-
-void ADungeonGameMode::BeginPlay()
-{
-	Super::BeginPlay();
 }

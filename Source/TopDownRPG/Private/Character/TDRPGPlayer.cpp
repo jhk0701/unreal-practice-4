@@ -1,5 +1,5 @@
-#include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
+#include "Core/TDRPGPlayerController.h"
 #include "Character/CharacterStatus.h"
 #include "Character/CharacterAbility.h"
 #include "Character/PlayerMove.h"
@@ -66,6 +66,7 @@ ATDRPGPlayer::ATDRPGPlayer()
 
 	// 임시 히트박스
 	hitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
+	hitCollider->SetupAttachment(RootComponent);
 	hitCollider->SetRelativeLocation(FVector(0, 100.f, 100.f));
 	hitCollider->SetSphereRadius(50.f);
 	hitCollider->Deactivate();
@@ -101,4 +102,5 @@ void ATDRPGPlayer::TakeDamage(int32 Damage)
 void ATDRPGPlayer::Die()
 {
 	PRINT_LOG(TEXT("%s is died"), *GetActorNameOrLabel());
+	
 }

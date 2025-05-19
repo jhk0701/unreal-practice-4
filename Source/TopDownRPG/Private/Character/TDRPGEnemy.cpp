@@ -4,6 +4,7 @@
 #include "Character/EnemyFSM.h"
 #include "Character/EnemyAttack.h"
 #include "Character/EnemyMove.h"
+#include "Core/DungeonGameState.h"
 #include <Components/CapsuleComponent.h>
 
 #include "TopDownRPG/TopDownRPG.h" // 디버깅용
@@ -49,6 +50,8 @@ ATDRPGEnemy::ATDRPGEnemy()
 void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	statusComp->OnCharacterDead.AddUObject(this, &ATDRPGEnemy::Die);
 }
 
 void ATDRPGEnemy::TakeDamage(int32 Damage)
@@ -60,4 +63,8 @@ void ATDRPGEnemy::TakeDamage(int32 Damage)
 void ATDRPGEnemy::Die()
 {
 	PRINT_LOG(TEXT("%s is died"), *GetActorNameOrLabel());
+	stateMachine->Transition(EEnemyState::Dead);
+
+	ADungeonGameState* state = Cast<ADungeonGameState>(GetWorld()->GetGameState());
+	state->OnEnemyDead();
 }
