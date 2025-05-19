@@ -42,6 +42,4 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatusBar, meta = (BindWidget))
 	TObjectPtr<UTextBlock> ManaLabel;
 
-protected:
-	virtual void NativeConstruct() override;
 };

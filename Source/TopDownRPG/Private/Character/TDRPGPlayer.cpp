@@ -12,7 +12,9 @@
 #include <Components/SphereComponent.h>
 
 #include "Core/DungeonGameMode.h"
+#include "Core/DungeonGameState.h"
 #include "TopDownRPG/TopDownRPG.h"
+#include "UI/TDRPGUWStatusBar.h"
 
 // Sets default values
 ATDRPGPlayer::ATDRPGPlayer()
@@ -78,7 +80,18 @@ void ATDRPGPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	ADungeonGameState* state = Cast<ADungeonGameState>(GetWorld()->GetGameState());
+	state->player = this;
+
 	statusComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
+
+	// TODO : 임시 UI 하드코딩 제거
+	if (StatusBarFactory)
+	{
+		StatusBarInst = CreateWidget<UTDRPGUWStatusBar>(GetWorld(), StatusBarFactory, TEXT("Character Status Bar"));
+		StatusBarInst->InitStatusBar(this);
+		StatusBarInst->AddToViewport();
+	}
 }
 
 // Called to bind functionality to input

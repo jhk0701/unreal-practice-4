@@ -17,7 +17,7 @@ class TOPDOWNRPG_API ADungeonGameState : public AGameStateBase
 public:
 	// 플레이어 접근용
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Player)
-	TObjectPtr<class ATDRPGPlayer> player;
+	TWeakObjectPtr<class ATDRPGPlayer> player;
 	
 protected:
 	// 적 캐릭터 관리용

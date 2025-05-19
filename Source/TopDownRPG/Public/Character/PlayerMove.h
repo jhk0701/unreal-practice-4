@@ -25,7 +25,7 @@ protected:
 	float Speed = 100.0f;	// TODO : 스탯 반영하기
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
-	float ToleranceToDestination = 1.f;
+	float ToleranceToDestination = 10.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement)
 	FVector Destination;

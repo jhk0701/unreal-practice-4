@@ -5,6 +5,8 @@
 #include <GameFramework/CharacterMovementComponent.h>
 #include <Components/CapsuleComponent.h>
 
+#include "TopDownRPG/TopDownRPG.h"
+
 UPlayerMove::UPlayerMove()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -57,6 +59,7 @@ void UPlayerMove::InputClick(const FInputActionValue& InputValue)
 		params))
 	{
 		Destination = hitResult.ImpactPoint;
+		Destination.Z = 0.0f;
 		bIsWalking = true;
 	}
 }
@@ -64,21 +67,29 @@ void UPlayerMove::InputClick(const FInputActionValue& InputValue)
 void UPlayerMove::StopMove()
 {
 	bIsWalking = false;
-
 	Destination = player->GetActorLocation();
 	moveComp->StopMovementImmediately();
 }
 
 void UPlayerMove::Move(float DeltaTime)
 {
-	if (!bIsWalking) return;
-
-	FVector dir = (Destination - player->GetActorLocation());
-	
-	if (dir.SquaredLength() < ToleranceToDestination * ToleranceToDestination)
+	if (!bIsWalking) 
 		return;
 
-	moveComp->AddInputVector(DeltaTime * Speed * dir.GetSafeNormal());
+	FVector playerLoc = player->GetActorLocation();
+	playerLoc.Z = 0.0f;
+		
+	FVector dir = (Destination - playerLoc);
+
+
+	if (dir.SquaredLength() < ToleranceToDestination * ToleranceToDestination)
+	{
+		bIsWalking = false;
+		return;
+	}
+
+	FVector input = DeltaTime * Speed * dir.GetSafeNormal();
+	moveComp->AddInputVector(input);
 }
 
 void UPlayerMove::InputDodge(const FInputActionValue& InputValue)

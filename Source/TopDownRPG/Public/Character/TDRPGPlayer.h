@@ -23,6 +23,14 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class USphereComponent> hitCollider;
 
+	// 임시 UI 테스트용
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UITemp")
+	TSubclassOf<class UTDRPGUWStatusBar> StatusBarFactory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UITemp")
+	TObjectPtr<UTDRPGUWStatusBar> StatusBarInst;
+
+
 	FOnInputBindDelegate OnInputBindDelegate;
 	FOnUniqueInputDelegate OnAttackCalled;
 
@@ -45,7 +53,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void InvokeAttackDelegate();
-	TObjectPtr<UCharacterStatus> GetStatus() { return statusComp; }
+	const TObjectPtr<UCharacterStatus> GetStatus() { return statusComp; }
 
 	void TakeDamage(int32 Damage);
 	void Die();
