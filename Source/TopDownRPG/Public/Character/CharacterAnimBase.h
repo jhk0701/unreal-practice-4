@@ -8,9 +8,7 @@
 
 class UAnimMontage;
 
-/**
- * 
- */
+
 UCLASS()
 class TOPDOWNRPG_API UCharacterAnimBase : public UAnimInstance
 {

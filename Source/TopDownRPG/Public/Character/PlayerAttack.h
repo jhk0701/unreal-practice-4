@@ -14,8 +14,6 @@ class TOPDOWNRPG_API UPlayerAttack : public UPlayerInputComponent
 {
 	GENERATED_BODY()
 
-protected:
-
 
 public:
 	UPlayerAttack();
@@ -24,6 +22,9 @@ public:
 
 	void InputAttack(const FInputActionValue& InputValue);
 	void InvokeAttack();
+
+	UFUNCTION(BlueprintCallable)
+	void ActivateHitCollider(bool bIsEnable);
 
 	UFUNCTION()
 	void OnActorOverlaped(

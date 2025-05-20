@@ -14,13 +14,20 @@ class TOPDOWNRPG_API UPlayerAnim : public UCharacterAnimBase
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Attack)
+	int32 curAttackIdx;
+
 public:
 	virtual void PlayAttack(int32 Idx) override;
 	virtual void PlayHit() override;
 
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Attack)
-	int curAttack;
+	UFUNCTION(BlueprintCallable)
+	void OnAttackStarted();
 
+	UFUNCTION(BlueprintCallable)
+	void OnAttackEnded();
+
+protected:
 	virtual void SetIsDead(const APawn* Pawn) override;
 };

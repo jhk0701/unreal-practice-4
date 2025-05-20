@@ -72,7 +72,6 @@ ATDRPGPlayer::ATDRPGPlayer()
 	hitCollider->SetupAttachment(RootComponent);
 	hitCollider->SetRelativeLocation(FVector(0, 100.f, 100.f));
 	hitCollider->SetSphereRadius(50.f);
-	hitCollider->Deactivate();
 
 	Tags.Add(GetTag());
 }

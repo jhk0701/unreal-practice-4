@@ -22,6 +22,7 @@ void UPlayerAttack::InitializeComponent()
 	Super::InitializeComponent();
 
 	player->hitCollider->OnComponentBeginOverlap.AddDynamic(this, &UPlayerAttack::OnActorOverlaped);
+	ActivateHitCollider(false);
 }
 
 void UPlayerAttack::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)
@@ -39,10 +40,15 @@ void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)
 void UPlayerAttack::InvokeAttack()
 {
 	player->InvokeAttackDelegate(); // 이동 기능은 꺼질 것
-	player->hitCollider->Activate();
+	ActivateHitCollider(true);
 
 	// 애니메이션 재생
 	player->animInst->PlayAttack(0);
+}
+
+void UPlayerAttack::ActivateHitCollider(bool bIsEnable)
+{
+	player->hitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics: ECollisionEnabled::NoCollision);
 }
 
 void UPlayerAttack::OnActorOverlaped(
