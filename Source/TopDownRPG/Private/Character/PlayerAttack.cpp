@@ -13,6 +13,7 @@
 
 #include "TopDownRPG/TopDownRPG.h"
 
+
 UPlayerAttack::UPlayerAttack()
 {
 }
@@ -41,6 +42,13 @@ void UPlayerAttack::InvokeAttack()
 {
 	player->InvokeAttackDelegate(); // 이동 기능은 꺼질 것
 	ActivateHitCollider(true);
+	
+	FHitResult hitResult;
+	player->GetMouseToWorld(hitResult);
+
+	FVector dir = hitResult.ImpactPoint - player->GetActorLocation();
+	
+	player->SetActorRotation(dir.ToOrientationQuat());
 
 	// 애니메이션 재생
 	player->animInst->PlayAttack(0);

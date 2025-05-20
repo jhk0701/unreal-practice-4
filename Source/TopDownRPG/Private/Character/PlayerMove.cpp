@@ -40,23 +40,8 @@ void UPlayerMove::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponen
 
 void UPlayerMove::InputClick(const FInputActionValue& InputValue)
 {
-	if (!controller)
-		return;
-
-	// 뷰포트 마우스 위치 -> 월드좌표로 변환
-	FVector worldPoint, worldDirection;
-	if (!controller->DeprojectMousePositionToWorld(worldPoint, worldDirection))
-		return;
-
-	FCollisionQueryParams params;
 	FHitResult hitResult;
-
-	if (GetWorld()->LineTraceSingleByChannel(
-		hitResult, 
-		worldPoint, 
-		worldPoint + worldDirection * 10000, 
-		ECC_GameTraceChannel1, 
-		params))
+	if (player->GetMouseToWorld(hitResult))
 	{
 		Destination = hitResult.ImpactPoint;
 		Destination.Z = 0.0f;
@@ -80,7 +65,6 @@ void UPlayerMove::Move(float DeltaTime)
 	playerLoc.Z = 0.0f;
 		
 	FVector dir = (Destination - playerLoc);
-
 
 	if (dir.SquaredLength() < ToleranceToDestination * ToleranceToDestination)
 	{

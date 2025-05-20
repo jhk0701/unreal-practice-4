@@ -22,8 +22,6 @@ public:
 
 	void InputAttack(const FInputActionValue& InputValue);
 	void InvokeAttack();
-
-	UFUNCTION(BlueprintCallable)
 	void ActivateHitCollider(bool bIsEnable);
 
 	UFUNCTION()

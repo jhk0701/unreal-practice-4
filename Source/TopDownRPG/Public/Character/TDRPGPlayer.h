@@ -39,7 +39,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerAttack> attackComp;
 
-
 	FOnInputBindDelegate OnInputBindDelegate;
 	FOnUniqueInputDelegate OnAttackCalled;
 
@@ -56,10 +55,12 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void InvokeAttackDelegate();
-	TWeakObjectPtr<UCharacterStatus> GetStatus() const { return statusComp; }
+	TObjectPtr<UCharacterStatus> GetStatus() const { return statusComp; }
 
 	void TakeDamage(int32 Damage);
 	void Die();
+
+	bool GetMouseToWorld(FHitResult& OutResult);
 
 	FName GetTag() const { return TEXT("Player"); }
 

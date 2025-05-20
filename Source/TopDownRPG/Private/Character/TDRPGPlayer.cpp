@@ -117,5 +117,23 @@ void ATDRPGPlayer::TakeDamage(int32 Damage)
 void ATDRPGPlayer::Die()
 {
 	PRINT_LOG(TEXT("%s is died"), *GetActorNameOrLabel());
-	
+}
+
+bool ATDRPGPlayer::GetMouseToWorld(FHitResult& OutResult)
+{
+	// 뷰포트 마우스 위치 -> 월드좌표로 변환
+	FVector worldPoint, worldDirection;
+
+	ATDRPGPlayerController* controller = Cast<ATDRPGPlayerController>(GetController());
+	if (!controller->DeprojectMousePositionToWorld(worldPoint, worldDirection))
+		return false;
+
+	FCollisionQueryParams params;
+
+	return GetWorld()->LineTraceSingleByChannel(
+		OutResult,
+		worldPoint,
+		worldPoint + worldDirection * 10000,
+		ECC_GameTraceChannel1,
+		params);
 }
