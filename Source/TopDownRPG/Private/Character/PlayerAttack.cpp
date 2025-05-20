@@ -40,18 +40,32 @@ void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)
 
 void UPlayerAttack::InvokeAttack()
 {
+	if (player->animInst->IsAttackPlaying())
+		return;
+
 	player->InvokeAttackDelegate(); // 이동 기능은 꺼질 것
-	ActivateHitCollider(true);
 	
 	FHitResult hitResult;
 	player->GetMouseToWorld(hitResult);
 
 	FVector dir = hitResult.ImpactPoint - player->GetActorLocation();
-	
 	player->SetActorRotation(dir.ToOrientationQuat());
 
 	// 애니메이션 재생
-	player->animInst->PlayAttack(0);
+	// TODO : 최적화 필요한지 체크
+	if (GetWorld()->GetTimerManager().IsTimerActive(attackResetTimer))
+		GetWorld()->GetTimerManager().ClearTimer(attackResetTimer);
+
+	GetWorld()->GetTimerManager().SetTimer(
+		attackResetTimer, 
+		[this]() {this->attackCount = 0; }, 
+		resetInterval, 
+		false);
+
+	++attackCount;
+	player->animInst->PlayAttack(attackCount);
+
+	PRINT_LOG(TEXT("attack count : %d"), attackCount);
 }
 
 void UPlayerAttack::ActivateHitCollider(bool bIsEnable)
@@ -68,11 +82,8 @@ void UPlayerAttack::OnActorOverlaped(
 	const FHitResult& SweepResult
 )
 {
-	PRINT_LOG(TEXT("Actor overlaped"));
-		
 	if(OtherActor && OtherActor->IsA<ATDRPGEnemy>())
 	{
-		PRINT_LOG(TEXT("Actor is enemy"));
 		ATDRPGEnemy* enemy = Cast<ATDRPGEnemy>(OtherActor);
 		int32 damage = player->abilityComp->GetAttackPower();
 

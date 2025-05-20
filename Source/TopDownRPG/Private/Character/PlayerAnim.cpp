@@ -22,7 +22,9 @@ void UPlayerAnim::PlayAttack(int32 Idx)
 
 	if (ATDRPGPlayer* player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
 	{
-		player->PlayAnimMontage(attackMontage, 1.0f, FName(FString::Printf(TEXT("Attack_%d"), Idx)));
+		int cnt = attackMontage->GetNumSections();
+		cnt = cnt == 0 ? 1 : cnt;
+		player->PlayAnimMontage(attackMontage, 1.0f, FName(FString::Printf(TEXT("Attack_%d"), Idx % cnt)));
 	}
 }
 

@@ -24,7 +24,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void OnAttackStarted();
-
 	UFUNCTION(BlueprintCallable)
 	void OnAttackEnded();
 
