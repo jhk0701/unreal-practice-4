@@ -15,10 +15,21 @@ void UPlayerAnim::SetIsDead(const APawn* Pawn)
 
 void UPlayerAnim::PlayAttack(int32 Idx)
 {
+	if (Montage_IsPlaying(attackMontage))
+		return;
+
+	if (ATDRPGPlayer* player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
+	{
+		player->PlayAnimMontage(attackMontage, 1.0f, FName(FString::Printf(TEXT("Attack_%d"), Idx)));
+	}
+	
 }
 
 void UPlayerAnim::PlayHit()
 {
+	if (Montage_IsPlaying(hitMontage))
+		return;
+
 	if(ATDRPGPlayer* player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
 	{
 		int cnt = hitMontage->GetNumSections();
