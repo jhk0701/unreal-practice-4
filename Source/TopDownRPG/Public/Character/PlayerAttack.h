@@ -16,13 +16,6 @@ class TOPDOWNRPG_API UPlayerAttack : public UPlayerInputComponent
 
 protected:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Setting|Temp")
-	bool bIsReady = true;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Setting|Temp")
-	float cooldown = 1.0f;
-
-	FTimerHandle cooldownTimer;
 
 public:
 	UPlayerAttack();

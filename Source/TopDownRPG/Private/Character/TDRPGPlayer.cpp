@@ -4,6 +4,7 @@
 #include "Character/CharacterAbility.h"
 #include "Character/PlayerMove.h"
 #include "Character/PlayerAttack.h"
+#include "Character/PlayerAnim.h"
 #include <EnhancedInputComponent.h>
 #include <Camera/CameraComponent.h>
 #include <GameFramework/CharacterMovementComponent.h>
@@ -92,6 +93,8 @@ void ATDRPGPlayer::BeginPlay()
 		StatusBarInst->InitStatusBar(this);
 		StatusBarInst->AddToViewport();
 	}
+
+	animInst = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
 }
 
 // Called to bind functionality to input

@@ -19,6 +19,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr <class UCharacterAbility> abilityComp;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Animation)
+	TObjectPtr<class UPlayerAnim> animInst;
+
 	// 임시 히트박스
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class USphereComponent> hitCollider;
@@ -53,11 +56,11 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void InvokeAttackDelegate();
-	const TObjectPtr<UCharacterStatus> GetStatus() { return statusComp; }
+	TWeakObjectPtr<UCharacterStatus> GetStatus() const { return statusComp; }
 
 	void TakeDamage(int32 Damage);
 	void Die();
 
-	const FName GetTag() { return TEXT("Player"); }
+	FName GetTag() const { return TEXT("Player"); }
 
 };

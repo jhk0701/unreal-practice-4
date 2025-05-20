@@ -7,6 +7,7 @@
 #include "Character/TDRPGEnemy.h"
 #include "Character/CharacterStatus.h"
 #include "Character/CharacterAbility.h"
+#include "Character/PlayerAnim.h"
 #include <EnhancedInputComponent.h>
 #include <Components/SphereComponent.h>
 
@@ -37,21 +38,11 @@ void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)
 
 void UPlayerAttack::InvokeAttack()
 {
-	if (!bIsReady) 
-		return;
-
 	player->InvokeAttackDelegate(); // 이동 기능은 꺼질 것
 	player->hitCollider->Activate();
-	
-	bIsReady = false;
-	GetWorld()->GetTimerManager().SetTimer(
-		cooldownTimer, [this]() 
-		{
-			this->bIsReady = true; 
-		}, 
-		cooldown, 
-		FTimerManagerTimerParameters()
-	);
+
+	// 애니메이션 재생
+	player->animInst->PlayAttack(0);
 }
 
 void UPlayerAttack::OnActorOverlaped(

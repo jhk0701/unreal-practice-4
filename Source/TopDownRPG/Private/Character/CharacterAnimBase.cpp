@@ -1,6 +1,4 @@
 #include "Character/CharacterAnimBase.h"
-#include "TopDownRPG/TopDownRPG.h"
-
 
 
 void UCharacterAnimBase::NativeInitializeAnimation()
@@ -18,6 +16,7 @@ void UCharacterAnimBase::NativeUpdateAnimation(float DeltaSeconds)
 	if(APawn* pawn = TryGetPawnOwner())
 	{
 		SetAccel(pawn);
+		SetIsDead(pawn);
 	}
 }
 
@@ -28,7 +27,19 @@ void UCharacterAnimBase::SetAccel(const APawn* Pawn)
 
 	double dir = FVector::DotProduct(velocity, forward);
 	Accel = (float)FMath::Max(dir, 0) * AccelScaler;
-	
-	// PRINT_LOG(TEXT("Dir : %g, Accel : %f, AccelScaler : %f"), dir, Accel, AccelScaler);
-	// PRINT_LOG(TEXT("Velocity : %s, Forward : %s"), *velocity.ToString(), *forward.ToString());
+}
+
+void UCharacterAnimBase::SetIsDead(const APawn* Pawn)
+{
+	bIsDead = false;
+}
+
+void UCharacterAnimBase::PlayAttack(const int32 Idx)
+{
+	Montage_Play(attackMontage);
+}
+
+void UCharacterAnimBase::PlayHit()
+{
+	Montage_Play(hitMontage);
 }

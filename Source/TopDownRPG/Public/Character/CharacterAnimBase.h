@@ -6,6 +6,8 @@
 #include "Animation/AnimInstance.h"
 #include "CharacterAnimBase.generated.h"
 
+class UAnimMontage;
+
 /**
  * 
  */
@@ -21,8 +23,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
 	float AccelScaler = 500.f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
+	bool bIsDead = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
+	TObjectPtr<UAnimMontage> attackMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
+	TObjectPtr<UAnimMontage> hitMontage;
+
+public:
+	virtual void PlayAttack(const int32 Idx);
+	virtual void PlayHit();
+
 protected:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
 	virtual void SetAccel(const APawn* Pawn);
+	virtual void SetIsDead(const APawn* Pawn);
 };
