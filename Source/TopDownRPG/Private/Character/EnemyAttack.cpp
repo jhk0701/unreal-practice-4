@@ -72,6 +72,8 @@ void UEnemyAttack::OnActorOverlaped(
 		ATDRPGPlayer* player = Cast<ATDRPGPlayer>(OtherActor);
 		int32 damage = enemy->abilityComp->GetAttackPower();
 
+		PRINT_LOG(TEXT("player take damage : %d"), damage);
+
 		player->TakeDamage(damage);
 	}
 }

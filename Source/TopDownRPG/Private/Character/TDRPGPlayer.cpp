@@ -70,7 +70,7 @@ ATDRPGPlayer::ATDRPGPlayer()
 	// 임시 히트박스
 	hitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
 	hitCollider->SetupAttachment(RootComponent);
-	hitCollider->SetRelativeLocation(FVector(0, 100.f, 100.f));
+	hitCollider->SetRelativeLocation(FVector(70.f, 0.0f, 0.0f));
 	hitCollider->SetSphereRadius(50.f);
 
 	Tags.Add(GetTag());
