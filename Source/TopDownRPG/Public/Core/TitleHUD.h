@@ -14,4 +14,16 @@ class TOPDOWNRPG_API ATitleHUD : public AHUD
 {
 	GENERATED_BODY()
 	
+protected:
+	UPROPERTY()
+	TMap<FName, class UTDRPGUserWidget*> uiMap;
+	
+	UPROPERTY()
+	FString basePath;
+
+public:
+	ATitleHUD();
+	virtual void BeginPlay() override;
+
+	void Initialize();
 };

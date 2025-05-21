@@ -46,9 +46,9 @@ public:
 	ATDRPGEnemy();
 	virtual void BeginPlay() override;
 
-	TObjectPtr<UCharacterStatus> GetStatus() const { return statusComp; }
+	inline TObjectPtr<UCharacterStatus> GetStatus() const { return statusComp; }
 	void TakeDamage(int32 Damage);
 	void Die();
 
-	const FName GetTag() { return TEXT("Enemy"); }
+	inline const FName GetTag() { return TEXT("Enemy"); }
 };

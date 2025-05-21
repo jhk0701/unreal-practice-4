@@ -55,13 +55,13 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void InvokeAttackDelegate();
-	TObjectPtr<UCharacterStatus> GetStatus() const { return statusComp; }
+	inline TObjectPtr<UCharacterStatus> GetStatus() const { return statusComp; }
 
 	void TakeDamage(int32 Damage);
 	void Die();
 
 	bool GetMouseToWorld(FHitResult& OutResult);
 
-	FName GetTag() const { return TEXT("Player"); }
+	inline FName GetTag() const { return TEXT("Player"); }
 
 };

@@ -2,6 +2,7 @@
 
 
 #include "Core/UISubsystem.h"
+#include "Core/AssetLoadSubsystem.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -17,7 +18,38 @@ void UUISubsystem::Deinitialize()
 	Super::Deinitialize();
 }
 
-void UUISubsystem::GetUI()
+template<class T>
+T* UUISubsystem::CreateUI()
 {
-	PRINT_LOG(TEXT("Call Get UI"));
+	PRINT_LOG(TEXT("Create UI"));
+
+	if (T::StaticClass())
+	{
+		FName name = T::StaticClass()->GetFName();
+		FString path = FString::Printf(basePath, *name, *name);
+
+		UAssetLoadSubsystem* assetLoad = GetGameInstance()->GetSubsystem<UAssetLoadSubsystem>();
+		T* loaded = assetLoad->Load<T>(path);
+		
+		if (!loaded)
+			return nullptr;
+
+		uiMap.Add(name, loaded);
+
+		return loaded;
+	}
+	else
+		return nullptr;
+}
+
+template<typename T>
+T* UUISubsystem::GetUI()
+{
+	PRINT_LOG(TEXT("Create UI"));
+
+	FName name = T::StaticClass()->GetFName();
+	if (uiMap.Contains(name) && !uiMap[name])
+		return uiMap[name];
+
+	return CreateUI<T>();
 }
