@@ -8,10 +8,11 @@ UEnemyMove::UEnemyMove()
 
 void UEnemyMove::MoveTo(const FVector& Direction)
 {
+	velocity = Direction;
+
 	AActor* owner = GetOwner();
 	FVector loc = owner->GetActorLocation() + Direction;
 	owner->SetActorLocation(loc);
-	
 	owner->SetActorRotation(Direction.GetSafeNormal().ToOrientationQuat());
 }
 

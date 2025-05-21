@@ -45,6 +45,7 @@ void UPlayerAttack::InvokeAttack()
 
 	player->InvokeAttackDelegate(); // 이동 기능은 꺼질 것
 	
+	// 커서 방향으로 바라보도록
 	FHitResult hitResult;
 	player->GetMouseToWorld(hitResult);
 
@@ -62,10 +63,9 @@ void UPlayerAttack::InvokeAttack()
 		resetInterval, 
 		false);
 
+	// 애니메이션 재생
 	++attackCount;
 	player->animInst->PlayAttack(attackCount);
-
-	PRINT_LOG(TEXT("attack count : %d"), attackCount);
 }
 
 void UPlayerAttack::ActivateHitCollider(bool bIsEnable)

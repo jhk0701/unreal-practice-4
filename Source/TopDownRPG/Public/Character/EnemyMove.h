@@ -16,7 +16,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
 	float Speed = 500.0f;
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement)
+	FVector velocity;
+
 public:	
 	UEnemyMove();
 	void MoveTo(const FVector& Direction);
+	FVector GetVelocity() const { return velocity; }
+
 };

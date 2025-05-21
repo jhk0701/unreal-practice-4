@@ -14,6 +14,9 @@ public:
 	TObjectPtr<class ATDRPGPlayer> target;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UCapsuleComponent> collider;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UCharacterStatus> statusComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
@@ -30,15 +33,13 @@ protected:
 	TObjectPtr<class UEnemyFSM> stateMachine;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UCapsuleComponent> collider;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<USkeletalMeshComponent> skinMesh;
 
 public:
 	ATDRPGEnemy();
 	virtual void BeginPlay() override;
 
+	TObjectPtr<UCharacterStatus> GetStatus() const { return statusComp; }
 	void TakeDamage(int32 Damage);
 	void Die();
 
