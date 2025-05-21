@@ -23,6 +23,7 @@ protected:
 public:	
 	UEnemyMove();
 	void MoveTo(const FVector& Direction);
+	void StopAtLocation();
 	FVector GetVelocity() const { return velocity; }
 
 };

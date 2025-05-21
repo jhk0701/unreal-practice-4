@@ -2,6 +2,8 @@
 
 
 #include "Character/EnemyAttack.h"
+#include "Character/TDRPGEnemy.h"
+#include "Character/EnemyAnim.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -17,6 +19,8 @@ void UEnemyAttack::BeginPlay()
 
 	bIsAttackable = true;
 	curCooldown = .0f;
+
+	enemy = Cast<ATDRPGEnemy>(GetOwner());
 }
 
 void UEnemyAttack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -41,5 +45,6 @@ void UEnemyAttack::Attack()
 	curCooldown = attackCooldown;
 
 	PRINT_LOG(TEXT("Enemy Attack!"));
+	enemy->animInst->PlayAttack(0);
 }
 

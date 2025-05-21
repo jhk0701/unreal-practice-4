@@ -4,6 +4,7 @@
 #include "Character/EnemyFSM.h"
 #include "Character/EnemyAttack.h"
 #include "Character/EnemyMove.h"
+#include "Character/EnemyAnim.h"
 #include "Core/DungeonGameState.h"
 #include <Components/CapsuleComponent.h>
 
@@ -52,6 +53,7 @@ void ATDRPGEnemy::BeginPlay()
 	Super::BeginPlay();
 
 	statusComp->OnCharacterDead.AddUObject(this, &ATDRPGEnemy::Die);
+	animInst = Cast<UEnemyAnim>(skinMesh->GetAnimInstance());
 }
 
 void ATDRPGEnemy::TakeDamage(int32 Damage)

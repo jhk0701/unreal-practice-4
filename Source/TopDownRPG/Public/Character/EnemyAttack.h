@@ -13,6 +13,9 @@ class TOPDOWNRPG_API UEnemyAttack : public UActorComponent
 	GENERATED_BODY()
 
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Owner)
+	TObjectPtr<class ATDRPGEnemy> enemy;
+
 	// TODO : 공격 - 스킬들 관리
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
 	bool bIsAttackable = true;

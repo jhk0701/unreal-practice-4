@@ -28,6 +28,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UEnemyAttack> attackComp;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UEnemyAnim> animInst;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = StateMachine)
 	TObjectPtr<class UEnemyFSM> stateMachine;

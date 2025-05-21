@@ -16,3 +16,8 @@ void UEnemyMove::MoveTo(const FVector& Direction)
 	owner->SetActorRotation(Direction.GetSafeNormal().ToOrientationQuat());
 }
 
+void UEnemyMove::StopAtLocation()
+{
+	velocity = FVector::ZeroVector;
+}
+

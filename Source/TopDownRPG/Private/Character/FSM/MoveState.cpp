@@ -33,5 +33,8 @@ void UMoveState::Update(float DeltaTime)
 		owner->moveComp->MoveTo(dir);
 	}
 	else
+	{
 		machine->Transition(EEnemyState::Attack);
+		owner->moveComp->StopAtLocation();
+	}
 }
