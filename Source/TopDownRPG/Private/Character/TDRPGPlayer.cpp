@@ -31,7 +31,7 @@ ATDRPGPlayer::ATDRPGPlayer()
 	// 임시 스탯, 어빌리티 세팅
 	// TODO : 데이터 테이블에서 받아오기
 	statusComp->InitStatus({ EStatus::Hp, EStatus::Mp }, { 100, 100 });
-	abilityComp->InitAbility({ 10,10,10 });
+	abilityComp->InitAbility({ 100,10,10 });
 
 	// Mesh 설정
 	// TODO : 각 클래스별 메시 받기
@@ -112,6 +112,7 @@ void ATDRPGPlayer::InvokeAttackDelegate()
 void ATDRPGPlayer::TakeDamage(int32 Damage)
 {
 	statusComp->SubtractStat(EStatus::Hp, Damage);
+	animInst->PlayHit();
 }
 
 void ATDRPGPlayer::Die()

@@ -37,5 +37,15 @@ public:
 	bool IsAttackable() { return bIsAttackable; }
 	float GetAttackRange() { return attackRange; }
 
+	void ActivateHitCollider(bool bIsEnable);
+
+	UFUNCTION()
+	void OnActorOverlaped(
+		UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult& SweepResult);
 
 };

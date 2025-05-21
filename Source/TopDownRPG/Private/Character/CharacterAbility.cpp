@@ -21,10 +21,10 @@ void UCharacterAbility::InitAbility(const TArray<uint32>& InitValues)
 
 uint32 UCharacterAbility::GetAttackPower()
 {
-	return uint32(100);
+	return Ability[EAbility::Str];
 }
 
 uint32 UCharacterAbility::GetDefensePower()
 {
-	return uint32(100);
+	return uint32(10);
 }

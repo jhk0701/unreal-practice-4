@@ -7,6 +7,7 @@
 #include "Character/EnemyAnim.h"
 #include "Core/DungeonGameState.h"
 #include <Components/CapsuleComponent.h>
+#include <Components/SphereComponent.h>
 
 #include "TopDownRPG/TopDownRPG.h" // 디버깅용
 
@@ -45,6 +46,12 @@ ATDRPGEnemy::ATDRPGEnemy()
 	stateMachine = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSMComp"));
 
 	Tags.Add(GetTag());
+
+	// 임시 히트박스
+	hitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
+	hitCollider->SetupAttachment(RootComponent);
+	hitCollider->SetRelativeLocation(FVector(0, 100.f, 100.f));
+	hitCollider->SetSphereRadius(50.f);
 }
 
 // Called when the game starts or when spawned
@@ -60,6 +67,7 @@ void ATDRPGEnemy::TakeDamage(int32 Damage)
 {
 	// TODO : 언리얼 데미지 시스템으로 변경
 	statusComp->SubtractStat(EStatus::Hp, Damage);
+	animInst->PlayHit();
 }
 
 void ATDRPGEnemy::Die()
