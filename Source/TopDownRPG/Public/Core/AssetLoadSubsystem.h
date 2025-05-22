@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
-#include <Templates/UnrealTypeTraits.h>
+#include <Templates/EnableIf.h>
 #include "AssetLoadSubsystem.generated.h"
 
 /**
@@ -16,7 +16,10 @@ class TOPDOWNRPG_API UAssetLoadSubsystem : public UGameInstanceSubsystem
 	GENERATED_BODY()
 	
 public:
-	// template<typename T, typename TEnableIf<TIsDerivedFrom<T, UClass>::Value>::Type>
 	template<class T>
-	T* Load(const FString& Path);
+	inline typename TEnableIf<TIsDerivedFrom<T, UObject>::Value, T*>::type
+	Load(const FString& Path) 
+	{
+		return LoadObject<T>(NULL, *Path, NULL, LOAD_None, NULL);
+	}
 };

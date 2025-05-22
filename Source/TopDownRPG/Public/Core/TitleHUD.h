@@ -15,11 +15,11 @@ class TOPDOWNRPG_API ATitleHUD : public AHUD
 	GENERATED_BODY()
 	
 protected:
-	UPROPERTY()
-	TMap<FName, class UTDRPGUserWidget*> uiMap;
-	
-	UPROPERTY()
-	FString basePath;
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<class UUserWidget> titleClass;
+
+	UPROPERTY(VisibleAnywhere, Category = "UI")
+	TObjectPtr<UUserWidget> titleInstance;
 
 public:
 	ATitleHUD();
