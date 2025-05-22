@@ -20,6 +20,6 @@ public:
 	inline typename TEnableIf<TIsDerivedFrom<T, UObject>::Value, T*>::type
 	Load(const FString& Path) 
 	{
-		return LoadObject<T>(NULL, *Path, NULL, LOAD_None, NULL);
+		return LoadObject<T>(nullptr, *Path);
 	}
 };

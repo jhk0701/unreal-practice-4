@@ -12,7 +12,7 @@ class UButton;
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType)
 class TOPDOWNRPG_API UTDRPGUWTitle : public UTDRPGUserWidget
 {
 	GENERATED_BODY()

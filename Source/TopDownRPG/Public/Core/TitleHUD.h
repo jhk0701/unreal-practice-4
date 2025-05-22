@@ -13,13 +13,6 @@ UCLASS()
 class TOPDOWNRPG_API ATitleHUD : public AHUD
 {
 	GENERATED_BODY()
-	
-protected:
-	UPROPERTY(EditAnywhere, Category = "UI")
-	TSubclassOf<class UUserWidget> titleClass;
-
-	UPROPERTY(VisibleAnywhere, Category = "UI")
-	TObjectPtr<UUserWidget> titleInstance;
 
 public:
 	ATitleHUD();
