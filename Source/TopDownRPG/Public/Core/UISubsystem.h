@@ -5,10 +5,15 @@
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "Core/AssetLoadSubsystem.h"
-#include "TopDownRPG/TopDownRPG.h"
 #include "UI/TDRPGUserWidget.h"
 #include <Templates/EnableIf.h>
+#include <Engine/AssetManager.h>
+#include <Engine/StreamableManager.h>
+#include "TopDownRPG/TopDownRPG.h"
 #include "UISubsystem.generated.h"
+
+
+DECLARE_DELEGATE_OneParam(FOnLoadCompleted, UTDRPGUserWidget*);
 
 /**
  * 
@@ -19,50 +24,41 @@ class TOPDOWNRPG_API UUISubsystem : public UGameInstanceSubsystem
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	TMap<FString, UTDRPGUserWidget*> uiMap;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI|BasePath")
 	FString basePath = TEXT("/Game/4-UI/WBP_%s.WBP_%s_C");
 
-	TMap<FName, class UTDRPGUserWidget*> uiMap;
 
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 
 	template<typename T>
-	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, T*>::type
-	CreateUI()
+	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, void>::type
+	GetUI(FOnLoadCompleted&& OnCompleted)
 	{
-		PRINT_LOG(TEXT("Create UI"));
+		UClass* type = T::StaticClass();
+		check(type);
+		FString name = type->GetFName().ToString();
+		
+		FStreamableManager& stream = UAssetManager::GetStreamableManager();
+		FSoftClassPath UIPath(FString::Format(TEXT("/Game/4-UI/WBP_{0}.WBP_{0}_C"), { name }));
 
-		UClass* widgetClass = T::StaticClass();
-		if (widgetClass)
-		{
-			FName name = widgetClass->GetFName();
-			FString path = FString::Printf(basePath, *name.ToString(), *name.ToString());
-			UAssetLoadSubsystem* assetLoad = GetGameInstance()->GetSubsystem<UAssetLoadSubsystem>();
-			T* loaded = assetLoad->Load<T>(path);
+		PRINT_LOG(TEXT("will load : %s"), *UIPath.GetAssetPathString());
 
-			if (!loaded)
-				return nullptr;
-
-			uiMap.Add(name, loaded);
-
-			return (T*)loaded;
-		}
-		else
-			return nullptr;
-	};
-
-	template<typename T>
-	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, T*>::type
-	GetUI() 
-	{
-		PRINT_LOG(TEXT("Create UI"));
-
-		FName name = T::StaticClass()->GetFName();
-		if (uiMap.Contains(name) && !uiMap[name])
-			return (T*)uiMap[name];
-
-		return CreateUI<T>();
+		stream.RequestAsyncLoad(
+			UIPath, 
+			FStreamableDelegate::CreateLambda(
+				[UIPath, OnCompleted, this]()
+				{
+					UClass* WidgetClass = Cast<UClass>(UIPath.ResolveObject());
+					if (WidgetClass)
+					{
+						UTDRPGUserWidget* widget = CreateWidget<UTDRPGUserWidget>(this->GetWorld(), WidgetClass);
+						OnCompleted.ExecuteIfBound(widget);
+					}
+				}));
 	};
 };
