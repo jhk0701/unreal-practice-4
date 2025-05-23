@@ -16,4 +16,13 @@ class TOPDOWNRPG_API ATitleGameMode : public AGameModeBase
 	
 public:
 	ATitleGameMode();
+
+	UFUNCTION()
+	void ExitGame();
+	UFUNCTION()
+	void StartGame();
+	UFUNCTION()
+	void StartNewGame();
+	UFUNCTION()
+	void ContinueGame();
 };

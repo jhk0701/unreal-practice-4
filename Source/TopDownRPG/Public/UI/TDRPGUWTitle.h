@@ -30,5 +30,5 @@ public:
 
 public:
 	virtual void NativeOnInitialized() override;
-
+	void BindButton();
 };

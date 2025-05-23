@@ -2,11 +2,25 @@
 
 
 #include "UI/TDRPGUWTitle.h"
-
-#include "TopDownRPG/TopDownRPG.h"
+#include "Core/TitleGameMode.h"
+#include <Components/Button.h>
 
 void UTDRPGUWTitle::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
-	PRINT_LOG(TEXT("init title ui"));
+
+	BindButton();
+}
+
+void UTDRPGUWTitle::BindButton()
+{
+	// Exit
+	ATitleGameMode* GameMode = Cast<ATitleGameMode>(GetWorld()->GetAuthGameMode());
+
+	if (!GameMode)
+		return;
+
+	NewGameButton->OnClicked.AddUniqueDynamic(GameMode, &ATitleGameMode::StartNewGame);
+	ContinueButton->OnClicked.AddUniqueDynamic(GameMode, &ATitleGameMode::ContinueGame);
+	ExitButton->OnClicked.AddUniqueDynamic(GameMode, &ATitleGameMode::ExitGame);
 }

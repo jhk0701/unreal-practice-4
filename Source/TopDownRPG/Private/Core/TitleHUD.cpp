@@ -20,10 +20,13 @@ void ATitleHUD::BeginPlay()
 void ATitleHUD::Initialize()
 {
 	UUISubsystem* uiSys= GetGameInstance()->GetSubsystem<UUISubsystem>();
-	
-	uiSys->GetUI<UTDRPGUWTitle>(FOnLoadCompleted::CreateLambda(
-		[](UTDRPGUserWidget* loadedWidget)
-		{
-			loadedWidget->AddToViewport();
-		}));
+	uiSys->GetUI<UTDRPGUWTitle>(FOnLoadCompleted::CreateUObject(this, &ATitleHUD::InitTitleUI));
+}
+
+void ATitleHUD::InitTitleUI(UTDRPGUserWidget* TitleUI)
+{
+	if (UTDRPGUWTitle* title = Cast<UTDRPGUWTitle>(TitleUI)) 
+	{
+		title->AddToViewport();
+	}
 }
