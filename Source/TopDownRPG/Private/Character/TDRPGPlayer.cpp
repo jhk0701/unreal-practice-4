@@ -4,6 +4,7 @@
 #include "Character/CharacterAbility.h"
 #include "Character/PlayerMove.h"
 #include "Character/PlayerAttack.h"
+#include "Character/PlayerInteraction.h"
 #include "Character/PlayerAnim.h"
 #include <EnhancedInputComponent.h>
 #include <Camera/CameraComponent.h>
@@ -29,6 +30,7 @@ ATDRPGPlayer::ATDRPGPlayer()
 	abilityComp = CreateDefaultSubobject<UCharacterAbility>(TEXT("AbilityComp"));
 	moveComp = CreateDefaultSubobject<UPlayerMove>(TEXT("MoveComp"));
 	attackComp = CreateDefaultSubobject<UPlayerAttack>(TEXT("AttackComp"));
+	interactComp = CreateDefaultSubobject<UPlayerInteraction>(TEXT("InteractComp"));
 
 	// 임시 스탯, 어빌리티 세팅
 	// TODO : 데이터 테이블에서 받아오기
@@ -79,7 +81,7 @@ ATDRPGPlayer::ATDRPGPlayer()
 
 	interactionCollider = CreateDefaultSubobject<USphereComponent>(TEXT("InteractionCollider"));
 	interactionCollider->SetSphereRadius(300);
-	interactionCollider->SetCollisionProfileName(TEXT("Interaction"));
+	interactionCollider->SetCollisionProfileName(CommonConst::Interaction_ProfileName);
 }
 
 void ATDRPGPlayer::BeginPlay()

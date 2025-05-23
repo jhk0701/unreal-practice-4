@@ -24,9 +24,7 @@ protected:
 
 public:	
 	UPlayerInputComponent();
-
 	virtual void InitializeComponent() override;
-
 	virtual void SetupInputBinding(class UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) {};
 		
 };

@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Inherit/Interactable.h"
 #include "TDRPGPlayer.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnUniqueInputDelegate);
@@ -19,14 +20,18 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr <class UCharacterAbility> abilityComp;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Animation)
-	TObjectPtr<class UPlayerAnim> animInst;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerMove> moveComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerAttack> attackComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UPlayerInteraction> interactComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Animation)
+	TObjectPtr<class UPlayerAnim> animInst;
+
 
 	FOnInputBindDelegate OnInputBindDelegate;
 	FOnUniqueInputDelegate OnAttackCalled;

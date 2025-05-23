@@ -4,6 +4,7 @@
 #include "Character/NPC/NPCMerchant.h"
 #include <Components/SphereComponent.h>
 #include <Components/CapsuleComponent.h>
+#include "CommonConst.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -16,7 +17,7 @@ ANPCMerchant::ANPCMerchant()
 	DetectArea->SetupAttachment(RootComponent);
 	DetectArea->InitSphereRadius(300);
 	DetectArea->SetGenerateOverlapEvents(true);
-	DetectArea->SetCollisionProfileName(TEXT("Interaction"));
+	DetectArea->SetCollisionProfileName(CommonConst::Interaction_ProfileName);
 }
 
 void ANPCMerchant::BeginPlay()
