@@ -22,6 +22,16 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Animation)
 	TObjectPtr<class UPlayerAnim> animInst;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UPlayerMove> moveComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UPlayerAttack> attackComp;
+
+	FOnInputBindDelegate OnInputBindDelegate;
+	FOnUniqueInputDelegate OnAttackCalled;
+
+	
 	// 임시 히트박스
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class USphereComponent> hitCollider;
@@ -33,21 +43,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UITemp")
 	TObjectPtr<UTDRPGUWStatusBar> StatusBarInst;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UPlayerMove> moveComp;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UPlayerAttack> attackComp;
-
-	FOnInputBindDelegate OnInputBindDelegate;
-	FOnUniqueInputDelegate OnAttackCalled;
-
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	TObjectPtr<class USpringArmComponent> springArm;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	TObjectPtr<class UCameraComponent> camera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Interaction)
+	TObjectPtr<USphereComponent> interactionCollider;
 
 public:
 	ATDRPGPlayer();
@@ -61,7 +65,5 @@ public:
 	void Die();
 
 	bool GetMouseToWorld(FHitResult& OutResult);
-
-	inline FName GetTag() const { return TEXT("Player"); }
 
 };

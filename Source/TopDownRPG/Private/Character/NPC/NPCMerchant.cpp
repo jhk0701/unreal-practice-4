@@ -16,7 +16,7 @@ ANPCMerchant::ANPCMerchant()
 	DetectArea->SetupAttachment(RootComponent);
 	DetectArea->InitSphereRadius(300);
 	DetectArea->SetGenerateOverlapEvents(true);
-	DetectArea->SetCollisionProfileName(TEXT("NPC"));
+	DetectArea->SetCollisionProfileName(TEXT("Interaction"));
 }
 
 void ANPCMerchant::BeginPlay()

@@ -12,6 +12,7 @@
 #include <Components/CapsuleComponent.h>
 #include <Components/SphereComponent.h>
 
+#include "CommonConst.h"
 #include "Core/DungeonGameMode.h"
 #include "Core/TDGameState.h"
 
@@ -68,13 +69,17 @@ ATDRPGPlayer::ATDRPGPlayer()
 	camera->SetRelativeRotation(FRotator(-60, 0, 0));
 	camera->bUsePawnControlRotation = false;
 
+	Tags.Add(CommonConst::PlayerTag);
+
 	// 임시 히트박스
 	hitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
 	hitCollider->SetupAttachment(RootComponent);
 	hitCollider->SetRelativeLocation(FVector(70.f, 0.0f, 0.0f));
 	hitCollider->SetSphereRadius(50.f);
 
-	Tags.Add(GetTag());
+	interactionCollider = CreateDefaultSubobject<USphereComponent>(TEXT("InteractionCollider"));
+	interactionCollider->SetSphereRadius(300);
+	interactionCollider->SetCollisionProfileName(TEXT("Interaction"));
 }
 
 void ATDRPGPlayer::BeginPlay()

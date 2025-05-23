@@ -8,6 +8,7 @@
 #include "Core/DungeonGameState.h"
 #include <Components/CapsuleComponent.h>
 #include <Components/SphereComponent.h>
+#include "CommonConst.h"
 
 #include "TopDownRPG/TopDownRPG.h" // 디버깅용
 
@@ -45,7 +46,7 @@ ATDRPGEnemy::ATDRPGEnemy()
 
 	stateMachine = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSMComp"));
 
-	Tags.Add(GetTag());
+	Tags.Add(CommonConst::EnemyTag);
 
 	// 임시 히트박스
 	hitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));

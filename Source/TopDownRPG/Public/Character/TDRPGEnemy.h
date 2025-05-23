@@ -50,5 +50,4 @@ public:
 	void TakeDamage(int32 Damage);
 	void Die();
 
-	inline const FName GetTag() { return TEXT("Enemy"); }
 };
