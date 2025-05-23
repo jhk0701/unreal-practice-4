@@ -13,5 +13,7 @@ UCLASS()
 class TOPDOWNRPG_API ALobbyGameState : public ATDGameState
 {
 	GENERATED_BODY()
+
+
 	
 };

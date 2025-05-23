@@ -12,8 +12,6 @@ ATDRPGNPCBase::ATDRPGNPCBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	interactCollider->SetupAttachment(RootComponent);
-
 	// 기본 콜라이더
 	collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
 	collider->InitCapsuleSize(30, 90);
@@ -32,4 +30,7 @@ ATDRPGNPCBase::ATDRPGNPCBase()
 		skinnedMesh->SetSkeletalMesh(tempMesh.Object);
 		skinnedMesh->SetRelativeLocationAndRotation(FVector(0,0,-90), FRotator(0, -90, 0));
 	}
+
+	interactCollider->SetupAttachment(RootComponent);
+
 }

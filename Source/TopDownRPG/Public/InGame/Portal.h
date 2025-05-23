@@ -11,7 +11,11 @@ class TOPDOWNRPG_API APortal : public AInteractBase
 {
 	GENERATED_BODY()
 
-public:	
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Comp")
+	TObjectPtr<class UCapsuleComponent> collider;
+
+public:
 	APortal();
 	virtual void BeginPlay() override;
 	virtual void Interact() override;

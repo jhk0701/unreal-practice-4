@@ -13,5 +13,8 @@ UCLASS()
 class TOPDOWNRPG_API ALobbyGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	void OpenLevel(FName LevelToGo);
+	void GoToDungeon();
 };

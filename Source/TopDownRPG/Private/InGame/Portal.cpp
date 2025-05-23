@@ -2,11 +2,18 @@
 
 
 #include "InGame/Portal.h"
-#include "TopDownRPG/TopDownRPG.h"
-
+#include <Components/BoxComponent.h>
+#include <Components/CapsuleComponent.h>
+#include "Core/LobbyGameMode.h"
 
 APortal::APortal()
 {
+	collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Root"));
+	collider->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
+	collider->SetGenerateOverlapEvents(false);
+	SetRootComponent(collider);
+
+	interactCollider->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -17,6 +24,8 @@ void APortal::BeginPlay()
 
 void APortal::Interact()
 {
-	PRINT_LOG(TEXT("Portal Test"));
+	// PRINT_LOG(TEXT("Portal Test"));
+	ALobbyGameMode* lobbyMode = Cast<ALobbyGameMode>(GetWorld()->GetAuthGameMode());
+	lobbyMode->GoToDungeon();
 }
 
