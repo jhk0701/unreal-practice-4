@@ -2,10 +2,17 @@
 
 
 #include "Character/PlayerInteraction.h"
+#include "Character/TDRPGPlayer.h"
 #include "Core/TDRPGPlayerController.h"
+#include "CommonConst.h"
 #include <EnhancedInputComponent.h>
+#include <Components/SphereComponent.h>
 
 #include "TopDownRPG/TopDownRPG.h"
+
+UPlayerInteraction::UPlayerInteraction()
+{
+}
 
 void UPlayerInteraction::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)
 {
@@ -16,5 +23,20 @@ void UPlayerInteraction::SetupInputBinding(UEnhancedInputComponent* PlayerInputC
 
 void UPlayerInteraction::InvokeInteract(const FInputActionValue& Value)
 {
-	PRINT_LOG(TEXT("Interact"));
+	TArray<AActor*> Overlapped;
+	player->interactCollider->GetOverlappingActors(Overlapped, AActor::StaticClass());
+
+	// 없으면 실행 중지
+	if (Overlapped.Num() < 1)
+		return;
+	
+	for (auto iter = Overlapped.CreateConstIterator(); iter; ++iter)
+	{
+		if ((*iter)->Implements<UInteractable>()) 
+		{
+			IInteractable* interactable = Cast<IInteractable>(*iter);
+			interactable->Interact();
+			return;
+		}
+	}
 }

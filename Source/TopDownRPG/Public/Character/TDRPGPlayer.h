@@ -32,10 +32,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Animation)
 	TObjectPtr<class UPlayerAnim> animInst;
 
-
 	FOnInputBindDelegate OnInputBindDelegate;
 	FOnUniqueInputDelegate OnAttackCalled;
-
 	
 	// 임시 히트박스
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
@@ -48,15 +46,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UITemp")
 	TObjectPtr<UTDRPGUWStatusBar> StatusBarInst;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Interaction)
+	TObjectPtr<class USphereComponent> interactCollider;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	TObjectPtr<class USpringArmComponent> springArm;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	TObjectPtr<class UCameraComponent> camera;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Interaction)
-	TObjectPtr<USphereComponent> interactionCollider;
 
 public:
 	ATDRPGPlayer();

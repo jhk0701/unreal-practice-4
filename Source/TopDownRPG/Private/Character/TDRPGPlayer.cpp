@@ -75,13 +75,14 @@ ATDRPGPlayer::ATDRPGPlayer()
 
 	// 임시 히트박스
 	hitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
-	hitCollider->SetupAttachment(RootComponent);
 	hitCollider->SetRelativeLocation(FVector(70.f, 0.0f, 0.0f));
 	hitCollider->SetSphereRadius(50.f);
+	hitCollider->SetupAttachment(RootComponent);
 
-	interactionCollider = CreateDefaultSubobject<USphereComponent>(TEXT("InteractionCollider"));
-	interactionCollider->SetSphereRadius(300);
-	interactionCollider->SetCollisionProfileName(CommonConst::Interaction_ProfileName);
+	interactCollider = CreateDefaultSubobject<USphereComponent>(TEXT("InteractionCollider"));
+	interactCollider->SetSphereRadius(300);
+	interactCollider->SetCollisionProfileName(CommonConst::Interaction_ProfileName);
+	interactCollider->SetupAttachment(RootComponent);
 }
 
 void ATDRPGPlayer::BeginPlay()

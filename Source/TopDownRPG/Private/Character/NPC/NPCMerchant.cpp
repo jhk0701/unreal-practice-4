@@ -30,6 +30,7 @@ void ANPCMerchant::BeginPlay()
 
 void ANPCMerchant::Interact()
 {
+	PRINT_LOG(TEXT("NPC Merchant Interact"));
 }
 
 void ANPCMerchant::OnBeginOverlapped(

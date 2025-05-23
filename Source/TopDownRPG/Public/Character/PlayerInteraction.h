@@ -14,8 +14,10 @@ class TOPDOWNRPG_API UPlayerInteraction : public UPlayerInputComponent
 {
 	GENERATED_BODY()
 	
-public:
-	virtual void SetupInputBinding(class UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
+protected:
 
+public:
+	UPlayerInteraction();
+	virtual void SetupInputBinding(class UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
 	void InvokeInteract(const FInputActionValue& Value);
 };
