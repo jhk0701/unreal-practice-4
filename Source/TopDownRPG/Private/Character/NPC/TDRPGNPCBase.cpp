@@ -2,6 +2,7 @@
 
 
 #include "Character/NPC/TDRPGNPCBase.h"
+#include <Components/BoxComponent.h>
 #include <Components/CapsuleComponent.h>
 
 #include "TopDownRPG/TopDownRPG.h"
@@ -9,11 +10,16 @@
 // Sets default values
 ATDRPGNPCBase::ATDRPGNPCBase()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
+
+	interactCollider->SetupAttachment(RootComponent);
 
 	// 기본 콜라이더
 	collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
 	collider->InitCapsuleSize(30, 90);
+	collider->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
+	collider->SetGenerateOverlapEvents(false);
+
 	SetRootComponent(collider);
 
 	// 기본 메시

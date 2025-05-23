@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "InGame/InteractBase.h"
 #include "TDRPGNPCBase.generated.h"
 
 UCLASS()
-class TOPDOWNRPG_API ATDRPGNPCBase : public AActor
+class TOPDOWNRPG_API ATDRPGNPCBase : public AInteractBase
 {
 	GENERATED_BODY()
 	
@@ -17,7 +17,6 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Comp")
 	TObjectPtr<USkeletalMeshComponent> skinnedMesh;
-
 
 public:	
 	ATDRPGNPCBase();

@@ -8,7 +8,6 @@
 #include <EnhancedInputComponent.h>
 #include <Components/SphereComponent.h>
 
-#include "TopDownRPG/TopDownRPG.h"
 
 UPlayerInteraction::UPlayerInteraction()
 {
@@ -32,6 +31,7 @@ void UPlayerInteraction::InvokeInteract(const FInputActionValue& Value)
 	
 	for (auto iter = Overlapped.CreateConstIterator(); iter; ++iter)
 	{
+		// 첫번째 객체만 실행
 		if ((*iter)->Implements<UInteractable>()) 
 		{
 			IInteractable* interactable = Cast<IInteractable>(*iter);
