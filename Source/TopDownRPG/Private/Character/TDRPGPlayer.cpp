@@ -13,7 +13,8 @@
 #include <Components/SphereComponent.h>
 
 #include "Core/DungeonGameMode.h"
-#include "Core/DungeonGameState.h"
+#include "Core/TDGameState.h"
+
 #include "TopDownRPG/TopDownRPG.h"
 #include "UI/TDRPGUWStatusBar.h"
 
@@ -80,7 +81,7 @@ void ATDRPGPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ADungeonGameState* state = Cast<ADungeonGameState>(GetWorld()->GetGameState());
+	ATDGameState* state = Cast<ATDGameState>(GetWorld()->GetGameState());
 	state->player = this;
 
 	statusComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);

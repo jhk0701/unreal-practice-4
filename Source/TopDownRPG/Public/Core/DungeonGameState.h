@@ -3,21 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameStateBase.h"
+#include "Core/TDGameState.h"
 #include "DungeonGameState.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API ADungeonGameState : public AGameStateBase
+class TOPDOWNRPG_API ADungeonGameState : public ATDGameState
 {
 	GENERATED_BODY()
 
-public:
-	// 플레이어 접근용
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Player)
-	TWeakObjectPtr<class ATDRPGPlayer> player;
 	
 protected:
 	// 적 캐릭터 관리용
