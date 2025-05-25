@@ -1,0 +1,5 @@
+,CharName,Str,Dex,Int,Hp,Mp,SkillId
+1001,SwordMan,10,5,5,100,50,
+1002,Ranger,5,10,5,100,50,
+1003,Mage,5,5,10,70,80,
+2001,TestEnemy,7,5,3,50,0,
