@@ -1,5 +1,4 @@
 #include "Character/TDRPGPlayer.h"
-#include "Core/TDRPGPlayerController.h"
 #include "Character/CharacterStatus.h"
 #include "Character/CharacterAbility.h"
 #include "Character/PlayerMove.h"
@@ -14,8 +13,10 @@
 #include <Components/SphereComponent.h>
 
 #include "CommonConst.h"
-#include "Core/DungeonGameMode.h"
+#include "Core/TDRPGPlayerController.h"
 #include "Core/TDGameState.h"
+#include "Core/DungeonGameMode.h"
+#include "Core/GameDatabaseSystem.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 #include "UI/TDRPGUWStatusBar.h"
@@ -103,6 +104,16 @@ void ATDRPGPlayer::BeginPlay()
 	}
 
 	animInst = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
+
+	UGameDatabaseSystem* database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
+	if (database)
+	{
+		auto rowNames = database->GameDatabase[ETableType::Character]->GetRowNames();
+		for (int32 i = 0; i < rowNames.Num(); i++)
+		{
+			PRINT_LOG(TEXT("[%d] : %s"), i, *rowNames[i].ToString());
+		}
+	}
 }
 
 // Called to bind functionality to input

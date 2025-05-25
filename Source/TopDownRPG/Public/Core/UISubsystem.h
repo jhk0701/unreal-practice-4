@@ -27,12 +27,23 @@ protected:
 	TMap<FString, UTDRPGUserWidget*> UIMap;
 
 public:
+
+	// 템플릿으로 사용
+	// 상속해서 만든 UserWidget에서 파생한 UI만 호출할 수 있도록 사용
+	/*
+		TEnableIf<condition, ret>::type
+			* 조건에 맞으면 ret 반환형 사용
+			* 그렇지 않으면 생성 취소
+		 
+		TIsDerivedFrom<baseType, parentType>::Value
+			* baseType이 parentType의 부모 클래스가 맞다면 true
+	*/
 	template<typename T>
 	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, void>::type
 	CreateUI(FOnLoadCompleted& OnCompleted)
 	{
 		UClass* type = T::StaticClass();
-		check(type);
+		check(type);	// 방어용으로 type이 nullptr이 아닌지 확인
 		FString name = type->GetFName().ToString();
 
 		FStreamableManager& stream = UAssetManager::GetStreamableManager();
@@ -68,7 +79,8 @@ public:
 			OnCompleted.ExecuteIfBound(UIMap[name]);
 			return;
 		}
-		else if(UIMap.Contains(name))
+		
+		if (UIMap.Contains(name))
 			UIMap.Remove(name);
 
 		CreateUI<T>(OnCompleted);
