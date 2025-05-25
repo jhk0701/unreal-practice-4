@@ -28,7 +28,7 @@ protected:
 
 public:
 
-	// 템플릿으로 사용
+	// 템플릿으로 작성
 	// 상속해서 만든 UserWidget에서 파생한 UI만 호출할 수 있도록 사용
 	/*
 		TEnableIf<condition, ret>::type
@@ -36,7 +36,7 @@ public:
 			* 그렇지 않으면 생성 취소
 		 
 		TIsDerivedFrom<baseType, parentType>::Value
-			* baseType이 parentType의 부모 클래스가 맞다면 true
+			* baseType이 parentType의 자식클래스라면 true
 	*/
 	template<typename T>
 	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, void>::type
