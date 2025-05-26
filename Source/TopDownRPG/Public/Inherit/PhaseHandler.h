@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "EnemyState.generated.h"
+#include "PhaseHandler.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
-class UEnemyState : public UInterface
+class UPhaseHandler : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -16,13 +16,11 @@ class UEnemyState : public UInterface
 /**
  * 
  */
-class TOPDOWNRPG_API IEnemyState
+class TOPDOWNRPG_API IPhaseHandler
 {
 	GENERATED_BODY()
 
 public:
 	virtual void Enter() = 0;
-	virtual void Update(float DeltaTime) = 0;
 	virtual void Exit() = 0;
-
 };

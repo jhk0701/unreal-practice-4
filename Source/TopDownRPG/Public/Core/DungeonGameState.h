@@ -37,7 +37,7 @@ public:
 	virtual void BeginPlay() override;
 
 	void SpawnEnemy();
-	int32 GetEnemyCount() { return enemyCount; }
+	inline int32 GetEnemyCount() const { return enemyCount; }
 	void OnEnemyDead();
 
 };

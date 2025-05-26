@@ -2,7 +2,7 @@
 
 
 #include "Core/LobbyGameMode.h"
-#include "Kismet/GameplayStatics.h"
+#include <Kismet/GameplayStatics.h>
 
 void ALobbyGameMode::OpenLevel(FName LevelToGo)
 {
