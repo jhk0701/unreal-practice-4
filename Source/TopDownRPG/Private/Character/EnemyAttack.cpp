@@ -20,7 +20,7 @@ void UEnemyAttack::BeginPlay()
 {
 	Super::BeginPlay();
 
-	bIsAttackable = true;
+	bIsAttacking = false;
 	curCooldown = .0f;
 
 	enemy = Cast<ATDRPGEnemy>(GetOwner());
@@ -32,21 +32,21 @@ void UEnemyAttack::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (!bIsAttackable)
+	if (bIsAttacking)
 	{
 		curCooldown -= DeltaTime;
 		
 		if (curCooldown <= .0f)
-			bIsAttackable = true;
+			bIsAttacking = false;
 	}
 }
 
 void UEnemyAttack::Attack()
 {
-	if (!bIsAttackable)
+	if (bIsAttacking)
 		return;
 
-	bIsAttackable = false;
+	bIsAttacking = true;
 	curCooldown = attackCooldown;
 
 	PRINT_LOG(TEXT("Enemy Attack!"));

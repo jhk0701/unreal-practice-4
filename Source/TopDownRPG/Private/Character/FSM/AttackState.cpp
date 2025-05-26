@@ -10,8 +10,6 @@
 void UAttackState::Enter()
 {
 	Super::Enter();
-
-
 }
 
 void UAttackState::Update(float DeltaTime)
@@ -25,18 +23,15 @@ void UAttackState::Update(float DeltaTime)
 	// TODO : 사망했는지 확인
 	ATDRPGPlayer* target = owner->target;
 
-	// 공격 가능한지 확인
-	if (attack->IsAttackable())
-		attack->Attack();
-	else
+	// 공격 가능한지 확인 : 거리 확인
+	FVector targetLoc = target->GetActorLocation();
+	FVector dir = targetLoc - owner->GetActorLocation();
+	float range = attack->GetAttackRange();
+	
+	if (dir.SquaredLength() > range * range && !attack->IsAttacking())
 	{
-		// 거리 확인
-		FVector targetLoc = target->GetActorLocation();
-		FVector dir = targetLoc - owner->GetActorLocation();
-		float range = attack->GetAttackRange();
-
-		// 거리가 멀면 쫓기
-		if (dir.SquaredLength() > range * range)
-			machine->Transition(EEnemyState::Move);
+		machine->Transition(EEnemyState::Move); // 거리가 멀면 쫓기
 	}
+	else
+		attack->Attack(); // 거리 내라면 공격
 }

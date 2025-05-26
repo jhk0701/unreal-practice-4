@@ -5,8 +5,6 @@
 #include "Character/FSM/AttackState.h"
 #include "Character/FSM/DeadState.h"
 
-#include "TopDownRPG/TopDownRPG.h"
-
 UEnemyFSM::UEnemyFSM()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -31,7 +29,6 @@ void UEnemyFSM::InitializeComponent()
 void UEnemyFSM::BeginPlay()
 {
 	Super::BeginPlay();
-
 
 	Transition(EEnemyState::Idle);
 }

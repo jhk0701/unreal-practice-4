@@ -18,12 +18,12 @@ protected:
 
 	// TODO : 공격 - 스킬들 관리
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
-	bool bIsAttackable = true;
+	bool bIsAttacking = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
 	float curCooldown = 0.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack|Setting")
-	float attackCooldown = 5.f;
+	float attackCooldown = 1.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack|Setting")
 	float attackRange = 100.0f;
@@ -34,8 +34,8 @@ public:
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void Attack();
-	bool IsAttackable() { return bIsAttackable; }
-	float GetAttackRange() { return attackRange; }
+	inline bool IsAttacking() const { return bIsAttacking; }
+	inline float GetAttackRange() const { return attackRange; }
 
 	void ActivateHitCollider(bool bIsEnable);
 
