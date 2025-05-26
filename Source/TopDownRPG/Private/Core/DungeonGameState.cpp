@@ -11,14 +11,6 @@
 
 ADungeonGameState::ADungeonGameState()
 {
-	// 페이즈 세팅
-	phaseMap.Add(EPhaseType::Start,	NewObject<UStartPhase>());
-	phaseMap.Add(EPhaseType::Wave,	NewObject<UWavePhase>());
-	phaseMap.Add(EPhaseType::End,	NewObject<UEndPhase>());
-	
-	for (auto iter = phaseMap.CreateConstIterator(); iter; ++iter) 
-		iter->Value->InitPhase(this);
-
 	// TODO : 데이터 기반 생성으로 변경
 	ConstructorHelpers::FClassFinder<ATDRPGEnemy> tempEnemy(TEXT("Blueprint'/Game/2-Blueprints/Enemy/BP_TDRPGEnemy.BP_TDRPGEnemy_C'"));
 	if (tempEnemy.Succeeded())
@@ -29,6 +21,14 @@ void ADungeonGameState::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// 페이즈 세팅
+	phaseMap.Add(EPhaseType::Start, NewObject<UStartPhase>());
+	phaseMap.Add(EPhaseType::Wave, NewObject<UWavePhase>());
+	phaseMap.Add(EPhaseType::End, NewObject<UEndPhase>());
+
+	for (auto iter = phaseMap.CreateConstIterator(); iter; ++iter)
+		iter->Value->InitPhase(this);
+
 	Transition(EPhaseType::Start);
 }
 
@@ -38,7 +38,7 @@ void ADungeonGameState::Transition(EPhaseType Phase)
 		curPhase->Exit();
 
 	curPhase = phaseMap[Phase];
-
+	
 	curPhase->Enter();
 }
 
