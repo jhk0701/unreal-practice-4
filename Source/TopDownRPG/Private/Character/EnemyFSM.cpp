@@ -22,7 +22,7 @@ void UEnemyFSM::InitializeComponent()
 	stateMap.Add(EEnemyState::Attack, NewObject<UAttackState>());
 	stateMap.Add(EEnemyState::Dead, NewObject<UDeadState>());
 
-	for (auto iter = stateMap.CreateIterator(); iter; ++iter)
+	for (auto iter = stateMap.CreateConstIterator(); iter; ++iter)
 		iter->Value->Initialize(this);
 }
 

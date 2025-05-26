@@ -31,6 +31,7 @@ public:
 	// 배열을 새로운 구조체로 랩핑하는 것으로 우회
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<FInnerIntArray> EnemyListPerWave;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<FInnerIntArray> EnemySpawnPerWave;
 };

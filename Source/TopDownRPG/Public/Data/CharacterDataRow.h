@@ -31,5 +31,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<int32> SkillId;
-
 };

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Character/FSM/EnemyState.h"
 #include "EnemyFSM.generated.h"
 
 UENUM(BlueprintType)

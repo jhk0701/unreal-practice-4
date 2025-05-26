@@ -6,6 +6,17 @@
 #include "Core/TDGameState.h"
 #include "DungeonGameState.generated.h"
 
+class UBasePhase;
+
+UENUM(BlueprintType)
+enum class EPhaseType : uint8
+{
+	Start,
+	Wave,
+	End,
+
+};
+
 /**
  * 
  */
@@ -15,7 +26,10 @@ class TOPDOWNRPG_API ADungeonGameState : public ATDGameState
 	GENERATED_BODY()
 
 	
-protected:
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Wave)
+	int32 CurWave = 0;
+
 	// 적 캐릭터 관리용
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Enemy)
 	int32 enemyCount = 0;
@@ -32,9 +46,17 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySpawn|Setting")
 	float spawningRadius = 500.f;
 
+protected:
+	UPROPERTY()
+	TObjectPtr<UBasePhase> curPhase;
+	UPROPERTY()
+	TMap<EPhaseType, UBasePhase*> phaseMap;
+
 public:
 	ADungeonGameState();
 	virtual void BeginPlay() override;
+
+	void Transition(EPhaseType InPhase);
 
 	void SpawnEnemy();
 	inline int32 GetEnemyCount() const { return enemyCount; }
