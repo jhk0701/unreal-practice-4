@@ -28,7 +28,7 @@ class TOPDOWNRPG_API ADungeonGameState : public ATDGameState
 	
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Wave)
-	int32 CurWave = 0;
+	int32 CurWaveIdx = 0;
 
 	// 적 캐릭터 관리용
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Enemy)

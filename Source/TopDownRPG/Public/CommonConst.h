@@ -17,5 +17,8 @@ public:
 
     static const FString PATH_FORMAT_UI;
     static const FString PATH_FORMAT_DATA_TABLE;
+
+    static const FName SCENE_LOBBY;
+    static const FName SCENE_GAME;
 };
 

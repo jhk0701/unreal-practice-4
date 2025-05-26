@@ -13,3 +13,10 @@ void UWavePhase::Enter()
 		gameState->SpawnEnemy();
 	
 }
+
+void UWavePhase::Exit()
+{
+	ADungeonGameState* gameState = Cast<ADungeonGameState>(state);
+
+	++gameState->CurWaveIdx;
+}

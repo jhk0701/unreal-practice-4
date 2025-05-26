@@ -2,6 +2,7 @@
 
 
 #include "Core/LobbyGameMode.h"
+#include "CommonConst.h"
 #include <Kismet/GameplayStatics.h>
 
 void ALobbyGameMode::OpenLevel(FName LevelToGo)
@@ -11,5 +12,5 @@ void ALobbyGameMode::OpenLevel(FName LevelToGo)
 
 void ALobbyGameMode::GoToDungeon()
 {
-	OpenLevel(FName("2-Game"));
+	OpenLevel(CommonConst::SCENE_GAME);
 }

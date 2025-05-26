@@ -14,12 +14,12 @@ class TOPDOWNRPG_API UCharacterConfig : public UDataAsset
 {
 	GENERATED_BODY()
 
+	// /Script/TopDownRPG.CharacterConfig'/Game/6-DataAsset/{name}.{name}'
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<USkeletalMesh> SkinnedMesh;	// 메쉬
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<class UCharacterAnimBase> AnimBlueprint; // 애니메이션 블루프린트
-	
-	// /Script/TopDownRPG.CharacterConfig'/Game/6-DataAsset/Test.Test'
 };

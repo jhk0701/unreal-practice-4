@@ -73,8 +73,6 @@ void ADungeonGameState::OnEnemyDead()
 	if (enemyCount == 0)
 	{
 		PRINT_LOG(TEXT("Game State Ended"));
-		// 스테이지 종료 UI
-		// 스테이지 보상
-
+		Transition(EPhaseType::End);
 	}
 }

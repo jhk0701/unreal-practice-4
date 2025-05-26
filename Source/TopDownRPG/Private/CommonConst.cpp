@@ -10,3 +10,7 @@ const FName CommonConst::EnemyTag = FName(TEXT("Enemy"));
 // 포맷 형태
 const FString CommonConst::PATH_FORMAT_UI = FString(TEXT("/Game/4-UI/WBP_{0}.WBP_{0}_C"));
 const FString CommonConst::PATH_FORMAT_DATA_TABLE = FString(TEXT("/Game/5-DataTable/{0}.{0}"));
+
+
+const FName CommonConst::SCENE_LOBBY = FName(TEXT("1-Lobby"));
+const FName CommonConst::SCENE_GAME = FName(TEXT("2-Game"));

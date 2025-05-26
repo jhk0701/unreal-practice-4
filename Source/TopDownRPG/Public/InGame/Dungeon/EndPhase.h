@@ -13,5 +13,8 @@ UCLASS()
 class TOPDOWNRPG_API UEndPhase : public UBasePhase
 {
 	GENERATED_BODY()
+
+public:
+	virtual void Enter() override;
 	
 };

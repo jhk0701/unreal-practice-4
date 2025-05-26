@@ -16,5 +16,7 @@ class TOPDOWNRPG_API ADungeonGameMode : public AGameModeBase
 
 public:
 	ADungeonGameMode();
+	void OpenLevel(FName LevelToGo);
+	void GoToLobby();
 	
 };
