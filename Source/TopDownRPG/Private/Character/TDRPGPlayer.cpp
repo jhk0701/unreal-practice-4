@@ -1,6 +1,5 @@
 #include "Character/TDRPGPlayer.h"
-#include "Character/CharacterStatus.h"
-#include "Character/CharacterAbility.h"
+#include "Character/CharacterData.h"
 #include "Character/PlayerMove.h"
 #include "Character/PlayerAttack.h"
 #include "Character/PlayerInteraction.h"
@@ -18,6 +17,8 @@
 #include "Core/DungeonGameMode.h"
 #include "Core/GameDatabaseSystem.h"
 
+#include "Data/CharacterDataRow.h"
+
 #include "TopDownRPG/TopDownRPG.h"
 #include "UI/TDRPGUWStatusBar.h"
 
@@ -27,16 +28,10 @@ ATDRPGPlayer::ATDRPGPlayer()
 	PrimaryActorTick.bCanEverTick = false;
 	
 	// 서브 컴포넌트 설정
-	statusComp = CreateDefaultSubobject<UCharacterStatus>(TEXT("StatusComp"));
-	abilityComp = CreateDefaultSubobject<UCharacterAbility>(TEXT("AbilityComp"));
+	dataComp = CreateDefaultSubobject<UCharacterData>(TEXT("DataComp"));
 	moveComp = CreateDefaultSubobject<UPlayerMove>(TEXT("MoveComp"));
 	attackComp = CreateDefaultSubobject<UPlayerAttack>(TEXT("AttackComp"));
 	interactComp = CreateDefaultSubobject<UPlayerInteraction>(TEXT("InteractComp"));
-
-	// 임시 스탯, 어빌리티 세팅
-	// TODO : 데이터 테이블에서 받아오기
-	statusComp->InitStatus({ EStatus::Hp, EStatus::Mp }, { 100, 100 });
-	abilityComp->InitAbility({ 100,10,10 });
 
 	// Mesh 설정
 	// TODO : 각 클래스별 메시 받기
@@ -93,8 +88,9 @@ void ATDRPGPlayer::BeginPlay()
 	ATDGameState* state = Cast<ATDGameState>(GetWorld()->GetGameState());
 	state->player = this;
 
-	statusComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
+	// TODO : 데이터 테이블 받아오기
 
+	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
 	// TODO : 임시 UI 하드코딩 제거
 	if (StatusBarFactory)
 	{
@@ -131,7 +127,7 @@ void ATDRPGPlayer::InvokeAttackDelegate()
 
 void ATDRPGPlayer::TakeDamage(int32 Damage)
 {
-	statusComp->SubtractStat(EStatus::Hp, Damage);
+	dataComp->SubtractStat(EStatus::Hp, Damage);
 	animInst->PlayHit();
 }
 

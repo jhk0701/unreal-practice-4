@@ -4,14 +4,14 @@
 #include "Character/PlayerAnim.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/PlayerAttack.h"
-#include "Character/CharacterStatus.h"
+#include "Character/CharacterData.h"
 
 
 void UPlayerAnim::SetIsDead(const APawn* Pawn)
 {
 	if (const ATDRPGPlayer* player = Cast<ATDRPGPlayer>(Pawn))
 	{
-		bIsDead = player->GetStatus()->bIsDead;
+		bIsDead = player->GetData()->bIsDead;
 	}
 }
 

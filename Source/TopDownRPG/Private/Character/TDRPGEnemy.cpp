@@ -1,6 +1,5 @@
 #include "Character/TDRPGEnemy.h"
-#include "Character/CharacterStatus.h"
-#include "Character/CharacterAbility.h"
+#include "Character/CharacterData.h"
 #include "Character/EnemyFSM.h"
 #include "Character/EnemyAttack.h"
 #include "Character/EnemyMove.h"
@@ -18,15 +17,12 @@ ATDRPGEnemy::ATDRPGEnemy()
 	PrimaryActorTick.bCanEverTick = false;
 
 	// 서브 컴포넌트 설정
-	statusComp = CreateDefaultSubobject<UCharacterStatus>(TEXT("StatusComp"));
-	abilityComp = CreateDefaultSubobject<UCharacterAbility>(TEXT("AbilityComp"));
+	dataComp = CreateDefaultSubobject<UCharacterData>(TEXT("DataComp"));
 	attackComp = CreateDefaultSubobject<UEnemyAttack>(TEXT("AttackComp"));
 	moveComp = CreateDefaultSubobject<UEnemyMove>(TEXT("MoveComp"));
 
-	// 임시 스탯, 어빌리티 세팅
 	// TODO : 데이터 테이블에서 받아오기
-	statusComp->InitStatus({ EStatus::Hp, EStatus::Mp }, { 100, 100 });
-	abilityComp->InitAbility({ 10,10,10 });
+	// dataComp
 
 	// 적 컴포넌트 구성
 	collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
@@ -60,14 +56,14 @@ void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	statusComp->OnCharacterDead.AddUObject(this, &ATDRPGEnemy::Die);
+	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGEnemy::Die);
 	animInst = Cast<UEnemyAnim>(skinMesh->GetAnimInstance());
 }
 
 void ATDRPGEnemy::TakeDamage(int32 Damage)
 {
 	// TODO : 언리얼 데미지 시스템으로 변경
-	statusComp->SubtractStat(EStatus::Hp, Damage);
+	dataComp->SubtractStat(EStatus::Hp, Damage);
 	animInst->PlayHit();
 }
 

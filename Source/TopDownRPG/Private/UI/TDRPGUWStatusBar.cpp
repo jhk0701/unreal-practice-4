@@ -3,23 +3,23 @@
 
 #include "UI/TDRPGUWStatusBar.h"
 #include "Character/TDRPGPlayer.h"
-#include "Character/CharacterStatus.h"
+#include "Character/CharacterData.h"
 #include <Components/TextBlock.h>
 #include <Components/ProgressBar.h>
 
 
-void UTDRPGUWStatusBar::InitStatusBar(TWeakObjectPtr<ATDRPGPlayer> NewPlayer)
+void UTDRPGUWStatusBar::InitStatusBar(ATDRPGPlayer* NewPlayer)
 {
 	player = NewPlayer;
 	PlayerNameLabel->SetText(FText::FromString(player->GetActorNameOrLabel()));
 
-	UCharacterStatus* status = player->statusComp;
+	UCharacterData* data = player->dataComp;
 	
-	status->Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UTDRPGUWStatusBar::OnHpChanged);
-	status->Stat[EStatus::Mp]->OnValueChanged.AddUObject(this, &UTDRPGUWStatusBar::OnMpChanged);
+	data->Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UTDRPGUWStatusBar::OnHpChanged);
+	data->Stat[EStatus::Mp]->OnValueChanged.AddUObject(this, &UTDRPGUWStatusBar::OnMpChanged);
 
-	OnHpChanged(status->Stat[EStatus::Hp]->GetMaxValue(), status->Stat[EStatus::Hp]->GetCurrentValue());
-	OnMpChanged(status->Stat[EStatus::Mp]->GetMaxValue(), status->Stat[EStatus::Mp]->GetCurrentValue());
+	OnHpChanged(data->Stat[EStatus::Hp]->GetMaxValue(), data->Stat[EStatus::Hp]->GetCurrentValue());
+	OnMpChanged(data->Stat[EStatus::Mp]->GetMaxValue(), data->Stat[EStatus::Mp]->GetCurrentValue());
 }
 
 void UTDRPGUWStatusBar::OnHpChanged(uint32 Max, uint32 Current)

@@ -4,7 +4,7 @@
 #include "Character/EnemyAttack.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/TDRPGEnemy.h"
-#include "Character/CharacterAbility.h"
+#include "Character/CharacterData.h"
 #include "Character/EnemyAnim.h"
 #include <Components/SphereComponent.h>
 
@@ -70,7 +70,7 @@ void UEnemyAttack::OnActorOverlaped(
 	if(OtherActor && OtherActor->IsA<ATDRPGPlayer>())
 	{
 		ATDRPGPlayer* player = Cast<ATDRPGPlayer>(OtherActor);
-		int32 damage = enemy->abilityComp->GetAttackPower();
+		int32 damage = enemy->dataComp->GetAttackPower();
 
 		PRINT_LOG(TEXT("player take damage : %d"), damage);
 

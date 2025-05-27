@@ -5,7 +5,7 @@
 #include "Character/TDRPGEnemy.h"
 #include "Character/EnemyAttack.h"
 #include "Character/EnemyMove.h"
-#include "Character/CharacterStatus.h"
+#include "Character/CharacterData.h"
 
 void UEnemyAnim::SetAccel(const APawn* Pawn)
 {
@@ -20,7 +20,7 @@ void UEnemyAnim::SetIsDead(const APawn* Pawn)
 {
 	if(const ATDRPGEnemy* enemy = Cast<ATDRPGEnemy>(Pawn))
 	{
-		bIsDead = enemy->GetStatus()->bIsDead;
+		bIsDead = enemy->GetData()->bIsDead;
 	}
 }
 

@@ -14,11 +14,9 @@ class TOPDOWNRPG_API ATDRPGPlayer : public ACharacter
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UCharacterStatus> statusComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr <class UCharacterAbility> abilityComp;
+	TObjectPtr<class UCharacterData> dataComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerMove> moveComp;
@@ -62,7 +60,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void InvokeAttackDelegate();
-	inline TObjectPtr<UCharacterStatus> GetStatus() const { return statusComp; }
+	inline TObjectPtr<UCharacterData> GetData() const { return dataComp; }
 
 	void TakeDamage(int32 Damage);
 	void Die();

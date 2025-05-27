@@ -6,6 +6,8 @@
 #include <Kismet/GameplayStatics.h>
 #include <Kismet/KismetSystemLibrary.h>
 
+#include "CommonConst.h"
+
 ATitleGameMode::ATitleGameMode()
 {
 	HUDClass = ATitleHUD::StaticClass();
@@ -25,7 +27,7 @@ void ATitleGameMode::ExitGame()
 void ATitleGameMode::StartGame()
 {
 	// TODO : 레벨 매니저 추가
-	UGameplayStatics::OpenLevel(this, "1-Lobby");
+	UGameplayStatics::OpenLevel(this, CommonConst::SCENE_LOBBY);
 }
 
 void ATitleGameMode::StartNewGame()

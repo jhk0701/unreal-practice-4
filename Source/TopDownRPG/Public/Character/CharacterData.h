@@ -37,16 +37,16 @@ class TOPDOWNRPG_API UCharacterData : public UActorComponent
 	GENERATED_BODY()
 
 public:	
+	UPROPERTY(EditAnywhere, Category = "ID")
+	uint32 CharID;
+
 	// 레벨
 	UPROPERTY()
 	uint32 Lv;
 
 	// 경험치
-	UPROPERTY()
 	TUniquePtr<Status> Exp;
-
 	// 체력, 마나
-	UPROPERTY()
 	TMap<EStatus, TUniquePtr<Status>> Stat;
 
 	// 힘, 민첩, 지능
@@ -72,6 +72,4 @@ public:
 
 	uint32 GetAttackPower();
 	uint32 GetDefensePower();
-};
-
 };

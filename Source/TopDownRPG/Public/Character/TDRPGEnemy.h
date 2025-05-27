@@ -14,13 +14,10 @@ public:
 	TObjectPtr<class ATDRPGPlayer> target;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UCharacterData> dataComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UCapsuleComponent> collider;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UCharacterStatus> statusComp;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UCharacterAbility> abilityComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UEnemyMove> moveComp;
@@ -46,7 +43,7 @@ public:
 	ATDRPGEnemy();
 	virtual void BeginPlay() override;
 
-	inline TObjectPtr<UCharacterStatus> GetStatus() const { return statusComp; }
+	inline TObjectPtr<UCharacterData> GetData() const { return dataComp; }
 	void TakeDamage(int32 Damage);
 	void Die();
 
