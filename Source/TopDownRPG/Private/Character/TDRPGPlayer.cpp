@@ -88,7 +88,6 @@ void ATDRPGPlayer::BeginPlay()
 	ATDGameState* state = Cast<ATDGameState>(GetWorld()->GetGameState());
 	state->player = this;
 
-	// TODO : 데이터 테이블 받아오기
 	FCharacterDataRow* data = nullptr;
 	UGameDatabaseSystem* database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
 	if (database)
@@ -98,6 +97,7 @@ void ATDRPGPlayer::BeginPlay()
 	}
 
 	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
+
 	// TODO : 임시 UI 하드코딩 제거
 	if (StatusBarFactory)
 	{

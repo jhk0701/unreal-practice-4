@@ -4,10 +4,13 @@
 #include "Character/EnemyAttack.h"
 #include "Character/EnemyMove.h"
 #include "Character/EnemyAnim.h"
-#include "Core/DungeonGameState.h"
 #include <Components/CapsuleComponent.h>
 #include <Components/SphereComponent.h>
+
 #include "CommonConst.h"
+#include "Core/DungeonGameState.h"
+#include "Core/GameDatabaseSystem.h"
+#include "Data/CharacterDataRow.h"
 
 #include "TopDownRPG/TopDownRPG.h" // 디버깅용
 
@@ -20,9 +23,6 @@ ATDRPGEnemy::ATDRPGEnemy()
 	dataComp = CreateDefaultSubobject<UCharacterData>(TEXT("DataComp"));
 	attackComp = CreateDefaultSubobject<UEnemyAttack>(TEXT("AttackComp"));
 	moveComp = CreateDefaultSubobject<UEnemyMove>(TEXT("MoveComp"));
-
-	// TODO : 데이터 테이블에서 받아오기
-	// dataComp
 
 	// 적 컴포넌트 구성
 	collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
@@ -56,7 +56,17 @@ void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// TODO : 데이터 테이블에서 받아오기
+	FCharacterDataRow* data = nullptr;
+	UGameDatabaseSystem* database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
+	if (database)
+	{
+		data = database->GameDatabase[ETableType::Character]->FindRow<FCharacterDataRow>(FName(dataComp->CharID), CommonConst::DATA_TABLE_CONTEXT);
+		dataComp->Initialize(1, 100, data);
+	}
+
 	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGEnemy::Die);
+
 	animInst = Cast<UEnemyAnim>(skinMesh->GetAnimInstance());
 }
 
