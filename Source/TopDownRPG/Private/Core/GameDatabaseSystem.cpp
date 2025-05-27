@@ -77,6 +77,9 @@ void UGameDatabaseSystem::GetLeveling(const FString& CharID, const int32 Lv, TAr
 	// 초기화
 	OutLeveling.Empty(); // 이 배열을 가지고 외부에서 스펙을 더한다.
 
+	if (!levelRange.Contains(CharID))
+		return;
+
 	// 현재 레벨이 어느 레벨 구간에 속하는지 구한다.
 	for (int32 i = 0; i < levelRange[CharID].Array.Num(); i++)
 	{
