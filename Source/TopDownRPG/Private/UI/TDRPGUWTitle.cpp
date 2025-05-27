@@ -15,12 +15,12 @@ void UTDRPGUWTitle::NativeOnInitialized()
 void UTDRPGUWTitle::BindButton()
 {
 	// Exit
-	ATitleGameMode* GameMode = Cast<ATitleGameMode>(GetWorld()->GetAuthGameMode());
+	ATitleGameMode* gameMode = Cast<ATitleGameMode>(GetWorld()->GetAuthGameMode());
 
-	if (!GameMode)
+	if (!gameMode)
 		return;
 
-	NewGameButton->OnClicked.AddUniqueDynamic(GameMode, &ATitleGameMode::StartNewGame);
-	ContinueButton->OnClicked.AddUniqueDynamic(GameMode, &ATitleGameMode::ContinueGame);
-	ExitButton->OnClicked.AddUniqueDynamic(GameMode, &ATitleGameMode::ExitGame);
+	NewGameButton->OnClicked.AddUniqueDynamic(gameMode, &ATitleGameMode::StartNewGame);
+	ContinueButton->OnClicked.AddUniqueDynamic(gameMode, &ATitleGameMode::ContinueGame);
+	ExitButton->OnClicked.AddUniqueDynamic(gameMode, &ATitleGameMode::ExitGame);
 }

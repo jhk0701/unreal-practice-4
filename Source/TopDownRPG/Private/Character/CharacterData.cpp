@@ -58,7 +58,7 @@ void UCharacterData::Initialize(uint32 InLv, uint32 InExp, FCharacterDataRow* In
 	// TODO : 스킬 반영
 
 	Exp->OnValueChanged.AddUObject(this, &UCharacterData::CheckExp);
-	Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UCharacterData::CheckPlayerIsDead);
+	Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UCharacterData::CheckIsDead);
 
 	// Debugging();
 }
@@ -75,10 +75,12 @@ void UCharacterData::LevelUp()
 	Exp->ChangeMaxValue(Exp->GetMaxValue() * 2); // TODO : 레벨 관련 데이터 테이블 작성
 }
 
-void UCharacterData::CheckPlayerIsDead(uint32 Max, uint32 Current)
+void UCharacterData::CheckIsDead(uint32 Max, uint32 Current)
 {
 	if (bIsDead)
 		return;
+
+	PRINT_LOG(TEXT("Check player is dead :: %u / %u"), Current, Max);
 
 	if (Current <= 0)
 	{
@@ -89,7 +91,7 @@ void UCharacterData::CheckPlayerIsDead(uint32 Max, uint32 Current)
 
 uint32 UCharacterData::GetAttackPower()
 {
-	return uint32(100);
+	return Ability[EAbility::Str]; // uint32(100);
 }
 
 uint32 UCharacterData::GetDefensePower()

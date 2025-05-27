@@ -67,8 +67,9 @@ public:
 	void CheckExp(uint32 Max, uint32 Current);
 	void LevelUp();
 
-	inline bool SubtractStat(EStatus Type, uint32 Value) { return Stat[Type]->TrySubtract(Value); }
-	void CheckPlayerIsDead(uint32 Max, uint32 Current);
+	inline bool TrySubtractStat(EStatus Type, uint32 Value) const { return Stat[Type]->TrySubtract(Value); }
+	inline void SubtractStat(EStatus Type, uint32 Value) { Stat[Type]->Subtract(Value); }
+	void CheckIsDead(uint32 Max, uint32 Current);
 
 	uint32 GetAttackPower();
 	uint32 GetDefensePower();

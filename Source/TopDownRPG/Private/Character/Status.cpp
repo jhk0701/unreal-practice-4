@@ -28,14 +28,17 @@ uint32 Status::Add(uint32 Value)
 
 uint32 Status::Subtract(uint32 Value)
 {
-	curValue = FMath::Max(curValue - Value, zero);
+	if (curValue < Value)
+		Value = curValue;
+
+	curValue -= Value;
 	OnValueChanged.Broadcast(maxValue, curValue);
 	return curValue;
 }
 
 bool Status::TrySubtract(uint32 Value)
 {
-	if (curValue - Value < zero)
+	if (curValue < Value)
 		return false;
 
 	Subtract(Value);

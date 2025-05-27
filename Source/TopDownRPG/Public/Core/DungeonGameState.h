@@ -14,9 +14,14 @@ enum class EPhaseType : uint8
 	Start,
 	Wave,
 	End,
-
 };
 
+UENUM(BlueprintType)
+enum class EStageResult : uint8 
+{
+	Cleared,
+	Failed
+};
 /**
  * 
  */
@@ -27,6 +32,9 @@ class TOPDOWNRPG_API ADungeonGameState : public ATDGameState
 
 	
 public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Result)
+	EStageResult StageResult = EStageResult::Cleared;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Wave)
 	int32 CurWaveIdx = 0;
 

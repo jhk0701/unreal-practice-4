@@ -26,7 +26,6 @@ public:
 	void ChangeMaxValue(uint32 Value);
 
 private:
-	const uint32 zero = 0;
 	uint32 maxValue;
 	uint32 curValue;
 

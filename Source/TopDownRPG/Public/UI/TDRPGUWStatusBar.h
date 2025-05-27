@@ -21,19 +21,19 @@ class TOPDOWNRPG_API UTDRPGUWStatusBar : public UTDRPGUserWidget
 protected:
 	TObjectPtr<ATDRPGPlayer> player;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatusBar, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
 	TObjectPtr<UTextBlock> PlayerNameLabel;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatusBar, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
 	TObjectPtr<UProgressBar> HealthBar;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatusBar, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
 	TObjectPtr<UTextBlock> HealthLabel;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatusBar, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
 	TObjectPtr<UProgressBar> ManaBar;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatusBar, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
 	TObjectPtr<UTextBlock> ManaLabel;
 
 public:

@@ -70,7 +70,7 @@ void ATDRPGEnemy::BeginPlay()
 void ATDRPGEnemy::TakeDamage(int32 Damage)
 {
 	// TODO : 언리얼 데미지 시스템으로 변경
-	dataComp->SubtractStat(EStatus::Hp, Damage);
+	dataComp->SubtractStat(EStatus::Hp, (uint32)Damage);
 	animInst->PlayHit();
 }
 

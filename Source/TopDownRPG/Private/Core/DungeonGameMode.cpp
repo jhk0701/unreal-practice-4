@@ -25,3 +25,8 @@ void ADungeonGameMode::GoToLobby()
 {
 	OpenLevel(CommonConst::SCENE_LOBBY);
 }
+
+void ADungeonGameMode::GoToNextStage()
+{
+	OpenLevel(CommonConst::SCENE_GAME);
+}

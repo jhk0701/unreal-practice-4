@@ -123,7 +123,7 @@ void ATDRPGPlayer::InvokeAttackDelegate()
 
 void ATDRPGPlayer::TakeDamage(int32 Damage)
 {
-	dataComp->SubtractStat(EStatus::Hp, Damage);
+	dataComp->SubtractStat(EStatus::Hp, (uint32)Damage);
 	animInst->PlayHit();
 }
 
