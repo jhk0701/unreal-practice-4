@@ -24,7 +24,7 @@ void UTDRPGUWStatusBar::InitStatusBar(ATDRPGPlayer* NewPlayer)
 
 void UTDRPGUWStatusBar::OnHpChanged(uint32 Max, uint32 Current)
 {
-	float percent = Current / (float)Max;
+	float percent = Current > 0 ? Current / (float)Max : 0;
 
 	HealthLabel->SetText(FText::FromString(FString::Printf(TEXT("%u / %u"), Current, Max)));
 	HealthBar->SetPercent(percent);
@@ -32,7 +32,7 @@ void UTDRPGUWStatusBar::OnHpChanged(uint32 Max, uint32 Current)
 
 void UTDRPGUWStatusBar::OnMpChanged(uint32 Max, uint32 Current)
 {
-	float percent = Current / (float)Max;
+	float percent = Current > 0 ? Current / (float)Max : 0;
 
 	ManaLabel->SetText(FText::FromString(FString::Printf(TEXT("%u / %u"), Current, Max)));
 	ManaBar->SetPercent(percent);

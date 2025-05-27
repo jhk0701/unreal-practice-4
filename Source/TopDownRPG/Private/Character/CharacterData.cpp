@@ -11,7 +11,7 @@ UCharacterData::UCharacterData()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UCharacterData::Initialize(uint32 InLv, uint32 InExp, FCharacterDataRow& InData)
+void UCharacterData::Initialize(uint32 InLv, uint32 InExp, FCharacterDataRow* InData)
 {
 	bIsDead = false;
 
@@ -19,12 +19,12 @@ void UCharacterData::Initialize(uint32 InLv, uint32 InExp, FCharacterDataRow& In
 	Exp = MakeUnique<Status>(InExp, (uint32)0);
 	Exp->OnValueChanged.AddUObject(this, &UCharacterData::CheckExp);
 
-	Stat.Add(EStatus::Hp, MakeUnique<Status>(InData.Hp));
-	Stat.Add(EStatus::Mp, MakeUnique<Status>(InData.Mp));
+	Stat.Add(EStatus::Hp, MakeUnique<Status>(InData->Hp));
+	Stat.Add(EStatus::Mp, MakeUnique<Status>(InData->Mp));
 	
-	Ability.Add(EAbility::Str, InData.Str);
-	Ability.Add(EAbility::Dex, InData.Dex);
-	Ability.Add(EAbility::Int, InData.Int);
+	Ability.Add(EAbility::Str, InData->Str);
+	Ability.Add(EAbility::Dex, InData->Dex);
+	Ability.Add(EAbility::Int, InData->Int);
 
 	// TODO : 스킬 반영
 

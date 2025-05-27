@@ -38,7 +38,7 @@ class TOPDOWNRPG_API UCharacterData : public UActorComponent
 
 public:	
 	UPROPERTY(EditAnywhere, Category = "ID")
-	uint32 CharID;
+	FString CharID;
 
 	// 레벨
 	UPROPERTY()
@@ -61,7 +61,7 @@ public:
 public:	
 	UCharacterData();
 
-	void Initialize(uint32 InLv, uint32 InExp, FCharacterDataRow& InData);
+	void Initialize(uint32 InLv, uint32 InExp, FCharacterDataRow* InData);
 
 	inline void AddExp(uint32 Value) { Exp->Add(Value); }
 	void CheckExp(uint32 Max, uint32 Current);

@@ -89,6 +89,13 @@ void ATDRPGPlayer::BeginPlay()
 	state->player = this;
 
 	// TODO : 데이터 테이블 받아오기
+	FCharacterDataRow* data = nullptr;
+	UGameDatabaseSystem* database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
+	if (database)
+	{
+		data = database->GameDatabase[ETableType::Character]->FindRow<FCharacterDataRow>(FName(dataComp->CharID), CommonConst::DATA_TABLE_CONTEXT);
+		dataComp->Initialize(1, 100, data);
+	}
 
 	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
 	// TODO : 임시 UI 하드코딩 제거
@@ -101,15 +108,6 @@ void ATDRPGPlayer::BeginPlay()
 
 	animInst = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
 
-	UGameDatabaseSystem* database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
-	if (database)
-	{
-		auto rowNames = database->GameDatabase[ETableType::Character]->GetRowNames();
-		for (int32 i = 0; i < rowNames.Num(); i++)
-		{
-			PRINT_LOG(TEXT("[%d] : %s"), i, *rowNames[i].ToString());
-		}
-	}
 }
 
 // Called to bind functionality to input
