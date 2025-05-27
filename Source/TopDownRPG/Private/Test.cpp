@@ -7,6 +7,8 @@
 #include <Engine/AssetManager.h>
 #include <Engine/StreamableManager.h>
 
+#include "TopDownRPG/TopDownRPG.h"
+
 // Sets default values
 ATest::ATest()
 {
@@ -21,11 +23,11 @@ void ATest::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	UStaticMesh* loadedMesh = LoadSync();
-	
-	if (loadedMesh)
-		MainMesh->SetStaticMesh(loadedMesh);
-	
+	FString code = TEXT("1001");
+	int32 lv = 1;
+
+	FString testCode = code + FString::Printf(TEXT("%03d"), lv);
+	PRINT_LOG(TEXT("%s"), *testCode);
 }
 
 // Called every frame

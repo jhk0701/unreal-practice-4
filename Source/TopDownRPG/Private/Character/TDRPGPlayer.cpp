@@ -88,12 +88,10 @@ void ATDRPGPlayer::BeginPlay()
 	ATDGameState* state = Cast<ATDGameState>(GetWorld()->GetGameState());
 	state->player = this;
 
-	FCharacterDataRow* data = nullptr;
-	UGameDatabaseSystem* database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
-	if (database)
+	if (UGameDatabaseSystem* database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>())
 	{
-		data = database->GameDatabase[ETableType::Character]->FindRow<FCharacterDataRow>(FName(dataComp->CharID), CommonConst::DATA_TABLE_CONTEXT);
-		dataComp->Initialize(1, 100, data);
+		FCharacterDataRow* data = database->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
+		dataComp->Initialize(5, 0, data);
 	}
 
 	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);

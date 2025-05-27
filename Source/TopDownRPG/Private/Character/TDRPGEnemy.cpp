@@ -56,12 +56,9 @@ void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// TODO : 데이터 테이블에서 받아오기
-	FCharacterDataRow* data = nullptr;
-	UGameDatabaseSystem* database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
-	if (database)
+	if (UGameDatabaseSystem* database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>())
 	{
-		data = database->GameDatabase[ETableType::Character]->FindRow<FCharacterDataRow>(FName(dataComp->CharID), CommonConst::DATA_TABLE_CONTEXT);
+		FCharacterDataRow* data = database->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
 		dataComp->Initialize(1, 100, data);
 	}
 

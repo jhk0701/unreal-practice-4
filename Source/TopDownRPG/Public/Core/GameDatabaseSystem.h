@@ -4,7 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
+#include "CommonConst.h"
+#include "Data/InnerIntArray.h"
+#include <Templates/EnableIf.h>
 #include "GameDatabaseSystem.generated.h"
+
 
 UENUM(BlueprintType)
 enum class ETableType : uint8
@@ -25,11 +29,32 @@ class TOPDOWNRPG_API UGameDatabaseSystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 	
-public:
+protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Table")
-	TMap<ETableType, class UDataTable*> GameDatabase;
-	
+	TMap<ETableType, class UDataTable*> gameDatabase;
+
+	// 레벨링 계산 편의용
+	// CharID - Lv : 레벨 범위
+	UPROPERTY()
+	TMap<FString, FInnerIntArray> levelRange;
+
+
+public:
+	// 외부에서 특정 테이블에 접근해서 열을 받기 위한 용도
+	template<typename T>
+	inline TEnableIf<TIsDerivedFrom<T, FTableRowBase>::Value, T*>::type
+	GetRow(ETableType Table, const FName& ID)
+	{
+		return gameDatabase[Table]->FindRow<T>(ID, CommonConst::DATA_TABLE_CONTEXT);
+	}
+
+	void GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling);
+	const FString GetLevelingKey(const FString& CharID, const int32 Index);
+
 protected:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+	
 	void LoadGameDatas();
+	void ProcessLevelData();
+
 };

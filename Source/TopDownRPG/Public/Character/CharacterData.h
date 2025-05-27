@@ -72,4 +72,6 @@ public:
 
 	uint32 GetAttackPower();
 	uint32 GetDefensePower();
+
+	void Debugging();
 };
