@@ -5,49 +5,73 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Character/Status.h"
-#include "CharacterStatus.generated.h"
+#include "CharacterData.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnStatusEmpty);
+struct FCharacterDataRow;
 
 UENUM(BlueprintType)
 enum class EStatus : uint8
 {
 	Hp UMETA(DisplayName = "Health Point"),
 	Mp UMETA(DisplayName = "Mana Point"),
+
+	COUNT
 };
 
-/**
- * 플레이어 스테이터스 컴포넌트 (제거 예정)
- */
-UCLASS()
-class TOPDOWNRPG_API UCharacterStatus : public UActorComponent
+UENUM(BlueprintType)
+enum class EAbility : uint8
+{
+	Str UMETA(DisplayName = "Strength"),
+	Dex UMETA(DisplayName = "Dexterity"),
+	Int UMETA(DisplayName = "Intelligence"),
+
+	COUNT
+};
+
+DECLARE_MULTICAST_DELEGATE(FOnStatusEmpty);
+
+
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+class TOPDOWNRPG_API UCharacterData : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:
+public:	
 	// 레벨
-	int32 Lv;
+	UPROPERTY()
+	uint32 Lv;
 
 	// 경험치
+	UPROPERTY()
 	TUniquePtr<Status> Exp;
-	
+
 	// 체력, 마나
+	UPROPERTY()
 	TMap<EStatus, TUniquePtr<Status>> Stat;
 
-	bool bIsDead = false;
+	// 힘, 민첩, 지능
+	UPROPERTY()
+	TMap<EAbility, uint32> Ability;
 
+	UPROPERTY()
+	bool bIsDead = false;
+	
 	FOnStatusEmpty OnCharacterDead;
 
-public:
-	UCharacterStatus();
+public:	
+	UCharacterData();
 
-	void InitLvAndExp(uint32 InitLv, uint32 InitExp);
+	void Initialize(uint32 InLv, uint32 InExp, FCharacterDataRow& InData);
+
 	inline void AddExp(uint32 Value) { Exp->Add(Value); }
 	void CheckExp(uint32 Max, uint32 Current);
 	void LevelUp();
 
-	void InitStatus(const TArray<EStatus>& StatusType, const TArray<uint32>& InitVal);
 	inline bool SubtractStat(EStatus Type, uint32 Value) { return Stat[Type]->TrySubtract(Value); }
-
 	void CheckPlayerIsDead(uint32 Max, uint32 Current);
+
+	uint32 GetAttackPower();
+	uint32 GetDefensePower();
+};
+
 };

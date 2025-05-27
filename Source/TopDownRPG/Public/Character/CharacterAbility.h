@@ -15,7 +15,7 @@ enum class EAbility : uint8
 };
 
 /**
- * 
+ *  (제거 예정)
  */
 UCLASS()
 class TOPDOWNRPG_API UCharacterAbility : public UActorComponent

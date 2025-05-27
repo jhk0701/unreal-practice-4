@@ -18,12 +18,6 @@ void UCharacterStatus::InitLvAndExp(uint32 InitLv, uint32 InitExp)
 	Exp->OnValueChanged.AddUObject(this, &UCharacterStatus::CheckExp);
 }
 
-void UCharacterStatus::CheckExp(uint32 Max, uint32 Current)
-{
-	if (Current >= Max)
-		LevelUp();
-}
-
 void UCharacterStatus::LevelUp()
 {
 	++Lv;
