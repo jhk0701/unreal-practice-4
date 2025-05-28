@@ -19,6 +19,7 @@ enum class ETableType : uint8
 	COUNT
 };
 
+
 DECLARE_ENUM_TO_STRING(ETableType);
 
 /**
@@ -28,15 +29,19 @@ UCLASS()
 class TOPDOWNRPG_API UGameDatabaseSystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
-	
+
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Config")
+	TObjectPtr<class UInitConfig> InitConfig;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Table")
-	TMap<ETableType, class UDataTable*> gameDatabase;
+	TMap<ETableType, class UDataTable*> GameDatabase;
 
 	// 레벨링 계산 편의용
 	// CharID - Lv : 레벨 범위
 	UPROPERTY()
-	TMap<FString, FInnerIntArray> levelRange;
+	TMap<FString, FInnerIntArray> LevelRange;
 
 
 public:
@@ -45,7 +50,7 @@ public:
 	inline TEnableIf<TIsDerivedFrom<T, FTableRowBase>::Value, T*>::type
 	GetRow(ETableType Table, const FName& ID)
 	{
-		return gameDatabase[Table]->FindRow<T>(ID, CommonConst::DATA_TABLE_CONTEXT);
+		return GameDatabase[Table]->FindRow<T>(ID, CommonConst::DATA_TABLE_CONTEXT);
 	}
 
 	void GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling);
@@ -53,8 +58,14 @@ public:
 
 protected:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-	
+
 	void LoadGameDatas();
+
+	// Data Table
 	void ProcessLevelData();
+
+	// Primary Data Asset
+	void InitConfigs();
+	void LoadConfigs();
 
 };

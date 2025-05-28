@@ -26,6 +26,6 @@ public:
 
 	FORCEINLINE virtual FPrimaryAssetId GetPrimaryAssetId() const override
 	{
-		return FPrimaryAssetId(CommonConst::AssetType_CharacterName, GetFName());
+		return FPrimaryAssetId(CommonConst::AssetType_CharacterConfig, GetFName());
 	};
 };

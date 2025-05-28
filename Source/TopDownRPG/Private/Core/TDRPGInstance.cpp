@@ -4,11 +4,8 @@
 #include "Core/TDRPGInstance.h"
 #include "TopDownRPG/TopDownRPG.h"
 
+
 void UTDRPGInstance::Init()
 {
 	Super::Init();
-
-	PRINT_LOG(TEXT("Game Instance init"));
-	
-	// 프라이머리 에셋 로드
 }

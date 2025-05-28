@@ -23,6 +23,7 @@ public:
     static const FName SCENE_LOBBY;
     static const FName SCENE_GAME;
 
-    static const FName AssetType_CharacterName;
+    static const FName AssetType_InitConfig;
+    static const FName AssetType_CharacterConfig;
 };
 

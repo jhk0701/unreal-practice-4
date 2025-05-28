@@ -15,5 +15,9 @@ class TOPDOWNRPG_API UResourceLoadSystem : public UGameInstanceSubsystem
 	GENERATED_BODY()
 	
 public:
-	inline void Load() {};
+	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+	virtual void Deinitialize() override;
+
+protected:
+	void Load();
 };

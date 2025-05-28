@@ -17,4 +17,5 @@ const FName CommonConst::SCENE_LOBBY = FName(TEXT("1-Lobby"));
 const FName CommonConst::SCENE_GAME = FName(TEXT("2-Game"));
 
 // 프라이머리 에셋 타입
-const FName CommonConst::AssetType_CharacterName = FName(TEXT("CharacterConfig"));
+const FName CommonConst::AssetType_InitConfig = FName(TEXT("InitConfig"));
+const FName CommonConst::AssetType_CharacterConfig = FName(TEXT("CharacterConfig"));
