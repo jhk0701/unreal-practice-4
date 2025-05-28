@@ -4,22 +4,28 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "CommonConst.h"
 #include "CharacterConfig.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UCharacterConfig : public UDataAsset
+class TOPDOWNRPG_API UCharacterConfig : public UPrimaryDataAsset
 {
 	GENERATED_BODY()
-
-	// /Script/TopDownRPG.CharacterConfig'/Game/6-DataAsset/{name}.{name}'
-
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<USkeletalMesh> SkinnedMesh;	// 메쉬
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<class UCharacterAnimBase> AnimBlueprint; // 애니메이션 블루프린트
+	UPROPERTY(EditAnywhere)
+	FName CharName;
+
+	UPROPERTY(EditAnywhere)
+	TSoftObjectPtr<USkeletalMesh> SkeletalMesh;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UAnimInstance> AnimInst;
+
+	FORCEINLINE virtual FPrimaryAssetId GetPrimaryAssetId() const override
+	{
+		return FPrimaryAssetId(CommonConst::AssetType_CharacterName, GetFName());
+	};
 };
