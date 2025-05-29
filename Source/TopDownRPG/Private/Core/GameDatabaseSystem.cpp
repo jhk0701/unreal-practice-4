@@ -104,3 +104,15 @@ const FString UGameDatabaseSystem::GetLevelingKey(const FString& CharID, const i
 	int32 range = LevelRange[CharID].Array[Index];
 	return CharID + FString::Printf(TEXT("%03d"), range);
 }
+
+UPrimaryDataAsset* UGameDatabaseSystem::LoadPrimaryAssetData(FPrimaryAssetId& ID)
+{
+	UAssetManager& Manager = UAssetManager::Get();
+
+	FSoftObjectPtr AssetPtr(Manager.GetPrimaryAssetPath(ID));
+
+	if (AssetPtr.IsPending())
+		AssetPtr.LoadSynchronous();
+
+	return Cast<UPrimaryDataAsset>(AssetPtr.Get());
+}

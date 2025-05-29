@@ -69,4 +69,6 @@ protected:
 
 	// Data Table
 	void ProcessLevelData();
+
+	UPrimaryDataAsset* LoadPrimaryAssetData(FPrimaryAssetId& ID);
 };

@@ -18,13 +18,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	FName CharName;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, meta = (AssetBundles = "CharacterBundles"))
 	TSoftObjectPtr<USkeletalMesh> SkeletalMesh;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<UAnimInstance> AnimInst;
+	UPROPERTY(EditAnywhere, meta = (AssetBundles = "CharacterBundles"))
+	TSoftClassPtr<UAnimInstance> Animation;
 
-	FORCEINLINE virtual FPrimaryAssetId GetPrimaryAssetId() const override
+	inline virtual FPrimaryAssetId GetPrimaryAssetId() const override
 	{
 		return FPrimaryAssetId(CommonConst::AssetType_CharacterConfig, GetFName());
 	};
