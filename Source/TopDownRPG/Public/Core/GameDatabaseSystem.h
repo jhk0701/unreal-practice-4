@@ -7,6 +7,7 @@
 #include "CommonConst.h"
 #include "Data/InnerIntArray.h"
 #include <Templates/EnableIf.h>
+#include <Engine/AssetManager.h>
 #include "GameDatabaseSystem.generated.h"
 
 
@@ -30,9 +31,6 @@ class TOPDOWNRPG_API UGameDatabaseSystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 
-public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Config")
-	TObjectPtr<class UInitConfig> InitConfig;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Table")
@@ -56,6 +54,14 @@ public:
 	void GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling);
 	const FString GetLevelingKey(const FString& CharID, const int32 Index);
 
+	template<typename T>
+	inline TEnableIf<TIsDerivedFrom<T, UPrimaryDataAsset>::Value, T*>::type
+	LoadConfigByID(FString* InConfig, FString* InID)
+	{
+		UAssetManager& Manager = UAssetManager::Get();
+		return nullptr;
+	}
+
 protected:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
@@ -63,9 +69,4 @@ protected:
 
 	// Data Table
 	void ProcessLevelData();
-
-	// Primary Data Asset
-	void InitConfigs();
-	void LoadConfigs();
-
 };

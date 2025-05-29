@@ -4,9 +4,6 @@
 #include "Core/GameDatabaseSystem.h"
 #include "Data/LevelingDataRow.h"
 #include "CommonConst.h"
-#include "Data/InitConfig.h"
-#include <Engine/AssetManager.h>
-#include <Engine/StreamableManager.h>
 #include <Engine/DataTable.h>
 
 #include "TopDownRPG/TopDownRPG.h"
@@ -19,9 +16,6 @@ void UGameDatabaseSystem::Initialize(FSubsystemCollectionBase& Collection)
 	// 게임 데이터 준비
 	// 데이터 테이블 로드
 	LoadGameDatas();
-
-	// 프라이머리 데이터 에셋 로드
-	InitConfigs();
 }
 
 FString EnumToString(ETableType EnumValue)
@@ -109,36 +103,4 @@ const FString UGameDatabaseSystem::GetLevelingKey(const FString& CharID, const i
 {
 	int32 range = LevelRange[CharID].Array[Index];
 	return CharID + FString::Printf(TEXT("%03d"), range);
-}
-
-
-void UGameDatabaseSystem::InitConfigs()
-{	
-	// 초기화 시, config에 해당하는 타입만 로드
-	UAssetManager& Manager = UAssetManager::Get();
-
-	// 초기화용 config
-	TArray<FPrimaryAssetId> Ids;
-	Manager.GetPrimaryAssetIdList(CommonConst::AssetType_InitConfig, Ids);
-
-	TSoftObjectPtr InitPtr(Manager.GetPrimaryAssetPath(Ids[0]));
-
-	if (InitPtr.IsPending())
-		InitPtr.LoadSynchronous();
-
-	InitConfig = Cast<UInitConfig>(InitPtr.Get());
-
-	if (InitConfig)
-		LoadConfigs();
-}
-
-void UGameDatabaseSystem::LoadConfigs()
-{
-	for(FString Config : InitConfig->ConfigsToInit)
-	{
-		// 로드한 에셋은 map에 저장
-
-		// 필요 시, map을 반환
-		// 반환한 맵에서 불러와 쓰기
-	}
 }
