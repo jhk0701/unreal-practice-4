@@ -18,7 +18,6 @@ void UPlayerMove::BeginPlay()
 
 	controller = Cast<ATDRPGPlayerController>(player->GetController());
 	moveComp = player->GetCharacterMovement();
-	meshComp = Cast<USceneComponent>(player->GetMesh());
 
 	player->OnAttackCalled.AddUObject(this, &UPlayerMove::StopMove);
 }

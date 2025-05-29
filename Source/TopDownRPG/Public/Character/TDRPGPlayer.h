@@ -14,7 +14,6 @@ class TOPDOWNRPG_API ATDRPGPlayer : public ACharacter
 	GENERATED_BODY()
 
 public:
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UCharacterData> dataComp;
 
@@ -37,13 +36,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class USphereComponent> hitCollider;
 
-	// 임시 UI 테스트용
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UITemp")
-	TSubclassOf<class UTDRPGUWStatusBar> StatusBarFactory;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UITemp")
-	TObjectPtr<UTDRPGUWStatusBar> StatusBarInst;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Interaction)
 	TObjectPtr<class USphereComponent> interactCollider;
 
@@ -53,6 +45,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	TObjectPtr<class UCameraComponent> camera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UI)
+	TObjectPtr<class UTDRPGUWStatusBar> UIStatusBar;
 
 public:
 	ATDRPGPlayer();

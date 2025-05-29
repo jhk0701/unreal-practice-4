@@ -16,11 +16,13 @@
 #include "Core/TDGameState.h"
 #include "Core/DungeonGameMode.h"
 #include "Core/GameDatabaseSystem.h"
+#include "Core/UISubsystem.h"
+#include "UI/TDRPGUWStatusBar.h"
 
 #include "Data/CharacterDataRow.h"
 
 #include "TopDownRPG/TopDownRPG.h"
-#include "UI/TDRPGUWStatusBar.h"
+
 
 // Sets default values
 ATDRPGPlayer::ATDRPGPlayer()
@@ -88,24 +90,32 @@ void ATDRPGPlayer::BeginPlay()
 	ATDGameState* state = Cast<ATDGameState>(GetWorld()->GetGameState());
 	state->player = this;
 
-	if (UGameDatabaseSystem* database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>())
+	UGameInstance* GameInst = GetGameInstance();
+
+	// 데이터 반영
+	if (UGameDatabaseSystem* Database = GameInst->GetSubsystem<UGameDatabaseSystem>())
 	{
-		FCharacterDataRow* data = database->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
-		dataComp->Initialize(5, 0, data);
+		FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
+		dataComp->Initialize(5, 0, Data);
 	}
 
 	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
-
-	// TODO : 임시 UI 하드코딩 제거
-	if (StatusBarFactory)
-	{
-		StatusBarInst = CreateWidget<UTDRPGUWStatusBar>(GetWorld(), StatusBarFactory, TEXT("Character Status Bar"));
-		StatusBarInst->InitStatusBar(this);
-		StatusBarInst->AddToViewport();
-	}
-
+	
 	animInst = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
 
+	// UI 호출
+	if (UUISubsystem* UISystem = GameInst->GetSubsystem<UUISubsystem>()) 
+	{
+		UISystem->GetUI<UTDRPGUWStatusBar>(
+			FOnLoadCompleted::CreateLambda( 
+				[this](UTDRPGUserWidget* Loaded){
+					UIStatusBar = Cast<UTDRPGUWStatusBar>(Loaded);
+					UIStatusBar->InitStatusBar(this);
+					UIStatusBar->AddToViewport();
+				})
+		);
+	}
+	
 }
 
 // Called to bind functionality to input

@@ -14,9 +14,6 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = OwnerComp)
 	TObjectPtr<class UCharacterMovementComponent> moveComp;
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = OwnerComp)
-	TObjectPtr<USceneComponent> meshComp;
-
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement)
 	bool bIsWalking = false;
