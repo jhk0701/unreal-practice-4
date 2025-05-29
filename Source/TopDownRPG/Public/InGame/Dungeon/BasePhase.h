@@ -19,10 +19,10 @@ class TOPDOWNRPG_API UBasePhase : public UObject, public IPhaseHandler
 	
 protected:
 	UPROPERTY()
-	TObjectPtr<ATDGameState> state;
+	TObjectPtr<ATDGameState> State;
 
 public:
-	inline void InitPhase(ATDGameState* InState) { state = InState; };
+	inline void InitPhase(ATDGameState* InState) { State = InState; };
 
 	virtual void Enter() override {};
 	virtual void Exit() override {};

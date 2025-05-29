@@ -105,7 +105,7 @@ const FString UGameDatabaseSystem::GetLevelingKey(const FString& CharID, const i
 	return CharID + FString::Printf(TEXT("%03d"), range);
 }
 
-UPrimaryDataAsset* UGameDatabaseSystem::LoadPrimaryAssetData(FPrimaryAssetId& ID)
+UPrimaryDataAsset* UGameDatabaseSystem::LoadPrimaryAssetData(const FPrimaryAssetId& ID)
 {
 	UAssetManager& Manager = UAssetManager::Get();
 

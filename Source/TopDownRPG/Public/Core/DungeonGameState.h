@@ -36,17 +36,13 @@ public:
 	EStageResult StageResult = EStageResult::Cleared;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Wave)
-	int32 CurWaveIdx = 0;
+	FString CurStageID;
 
-	// 적 캐릭터 관리용
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Enemy)
-	int32 enemyCount = 0;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Wave)
+	int32 CurWaveIdx = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = EnemySpawn)
 	TSubclassOf<class ATDRPGEnemy> enemyFactory;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySpawn|Setting")
-	int32 numberOfEnemy = 5;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySpawn|Setting")
 	FVector spawnPoint = FVector::ZeroVector;
@@ -54,11 +50,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySpawn|Setting")
 	float spawningRadius = 500.f;
 
+	// 임시 적 캐릭터 관리용
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "EnemySpawn|SettingTemp")
+	int32 EnemyCount = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySpawn|SettingTemp")
+	int32 numberOfEnemy = 5;
+
+
 protected:
 	UPROPERTY()
-	TObjectPtr<UBasePhase> curPhase;
+	TObjectPtr<UBasePhase> CurPhase;
+
 	UPROPERTY()
-	TMap<EPhaseType, UBasePhase*> phaseMap;
+	TMap<EPhaseType, UBasePhase*> PhaseMap;
 
 public:
 	ADungeonGameState();
@@ -66,8 +71,10 @@ public:
 
 	void Transition(EPhaseType InPhase);
 
-	void SpawnEnemy();
-	inline int32 GetEnemyCount() const { return enemyCount; }
+	void SpawnEnemy(const FString& EnemyID);
+	
+	const inline int32 GetEnemyCount() { return EnemyCount; }
+	
 	void OnEnemyDead();
 
 };

@@ -11,7 +11,7 @@
 void UEndPhase::Enter()
 {
 	// 스테이지 종료 UI
-	APlayerController* controller = UGameplayStatics::GetPlayerController(state->GetWorld(), 0);
+	APlayerController* controller = UGameplayStatics::GetPlayerController(State->GetWorld(), 0);
 	
 	if(ADungeonHUD* hud = Cast<ADungeonHUD>(controller->GetHUD()))
 	{

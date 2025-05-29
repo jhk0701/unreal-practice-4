@@ -8,12 +8,11 @@ void UStartPhase::Enter()
 {
 	Super::Enter();
 
-	ADungeonGameState* gameState = Cast<ADungeonGameState>(state);
-
-	// TODO : 현재 스테이지의 웨이브 데이터 받아오기
+	ADungeonGameState* GameState = Cast<ADungeonGameState>(State);
 	
 	// 초기화
-	gameState->CurWaveIdx = 0;
+	GameState->CurStageID = TEXT("1001"); // TODO : 스테이지 ID 매직넘버 제거
+	GameState->CurWaveIdx = 0;
 
-	gameState->Transition(EPhaseType::Wave);
+	GameState->Transition(EPhaseType::Wave);
 }

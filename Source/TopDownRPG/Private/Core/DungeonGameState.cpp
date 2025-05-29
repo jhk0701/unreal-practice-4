@@ -22,27 +22,27 @@ void ADungeonGameState::BeginPlay()
 	Super::BeginPlay();
 
 	// 페이즈 세팅
-	phaseMap.Add(EPhaseType::Start, NewObject<UStartPhase>());
-	phaseMap.Add(EPhaseType::Wave, NewObject<UWavePhase>());
-	phaseMap.Add(EPhaseType::End, NewObject<UEndPhase>());
+	PhaseMap.Add(EPhaseType::Start, NewObject<UStartPhase>());
+	PhaseMap.Add(EPhaseType::Wave, NewObject<UWavePhase>());
+	PhaseMap.Add(EPhaseType::End, NewObject<UEndPhase>());
 
-	for (auto iter = phaseMap.CreateConstIterator(); iter; ++iter)
+	for (auto iter = PhaseMap.CreateConstIterator(); iter; ++iter)
 		iter->Value->InitPhase(this);
-
+	
 	Transition(EPhaseType::Start);
 }
 
 void ADungeonGameState::Transition(EPhaseType Phase)
 {
-	if (curPhase)
-		curPhase->Exit();
+	if (CurPhase)
+		CurPhase->Exit();
 
-	curPhase = phaseMap[Phase];
+	CurPhase = PhaseMap[Phase];
 	
-	curPhase->Enter();
+	CurPhase->Enter();
 }
 
-void ADungeonGameState::SpawnEnemy()
+void ADungeonGameState::SpawnEnemy(const FString& EnemyID)
 {
 	if (!enemyFactory)
 	{
@@ -50,27 +50,27 @@ void ADungeonGameState::SpawnEnemy()
 		return;
 	}
 
-	FVector spawnLoc = spawnPoint;
-	spawnLoc.X += FMath::RandRange(-spawningRadius, spawningRadius);
-	spawnLoc.Y += FMath::RandRange(-spawningRadius, spawningRadius);
+	FVector SpawnLoc = spawnPoint;
+	SpawnLoc.X += FMath::RandRange(-spawningRadius, spawningRadius);
+	SpawnLoc.Y += FMath::RandRange(-spawningRadius, spawningRadius);
 	
-	FTransform spawnTransform;
-	spawnTransform.SetLocation(spawnLoc);
-	spawnTransform.SetRotation(FQuat::Identity);
+	FTransform SpawnTransform;
+	SpawnTransform.SetLocation(SpawnLoc);
+	SpawnTransform.SetRotation(FQuat::Identity);
 
-	GetWorld()->SpawnActor<AActor>(enemyFactory, spawnTransform);
+	GetWorld()->SpawnActor<AActor>(enemyFactory, SpawnTransform);
 
-	++enemyCount;
+	++EnemyCount;
 }
 
 void ADungeonGameState::OnEnemyDead()
 {
-	if (enemyCount == 0)
+	if (EnemyCount == 0)
 		return;
 
-	--enemyCount;
+	--EnemyCount;
 
-	if (enemyCount == 0)
+	if (EnemyCount == 0)
 	{
 		PRINT_LOG(TEXT("Game State Ended"));
 		Transition(EPhaseType::End);

@@ -16,6 +16,7 @@ enum class ETableType : uint8
 {
 	Character = 0,
 	Leveling,
+	Stage,
 
 	COUNT
 };
@@ -54,7 +55,7 @@ public:
 	void GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling);
 	const FString GetLevelingKey(const FString& CharID, const int32 Index);
 
-	UPrimaryDataAsset* LoadPrimaryAssetData(FPrimaryAssetId& ID);
+	UPrimaryDataAsset* LoadPrimaryAssetData(const FPrimaryAssetId& ID);
 
 protected:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
