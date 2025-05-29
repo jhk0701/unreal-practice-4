@@ -4,22 +4,23 @@
 #include "Character/PlayerAttack.h"
 #include "Character/PlayerInteraction.h"
 #include "Character/PlayerAnim.h"
+
+#include "CommonConst.h"
+#include "Core/TDRPGPlayerController.h"
+#include "Core/TDGameState.h"
+#include "Core/GameDatabaseSystem.h"
+#include "Core/UISubsystem.h"
+
+#include "UI/TDRPGUWStatusBar.h"
+#include "Data/CharacterDataRow.h"
+#include "Data/CharacterConfig.h"
+
 #include <EnhancedInputComponent.h>
 #include <Camera/CameraComponent.h>
 #include <GameFramework/CharacterMovementComponent.h>
 #include <GameFramework/SpringArmComponent.h>
 #include <Components/CapsuleComponent.h>
 #include <Components/SphereComponent.h>
-
-#include "CommonConst.h"
-#include "Core/TDRPGPlayerController.h"
-#include "Core/TDGameState.h"
-#include "Core/DungeonGameMode.h"
-#include "Core/GameDatabaseSystem.h"
-#include "Core/UISubsystem.h"
-#include "UI/TDRPGUWStatusBar.h"
-
-#include "Data/CharacterDataRow.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -34,17 +35,6 @@ ATDRPGPlayer::ATDRPGPlayer()
 	moveComp = CreateDefaultSubobject<UPlayerMove>(TEXT("MoveComp"));
 	attackComp = CreateDefaultSubobject<UPlayerAttack>(TEXT("AttackComp"));
 	interactComp = CreateDefaultSubobject<UPlayerInteraction>(TEXT("InteractComp"));
-
-	// Mesh 설정
-	// TODO : 각 클래스별 메시 받기
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempMesh(TEXT("SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple'"));
-	if (tempMesh.Succeeded())
-	{
-		USkeletalMeshComponent* meshComp = GetMesh();
-		meshComp->SetSkeletalMesh(tempMesh.Object);
-		meshComp->SetRelativeLocation(FVector(0, 0, -90.f));
-		meshComp->SetRelativeRotation(FRotator(0, -90.f, 0));
-	}
 
 	// 충돌체 설정
 	GetCapsuleComponent()->InitCapsuleSize(20.0f, 90.0f);
@@ -95,13 +85,31 @@ void ATDRPGPlayer::BeginPlay()
 	// 데이터 반영
 	if (UGameDatabaseSystem* Database = GameInst->GetSubsystem<UGameDatabaseSystem>())
 	{
+		// TODO : 플레이어 데이터 반영
 		FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
 		dataComp->Initialize(5, 0, Data);
-	}
+		
+		FPrimaryAssetId ConfigID(CommonConst::AssetType_CharacterConfig, *dataComp->CharID);
+		UPrimaryDataAsset* LoadedDataAsset = Database->LoadPrimaryAssetData(ConfigID);
 
-	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
-	
-	animInst = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
+		if (!LoadedDataAsset)
+			PRINT_LOG(TEXT("Config is null"));
+
+		UCharacterConfig* Config = Cast<UCharacterConfig>(LoadedDataAsset);
+		
+		USkeletalMeshComponent* MeshComp = GetMesh();
+
+		if (Config->SkeletalMesh.IsPending())
+			Config->SkeletalMesh.LoadSynchronous();
+
+		MeshComp->SetSkeletalMesh(Config->SkeletalMesh.Get());
+		MeshComp->SetRelativeLocationAndRotation(FVector(0, 0, -90.f), FRotator(0, -90.f, 0));
+
+		if (Config->Animation.IsPending())
+			Config->Animation.LoadSynchronous();
+
+		MeshComp->SetAnimClass(Config->Animation.Get());
+	}
 
 	// UI 호출
 	if (UUISubsystem* UISystem = GameInst->GetSubsystem<UUISubsystem>()) 
@@ -116,6 +124,8 @@ void ATDRPGPlayer::BeginPlay()
 		);
 	}
 	
+
+	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
 }
 
 // Called to bind functionality to input

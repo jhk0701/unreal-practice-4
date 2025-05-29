@@ -54,13 +54,7 @@ public:
 	void GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling);
 	const FString GetLevelingKey(const FString& CharID, const int32 Index);
 
-	template<typename T>
-	inline TEnableIf<TIsDerivedFrom<T, UPrimaryDataAsset>::Value, T*>::type
-	LoadConfigByID(FString* InConfig, FString* InID)
-	{
-		UAssetManager& Manager = UAssetManager::Get();
-		return nullptr;
-	}
+	UPrimaryDataAsset* LoadPrimaryAssetData(FPrimaryAssetId& ID);
 
 protected:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
@@ -69,6 +63,4 @@ protected:
 
 	// Data Table
 	void ProcessLevelData();
-
-	UPrimaryDataAsset* LoadPrimaryAssetData(FPrimaryAssetId& ID);
 };
