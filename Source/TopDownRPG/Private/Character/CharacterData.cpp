@@ -17,7 +17,6 @@ UCharacterData::UCharacterData()
 void UCharacterData::Initialize(uint32 InLv, uint32 InExp, FCharacterDataRow* InData)
 {
 	// TODO: 플레이어 데이터로부터 CharID 받아오기
-	CharID = TEXT("1001");
 
 	bIsDead = false;
 

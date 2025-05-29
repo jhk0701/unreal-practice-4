@@ -92,9 +92,6 @@ void ATDRPGPlayer::BeginPlay()
 		FPrimaryAssetId ConfigID(CommonConst::AssetType_CharacterConfig, *dataComp->CharID);
 		UPrimaryDataAsset* LoadedDataAsset = Database->LoadPrimaryAssetData(ConfigID);
 
-		if (!LoadedDataAsset)
-			PRINT_LOG(TEXT("Config is null"));
-
 		UCharacterConfig* Config = Cast<UCharacterConfig>(LoadedDataAsset);
 		
 		USkeletalMeshComponent* MeshComp = GetMesh();
@@ -109,6 +106,7 @@ void ATDRPGPlayer::BeginPlay()
 			Config->Animation.LoadSynchronous();
 
 		MeshComp->SetAnimClass(Config->Animation.Get());
+		animInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
 	}
 
 	// UI 호출

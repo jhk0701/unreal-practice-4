@@ -17,9 +17,6 @@ public:
 	TObjectPtr<class UCharacterData> dataComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UCapsuleComponent> collider;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UEnemyMove> moveComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
@@ -31,6 +28,9 @@ public:
 	// 임시 히트박스
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class USphereComponent> hitCollider;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
+	TObjectPtr<class UCapsuleComponent> collider;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = StateMachine)

@@ -16,20 +16,6 @@ void UGameDatabaseSystem::Initialize(FSubsystemCollectionBase& Collection)
 	// 게임 데이터 준비
 	// 데이터 테이블 로드
 	LoadGameDatas();
-
-	// Test
-
-	UAssetManager& Manager = UAssetManager::Get();
-
-	TArray<FPrimaryAssetId> IDArr;
-	Manager.GetPrimaryAssetIdList(CommonConst::AssetType_CharacterConfig, IDArr);
-
-	PRINT_LOG(TEXT("Show Up Ids"));
-
-	for (int32 i = 0; i < IDArr.Num(); i++)
-	{
-		PRINT_LOG(TEXT("ID : %s"), *IDArr[i].ToString());
-	}
 }
 
 FString EnumToString(ETableType EnumValue)

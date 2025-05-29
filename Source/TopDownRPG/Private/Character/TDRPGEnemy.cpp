@@ -56,10 +56,10 @@ void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (UGameDatabaseSystem* database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>())
+	if (UGameDatabaseSystem* Database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>())
 	{
-		FCharacterDataRow* data = database->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
-		dataComp->Initialize(1, 100, data);
+		FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
+		dataComp->Initialize(1, 100, Data);
 	}
 
 	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGEnemy::Die);
