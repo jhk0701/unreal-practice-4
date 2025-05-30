@@ -23,7 +23,9 @@ public:
 	uint32 Subtract(uint32 Value);
 	bool TrySubtract(uint32 Value);
 
+	void ChangeMaxValue(uint32 NewMaxValue);
 	void ChangeMaxValue(uint32 NewMaxValue, uint32 NewCurValue);
+	
 
 private:
 	uint32 maxValue;

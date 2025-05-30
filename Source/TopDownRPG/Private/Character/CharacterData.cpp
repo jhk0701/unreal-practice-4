@@ -20,33 +20,33 @@ void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow* InData)
 	bIsDead = false;
 
 	// 초기 데이터
-	uint32	hp = InData->Hp,	mp = InData->Mp;
-	int32	str = InData->Str,	dex = InData->Dex,	intel = InData->Int;
+	uint32	Hp = InData->Hp,	Mp = InData->Mp;
+	int32	Str = InData->Str,	Dex = InData->Dex,	Int = InData->Int;
 
 	// 레벨링 반영
-	TArray<int32> leveling;
+	TArray<int32> Leveling;
 	UGameDataManager* GameData = GetWorld()->GetGameInstance()->GetSubsystem<UGameDataManager>();
-	GameData->GetLeveling(CharID, InLv, leveling);
+	GameData->GetLeveling(CharID, InLv, Leveling);
 
-	for (int32 i = 0; i < leveling.Num(); ++i)
+	for (int32 i = 0; i < Leveling.Num(); ++i)
 	{
 		FString key = GameData->GetLevelingKey(CharID, i);
 		FLevelingDataRow* row = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, FName(key));
 
-		hp += row->Hp * leveling[i];
-		mp += row->Mp * leveling[i];
+		Hp += row->Hp * Leveling[i];
+		Mp += row->Mp * Leveling[i];
 
-		str += row->Str * leveling[i];
-		dex += row->Dex * leveling[i];
-		intel += row->Int * leveling[i];
+		Str += row->Str * Leveling[i];
+		Dex += row->Dex * Leveling[i];
+		Int += row->Int * Leveling[i];
 	}
 
-	Stat.Add(EStatus::Hp, MakeUnique<Status>(hp));
-	Stat.Add(EStatus::Mp, MakeUnique<Status>(mp));
+	Stat.Add(EStatus::Hp, MakeUnique<Status>(Hp));
+	Stat.Add(EStatus::Mp, MakeUnique<Status>(Mp));
 
-	Ability.Add(EAbility::Str, str);
-	Ability.Add(EAbility::Dex, dex);
-	Ability.Add(EAbility::Int, intel);
+	Ability.Add(EAbility::Str, Str);
+	Ability.Add(EAbility::Dex, Dex);
+	Ability.Add(EAbility::Int, Int);
 
 	// TODO : 스킬 반영
 	Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UCharacterData::CheckIsDead);

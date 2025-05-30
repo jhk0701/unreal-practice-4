@@ -81,6 +81,19 @@ void ATDRPGPlayer::BeginPlay()
 	ATDGameState* state = Cast<ATDGameState>(GetWorld()->GetGameState());
 	state->player = this;
 
+	Initialize();
+}
+
+// Called to bind functionality to input
+void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	OnInputBindDelegate.Broadcast(Cast<UEnhancedInputComponent>(PlayerInputComponent), Cast<ATDRPGPlayerController>(GetController()));
+}
+
+void ATDRPGPlayer::Initialize()
+{
 	UGameInstance* GameInst = GetGameInstance();
 
 	// 데이터 반영
@@ -88,10 +101,10 @@ void ATDRPGPlayer::BeginPlay()
 	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
 	dataComp->CharID = Player->GetPlayerData().CharID;
 
-	PRINT_LOG(TEXT("Player Char ID : %s"), *dataComp->CharID);
 	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, *dataComp->CharID);
 	dataComp->Initialize(Player->Lv, Data);
 
+	// 캐릭터 동적 구성
 	FPrimaryAssetId ConfigID(CommonConst::AssetType_CharacterConfig, *dataComp->CharID);
 	UPrimaryDataAsset* LoadedDataAsset = Database->LoadPrimaryAssetData(ConfigID);
 
@@ -111,7 +124,6 @@ void ATDRPGPlayer::BeginPlay()
 	MeshComp->SetAnimInstanceClass(Config->Animation.Get());
 	animInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
 
-
 	// UI 호출
 	UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>();
 	UIManager->GetUI<UTDRPGUWStatusBar>(
@@ -122,17 +134,9 @@ void ATDRPGPlayer::BeginPlay()
 				UIStatusBar->AddToViewport();
 			})
 	);
-	
+
 
 	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
-}
-
-// Called to bind functionality to input
-void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	OnInputBindDelegate.Broadcast(Cast<UEnhancedInputComponent>(PlayerInputComponent), Cast<ATDRPGPlayerController>(GetController()));
 }
 
 void ATDRPGPlayer::InvokeAttackDelegate()

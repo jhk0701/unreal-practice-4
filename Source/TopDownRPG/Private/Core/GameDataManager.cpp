@@ -81,21 +81,25 @@ void UGameDataManager::GetLeveling(const FString& CharID, const int32 Lv, TArray
 		return;
 
 	// 현재 레벨이 어느 레벨 구간에 속하는지 구한다.
-	for (int32 i = 0; i < LevelRange[CharID].Array.Num(); i++)
+	int32 Count = LevelRange[CharID].Array.Num();
+	for (int32 i = 0; i < Count; i++)
 	{
-		if (LevelRange[CharID].Array[i] >= Lv)
+		int32 CurRange = LevelRange[CharID].Array[i];
+		int32 Size = 0;
+
+		// 1. 들어온 레벨이 현재 구간을 넘었는지 체크
+		if (Lv < CurRange)
+			break; // 현재 구간을 넘지 못했다면 for문 종료
+		else if (Lv == CurRange)
+			Size = 1;
+		else
 		{
-			// 해당 레벨 구간 - 현재 레벨 갯수를 배열에 넣는다.
-			int32 size = LevelRange[CharID].Array[i] - Lv;
-			OutLeveling.Add(size);
-			break;
+			// 2. 들어온 레벨이 현재 구간을 넘음. 다음 구간을 넘는지 확인
+			int32 NextRange = LevelRange[CharID].Array[i + 1];
+			Size = Lv < NextRange ? Lv - CurRange : NextRange - CurRange;
 		}
-		else 
-		{
-			// 이전 레벨 구간을 레벨링 배열에 넣는다
-			int32 size = LevelRange[CharID].Array[i + 1] - LevelRange[CharID].Array[i];
-			OutLeveling.Add(size);
-		}
+
+		OutLeveling.Add(Size);
 	}
 }
 

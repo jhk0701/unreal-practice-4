@@ -43,6 +43,14 @@ bool Status::TrySubtract(uint32 Value)
 	return true;
 }
 
+void Status::ChangeMaxValue(uint32 NewMaxValue)
+{
+	maxValue = NewMaxValue;
+	curValue = NewMaxValue;
+
+	OnValueChanged.Broadcast(NewMaxValue, NewMaxValue);
+}
+
 void Status::ChangeMaxValue(uint32 NewMaxValue, uint32 NewCurValue)
 {
 	maxValue = NewMaxValue;

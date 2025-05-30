@@ -54,6 +54,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void Initialize();
+
 	void InvokeAttackDelegate();
 	inline const TObjectPtr<UCharacterData> GetData() const { return dataComp; }
 

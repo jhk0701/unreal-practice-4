@@ -1,7 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Core/PlayerManager.h"
+#include "Core/GameDataManager.h"
+#include "Data/LevelingDataRow.h"
+
+#include "TopDownRPG/TopDownRPG.h"
 
 void UPlayerManager::LoadData()
 {
@@ -22,9 +25,25 @@ void UPlayerManager::LoadData()
 
 	Lv = PlayerData.CharLv;
 	
-	// TODO : Exp 계산
 
-	Exp = MakeUnique<Status>(200, PlayerData.CharExp);
+	// 레벨링 데이터 불러오기
+	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
+
+	TArray<int32> Leveling;
+	GameData->GetLeveling(PlayerData.CharID, Lv, Leveling);
+
+	// Exp 파트 더하기
+	uint32 MaxExp = 0;
+	int32 Count = Leveling.Num();
+	for (int32 i = 0; i < Count; i++)
+	{
+		FString Key = GameData->GetLevelingKey(PlayerData.CharID, Lv);
+		FLevelingDataRow* LevelData = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, *Key);
+		
+		MaxExp += LevelData->ExpDemand;
+	}
+
+	Exp = MakeUnique<Status>(MaxExp, PlayerData.CharExp);
 	CurrencyGold = MakeUnique<Currency>(PlayerData.Gold);
 
 	Exp->OnValueChanged.AddUObject(this, &UPlayerManager::CheckExp);
@@ -48,6 +67,13 @@ void UPlayerManager::CheckExp(uint32 Max, uint32 Current)
 void UPlayerManager::LevelUp()
 {
 	++Lv;
-	Exp->ChangeMaxValue(Exp->GetMaxValue() * 2, 0); // TODO : 레벨 관련 데이터 테이블 작성
+
+	// 레벨링 데이터에서 새로운 레벨의 경험치 요구량 받아오기
+	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
+	FString Key = GameData->GetLevelingKey(PlayerData.CharID, Lv);
+	FLevelingDataRow* LevelData = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, *Key);
+
+	uint32 MaxExp = Exp->GetMaxValue() + LevelData->ExpDemand;
+	Exp->ChangeMaxValue(MaxExp, 0);
 
 }

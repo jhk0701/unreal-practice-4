@@ -30,12 +30,8 @@ void UEndPhase::Enter()
 		UPlayerManager* PlayerData = GameInstance->GetSubsystem<UPlayerManager>();
 
 		// 골드 보상 수령
-		PRINT_LOG(TEXT("Cur Lv : %u, Exp : %u, Gold : %u"), PlayerData->Lv, PlayerData->Exp->GetCurrentValue(), PlayerData->CurrencyGold->GetCurrency());
-
 		PlayerData->CurrencyGold->Add(StageData->GoldReward);
 		PlayerData->Exp->Add(StageData->ExpReward);
-
-		PRINT_LOG(TEXT("After Lv : %u, Exp : %u, Gold : %u"), PlayerData->Lv, PlayerData->Exp->GetCurrentValue(), PlayerData->CurrencyGold->GetCurrency());
 	}
 
 	// 스테이지 종료 UI
