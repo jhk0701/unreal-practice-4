@@ -7,6 +7,9 @@
 #include "InGame/Dungeon/WavePhase.h"
 #include "InGame/Dungeon/EndPhase.h"
 
+#include "Core/GameDatabaseSystem.h"
+#include "Data/StageDataRow.h"
+
 #include "TopDownRPG/TopDownRPG.h"
 
 ADungeonGameState::ADungeonGameState()
@@ -72,7 +75,18 @@ void ADungeonGameState::OnEnemyDead()
 
 	if (EnemyCount == 0)
 	{
-		PRINT_LOG(TEXT("Game State Ended"));
-		Transition(EPhaseType::End);
+		PRINT_LOG(TEXT("Wave Ended"));
+		ProceedWave();
 	}
+}
+
+void ADungeonGameState::ProceedWave()
+{
+	// 현재 스테이지 데이터 로드
+	UGameDatabaseSystem* GameDatabase = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
+	FStageDataRow* StageData = GameDatabase->GetRow<FStageDataRow>(ETableType::Stage, *CurStageId);
+	
+	// CurWaveIdx 가 마지막 Idx면 종료
+	// Wave 재개 CurWaveIdx는 Wave Exit에서 +1
+	Transition(StageData->EnemyListPerWave.Num() - 1 == CurWaveIdx ? EPhaseType::End : EPhaseType::Wave);
 }

@@ -36,7 +36,7 @@ public:
 	EStageResult StageResult = EStageResult::Cleared;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Wave)
-	FString CurStageID;
+	FString CurStageId;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Wave)
 	int32 CurWaveIdx = 0;
@@ -76,5 +76,7 @@ public:
 	const inline int32 GetEnemyCount() { return EnemyCount; }
 	
 	void OnEnemyDead();
+
+	void ProceedWave();
 
 };

@@ -11,7 +11,7 @@ void UStartPhase::Enter()
 	ADungeonGameState* GameState = Cast<ADungeonGameState>(State);
 	
 	// 초기화
-	GameState->CurStageID = TEXT("1001"); // TODO : 스테이지 ID 매직넘버 제거
+	GameState->CurStageId = TEXT("1002"); // TODO : 스테이지 ID 매직넘버 제거
 	GameState->CurWaveIdx = 0;
 
 	GameState->Transition(EPhaseType::Wave);

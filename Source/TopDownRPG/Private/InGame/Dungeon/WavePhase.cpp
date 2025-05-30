@@ -12,7 +12,7 @@ void UWavePhase::Enter()
 
 	// 현재 스테이지의 웨이브 데이터 받아오기
 	UGameDatabaseSystem* GameDatabase = GameState->GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
-	FStageDataRow* StageData = GameDatabase->GetRow<FStageDataRow>(ETableType::Stage, *GameState->CurStageID);
+	FStageDataRow* StageData = GameDatabase->GetRow<FStageDataRow>(ETableType::Stage, *GameState->CurStageId);
 
 	// 데이터에 따라 적 소환
 	FInnerIntArray EnemyList = StageData->EnemyListPerWave[GameState->CurWaveIdx];
@@ -21,7 +21,6 @@ void UWavePhase::Enter()
 	{
 		for (int32 j = 0; j < Spawn.Array[i]; j++)
 			GameState->SpawnEnemy(FString::Printf(TEXT("%d"), EnemyList.Array[i]));
-		
 	}
 	
 }
@@ -29,6 +28,5 @@ void UWavePhase::Enter()
 void UWavePhase::Exit()
 {
 	ADungeonGameState* GameState = Cast<ADungeonGameState>(State);
-
 	++GameState->CurWaveIdx;
 }
