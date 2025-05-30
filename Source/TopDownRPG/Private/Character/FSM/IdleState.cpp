@@ -6,7 +6,7 @@
 #include "Character/TDRPGEnemy.h"
 #include "Kismet/GameplayStatics.h"
 
-#include "Core/DungeonGameMode.h"
+#include "InGame/Dungeon/DungeonGameMode.h"
 #include "TopDownRPG/TopDownRPG.h"
 
 void UIdleState::Enter()

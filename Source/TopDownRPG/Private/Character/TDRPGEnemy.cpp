@@ -8,7 +8,7 @@
 #include <Components/SphereComponent.h>
 
 #include "CommonConst.h"
-#include "Core/DungeonGameState.h"
+#include "InGame/Dungeon/DungeonGameState.h"
 #include "Core/GameDataManager.h"
 #include "Data/CharacterDataRow.h"
 

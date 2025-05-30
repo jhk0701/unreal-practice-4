@@ -2,7 +2,7 @@
 
 
 #include "InGame/Dungeon/WavePhase.h"
-#include "Core/DungeonGameState.h"
+#include "InGame/Dungeon/DungeonGameState.h"
 #include "Core/GameDataManager.h"
 #include "Data/StageDataRow.h"
 

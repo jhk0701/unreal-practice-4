@@ -2,7 +2,7 @@
 
 
 #include "UI/TDRPGUWStageResult.h"
-#include "Core/DungeonGameMode.h"
+#include "InGame/Dungeon/DungeonGameMode.h"
 
 #include <Components/Button.h>
 #include <Components/TextBlock.h>

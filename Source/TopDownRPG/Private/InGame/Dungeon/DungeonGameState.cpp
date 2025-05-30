@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Core/DungeonGameState.h"
-#include "Character/TDRPGEnemy.h"
+#include "InGame/Dungeon/DungeonGameState.h"
 #include "InGame/Dungeon/StartPhase.h"
 #include "InGame/Dungeon/WavePhase.h"
 #include "InGame/Dungeon/EndPhase.h"
+#include "Character/TDRPGEnemy.h"
 
 #include "Core/GameDataManager.h"
 #include "Data/StageDataRow.h"

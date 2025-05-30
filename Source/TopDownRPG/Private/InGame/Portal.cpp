@@ -4,7 +4,7 @@
 #include "InGame/Portal.h"
 #include <Components/BoxComponent.h>
 #include <Components/CapsuleComponent.h>
-#include "Core/LobbyGameMode.h"
+#include "InGame/Lobby/LobbyGameMode.h"
 
 APortal::APortal()
 {

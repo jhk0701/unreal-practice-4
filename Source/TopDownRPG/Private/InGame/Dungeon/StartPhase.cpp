@@ -2,7 +2,7 @@
 
 
 #include "InGame/Dungeon/StartPhase.h"
-#include "Core/DungeonGameState.h"
+#include "InGame/Dungeon/DungeonGameState.h"
 
 void UStartPhase::Enter()
 {

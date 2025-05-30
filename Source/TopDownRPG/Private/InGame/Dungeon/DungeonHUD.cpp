@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Core/DungeonHUD.h"
+#include "InGame/Dungeon/DungeonHUD.h"
+#include "InGame/Dungeon/DungeonGameState.h"
 #include "Core/UIManager.h"
-#include "Core/DungeonGameState.h"
 #include "UI/TDRPGUWStageResult.h"
 #include <Kismet/GameplayStatics.h>
 

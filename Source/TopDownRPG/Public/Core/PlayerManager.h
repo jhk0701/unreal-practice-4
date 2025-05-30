@@ -35,6 +35,14 @@ class TOPDOWNRPG_API UPlayerManager : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 	
+protected:
+	UPROPERTY(VisibleAnywhere)
+	FPlayerData PlayerData;
 
+public:
+	inline const FPlayerData& GetPlayerData() { return PlayerData; }
+	
+	void LoadData();
+	void SaveData();
 
 };

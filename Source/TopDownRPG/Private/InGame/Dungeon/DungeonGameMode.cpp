@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Core/DungeonGameMode.h"
-#include "Core/DungeonGameState.h"
+#include "InGame/Dungeon/DungeonGameMode.h"
+#include "InGame/Dungeon/DungeonGameState.h"
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
 #include "CommonConst.h"

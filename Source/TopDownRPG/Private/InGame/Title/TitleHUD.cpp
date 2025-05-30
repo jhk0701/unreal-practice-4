@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Core/TitleHUD.h"
+#include "InGame/Title/TitleHUD.h"
 #include "Core/UIManager.h"
 #include "UI/TDRPGUWTitle.h"
 #include "TopDownRPG/TopDownRPG.h"

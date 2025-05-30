@@ -2,7 +2,7 @@
 
 
 #include "UI/TDRPGUWTitle.h"
-#include "Core/TitleGameMode.h"
+#include "InGame/Title/TitleGameMode.h"
 #include <Components/Button.h>
 
 void UTDRPGUWTitle::NativeOnInitialized()

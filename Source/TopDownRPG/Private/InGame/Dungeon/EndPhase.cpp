@@ -2,7 +2,7 @@
 
 
 #include "InGame/Dungeon/EndPhase.h"
-#include "Core/DungeonHUD.h"
+#include "InGame/Dungeon/DungeonHUD.h"
 #include "Core/TDGameState.h"
 
 #include <GameFramework/PlayerController.h>
