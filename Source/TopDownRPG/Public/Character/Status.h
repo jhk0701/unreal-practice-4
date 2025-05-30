@@ -16,14 +16,14 @@ public:
 
 	FOnValueChanged OnValueChanged;
 
-	uint32 GetMaxValue() { return maxValue; }
-	uint32 GetCurrentValue() { return curValue; }
+	inline uint32 GetMaxValue() { return maxValue; }
+	inline uint32 GetCurrentValue() { return curValue; }
 
 	uint32 Add(uint32 Value);
 	uint32 Subtract(uint32 Value);
 	bool TrySubtract(uint32 Value);
 
-	void ChangeMaxValue(uint32 Value);
+	void ChangeMaxValue(uint32 NewMaxValue, uint32 NewCurValue);
 
 private:
 	uint32 maxValue;

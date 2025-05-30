@@ -59,7 +59,7 @@ void ATDRPGEnemy::BeginPlay()
 	if (UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>())
 	{
 		FCharacterDataRow* Data = GameData->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
-		dataComp->Initialize(1, 100, Data);
+		dataComp->Initialize(1, Data);
 	}
 
 	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGEnemy::Die);

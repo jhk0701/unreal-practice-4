@@ -9,6 +9,7 @@
 #include "Core/TDRPGPlayerController.h"
 #include "Core/TDGameState.h"
 #include "Core/GameDataManager.h"
+#include "Core/PlayerManager.h"
 #include "Core/UIManager.h"
 
 #include "UI/TDRPGUWStatusBar.h"
@@ -83,44 +84,44 @@ void ATDRPGPlayer::BeginPlay()
 	UGameInstance* GameInst = GetGameInstance();
 
 	// 데이터 반영
-	if (UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>())
-	{
-		// TODO : 플레이어 데이터 반영
-		FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
-		dataComp->Initialize(5, 0, Data);
-		
-		FPrimaryAssetId ConfigID(CommonConst::AssetType_CharacterConfig, *dataComp->CharID);
-		UPrimaryDataAsset* LoadedDataAsset = Database->LoadPrimaryAssetData(ConfigID);
+	UPlayerManager* Player = GameInst->GetSubsystem<UPlayerManager>();
+	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
+	dataComp->CharID = Player->GetPlayerData().CharID;
 
-		UCharacterConfig* Config = Cast<UCharacterConfig>(LoadedDataAsset);
-		
-		USkeletalMeshComponent* MeshComp = GetMesh();
+	PRINT_LOG(TEXT("Player Char ID : %s"), *dataComp->CharID);
+	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, *dataComp->CharID);
+	dataComp->Initialize(Player->Lv, Data);
 
-		if (Config->SkeletalMesh.IsPending())
-			Config->SkeletalMesh.LoadSynchronous();
+	FPrimaryAssetId ConfigID(CommonConst::AssetType_CharacterConfig, *dataComp->CharID);
+	UPrimaryDataAsset* LoadedDataAsset = Database->LoadPrimaryAssetData(ConfigID);
 
-		MeshComp->SetSkeletalMesh(Config->SkeletalMesh.Get());
-		MeshComp->SetRelativeLocationAndRotation(FVector(0, 0, -90.f), FRotator(0, -90.f, 0));
+	UCharacterConfig* Config = Cast<UCharacterConfig>(LoadedDataAsset);
 
-		if (Config->Animation.IsPending())
-			Config->Animation.LoadSynchronous();
+	USkeletalMeshComponent* MeshComp = GetMesh();
 
-		MeshComp->SetAnimInstanceClass(Config->Animation.Get());
-		animInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
-	}
+	if (Config->SkeletalMesh.IsPending())
+		Config->SkeletalMesh.LoadSynchronous();
+
+	MeshComp->SetSkeletalMesh(Config->SkeletalMesh.Get());
+	MeshComp->SetRelativeLocationAndRotation(FVector(0, 0, -90.f), FRotator(0, -90.f, 0));
+
+	if (Config->Animation.IsPending())
+		Config->Animation.LoadSynchronous();
+
+	MeshComp->SetAnimInstanceClass(Config->Animation.Get());
+	animInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
+
 
 	// UI 호출
-	if (UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>())
-	{
-		UIManager->GetUI<UTDRPGUWStatusBar>(
-			FOnLoadCompleted::CreateLambda( 
-				[this](UTDRPGUserWidget* Loaded){
-					UIStatusBar = Cast<UTDRPGUWStatusBar>(Loaded);
-					UIStatusBar->InitStatusBar(this);
-					UIStatusBar->AddToViewport();
-				})
-		);
-	}
+	UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>();
+	UIManager->GetUI<UTDRPGUWStatusBar>(
+		FOnLoadCompleted::CreateLambda(
+			[this](UTDRPGUserWidget* Loaded) {
+				UIStatusBar = Cast<UTDRPGUWStatusBar>(Loaded);
+				UIStatusBar->InitStatusBar(this);
+				UIStatusBar->AddToViewport();
+			})
+	);
 	
 
 	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);

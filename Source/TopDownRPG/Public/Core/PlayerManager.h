@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
+#include "Character/Status.h"
 #include "Property/Currency.h"
 #include "PlayerManager.generated.h"
 
@@ -39,6 +40,14 @@ class TOPDOWNRPG_API UPlayerManager : public UGameInstanceSubsystem
 	GENERATED_BODY()
 	
 public:
+	// 레벨
+	UPROPERTY()
+	uint32 Lv;
+	
+	// 경험치
+	TUniquePtr<Status> Exp;
+
+	// 골드
 	TUniquePtr<Currency> CurrencyGold;
 
 protected:
@@ -50,5 +59,10 @@ public:
 	
 	void LoadData();
 	void SaveData();
+
+	// 레벨 관리
+	inline void AddExp(uint32 Value) { Exp->Add(Value); }
+	void CheckExp(uint32 Max, uint32 Current);
+	void LevelUp();
 
 };

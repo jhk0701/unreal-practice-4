@@ -19,8 +19,8 @@ public:
 	Currency(uint32 InValue);
 	~Currency();
 
-	inline const virtual uint32 GetCurrency() { return Value; }
-	virtual void Add(uint32 InValue);
-	virtual bool SafeSub(uint32 InValue);
+	inline const uint32 GetCurrency() { return Value; }
+	void Add(uint32 InValue);
+	bool SafeSub(uint32 InValue);
 
 };

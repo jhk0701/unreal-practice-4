@@ -40,17 +40,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "ID")
 	FString CharID;
 
-	// 레벨
-	UPROPERTY()
-	uint32 Lv;
-
-	// 경험치
-	TUniquePtr<Status> Exp;
 	// 체력, 마나
 	TMap<EStatus, TUniquePtr<Status>> Stat;
 
 	// 힘, 민첩, 지능
-	UPROPERTY()
 	TMap<EAbility, uint32> Ability;
 
 	UPROPERTY()
@@ -61,11 +54,7 @@ public:
 public:	
 	UCharacterData();
 
-	void Initialize(uint32 InLv, uint32 InExp, FCharacterDataRow* InData);
-
-	inline void AddExp(uint32 Value) { Exp->Add(Value); }
-	void CheckExp(uint32 Max, uint32 Current);
-	void LevelUp();
+	void Initialize(uint32 InLv, FCharacterDataRow* InData);
 
 	inline bool TrySubtractStat(EStatus Type, uint32 Value) const { return Stat[Type]->TrySubtract(Value); }
 	inline void SubtractStat(EStatus Type, uint32 Value) { Stat[Type]->Subtract(Value); }
