@@ -15,9 +15,7 @@ Status::Status(uint32 InitMaxValue, uint32 InitCurrentValue)
 {
 }
 
-Status::~Status()
-{
-}
+Status::~Status(){}
 
 uint32 Status::Add(uint32 Value)
 {

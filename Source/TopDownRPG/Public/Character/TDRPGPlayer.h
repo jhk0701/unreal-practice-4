@@ -55,7 +55,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void InvokeAttackDelegate();
-	inline TObjectPtr<UCharacterData> GetData() const { return dataComp; }
+	inline const TObjectPtr<UCharacterData> GetData() const { return dataComp; }
 
 	void TakeDamage(int32 Damage);
 	void Die();

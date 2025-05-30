@@ -15,7 +15,12 @@ void UPlayerManager::LoadData()
 		TEXT("1001"),
 		5,
 		0,
+
+		// 재화 : 골드
+		uint32(100)
 	};
+
+	CurrencyGold = MakeUnique<Currency>(PlayerData.Gold);
 }
 
 void UPlayerManager::SaveData()

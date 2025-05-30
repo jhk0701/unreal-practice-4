@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
+#include "Property/Currency.h"
 #include "PlayerManager.generated.h"
 
 USTRUCT(BlueprintType)
@@ -23,7 +24,9 @@ struct FPlayerData
 	UPROPERTY()
 	int32 CharExp;
 
-	// TODO : 재화
+	UPROPERTY()
+	uint32 Gold;
+
 	// TODO : 인벤토리
 };
 
@@ -35,6 +38,9 @@ class TOPDOWNRPG_API UPlayerManager : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 	
+public:
+	TUniquePtr<Currency> CurrencyGold;
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	FPlayerData PlayerData;
