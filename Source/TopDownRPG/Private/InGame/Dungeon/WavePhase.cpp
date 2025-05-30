@@ -3,7 +3,7 @@
 
 #include "InGame/Dungeon/WavePhase.h"
 #include "Core/DungeonGameState.h"
-#include "Core/GameDatabaseSystem.h"
+#include "Core/GameDataManager.h"
 #include "Data/StageDataRow.h"
 
 void UWavePhase::Enter()
@@ -11,8 +11,8 @@ void UWavePhase::Enter()
 	ADungeonGameState* GameState = Cast<ADungeonGameState>(State);
 
 	// 현재 스테이지의 웨이브 데이터 받아오기
-	UGameDatabaseSystem* GameDatabase = GameState->GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
-	FStageDataRow* StageData = GameDatabase->GetRow<FStageDataRow>(ETableType::Stage, *GameState->CurStageId);
+	UGameDataManager* GameData = GameState->GetGameInstance()->GetSubsystem<UGameDataManager>();
+	FStageDataRow* StageData = GameData->GetRow<FStageDataRow>(ETableType::Stage, *GameState->CurStageId);
 
 	// 데이터에 따라 적 소환
 	FInnerIntArray EnemyList = StageData->EnemyListPerWave[GameState->CurWaveIdx];

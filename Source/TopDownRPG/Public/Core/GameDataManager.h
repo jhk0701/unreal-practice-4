@@ -8,7 +8,7 @@
 #include "Data/InnerIntArray.h"
 #include <Templates/EnableIf.h>
 #include <Engine/AssetManager.h>
-#include "GameDatabaseSystem.generated.h"
+#include "GameDataManager.generated.h"
 
 
 UENUM(BlueprintType)
@@ -28,7 +28,7 @@ DECLARE_ENUM_TO_STRING(ETableType);
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UGameDatabaseSystem : public UGameInstanceSubsystem
+class TOPDOWNRPG_API UGameDataManager : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 

@@ -5,7 +5,7 @@
 #include "Character/Status.h"
 #include "Data/CharacterDataRow.h"
 #include "Data/LevelingDataRow.h"
-#include "Core/GameDatabaseSystem.h"
+#include "Core/GameDataManager.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -29,13 +29,13 @@ void UCharacterData::Initialize(uint32 InLv, uint32 InExp, FCharacterDataRow* In
 	// 레벨링 반영
 	TArray<int32> leveling;
 
-	UGameDatabaseSystem* gameDB = GetWorld()->GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
-	gameDB->GetLeveling(CharID, Lv, leveling);
+	UGameDataManager* GameData = GetWorld()->GetGameInstance()->GetSubsystem<UGameDataManager>();
+	GameData->GetLeveling(CharID, Lv, leveling);
 
 	for (int32 i = 0; i < leveling.Num(); ++i)
 	{
-		FString key = gameDB->GetLevelingKey(CharID, i);
-		FLevelingDataRow* row = gameDB->GetRow<FLevelingDataRow>(ETableType::Leveling, FName(key));
+		FString key = GameData->GetLevelingKey(CharID, i);
+		FLevelingDataRow* row = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, FName(key));
 
 		exp += row->ExpDemand * leveling[i];
 

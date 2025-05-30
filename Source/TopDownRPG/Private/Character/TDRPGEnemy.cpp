@@ -9,7 +9,7 @@
 
 #include "CommonConst.h"
 #include "Core/DungeonGameState.h"
-#include "Core/GameDatabaseSystem.h"
+#include "Core/GameDataManager.h"
 #include "Data/CharacterDataRow.h"
 
 #include "TopDownRPG/TopDownRPG.h" // 디버깅용
@@ -56,9 +56,9 @@ void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (UGameDatabaseSystem* Database = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>())
+	if (UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>())
 	{
-		FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
+		FCharacterDataRow* Data = GameData->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
 		dataComp->Initialize(1, 100, Data);
 	}
 

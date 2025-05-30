@@ -9,7 +9,7 @@
 #include <Engine/AssetManager.h>
 #include <Engine/StreamableManager.h>
 #include "CommonConst.h"
-#include "UISubsystem.generated.h"
+#include "UIManager.generated.h"
 
 
 DECLARE_DELEGATE_OneParam(FOnLoadCompleted, UTDRPGUserWidget*);
@@ -18,7 +18,7 @@ DECLARE_DELEGATE_OneParam(FOnLoadCompleted, UTDRPGUserWidget*);
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UUISubsystem : public UGameInstanceSubsystem
+class TOPDOWNRPG_API UUIManager : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 

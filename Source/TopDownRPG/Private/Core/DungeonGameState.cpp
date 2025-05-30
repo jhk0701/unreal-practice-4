@@ -7,7 +7,7 @@
 #include "InGame/Dungeon/WavePhase.h"
 #include "InGame/Dungeon/EndPhase.h"
 
-#include "Core/GameDatabaseSystem.h"
+#include "Core/GameDataManager.h"
 #include "Data/StageDataRow.h"
 
 #include "TopDownRPG/TopDownRPG.h"
@@ -83,8 +83,8 @@ void ADungeonGameState::OnEnemyDead()
 void ADungeonGameState::ProceedWave()
 {
 	// 현재 스테이지 데이터 로드
-	UGameDatabaseSystem* GameDatabase = GetGameInstance()->GetSubsystem<UGameDatabaseSystem>();
-	FStageDataRow* StageData = GameDatabase->GetRow<FStageDataRow>(ETableType::Stage, *CurStageId);
+	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
+	FStageDataRow* StageData = GameData->GetRow<FStageDataRow>(ETableType::Stage, *CurStageId);
 	
 	// CurWaveIdx 가 마지막 Idx면 종료
 	// Wave 재개 CurWaveIdx는 Wave Exit에서 +1

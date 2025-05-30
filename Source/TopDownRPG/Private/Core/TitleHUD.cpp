@@ -2,7 +2,7 @@
 
 
 #include "Core/TitleHUD.h"
-#include "Core/UISubsystem.h"
+#include "Core/UIManager.h"
 #include "UI/TDRPGUWTitle.h"
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -19,14 +19,12 @@ void ATitleHUD::BeginPlay()
 
 void ATitleHUD::Initialize()
 {
-	UUISubsystem* uiSys= GetGameInstance()->GetSubsystem<UUISubsystem>();
-	uiSys->GetUI<UTDRPGUWTitle>(FOnLoadCompleted::CreateUObject(this, &ATitleHUD::InitTitleUI));
+	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
+	UI->GetUI<UTDRPGUWTitle>(FOnLoadCompleted::CreateUObject(this, &ATitleHUD::InitTitleUI));
 }
 
 void ATitleHUD::InitTitleUI(UTDRPGUserWidget* TitleUI)
 {
-	if (UTDRPGUWTitle* title = Cast<UTDRPGUWTitle>(TitleUI)) 
-	{
-		title->AddToViewport();
-	}
+	if (UTDRPGUWTitle* Title = Cast<UTDRPGUWTitle>(TitleUI)) 
+		Title->AddToViewport();
 }

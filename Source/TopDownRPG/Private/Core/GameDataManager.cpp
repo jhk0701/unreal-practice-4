@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Core/GameDatabaseSystem.h"
+#include "Core/GameDataManager.h"
 #include "Data/LevelingDataRow.h"
 #include "CommonConst.h"
 #include <Engine/DataTable.h>
@@ -9,7 +9,7 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-void UGameDatabaseSystem::Initialize(FSubsystemCollectionBase& Collection)
+void UGameDataManager::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 
@@ -28,7 +28,7 @@ FString EnumToString(ETableType EnumValue)
 	return EnumPtr->GetDisplayNameTextByIndex((int32)EnumValue).ToString();
 }
 
-void UGameDatabaseSystem::LoadGameDatas()
+void UGameDataManager::LoadGameDatas()
 {
 	FStreamableManager& stream = UAssetManager::Get().GetStreamableManager();
 
@@ -54,7 +54,7 @@ void UGameDatabaseSystem::LoadGameDatas()
 	ProcessLevelData();
 }
 
-void UGameDatabaseSystem::ProcessLevelData()
+void UGameDataManager::ProcessLevelData()
 {
 	TArray<FName> keys = GameDatabase[ETableType::Leveling]->GetRowNames();
 
@@ -72,7 +72,7 @@ void UGameDatabaseSystem::ProcessLevelData()
 	}
 }
 
-void UGameDatabaseSystem::GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling)
+void UGameDataManager::GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling)
 {
 	// 초기화
 	OutLeveling.Empty(); // 이 배열을 가지고 외부에서 스펙을 더한다.
@@ -99,13 +99,13 @@ void UGameDatabaseSystem::GetLeveling(const FString& CharID, const int32 Lv, TAr
 	}
 }
 
-const FString UGameDatabaseSystem::GetLevelingKey(const FString& CharID, const int32 Index)
+const FString UGameDataManager::GetLevelingKey(const FString& CharID, const int32 Index)
 {
 	int32 range = LevelRange[CharID].Array[Index];
 	return CharID + FString::Printf(TEXT("%03d"), range);
 }
 
-UPrimaryDataAsset* UGameDatabaseSystem::LoadPrimaryAssetData(const FPrimaryAssetId& ID)
+UPrimaryDataAsset* UGameDataManager::LoadPrimaryAssetData(const FPrimaryAssetId& ID)
 {
 	UAssetManager& Manager = UAssetManager::Get();
 

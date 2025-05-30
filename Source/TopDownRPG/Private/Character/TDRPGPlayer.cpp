@@ -8,8 +8,8 @@
 #include "CommonConst.h"
 #include "Core/TDRPGPlayerController.h"
 #include "Core/TDGameState.h"
-#include "Core/GameDatabaseSystem.h"
-#include "Core/UISubsystem.h"
+#include "Core/GameDataManager.h"
+#include "Core/UIManager.h"
 
 #include "UI/TDRPGUWStatusBar.h"
 #include "Data/CharacterDataRow.h"
@@ -83,7 +83,7 @@ void ATDRPGPlayer::BeginPlay()
 	UGameInstance* GameInst = GetGameInstance();
 
 	// 데이터 반영
-	if (UGameDatabaseSystem* Database = GameInst->GetSubsystem<UGameDatabaseSystem>())
+	if (UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>())
 	{
 		// TODO : 플레이어 데이터 반영
 		FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
@@ -105,14 +105,14 @@ void ATDRPGPlayer::BeginPlay()
 		if (Config->Animation.IsPending())
 			Config->Animation.LoadSynchronous();
 
-		MeshComp->SetAnimClass(Config->Animation.Get());
+		MeshComp->SetAnimInstanceClass(Config->Animation.Get());
 		animInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
 	}
 
 	// UI 호출
-	if (UUISubsystem* UISystem = GameInst->GetSubsystem<UUISubsystem>()) 
+	if (UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>())
 	{
-		UISystem->GetUI<UTDRPGUWStatusBar>(
+		UIManager->GetUI<UTDRPGUWStatusBar>(
 			FOnLoadCompleted::CreateLambda( 
 				[this](UTDRPGUserWidget* Loaded){
 					UIStatusBar = Cast<UTDRPGUWStatusBar>(Loaded);

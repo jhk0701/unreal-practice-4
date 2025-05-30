@@ -2,7 +2,7 @@
 
 
 #include "Core/DungeonHUD.h"
-#include "Core/UISubsystem.h"
+#include "Core/UIManager.h"
 #include "Core/DungeonGameState.h"
 #include "UI/TDRPGUWStageResult.h"
 #include <Kismet/GameplayStatics.h>
@@ -10,10 +10,10 @@
 
 void ADungeonHUD::ShowResultUI()
 {
-	UUISubsystem* uiSys = UGameplayStatics::GetGameInstance(GetWorld())->GetSubsystem<UUISubsystem>();
+	UUIManager* UI = UGameplayStatics::GetGameInstance(GetWorld())->GetSubsystem<UUIManager>();
 
-	if (uiSys)
-		uiSys->GetUI<UTDRPGUWStageResult>(FOnLoadCompleted::CreateUObject(this, &ADungeonHUD::InitResultUI));
+	if (UI)
+		UI->GetUI<UTDRPGUWStageResult>(FOnLoadCompleted::CreateUObject(this, &ADungeonHUD::InitResultUI));
 }
 
 void ADungeonHUD::InitResultUI(UTDRPGUserWidget* ui)
@@ -21,9 +21,7 @@ void ADungeonHUD::InitResultUI(UTDRPGUserWidget* ui)
 	if (UTDRPGUWStageResult* stageResult = Cast<UTDRPGUWStageResult>(ui)) 
 	{
 		if(ADungeonGameState* gameState = Cast<ADungeonGameState>(UGameplayStatics::GetGameState(GetWorld())))
-		{
 			stageResult->SetResult(gameState->StageResult == EStageResult::Cleared);
-		}
 		
 		stageResult->AddToViewport();
 	}
