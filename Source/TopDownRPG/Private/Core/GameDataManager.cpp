@@ -9,15 +9,6 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-void UGameDataManager::Initialize(FSubsystemCollectionBase& Collection)
-{
-	Super::Initialize(Collection);
-
-	// 게임 데이터 준비
-	// 데이터 테이블 로드
-	LoadGameDatas();
-}
-
 FString EnumToString(ETableType EnumValue)
 {
     const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ETableType"), true);
@@ -30,24 +21,29 @@ FString EnumToString(ETableType EnumValue)
 
 void UGameDataManager::LoadGameDatas()
 {
-	FStreamableManager& stream = UAssetManager::Get().GetStreamableManager();
+	// 게임 데이터 준비
+	// 데이터 테이블 로드
+	FStreamableManager& Stream = UAssetManager::Get().GetStreamableManager();
 
 	// 0. 로드할 에셋들
-	int32 cnt = (int32)ETableType::COUNT;
+	int32 Cnt = (int32)ETableType::COUNT;
 	
-	for (int32 i = 0; i < cnt; ++i) 
+	for (int32 i = 0; i < Cnt; ++i)
 	{
-		ETableType table = (ETableType)(i);
+		ETableType Table = (ETableType)(i);
 
 		// 1. 경로에서 에셋 로드
-		FSoftObjectPath path(FString::Format(*CommonConst::PATH_FORMAT_DATA_TABLE, { EnumToString(table) }));
+		FSoftObjectPath Path(FString::Format(*CommonConst::PATH_FORMAT_DATA_TABLE, { EnumToString(Table) }));
 
 		// 비동기 방식 -> 동기 방식으로 변경
-		auto handle = stream.RequestSyncLoad(path);
-
+		auto handle = Stream.RequestSyncLoad(Path);
+		
 		// 2. 로드한 에셋 캐싱
-		if (UDataTable* loaded = Cast<UDataTable>(path.ResolveObject()))
-			GameDatabase.Add(table, loaded);
+		if (UDataTable* loaded = Cast<UDataTable>(Path.ResolveObject()))
+		{
+			GameDatabase.Add(Table, loaded);
+			PRINT_LOG(TEXT("Table Loaded"));
+		}
 	}
 
 	// 로드한 데이터 후처리
@@ -105,8 +101,8 @@ void UGameDataManager::GetLeveling(const FString& CharID, const int32 Lv, TArray
 
 const FString UGameDataManager::GetLevelingKey(const FString& CharID, const int32 Index)
 {
-	int32 range = LevelRange[CharID].Array[Index];
-	return CharID + FString::Printf(TEXT("%03d"), range);
+	int32 Range = LevelRange[CharID].Array[Index];
+	return CharID + FString::Printf(TEXT("%03d"), Range);
 }
 
 UPrimaryDataAsset* UGameDataManager::LoadPrimaryAssetData(const FPrimaryAssetId& ID)

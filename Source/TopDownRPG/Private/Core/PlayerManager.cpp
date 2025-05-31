@@ -34,10 +34,10 @@ void UPlayerManager::LoadData()
 
 	// Exp 파트 더하기
 	uint32 MaxExp = 0;
-	int32 Count = Leveling.Num();
-	for (int32 i = 0; i < Count; i++)
+	int32 Cnt = Leveling.Num();
+	for (int32 i = 0; i < Cnt; i++)
 	{
-		FString Key = GameData->GetLevelingKey(PlayerData.CharID, Lv);
+		FString Key = GameData->GetLevelingKey(PlayerData.CharID, i);
 		FLevelingDataRow* LevelData = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, *Key);
 		
 		MaxExp += LevelData->ExpDemand;
@@ -47,6 +47,8 @@ void UPlayerManager::LoadData()
 	CurrencyGold = MakeUnique<Currency>(PlayerData.Gold);
 
 	Exp->OnValueChanged.AddUObject(this, &UPlayerManager::CheckExp);
+
+	PRINT_LOG(TEXT("Player Data Loaded"));
 }
 
 void UPlayerManager::SaveData()

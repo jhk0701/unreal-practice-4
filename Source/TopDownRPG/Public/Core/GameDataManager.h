@@ -44,6 +44,8 @@ protected:
 
 
 public:
+	void LoadGameDatas();
+
 	// 외부에서 특정 테이블에 접근해서 열을 받기 위한 용도
 	template<typename T>
 	inline TEnableIf<TIsDerivedFrom<T, FTableRowBase>::Value, T*>::type
@@ -58,10 +60,5 @@ public:
 	UPrimaryDataAsset* LoadPrimaryAssetData(const FPrimaryAssetId& ID);
 
 protected:
-	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-
-	void LoadGameDatas();
-
-	// Data Table
 	void ProcessLevelData();
 };
