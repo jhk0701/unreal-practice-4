@@ -22,6 +22,7 @@ enum class EStageResult : uint8
 	Cleared,
 	Failed
 };
+
 /**
  * 
  */

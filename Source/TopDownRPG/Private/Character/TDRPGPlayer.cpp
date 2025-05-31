@@ -114,14 +114,18 @@ void ATDRPGPlayer::Initialize()
 
 	USkeletalMeshComponent* MeshComp = GetMesh();
 
+	/*
 	if (Config->SkeletalMesh.IsPending())
 		Config->SkeletalMesh.LoadSynchronous();
+	*/
 
 	MeshComp->SetSkeletalMesh(Config->SkeletalMesh.Get());
 	MeshComp->SetRelativeLocationAndRotation(FVector(0, 0, -90.f), FRotator(0, -90.f, 0));
 
+	/*
 	if (Config->Animation.IsPending())
 		Config->Animation.LoadSynchronous();
+	*/
 
 	MeshComp->SetAnimInstanceClass(Config->Animation.Get());
 	animInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
