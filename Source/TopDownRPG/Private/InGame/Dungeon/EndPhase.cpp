@@ -17,7 +17,8 @@
 void UEndPhase::Enter()
 {
 	ADungeonGameState* GameState = Cast<ADungeonGameState>(State);
-	
+	// GameState->EnemyCount
+
 	// 클리어 시, 스테이지 보상
 	if (GameState->StageResult == EStageResult::Cleared) 
 	{
@@ -35,9 +36,9 @@ void UEndPhase::Enter()
 	}
 
 	// 스테이지 종료 UI
-	APlayerController* controller = UGameplayStatics::GetPlayerController(State->GetWorld(), 0);
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(State->GetWorld(), 0);
 	
-	if(ADungeonHUD* hud = Cast<ADungeonHUD>(controller->GetHUD()))
+	if(ADungeonHUD* hud = Cast<ADungeonHUD>(Controller->GetHUD()))
 	{
 		hud->ShowResultUI();
 	}

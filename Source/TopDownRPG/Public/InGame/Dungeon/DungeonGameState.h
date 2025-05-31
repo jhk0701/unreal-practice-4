@@ -41,21 +41,17 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Wave)
 	int32 CurWaveIdx = 0;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = EnemySpawn)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySpawn")
 	TSubclassOf<class ATDRPGEnemy> enemyFactory;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "EnemySpawn")
+	int32 EnemyCount = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySpawn|Setting")
 	FVector spawnPoint = FVector::ZeroVector;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySpawn|Setting")
 	float spawningRadius = 500.f;
-
-	// 임시 적 캐릭터 관리용
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "EnemySpawn|SettingTemp")
-	int32 EnemyCount = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySpawn|SettingTemp")
-	int32 numberOfEnemy = 5;
 
 
 protected:
@@ -78,5 +74,7 @@ public:
 	void OnEnemyDead();
 
 	void ProceedWave();
+
+	void FinishStage(EStageResult InResult);
 
 };

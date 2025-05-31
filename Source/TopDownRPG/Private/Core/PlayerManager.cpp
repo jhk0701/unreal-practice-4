@@ -24,7 +24,6 @@ void UPlayerManager::LoadData()
 	};
 
 	Lv = PlayerData.CharLv;
-	
 
 	// 레벨링 데이터 불러오기
 	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
@@ -47,8 +46,6 @@ void UPlayerManager::LoadData()
 	CurrencyGold = MakeUnique<Currency>(PlayerData.Gold);
 
 	Exp->OnValueChanged.AddUObject(this, &UPlayerManager::CheckExp);
-
-	PRINT_LOG(TEXT("Player Data Loaded"));
 }
 
 void UPlayerManager::SaveData()

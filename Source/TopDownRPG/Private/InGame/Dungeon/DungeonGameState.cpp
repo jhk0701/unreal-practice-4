@@ -88,5 +88,14 @@ void ADungeonGameState::ProceedWave()
 	
 	// CurWaveIdx 가 마지막 Idx면 종료
 	// Wave 재개 CurWaveIdx는 Wave Exit에서 +1
-	Transition(StageData->EnemyListPerWave.Num() - 1 == CurWaveIdx ? EPhaseType::End : EPhaseType::Wave);
+	if (StageData->EnemyListPerWave.Num() - 1 > CurWaveIdx)
+		Transition(EPhaseType::Wave);
+	else
+		FinishStage(EStageResult::Cleared);
+}
+
+void ADungeonGameState::FinishStage(EStageResult InResult)
+{
+	StageResult = InResult;
+	Transition(EPhaseType::End);
 }

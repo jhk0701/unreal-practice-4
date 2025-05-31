@@ -40,10 +40,7 @@ void UGameDataManager::LoadGameDatas()
 		
 		// 2. 로드한 에셋 캐싱
 		if (UDataTable* loaded = Cast<UDataTable>(Path.ResolveObject()))
-		{
 			GameDatabase.Add(Table, loaded);
-			PRINT_LOG(TEXT("Table Loaded"));
-		}
 	}
 
 	// 로드한 데이터 후처리

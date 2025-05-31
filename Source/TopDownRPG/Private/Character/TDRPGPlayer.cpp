@@ -12,6 +12,8 @@
 #include "Core/PlayerManager.h"
 #include "Core/UIManager.h"
 
+#include "InGame/Dungeon/DungeonGameState.h"
+
 #include "UI/TDRPGUWStatusBar.h"
 #include "Data/CharacterDataRow.h"
 #include "Data/CharacterConfig.h"
@@ -152,7 +154,9 @@ void ATDRPGPlayer::TakeDamage(int32 Damage)
 
 void ATDRPGPlayer::Die()
 {
-	PRINT_LOG(TEXT("%s is died"), *GetActorNameOrLabel());
+	// 던전이라면 스테이지 종료 : 결과 실패
+	if (ADungeonGameState* DungeonState = Cast<ADungeonGameState>(GetWorld()->GetGameState()))
+		DungeonState->FinishStage(EStageResult::Failed);
 }
 
 bool ATDRPGPlayer::GetMouseToWorld(FHitResult& OutResult)
