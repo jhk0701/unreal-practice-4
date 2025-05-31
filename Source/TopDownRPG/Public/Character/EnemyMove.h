@@ -18,12 +18,12 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement)
-	FVector velocity;
+	FVector Velocity;
 
 public:	
 	UEnemyMove();
 	void MoveTo(const FVector& Direction);
 	void StopAtLocation();
-	FVector GetVelocity() const { return velocity; }
+	FVector GetVelocity() const { return Velocity; }
 
 };

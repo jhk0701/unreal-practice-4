@@ -23,19 +23,19 @@ void UPlayerInteraction::SetupInputBinding(UEnhancedInputComponent* PlayerInputC
 void UPlayerInteraction::InvokeInteract(const FInputActionValue& Value)
 {
 	TArray<AActor*> Overlapped;
-	player->interactCollider->GetOverlappingActors(Overlapped, AActor::StaticClass());
+	Player->InteractCollider->GetOverlappingActors(Overlapped, AActor::StaticClass());
 
 	// 없으면 실행 중지
 	if (Overlapped.Num() < 1)
 		return;
 	
-	for (auto iter = Overlapped.CreateConstIterator(); iter; ++iter)
+	for (auto Iter = Overlapped.CreateConstIterator(); Iter; ++Iter)
 	{
 		// 첫번째 객체만 실행
-		if ((*iter)->Implements<UInteractable>()) 
+		if ((*Iter)->Implements<UInteractable>())
 		{
-			IInteractable* interactable = Cast<IInteractable>(*iter);
-			interactable->Interact();
+			IInteractable* Interactable = Cast<IInteractable>(*Iter);
+			Interactable->Interact();
 			return;
 		}
 	}

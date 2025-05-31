@@ -15,15 +15,15 @@ void UEnemyFSM::InitializeComponent()
 {
 	Super::InitializeComponent();
 
-	owner = Cast<ATDRPGEnemy>(GetOwner());
+	Owner = Cast<ATDRPGEnemy>(GetOwner());
 	
-	stateMap.Add(EEnemyState::Idle, NewObject<UIdleState>());
-	stateMap.Add(EEnemyState::Move, NewObject<UMoveState>());
-	stateMap.Add(EEnemyState::Attack, NewObject<UAttackState>());
-	stateMap.Add(EEnemyState::Dead, NewObject<UDeadState>());
+	StateMap.Add(EEnemyState::Idle, NewObject<UIdleState>());
+	StateMap.Add(EEnemyState::Move, NewObject<UMoveState>());
+	StateMap.Add(EEnemyState::Attack, NewObject<UAttackState>());
+	StateMap.Add(EEnemyState::Dead, NewObject<UDeadState>());
 
-	for (auto iter = stateMap.CreateConstIterator(); iter; ++iter)
-		iter->Value->Initialize(this);
+	for (auto Iter = StateMap.CreateConstIterator(); Iter; ++Iter)
+		Iter->Value->Initialize(this);
 }
 
 void UEnemyFSM::BeginPlay()
@@ -37,25 +37,25 @@ void UEnemyFSM::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (curState)
-		curState->Update(DeltaTime);
+	if (CurState)
+		CurState->Update(DeltaTime);
 }
 
-void UEnemyFSM::Transition(EEnemyState type)
+void UEnemyFSM::Transition(EEnemyState Type)
 {
-	if (curState)
-		curState->Exit();
+	if (CurState)
+		CurState->Exit();
 
-	curState = stateMap[type];
+	CurState = StateMap[Type];
 
-	curState->Enter();
+	CurState->Enter();
 }
 
 TObjectPtr<ATDRPGEnemy> UEnemyFSM::GetOwnerEnemy()
 {
-	if(!owner)
-		owner = Cast<ATDRPGEnemy>(GetOwner());
+	if(!Owner)
+		Owner = Cast<ATDRPGEnemy>(GetOwner());
 
-	return owner;
+	return Owner;
 }
 

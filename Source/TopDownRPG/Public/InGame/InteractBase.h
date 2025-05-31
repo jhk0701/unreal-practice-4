@@ -14,7 +14,7 @@ class TOPDOWNRPG_API AInteractBase : public AActor, public IInteractable
 	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Interaction)
-	TObjectPtr<class UBoxComponent> interactCollider;
+	TObjectPtr<class UBoxComponent> InteractCollider;
 
 	// TODO : 접근 시 활성화되는 인터랙션 UI 추가
 

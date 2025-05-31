@@ -19,22 +19,22 @@ void UMoveState::Update(float DeltaTime)
 {
 	Super::Update(DeltaTime);
 
-	ATDRPGEnemy* owner = machine->GetOwnerEnemy();
+	ATDRPGEnemy* Owner = Machine->GetOwnerEnemy();
 
-	FVector targetLoc = owner->target->GetActorLocation();
-	FVector ownerLoc = owner->GetActorLocation();
+	FVector TargetLoc = Owner->Target->GetActorLocation();
+	FVector OwnerLoc = Owner->GetActorLocation();
 
-	FVector dir = targetLoc - ownerLoc;
-	float range = owner->attackComp->GetAttackRange();
+	FVector Dir = TargetLoc - OwnerLoc;
+	float Range = Owner->AttackComp->GetAttackRange();
 
-	if (dir.SquaredLength() > range * range)
+	if (Dir.SquaredLength() > Range * Range)
 	{
-		dir = owner->moveComp->Speed * DeltaTime * dir.GetSafeNormal();
-		owner->moveComp->MoveTo(dir);
+		Dir = Owner->MoveComp->Speed * DeltaTime * Dir.GetSafeNormal();
+		Owner->MoveComp->MoveTo(Dir);
 	}
 	else
 	{
-		machine->Transition(EEnemyState::Attack);
-		owner->moveComp->StopAtLocation();
+		Machine->Transition(EEnemyState::Attack);
+		Owner->MoveComp->StopAtLocation();
 	}
 }

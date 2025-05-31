@@ -14,19 +14,19 @@ class TOPDOWNRPG_API UEnemyAttack : public UActorComponent
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Owner)
-	TObjectPtr<class ATDRPGEnemy> enemy;
+	TObjectPtr<class ATDRPGEnemy> Enemy;
 
 	// TODO : 공격 - 스킬들 관리
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
 	bool bIsAttacking = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
-	float curCooldown = 0.0f;
+	float CurCooldown = 0.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack|Setting")
-	float attackCooldown = 1.f;
+	float AttackCooldown = 1.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack|Setting")
-	float attackRange = 100.0f;
+	float AttackRange = 100.0f;
 
 public:	
 	UEnemyAttack();
@@ -35,7 +35,7 @@ public:
 
 	void Attack();
 	inline bool IsAttacking() const { return bIsAttacking; }
-	inline float GetAttackRange() const { return attackRange; }
+	inline const float GetAttackRange() { return AttackRange; }
 
 	void ActivateHitCollider(bool bIsEnable);
 

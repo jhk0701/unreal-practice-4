@@ -20,35 +20,35 @@ ATDRPGEnemy::ATDRPGEnemy()
 	PrimaryActorTick.bCanEverTick = false;
 
 	// 서브 컴포넌트 설정
-	dataComp = CreateDefaultSubobject<UCharacterData>(TEXT("DataComp"));
-	attackComp = CreateDefaultSubobject<UEnemyAttack>(TEXT("AttackComp"));
-	moveComp = CreateDefaultSubobject<UEnemyMove>(TEXT("MoveComp"));
+	DataComp = CreateDefaultSubobject<UCharacterData>(TEXT("DataComp"));
+	AttackComp = CreateDefaultSubobject<UEnemyAttack>(TEXT("AttackComp"));
+	MoveComp = CreateDefaultSubobject<UEnemyMove>(TEXT("MoveComp"));
 
 	// 적 컴포넌트 구성
-	collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
-	SetRootComponent(collider);
-	collider->InitCapsuleSize(20, 90);
+	Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
+	SetRootComponent(Collider);
+	Collider->InitCapsuleSize(20, 90);
 	
-	skinMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
-	skinMesh->SetupAttachment(collider);
+	SkinMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+	SkinMesh->SetupAttachment(Collider);
 	
 	// TODO : 데이터 기반 메쉬 불러오기
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempMesh(TEXT("SkeletalMesh'/Game/Characters/Mannequin_UE4/Meshes/SK_Mannequin.SK_Mannequin'"));
-	if(tempMesh.Succeeded())
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh(TEXT("SkeletalMesh'/Game/Characters/Mannequin_UE4/Meshes/SK_Mannequin.SK_Mannequin'"));
+	if(TempMesh.Succeeded())
 	{
-		skinMesh->SetSkeletalMesh(tempMesh.Object);
-		skinMesh->SetRelativeLocationAndRotation(FVector(0,0,-90.f), FRotator(0, -90.0f, 0));
+		SkinMesh->SetSkeletalMesh(TempMesh.Object);
+		SkinMesh->SetRelativeLocationAndRotation(FVector(0,0,-90.f), FRotator(0, -90.0f, 0));
 	}
 
-	stateMachine = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSMComp"));
+	StateMachine = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSMComp"));
 
 	Tags.Add(CommonConst::EnemyTag);
 
 	// 임시 히트박스
-	hitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
-	hitCollider->SetupAttachment(RootComponent);
-	hitCollider->SetRelativeLocation(FVector(70.f, 0, 0));
-	hitCollider->SetSphereRadius(50.f);
+	HitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
+	HitCollider->SetupAttachment(RootComponent);
+	HitCollider->SetRelativeLocation(FVector(70.f, 0, 0));
+	HitCollider->SetSphereRadius(50.f);
 }
 
 // Called when the game starts or when spawned
@@ -58,27 +58,27 @@ void ATDRPGEnemy::BeginPlay()
 
 	if (UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>())
 	{
-		FCharacterDataRow* Data = GameData->GetRow<FCharacterDataRow>(ETableType::Character, FName(dataComp->CharID));
-		dataComp->Initialize(1, Data);
+		FCharacterDataRow* Data = GameData->GetRow<FCharacterDataRow>(ETableType::Character, FName(DataComp->CharID));
+		DataComp->Initialize(1, Data);
 	}
 
-	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGEnemy::Die);
+	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGEnemy::Die);
 
-	animInst = Cast<UEnemyAnim>(skinMesh->GetAnimInstance());
+	AnimInst = Cast<UEnemyAnim>(SkinMesh->GetAnimInstance());
 }
 
 void ATDRPGEnemy::TakeDamage(int32 Damage)
 {
 	// TODO : 언리얼 데미지 시스템으로 변경
-	dataComp->SubtractStat(EStatus::Hp, (uint32)Damage);
-	animInst->PlayHit();
+	DataComp->SubtractStat(EStatus::Hp, (uint32)Damage);
+	AnimInst->PlayHit();
 }
 
 void ATDRPGEnemy::Die()
 {
 	PRINT_LOG(TEXT("%s is died"), *GetActorNameOrLabel());
-	stateMachine->Transition(EEnemyState::Dead);
+	StateMachine->Transition(EEnemyState::Dead);
 
-	ADungeonGameState* state = Cast<ADungeonGameState>(GetWorld()->GetGameState());
-	state->OnEnemyDead();
+	ADungeonGameState* State = Cast<ADungeonGameState>(GetWorld()->GetGameState());
+	State->OnEnemyDead();
 }

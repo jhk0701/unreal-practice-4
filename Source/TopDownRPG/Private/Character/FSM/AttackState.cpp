@@ -17,21 +17,21 @@ void UAttackState::Update(float DeltaTime)
 	Super::Update(DeltaTime);
 
 	// 공격 행동
-	ATDRPGEnemy* owner = machine->GetOwnerEnemy();
-	UEnemyAttack* attack = owner->attackComp;
+	ATDRPGEnemy* Owner = Machine->GetOwnerEnemy();
+	UEnemyAttack* Attack = Owner->AttackComp;
 	
 	// TODO : 사망했는지 확인
-	ATDRPGPlayer* target = owner->target;
+	ATDRPGPlayer* Target = Owner->Target;
 
 	// 공격 가능한지 확인 : 거리 확인
-	FVector targetLoc = target->GetActorLocation();
-	FVector dir = targetLoc - owner->GetActorLocation();
-	float range = attack->GetAttackRange();
+	FVector TargetLoc = Target->GetActorLocation();
+	FVector Dir = TargetLoc - Owner->GetActorLocation();
+	float Range = Attack->GetAttackRange();
 	
-	if (dir.SquaredLength() > range * range && !attack->IsAttacking())
+	if (Dir.SquaredLength() > Range * Range && !Attack->IsAttacking())
 	{
-		machine->Transition(EEnemyState::Move); // 거리가 멀면 쫓기
+		Machine->Transition(EEnemyState::Move); // 거리가 멀면 쫓기
 	}
 	else
-		attack->Attack(); // 거리 내라면 공격
+		Attack->Attack(); // 거리 내라면 공격
 }

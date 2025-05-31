@@ -10,5 +10,5 @@ void UDeadState::Enter()
 {
 	Super::Enter();
 
-	machine->GetOwnerEnemy()->Destroy();
+	Machine->GetOwnerEnemy()->Destroy();
 }

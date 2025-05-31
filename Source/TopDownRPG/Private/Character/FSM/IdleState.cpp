@@ -13,13 +13,13 @@ void UIdleState::Enter()
 {
 	Super::Enter();
 
-	if(machine->GetOwnerEnemy())
+	if(Machine->GetOwnerEnemy())
 	{
 		// TODO : 하드코딩 제거
-		auto actor = UGameplayStatics::GetActorOfClass(machine->GetWorld(), ATDRPGPlayer::StaticClass());
-		machine->GetOwnerEnemy()->target = Cast<ATDRPGPlayer>(actor);
+		auto Actor = UGameplayStatics::GetActorOfClass(Machine->GetWorld(), ATDRPGPlayer::StaticClass());
+		Machine->GetOwnerEnemy()->Target = Cast<ATDRPGPlayer>(Actor);
 		
-		machine->Transition(EEnemyState::Move);
+		Machine->Transition(EEnemyState::Move);
 	}
 	else
 	{

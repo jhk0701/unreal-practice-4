@@ -10,30 +10,30 @@
 
 void UTDRPGUWStatusBar::InitStatusBar(ATDRPGPlayer* NewPlayer)
 {
-	player = NewPlayer;
-	PlayerNameLabel->SetText(FText::FromString(player->GetActorNameOrLabel()));
+	Player = NewPlayer;
+	PlayerNameLabel->SetText(FText::FromString(Player->GetActorNameOrLabel()));
 
-	UCharacterData* data = player->dataComp;
+	UCharacterData* Data = Player->DataComp;
 	
-	data->Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UTDRPGUWStatusBar::OnHpChanged);
-	data->Stat[EStatus::Mp]->OnValueChanged.AddUObject(this, &UTDRPGUWStatusBar::OnMpChanged);
+	Data->Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UTDRPGUWStatusBar::OnHpChanged);
+	Data->Stat[EStatus::Mp]->OnValueChanged.AddUObject(this, &UTDRPGUWStatusBar::OnMpChanged);
 
-	OnHpChanged(data->Stat[EStatus::Hp]->GetMaxValue(), data->Stat[EStatus::Hp]->GetCurrentValue());
-	OnMpChanged(data->Stat[EStatus::Mp]->GetMaxValue(), data->Stat[EStatus::Mp]->GetCurrentValue());
+	OnHpChanged(Data->Stat[EStatus::Hp]->GetMaxValue(), Data->Stat[EStatus::Hp]->GetCurrentValue());
+	OnMpChanged(Data->Stat[EStatus::Mp]->GetMaxValue(), Data->Stat[EStatus::Mp]->GetCurrentValue());
 }
 
 void UTDRPGUWStatusBar::OnHpChanged(uint32 Max, uint32 Current)
 {
-	float percent = Current > 0 ? Current / (float)Max : 0;
+	float Percent = Current > 0 ? Current / (float)Max : 0;
 
 	HealthLabel->SetText(FText::FromString(FString::Printf(TEXT("%u / %u"), Current, Max)));
-	HealthBar->SetPercent(percent);
+	HealthBar->SetPercent(Percent);
 }
 
 void UTDRPGUWStatusBar::OnMpChanged(uint32 Max, uint32 Current)
 {
-	float percent = Current > 0 ? Current / (float)Max : 0;
+	float Percent = Current > 0 ? Current / (float)Max : 0;
 
 	ManaLabel->SetText(FText::FromString(FString::Printf(TEXT("%u / %u"), Current, Max)));
-	ManaBar->SetPercent(percent);
+	ManaBar->SetPercent(Percent);
 }

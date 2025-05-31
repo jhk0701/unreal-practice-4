@@ -34,10 +34,10 @@ ATDRPGPlayer::ATDRPGPlayer()
 	PrimaryActorTick.bCanEverTick = false;
 	
 	// 서브 컴포넌트 설정
-	dataComp = CreateDefaultSubobject<UCharacterData>(TEXT("DataComp"));
-	moveComp = CreateDefaultSubobject<UPlayerMove>(TEXT("MoveComp"));
-	attackComp = CreateDefaultSubobject<UPlayerAttack>(TEXT("AttackComp"));
-	interactComp = CreateDefaultSubobject<UPlayerInteraction>(TEXT("InteractComp"));
+	DataComp = CreateDefaultSubobject<UCharacterData>(TEXT("DataComp"));
+	MoveComp = CreateDefaultSubobject<UPlayerMove>(TEXT("MoveComp"));
+	AttackComp = CreateDefaultSubobject<UPlayerAttack>(TEXT("AttackComp"));
+	InteractComp = CreateDefaultSubobject<UPlayerInteraction>(TEXT("InteractComp"));
 
 	// 충돌체 설정
 	GetCapsuleComponent()->InitCapsuleSize(20.0f, 90.0f);
@@ -50,38 +50,38 @@ ATDRPGPlayer::ATDRPGPlayer()
 	GetCharacterMovement()->bOrientRotationToMovement = true; // 캐릭터가 향하는 곳을 바라보도록
 
 	// 카메라
-	springArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	springArm->SetupAttachment(RootComponent);
-	springArm->SetUsingAbsoluteRotation(true); // 캐릭터가 회전해도 카메라 암은 회전하지 않도록 함
-	springArm->TargetArmLength = 350.0f;
-	springArm->SocketOffset = FVector(0, 0, 600.f);
-	springArm->bUsePawnControlRotation = false;
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	SpringArm->SetupAttachment(RootComponent);
+	SpringArm->SetUsingAbsoluteRotation(true); // 캐릭터가 회전해도 카메라 암은 회전하지 않도록 함
+	SpringArm->TargetArmLength = 350.0f;
+	SpringArm->SocketOffset = FVector(0, 0, 600.f);
+	SpringArm->bUsePawnControlRotation = false;
 
-	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	camera->SetupAttachment(springArm, springArm->SocketName);
-	camera->SetRelativeRotation(FRotator(-60, 0, 0));
-	camera->bUsePawnControlRotation = false;
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	Camera->SetupAttachment(SpringArm, SpringArm->SocketName);
+	Camera->SetRelativeRotation(FRotator(-60, 0, 0));
+	Camera->bUsePawnControlRotation = false;
 
 	Tags.Add(CommonConst::PlayerTag);
 
 	// 임시 히트박스
-	hitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
-	hitCollider->SetRelativeLocation(FVector(70.f, 0.0f, 0.0f));
-	hitCollider->SetSphereRadius(50.f);
-	hitCollider->SetupAttachment(RootComponent);
+	HitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
+	HitCollider->SetRelativeLocation(FVector(70.f, 0.0f, 0.0f));
+	HitCollider->SetSphereRadius(50.f);
+	HitCollider->SetupAttachment(RootComponent);
 
-	interactCollider = CreateDefaultSubobject<USphereComponent>(TEXT("InteractionCollider"));
-	interactCollider->SetSphereRadius(300);
-	interactCollider->SetCollisionProfileName(CommonConst::Interaction_ProfileName);
-	interactCollider->SetupAttachment(RootComponent);
+	InteractCollider = CreateDefaultSubobject<USphereComponent>(TEXT("InteractionCollider"));
+	InteractCollider->SetSphereRadius(300);
+	InteractCollider->SetCollisionProfileName(CommonConst::Interaction_ProfileName);
+	InteractCollider->SetupAttachment(RootComponent);
 }
 
 void ATDRPGPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ATDGameState* state = Cast<ATDGameState>(GetWorld()->GetGameState());
-	state->player = this;
+	ATDGameState* State = Cast<ATDGameState>(GetWorld()->GetGameState());
+	State->Player = this;
 
 	Initialize();
 }
@@ -101,13 +101,13 @@ void ATDRPGPlayer::Initialize()
 	// 데이터 반영
 	UPlayerManager* Player = GameInst->GetSubsystem<UPlayerManager>();
 	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
-	dataComp->CharID = Player->GetPlayerData().CharID;
+	DataComp->CharID = Player->GetPlayerData().CharID;
 
-	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, *dataComp->CharID);
-	dataComp->Initialize(Player->Lv, Data);
+	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, *DataComp->CharID);
+	DataComp->Initialize(Player->Lv, Data);
 
 	// 캐릭터 동적 구성
-	FPrimaryAssetId ConfigID(CommonConst::AssetType_CharacterConfig, *dataComp->CharID);
+	FPrimaryAssetId ConfigID(CommonConst::AssetType_CharacterConfig, *DataComp->CharID);
 	UPrimaryDataAsset* LoadedDataAsset = Database->LoadPrimaryAssetData(ConfigID);
 
 	UCharacterConfig* Config = Cast<UCharacterConfig>(LoadedDataAsset);
@@ -128,7 +128,7 @@ void ATDRPGPlayer::Initialize()
 	*/
 
 	MeshComp->SetAnimInstanceClass(Config->Animation.Get());
-	animInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
+	AnimInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
 
 	// UI 호출
 	UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>();
@@ -142,7 +142,7 @@ void ATDRPGPlayer::Initialize()
 	);
 
 
-	dataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
+	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
 }
 
 void ATDRPGPlayer::InvokeAttackDelegate()
@@ -152,8 +152,8 @@ void ATDRPGPlayer::InvokeAttackDelegate()
 
 void ATDRPGPlayer::TakeDamage(int32 Damage)
 {
-	dataComp->SubtractStat(EStatus::Hp, (uint32)Damage);
-	animInst->PlayHit();
+	DataComp->SubtractStat(EStatus::Hp, (uint32)Damage);
+	AnimInst->PlayHit();
 }
 
 void ATDRPGPlayer::Die()
@@ -166,18 +166,18 @@ void ATDRPGPlayer::Die()
 bool ATDRPGPlayer::GetMouseToWorld(FHitResult& OutResult)
 {
 	// 뷰포트 마우스 위치 -> 월드좌표로 변환
-	FVector worldPoint, worldDirection;
-
-	ATDRPGPlayerController* controller = Cast<ATDRPGPlayerController>(GetController());
-	if (!controller->DeprojectMousePositionToWorld(worldPoint, worldDirection))
+	FVector WorldPoint, WorldDirection;
+	
+	ATDRPGPlayerController* PlayerController = Cast<ATDRPGPlayerController>(GetController());
+	if (!PlayerController->DeprojectMousePositionToWorld(WorldPoint, WorldDirection))
 		return false;
 
-	FCollisionQueryParams params;
+	FCollisionQueryParams Params;
 
 	return GetWorld()->LineTraceSingleByChannel(
 		OutResult,
-		worldPoint,
-		worldPoint + worldDirection * 10000,
+		WorldPoint,
+		WorldPoint + WorldDirection * 10000,
 		ECC_GameTraceChannel1,
-		params);
+		Params);
 }

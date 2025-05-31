@@ -21,7 +21,7 @@ void UPlayerAttack::InitializeComponent()
 {
 	Super::InitializeComponent();
 
-	player->hitCollider->OnComponentBeginOverlap.AddDynamic(this, &UPlayerAttack::OnActorOverlaped);
+	Player->HitCollider->OnComponentBeginOverlap.AddDynamic(this, &UPlayerAttack::OnActorOverlaped);
 	ActivateHitCollider(false);
 }
 
@@ -39,37 +39,37 @@ void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)
 
 void UPlayerAttack::InvokeAttack()
 {
-	if (player->animInst->IsAttackPlaying())
+	if (Player->AnimInst->IsAttackPlaying())
 		return;
 
-	player->InvokeAttackDelegate(); // 이동 기능은 꺼질 것
+	Player->InvokeAttackDelegate(); // 이동 기능은 꺼질 것
 	
 	// 커서 방향으로 바라보도록
-	FHitResult hitResult;
-	player->GetMouseToWorld(hitResult);
+	FHitResult HitResult;
+	Player->GetMouseToWorld(HitResult);
 
-	FVector dir = hitResult.ImpactPoint - player->GetActorLocation();
-	player->SetActorRotation(dir.ToOrientationQuat());
+	FVector Dir = HitResult.ImpactPoint - Player->GetActorLocation();
+	Player->SetActorRotation(Dir.ToOrientationQuat());
 
 	// 애니메이션 재생
 	// TODO : 최적화 필요한지 체크
-	if (GetWorld()->GetTimerManager().IsTimerActive(attackResetTimer))
-		GetWorld()->GetTimerManager().ClearTimer(attackResetTimer);
+	if (GetWorld()->GetTimerManager().IsTimerActive(AttackResetTimer))
+		GetWorld()->GetTimerManager().ClearTimer(AttackResetTimer);
 
 	GetWorld()->GetTimerManager().SetTimer(
-		attackResetTimer, 
-		[this]() {this->attackCount = 0; }, 
-		resetInterval, 
+		AttackResetTimer,
+		[this]() { this->AttackCount = 0; }, 
+		ResetInterval, 
 		false);
 
 	// 애니메이션 재생
-	++attackCount;
-	player->animInst->PlayAttack(attackCount);
+	++AttackCount;
+	Player->AnimInst->PlayAttack(AttackCount);
 }
 
 void UPlayerAttack::ActivateHitCollider(bool bIsEnable)
 {
-	player->hitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics: ECollisionEnabled::NoCollision);
+	Player->HitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics: ECollisionEnabled::NoCollision);
 }
 
 void UPlayerAttack::OnActorOverlaped(
@@ -83,9 +83,9 @@ void UPlayerAttack::OnActorOverlaped(
 {
 	if(OtherActor && OtherActor->IsA<ATDRPGEnemy>())
 	{
-		ATDRPGEnemy* enemy = Cast<ATDRPGEnemy>(OtherActor);
-		int32 damage = player->dataComp->GetAttackPower();
+		ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(OtherActor);
+		int32 Damage = Player->DataComp->GetAttackPower();
 
-		enemy->TakeDamage(damage);
+		Enemy->TakeDamage(Damage);
 	}
 }

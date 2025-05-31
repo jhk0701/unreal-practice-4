@@ -22,11 +22,11 @@ void UCharacterAnimBase::NativeUpdateAnimation(float DeltaSeconds)
 
 void UCharacterAnimBase::SetAccel(const APawn* Pawn)
 {
-	FVector velocity = Pawn->GetVelocity().GetSafeNormal();
-	FVector forward = Pawn->GetActorForwardVector();
+	FVector Velocity = Pawn->GetVelocity().GetSafeNormal();
+	FVector Forward = Pawn->GetActorForwardVector();
 
-	double dir = FVector::DotProduct(velocity, forward);
-	Accel = (float)FMath::Max(dir, 0) * AccelScaler;
+	double Dir = FVector::DotProduct(Velocity, Forward);
+	Accel = (float)FMath::Max(Dir, 0) * AccelScaler;
 }
 
 void UCharacterAnimBase::SetIsDead(const APawn* Pawn)
@@ -36,10 +36,10 @@ void UCharacterAnimBase::SetIsDead(const APawn* Pawn)
 
 void UCharacterAnimBase::PlayAttack(const int32 Idx)
 {
-	Montage_Play(attackMontage);
+	Montage_Play(AttackMontage);
 }
 
 void UCharacterAnimBase::PlayHit()
 {
-	Montage_Play(hitMontage);
+	Montage_Play(HitMontage);
 }

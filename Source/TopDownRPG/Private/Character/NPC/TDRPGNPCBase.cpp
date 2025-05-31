@@ -13,24 +13,24 @@ ATDRPGNPCBase::ATDRPGNPCBase()
 	PrimaryActorTick.bCanEverTick = false;
 
 	// 기본 콜라이더
-	collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
-	collider->InitCapsuleSize(30, 90);
-	collider->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
-	collider->SetGenerateOverlapEvents(false);
+	Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
+	Collider->InitCapsuleSize(30, 90);
+	Collider->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
+	Collider->SetGenerateOverlapEvents(false);
 
-	SetRootComponent(collider);
+	SetRootComponent(Collider);
 
 	// 기본 메시
-	skinnedMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
-	skinnedMesh->SetupAttachment(RootComponent);
+	SkinnedMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+	SkinnedMesh->SetupAttachment(RootComponent);
 
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempMesh(TEXT("SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Quinn_Simple.SKM_Quinn_Simple'"));
-	if (tempMesh.Succeeded()) 
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh(TEXT("SkeletalMesh'/Game/Characters/Mannequins/Meshes/SKM_Quinn_Simple.SKM_Quinn_Simple'"));
+	if (TempMesh.Succeeded())
 	{
-		skinnedMesh->SetSkeletalMesh(tempMesh.Object);
-		skinnedMesh->SetRelativeLocationAndRotation(FVector(0,0,-90), FRotator(0, -90, 0));
+		SkinnedMesh->SetSkeletalMesh(TempMesh.Object);
+		SkinnedMesh->SetRelativeLocationAndRotation(FVector(0,0,-90), FRotator(0, -90, 0));
 	}
 
-	interactCollider->SetupAttachment(RootComponent);
+	InteractCollider->SetupAttachment(RootComponent);
 
 }

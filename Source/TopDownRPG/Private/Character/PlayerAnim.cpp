@@ -9,47 +9,47 @@
 
 void UPlayerAnim::SetIsDead(const APawn* Pawn)
 {
-	if (const ATDRPGPlayer* player = Cast<ATDRPGPlayer>(Pawn))
+	if (const ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Pawn))
 	{
-		bIsDead = player->GetData()->bIsDead;
+		bIsDead = Player->GetData()->bIsDead;
 	}
 }
 
 void UPlayerAnim::PlayAttack(int32 Idx)
 {
-	if (Montage_IsPlaying(attackMontage))
+	if (Montage_IsPlaying(AttackMontage))
 		return;
 
-	if (ATDRPGPlayer* player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
+	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
 	{
-		int cnt = attackMontage->GetNumSections();
-		cnt = cnt == 0 ? 1 : cnt;
-		player->PlayAnimMontage(attackMontage, 1.0f, FName(FString::Printf(TEXT("Attack_%d"), Idx % cnt)));
+		int Cnt = AttackMontage->GetNumSections();
+		Cnt = Cnt == 0 ? 1 : Cnt;
+		Player->PlayAnimMontage(AttackMontage, 1.0f, FName(FString::Printf(TEXT("Attack_%d"), Idx % Cnt)));
 	}
 }
 
 void UPlayerAnim::PlayHit()
 {
-	if (Montage_IsPlaying(hitMontage))
+	if (Montage_IsPlaying(HitMontage))
 		return;
 
-	if(ATDRPGPlayer* player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
+	if(ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
 	{
-		int cnt = hitMontage->GetNumSections();
-		int idx = FMath::RandRange(0, cnt - 1);
+		int Cnt = HitMontage->GetNumSections();
+		int Idx = FMath::RandRange(0, Cnt - 1);
 
-		player->PlayAnimMontage(hitMontage, 1.0f, FName(FString::Printf(TEXT("Hit_%d"), idx)));
+		Player->PlayAnimMontage(HitMontage, 1.0f, FName(FString::Printf(TEXT("Hit_%d"), Idx)));
 	}
 }
 
 void UPlayerAnim::OnAttackStarted()
 {
-	if (ATDRPGPlayer* player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
-		player->attackComp->ActivateHitCollider(true);
+	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
+		Player->AttackComp->ActivateHitCollider(true);
 }
 
 void UPlayerAnim::OnAttackEnded()
 {
-	if (ATDRPGPlayer* player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
-		player->attackComp->ActivateHitCollider(false);
+	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
+		Player->AttackComp->ActivateHitCollider(false);
 }

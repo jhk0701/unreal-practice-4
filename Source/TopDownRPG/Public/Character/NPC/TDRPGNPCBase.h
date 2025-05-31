@@ -13,10 +13,10 @@ class TOPDOWNRPG_API ATDRPGNPCBase : public AInteractBase
 	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Comp")
-	TObjectPtr<class UCapsuleComponent> collider;
+	TObjectPtr<class UCapsuleComponent> Collider;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Comp")
-	TObjectPtr<USkeletalMeshComponent> skinnedMesh;
+	TObjectPtr<USkeletalMeshComponent> SkinnedMesh;
 
 public:	
 	ATDRPGNPCBase();

@@ -16,10 +16,10 @@ void UPlayerMove::BeginPlay()
 {
 	Super::BeginPlay();
 
-	controller = Cast<ATDRPGPlayerController>(player->GetController());
-	moveComp = player->GetCharacterMovement();
+	Controller = Cast<ATDRPGPlayerController>(Player->GetController());
+	MoveComp = Player->GetCharacterMovement();
 
-	player->OnAttackCalled.AddUObject(this, &UPlayerMove::StopMove);
+	Player->OnAttackCalled.AddUObject(this, &UPlayerMove::StopMove);
 }
 
 void UPlayerMove::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -40,7 +40,7 @@ void UPlayerMove::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponen
 void UPlayerMove::InputClick(const FInputActionValue& InputValue)
 {
 	FHitResult hitResult;
-	if (player->GetMouseToWorld(hitResult))
+	if (Player->GetMouseToWorld(hitResult))
 	{
 		Destination = hitResult.ImpactPoint;
 		Destination.Z = 0.0f;
@@ -51,8 +51,8 @@ void UPlayerMove::InputClick(const FInputActionValue& InputValue)
 void UPlayerMove::StopMove()
 {
 	bIsWalking = false;
-	Destination = player->GetActorLocation();
-	moveComp->StopMovementImmediately();
+	Destination = Player->GetActorLocation();
+	MoveComp->StopMovementImmediately();
 }
 
 void UPlayerMove::Move(float DeltaTime)
@@ -60,19 +60,19 @@ void UPlayerMove::Move(float DeltaTime)
 	if (!bIsWalking) 
 		return;
 
-	FVector playerLoc = player->GetActorLocation();
-	playerLoc.Z = 0.0f;
+	FVector PlayerLoc = Player->GetActorLocation();
+	PlayerLoc.Z = 0.0f;
 		
-	FVector dir = (Destination - playerLoc);
+	FVector Dir = (Destination - PlayerLoc);
 
-	if (dir.SquaredLength() < ToleranceToDestination * ToleranceToDestination)
+	if (Dir.SquaredLength() < ToleranceToDestination * ToleranceToDestination)
 	{
 		bIsWalking = false;
 		return;
 	}
 
-	FVector input = DeltaTime * Speed * dir.GetSafeNormal();
-	moveComp->AddInputVector(input);
+	FVector Input = DeltaTime * Speed * Dir.GetSafeNormal();
+	MoveComp->AddInputVector(Input);
 }
 
 void UPlayerMove::InputDodge(const FInputActionValue& InputValue)
@@ -83,6 +83,6 @@ void UPlayerMove::InputDodge(const FInputActionValue& InputValue)
 void UPlayerMove::Dodge()
 {
 	StopMove();
-	moveComp->Launch(player->GetActorForwardVector() * DodgePower);
+	MoveComp->Launch(Player->GetActorForwardVector() * DodgePower);
 }
 

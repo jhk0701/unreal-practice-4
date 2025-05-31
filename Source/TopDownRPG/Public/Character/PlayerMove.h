@@ -12,7 +12,7 @@ class TOPDOWNRPG_API UPlayerMove : public UPlayerInputComponent
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = OwnerComp)
-	TObjectPtr<class UCharacterMovementComponent> moveComp;
+	TObjectPtr<class UCharacterMovementComponent> MoveComp;
 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement)

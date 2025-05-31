@@ -3,15 +3,15 @@
 
 #include "Character/Status.h"
 
-Status::Status(uint32 InitMaxValue)
-	: maxValue(InitMaxValue),
-	curValue(maxValue)
+Status::Status(uint32 InitMaxValue) : 
+	MaxValue(InitMaxValue),
+	CurValue(MaxValue)
 {
 }
 
-Status::Status(uint32 InitMaxValue, uint32 InitCurrentValue)
-	: maxValue(InitMaxValue),
-	curValue(InitCurrentValue)
+Status::Status(uint32 InitMaxValue, uint32 InitCurrentValue) : 
+	MaxValue(InitMaxValue),
+	CurValue(InitCurrentValue)
 {
 }
 
@@ -19,24 +19,25 @@ Status::~Status(){}
 
 uint32 Status::Add(uint32 Value)
 {
-	curValue = FMath::Min(curValue + Value, maxValue);
-	OnValueChanged.Broadcast(maxValue, curValue);
-	return curValue;
+	CurValue = FMath::Min(CurValue + Value, MaxValue);
+	OnValueChanged.Broadcast(MaxValue, CurValue);
+
+	return CurValue;
 }
 
 uint32 Status::Subtract(uint32 Value)
 {
-	if (curValue < Value)
-		Value = curValue;
+	if (CurValue < Value)
+		Value = CurValue;
 
-	curValue -= Value;
-	OnValueChanged.Broadcast(maxValue, curValue);
-	return curValue;
+	CurValue -= Value;
+	OnValueChanged.Broadcast(MaxValue, CurValue);
+	return CurValue;
 }
 
 bool Status::TrySubtract(uint32 Value)
 {
-	if (curValue < Value)
+	if (CurValue < Value)
 		return false;
 
 	Subtract(Value);
@@ -45,16 +46,16 @@ bool Status::TrySubtract(uint32 Value)
 
 void Status::ChangeMaxValue(uint32 NewMaxValue)
 {
-	maxValue = NewMaxValue;
-	curValue = NewMaxValue;
+	MaxValue = NewMaxValue;
+	CurValue = NewMaxValue;
 
 	OnValueChanged.Broadcast(NewMaxValue, NewMaxValue);
 }
 
 void Status::ChangeMaxValue(uint32 NewMaxValue, uint32 NewCurValue)
 {
-	maxValue = NewMaxValue;
-	curValue = NewCurValue;
+	MaxValue = NewMaxValue;
+	CurValue = NewCurValue;
 
 	OnValueChanged.Broadcast(NewMaxValue, NewCurValue);
 }

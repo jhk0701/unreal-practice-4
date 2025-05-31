@@ -13,7 +13,7 @@ class TOPDOWNRPG_API APortal : public AInteractBase
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Comp")
-	TObjectPtr<class UCapsuleComponent> collider;
+	TObjectPtr<class UCapsuleComponent> Collider;
 
 public:
 	APortal();

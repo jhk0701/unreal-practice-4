@@ -19,7 +19,7 @@ class TOPDOWNRPG_API UTDRPGUWStatusBar : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 protected:
-	TObjectPtr<ATDRPGPlayer> player;
+	TObjectPtr<ATDRPGPlayer> Player;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
 	TObjectPtr<UTextBlock> PlayerNameLabel;

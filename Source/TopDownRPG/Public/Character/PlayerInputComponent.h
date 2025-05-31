@@ -17,10 +17,10 @@ class TOPDOWNRPG_API UPlayerInputComponent : public UActorComponent
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = OwnerComp)
-	TObjectPtr<ATDRPGPlayerController> controller;
+	TObjectPtr<ATDRPGPlayerController> Controller;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = OwnerComp)
-	TObjectPtr<ATDRPGPlayer> player;
+	TObjectPtr<ATDRPGPlayer> Player;
 
 public:	
 	UPlayerInputComponent();

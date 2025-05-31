@@ -12,18 +12,18 @@ AInteractBase::AInteractBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	interactCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("Interact Collider"));
-	interactCollider->InitBoxExtent(FVector(300));
-	interactCollider->SetGenerateOverlapEvents(true);
-	interactCollider->SetCollisionProfileName(CommonConst::Interaction_ProfileName);
+	InteractCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("Interact Collider"));
+	InteractCollider->InitBoxExtent(FVector(300));
+	InteractCollider->SetGenerateOverlapEvents(true);
+	InteractCollider->SetCollisionProfileName(CommonConst::Interaction_ProfileName);
 }
 
 void AInteractBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	interactCollider->OnComponentBeginOverlap.AddUniqueDynamic(this, &AInteractBase::OnBeginOverlapped);
-	interactCollider->OnComponentEndOverlap.AddUniqueDynamic(this, &AInteractBase::OnEndOverlapped);
+	InteractCollider->OnComponentBeginOverlap.AddUniqueDynamic(this, &AInteractBase::OnBeginOverlapped);
+	InteractCollider->OnComponentEndOverlap.AddUniqueDynamic(this, &AInteractBase::OnEndOverlapped);
 }
 
 

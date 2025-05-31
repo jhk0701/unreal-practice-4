@@ -25,14 +25,14 @@ public:
 	bool bIsDead = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
-	TObjectPtr<UAnimMontage> attackMontage;
+	TObjectPtr<UAnimMontage> AttackMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
-	TObjectPtr<UAnimMontage> hitMontage;
+	TObjectPtr<UAnimMontage> HitMontage;
 
 public:
 	virtual void PlayAttack(const int32 Idx);
-	virtual bool IsAttackPlaying() const { return Montage_IsPlaying(attackMontage); };
+	virtual bool IsAttackPlaying() const { return Montage_IsPlaying(AttackMontage); };
 
 	virtual void PlayHit();
 

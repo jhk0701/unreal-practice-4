@@ -42,26 +42,26 @@ public:
 	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, void>::type
 	CreateUI(FOnLoadCompleted& OnCompleted)
 	{
-		UClass* type = T::StaticClass();
-		check(type);	// 방어용으로 type이 nullptr이 아닌지 확인
-		FString name = type->GetFName().ToString();
+		UClass* Type = T::StaticClass();
+		check(Type);	// 방어용으로 type이 nullptr이 아닌지 확인
+		FString Name = Type->GetFName().ToString();
 
-		FStreamableManager& stream = UAssetManager::GetStreamableManager();
-		FSoftClassPath path(FString::Format(*CommonConst::PATH_FORMAT_UI, { name }));
+		FStreamableManager& Stream = UAssetManager::GetStreamableManager();
+		FSoftClassPath Path(FString::Format(*CommonConst::PATH_FORMAT_UI, { Name }));
 
-		stream.RequestAsyncLoad(
-			path,
+		Stream.RequestAsyncLoad(
+			Path,
 			FStreamableDelegate::CreateLambda(
-				[this, path, name, OnCompleted]()
+				[this, Path, Name, OnCompleted]()
 				{
-					UClass* WidgetClass = Cast<UClass>(path.ResolveObject());
+					UClass* WidgetClass = Cast<UClass>(Path.ResolveObject());
 					if (WidgetClass)
 					{
-						UTDRPGUserWidget* widget = CreateWidget<UTDRPGUserWidget>(this->GetWorld(), WidgetClass);
+						UTDRPGUserWidget* Widget = CreateWidget<UTDRPGUserWidget>(this->GetWorld(), WidgetClass);
 
-						this->UIMap.Add(name, widget);
+						this->UIMap.Add(Name, Widget);
 
-						OnCompleted.ExecuteIfBound(widget);
+						OnCompleted.ExecuteIfBound(Widget);
 					}
 				}));
 	}
@@ -70,18 +70,18 @@ public:
 	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, void>::type
 	GetUI(FOnLoadCompleted&& OnCompleted)
 	{
-		UClass* type = T::StaticClass();
-		check(type);
-		FString name = type->GetFName().ToString();
+		UClass* Type = T::StaticClass();
+		check(Type);
+		FString Name = Type->GetFName().ToString();
 
-		if (UIMap.Contains(name) && IsValid(UIMap[name]))
+		if (UIMap.Contains(Name) && IsValid(UIMap[Name]))
 		{
-			OnCompleted.ExecuteIfBound(UIMap[name]);
+			OnCompleted.ExecuteIfBound(UIMap[Name]);
 			return;
 		}
 		
-		if (UIMap.Contains(name))
-			UIMap.Remove(name);
+		if (UIMap.Contains(Name))
+			UIMap.Remove(Name);
 
 		CreateUI<T>(OnCompleted);
 	};

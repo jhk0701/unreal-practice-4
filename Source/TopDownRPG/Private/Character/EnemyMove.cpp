@@ -8,16 +8,16 @@ UEnemyMove::UEnemyMove()
 
 void UEnemyMove::MoveTo(const FVector& Direction)
 {
-	velocity = Direction;
+	Velocity = Direction;
 
-	AActor* owner = GetOwner();
-	FVector loc = owner->GetActorLocation() + Direction;
-	owner->SetActorLocation(loc);
-	owner->SetActorRotation(Direction.GetSafeNormal().ToOrientationQuat());
+	AActor* Owner = GetOwner();
+	FVector Loc = Owner->GetActorLocation() + Direction;
+	Owner->SetActorLocation(Loc);
+	Owner->SetActorRotation(Direction.GetSafeNormal().ToOrientationQuat());
 }
 
 void UEnemyMove::StopAtLocation()
 {
-	velocity = FVector::ZeroVector;
+	Velocity = FVector::ZeroVector;
 }
 

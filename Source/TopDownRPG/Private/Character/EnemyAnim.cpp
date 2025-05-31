@@ -9,29 +9,29 @@
 
 void UEnemyAnim::SetAccel(const APawn* Pawn)
 {
-	FVector velocity = Cast<ATDRPGEnemy>(Pawn)->moveComp->GetVelocity();
-	FVector forward = Pawn->GetActorForwardVector();
+	FVector Velocity = Cast<ATDRPGEnemy>(Pawn)->MoveComp->GetVelocity();
+	FVector Forward = Pawn->GetActorForwardVector();
 
-	double dir = FVector::DotProduct(velocity, forward);
-	Accel = (float)FMath::Max(dir, 0) * AccelScaler;
+	double Dir = FVector::DotProduct(Velocity, Forward);
+	Accel = (float)FMath::Max(Dir, 0) * AccelScaler;
 }
 
 void UEnemyAnim::SetIsDead(const APawn* Pawn)
 {
-	if(const ATDRPGEnemy* enemy = Cast<ATDRPGEnemy>(Pawn))
+	if(const ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(Pawn))
 	{
-		bIsDead = enemy->GetData()->bIsDead;
+		bIsDead = Enemy->GetData()->bIsDead;
 	}
 }
 
 void UEnemyAnim::OnAttackStarted()
 {
-	if (ATDRPGEnemy* enemy = Cast<ATDRPGEnemy>(TryGetPawnOwner()))
-		enemy->attackComp->ActivateHitCollider(true);
+	if (ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(TryGetPawnOwner()))
+		Enemy->AttackComp->ActivateHitCollider(true);
 }
 
 void UEnemyAnim::OnAttackEnded()
 {
-	if (ATDRPGEnemy* enemy = Cast<ATDRPGEnemy>(TryGetPawnOwner()))
-		enemy->attackComp->ActivateHitCollider(false);
+	if (ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(TryGetPawnOwner()))
+		Enemy->AttackComp->ActivateHitCollider(false);
 }

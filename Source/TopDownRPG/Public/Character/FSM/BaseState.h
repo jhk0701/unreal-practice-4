@@ -19,12 +19,12 @@ class TOPDOWNRPG_API UBaseState : public UObject, public IPhaseHandler, public I
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = State)
-	TObjectPtr<class UEnemyFSM> machine;
+	TObjectPtr<class UEnemyFSM> Machine;
 
 public:
 	UBaseState() {};
 
-	inline virtual void Initialize(UEnemyFSM* InMachine) { machine = InMachine; };
+	inline virtual void Initialize(UEnemyFSM* InMachine) { Machine = InMachine; };
 
 	virtual void Enter() override {};
 	virtual void Update(float DeltaTime) override {};

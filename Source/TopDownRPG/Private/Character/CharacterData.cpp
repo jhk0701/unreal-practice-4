@@ -71,11 +71,13 @@ void UCharacterData::CheckIsDead(uint32 Max, uint32 Current)
 
 uint32 UCharacterData::GetAttackPower()
 {
-	return Ability[EAbility::Str]; // uint32(100);
+	// TODO : 최종 공격력 계산
+	return Ability[EAbility::Str];
 }
 
 uint32 UCharacterData::GetDefensePower()
 {
+	// TODO : 최종 방어력 계산
 	return uint32(100);
 }
 

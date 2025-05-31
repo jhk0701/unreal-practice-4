@@ -21,10 +21,10 @@ void UEnemyAttack::BeginPlay()
 	Super::BeginPlay();
 
 	bIsAttacking = false;
-	curCooldown = .0f;
+	CurCooldown = .0f;
 
-	enemy = Cast<ATDRPGEnemy>(GetOwner());
-	enemy->hitCollider->OnComponentBeginOverlap.AddDynamic(this, &UEnemyAttack::OnActorOverlaped);
+	Enemy = Cast<ATDRPGEnemy>(GetOwner());
+	Enemy->HitCollider->OnComponentBeginOverlap.AddDynamic(this, &UEnemyAttack::OnActorOverlaped);
 	ActivateHitCollider(false);
 }
 
@@ -34,9 +34,9 @@ void UEnemyAttack::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 
 	if (bIsAttacking)
 	{
-		curCooldown -= DeltaTime;
+		CurCooldown -= DeltaTime;
 		
-		if (curCooldown <= .0f)
+		if (CurCooldown <= .0f)
 			bIsAttacking = false;
 	}
 }
@@ -47,15 +47,15 @@ void UEnemyAttack::Attack()
 		return;
 
 	bIsAttacking = true;
-	curCooldown = attackCooldown;
+	CurCooldown = AttackCooldown;
 
 	PRINT_LOG(TEXT("Enemy Attack!"));
-	enemy->animInst->PlayAttack(0);
+	Enemy->AnimInst->PlayAttack(0);
 }
 
 void UEnemyAttack::ActivateHitCollider(bool bIsEnable)
 {
-	enemy->hitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics : ECollisionEnabled::NoCollision);
+	Enemy->HitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics : ECollisionEnabled::NoCollision);
 }
 
 void UEnemyAttack::OnActorOverlaped(
@@ -69,12 +69,12 @@ void UEnemyAttack::OnActorOverlaped(
 {
 	if(OtherActor && OtherActor->IsA<ATDRPGPlayer>())
 	{
-		ATDRPGPlayer* player = Cast<ATDRPGPlayer>(OtherActor);
-		int32 damage = enemy->dataComp->GetAttackPower();
+		ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(OtherActor);
+		int32 Damage = Enemy->DataComp->GetAttackPower();
 
-		PRINT_LOG(TEXT("player take damage : %d"), damage);
+		PRINT_LOG(TEXT("player take damage : %d"), Damage);
 
-		player->TakeDamage(damage);
+		Player->TakeDamage(Damage);
 	}
 }
 

@@ -16,7 +16,7 @@ class TOPDOWNRPG_API UPlayerAnim : public UCharacterAnimBase
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Attack)
-	int32 curAttackIdx;
+	int32 CurAttackIdx;
 
 public:
 	virtual void PlayAttack(int32 Idx) override;

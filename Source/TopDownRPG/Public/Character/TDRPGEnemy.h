@@ -11,39 +11,39 @@ class TOPDOWNRPG_API ATDRPGEnemy : public APawn
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Target)
-	TObjectPtr<class ATDRPGPlayer> target;
+	TObjectPtr<class ATDRPGPlayer> Target;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UCharacterData> dataComp;
+	TObjectPtr<class UCharacterData> DataComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UEnemyMove> moveComp;
+	TObjectPtr<class UEnemyMove> MoveComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UEnemyAttack> attackComp;
+	TObjectPtr<class UEnemyAttack> AttackComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UEnemyAnim> animInst;
+	TObjectPtr<class UEnemyAnim> AnimInst;
 
 	// 임시 히트박스
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class USphereComponent> hitCollider;
+	TObjectPtr<class USphereComponent> HitCollider;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UCapsuleComponent> collider;
+	TObjectPtr<class UCapsuleComponent> Collider;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = StateMachine)
-	TObjectPtr<class UEnemyFSM> stateMachine;
+	TObjectPtr<class UEnemyFSM> StateMachine;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<USkeletalMeshComponent> skinMesh;
+	TObjectPtr<USkeletalMeshComponent> SkinMesh;
 
 public:
 	ATDRPGEnemy();
 	virtual void BeginPlay() override;
 
-	inline TObjectPtr<UCharacterData> GetData() const { return dataComp; }
+	inline TObjectPtr<UCharacterData> GetData() const { return DataComp; }
 	void TakeDamage(int32 Damage);
 	void Die();
 

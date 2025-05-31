@@ -8,12 +8,12 @@
 
 APortal::APortal()
 {
-	collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Root"));
-	collider->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
-	collider->SetGenerateOverlapEvents(false);
-	SetRootComponent(collider);
+	Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Root"));
+	Collider->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
+	Collider->SetGenerateOverlapEvents(false);
+	SetRootComponent(Collider);
 
-	interactCollider->SetupAttachment(RootComponent);
+	InteractCollider->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -25,7 +25,7 @@ void APortal::BeginPlay()
 void APortal::Interact()
 {
 	// PRINT_LOG(TEXT("Portal Test"));
-	ALobbyGameMode* lobbyMode = Cast<ALobbyGameMode>(GetWorld()->GetAuthGameMode());
-	lobbyMode->GoToDungeon();
+	ALobbyGameMode* LobbyMode = Cast<ALobbyGameMode>(GetWorld()->GetAuthGameMode());
+	LobbyMode->GoToDungeon();
 }
 

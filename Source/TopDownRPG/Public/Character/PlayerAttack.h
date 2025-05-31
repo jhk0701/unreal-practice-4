@@ -15,13 +15,13 @@ class TOPDOWNRPG_API UPlayerAttack : public UPlayerInputComponent
 	GENERATED_BODY()
 
 protected:
-	FTimerHandle attackResetTimer;
+	FTimerHandle AttackResetTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
-	float resetInterval = 2.0f;
+	float ResetInterval = 2.0f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack|Combo")
-	int32 attackCount = 0;
+	int32 AttackCount = 0;
 
 public:
 	UPlayerAttack();
