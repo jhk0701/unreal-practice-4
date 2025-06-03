@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Data/ItemDataRow.h"
+#include "TDRPGEnum.h"
 #include "ConsumeDataRow.generated.h"
 
 /**
@@ -15,11 +16,14 @@ struct TOPDOWNRPG_API FConsumeDataRow : public FItemDataRow
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditAnywhere)
+	EConsumeType Type;
+
 	// 효과 적용 시간 (초단위)
 	// 1초 당 Value 값만큼 회복
 	// 0초 : 즉시 회복
 	UPROPERTY(EditAnywhere)
-	uint32 Duration; 
+	uint8 Duration; 
 
 	// 적용량
 	UPROPERTY(EditAnywhere)

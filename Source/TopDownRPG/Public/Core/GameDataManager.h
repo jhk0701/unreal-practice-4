@@ -62,6 +62,8 @@ public:
 
 	UPrimaryDataAsset* LoadPrimaryAssetData(const FPrimaryAssetId& ID);
 
+	const FString EnumToString(ETableType EnumValue);
+
 protected:
 	void ProcessLevelData();
 };

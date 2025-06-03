@@ -7,5 +7,6 @@ void UConsumeItem::Use()
 {
 	--Quantity;
 
-	// TODO : 아이템에 따른 효과 사용
+	// 아이템에 따른 효과 사용
+	// 하위 객체들에서 구현
 }

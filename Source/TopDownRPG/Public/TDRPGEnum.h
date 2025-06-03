@@ -43,3 +43,15 @@ enum class EEquipType : uint8
 	Glove,
 	Shoes,
 };
+
+UENUM(BlueprintType)
+enum class EConsumeType : uint8
+{
+	RecoverHP,
+	RecoverMP,
+	BuffHP,
+	BuffMP,
+	BuffStr,
+	BuffDex,
+	BuffInt,
+};

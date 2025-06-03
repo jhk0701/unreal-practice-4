@@ -9,16 +9,6 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-FString EnumToString(ETableType EnumValue)
-{
-    const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ETableType"), true);
-    if (!EnumPtr)
-    {
-        return FString("Invalid Enum");
-    }
-	return EnumPtr->GetDisplayNameTextByIndex((int32)EnumValue).ToString();
-}
-
 void UGameDataManager::LoadGameDatas()
 {
 	// 게임 데이터 준비
@@ -101,6 +91,19 @@ const FString UGameDataManager::GetLevelingKey(const FString& CharID, const int3
 	int32 Range = LevelRange[CharID].Array[Index];
 	return CharID + FString::Printf(TEXT("%03d"), Range);
 }
+
+const FString UGameDataManager::EnumToString(ETableType EnumValue)
+{
+	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ETableType"), true);
+	
+	if (!EnumPtr)
+	{
+		return FString("Invalid Enum");
+	}
+
+	return EnumPtr->GetDisplayNameTextByIndex((int32)EnumValue).ToString();
+}
+
 
 UPrimaryDataAsset* UGameDataManager::LoadPrimaryAssetData(const FPrimaryAssetId& ID)
 {

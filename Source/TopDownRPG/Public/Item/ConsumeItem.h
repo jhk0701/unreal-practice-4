@@ -9,11 +9,12 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class TOPDOWNRPG_API UConsumeItem : public UItemBase
 {
 	GENERATED_BODY()
 
 public:
-	void Use();
+	virtual void Use();
+	virtual void OnDurationEnded() PURE_VIRTUAL(UConsumeItem::OnDurationEnded, );
 };
