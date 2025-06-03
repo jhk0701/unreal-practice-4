@@ -5,11 +5,41 @@
 #include "CoreMinimal.h"
 
 UENUM(BlueprintType)
+enum class EStatus : uint8
+{
+	Hp UMETA(DisplayName = "Health Point"),
+	Mp UMETA(DisplayName = "Mana Point"),
+
+	COUNT
+};
+
+UENUM(BlueprintType)
+enum class EAbility : uint8
+{
+	Str UMETA(DisplayName = "Strength"),
+	Dex UMETA(DisplayName = "Dexterity"),
+	Int UMETA(DisplayName = "Intelligence"),
+
+	COUNT
+};
+
+UENUM(BlueprintType)
 enum class ERarity : uint8
 {
-	Normal = 0	UMETA(DisplayName = "Normal"),
-	Rare		UMETA(DisplayName = "Rare"),
-	Heroic		UMETA(DisplayName = "Heroic"),
-	Legendary	UMETA(DisplayName = "Legendary"),
-	Mythic		UMETA(DisplayName = "Mythic"),
+	Normal,
+	Rare,
+	Heroic,
+	Legendary,
+	Mythic,
+};
+
+UENUM(BlueprintType)
+enum class EEquipType : uint8
+{
+	Weapon,
+	Head,
+	Top,
+	Bottom,
+	Glove,
+	Shoes,
 };

@@ -20,10 +20,10 @@ struct FPlayerData
 	FString CharID;
 
 	UPROPERTY()
-	int32 CharLv;
+	uint32 CharLv;
 
 	UPROPERTY()
-	int32 CharExp;
+	uint32 CharExp;
 
 	UPROPERTY()
 	uint32 Gold;

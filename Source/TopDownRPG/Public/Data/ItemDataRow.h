@@ -18,10 +18,10 @@ public:
 
 	// 희귀도
 	UPROPERTY(EditAnywhere)
-	ERarity Rariry;
+	ERarity Rarity;
 
 	UPROPERTY(EditAnywhere)
-	int32 NumOfDuplicate;
+	uint8 NumOfDuplicate;
 
 	// 구성요소
 	UPROPERTY(EditAnywhere)

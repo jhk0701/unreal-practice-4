@@ -22,5 +22,5 @@ protected:
 	FItemDataRow* Data = nullptr;
 	
 	UPROPERTY(VisibleAnywhere)
-	int32 Count;
+	int32 Quantity;
 };

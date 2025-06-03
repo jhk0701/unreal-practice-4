@@ -5,8 +5,7 @@
 
 void UConsumeItem::Use()
 {
-	--Count;
-
+	--Quantity;
 
 	// TODO : 아이템에 따른 효과 사용
 }

@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Item/ItemBase.h"
-#include "GeneralItem.generated.h"
+#include "IngredientItem.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UGeneralItem : public UItemBase
+class TOPDOWNRPG_API UIngredientItem : public UItemBase
 {
 	GENERATED_BODY()
 	

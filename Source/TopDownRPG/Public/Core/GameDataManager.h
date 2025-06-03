@@ -14,9 +14,12 @@
 UENUM(BlueprintType)
 enum class ETableType : uint8
 {
-	Character = 0,
+	Character,
 	Leveling,
 	Stage,
+	Equipment,
+	Consume,
+	Ingredient,
 
 	COUNT
 };

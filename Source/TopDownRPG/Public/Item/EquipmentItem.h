@@ -6,17 +6,6 @@
 #include "Item/ItemBase.h"
 #include "EquipmentItem.generated.h"
 
-UENUM(BlueprintType)
-enum class EEquipType : uint8
-{
-	Weapon,
-
-	Head,
-	Top,
-	Bottom,
-	Glove,
-	Shoes,
-};
 
 /**
  * 
@@ -26,7 +15,12 @@ class TOPDOWNRPG_API UEquipmentItem : public UItemBase
 {
 	GENERATED_BODY()
 	
+	// 장비류는 장착 시 능력을 향상
+	// 최종 공격력 상승 : 무기 , 최종 방어력 상승 : 방어
+	// 장착 시, 추가 효과 제공
+
 public:
+	// 아이템 활용
 	void Equip();
 	void Unequip();
 };

@@ -5,28 +5,10 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Character/Status.h"
+#include "TDRPGEnum.h"
 #include "CharacterData.generated.h"
 
 struct FCharacterDataRow;
-
-UENUM(BlueprintType)
-enum class EStatus : uint8
-{
-	Hp UMETA(DisplayName = "Health Point"),
-	Mp UMETA(DisplayName = "Mana Point"),
-
-	COUNT
-};
-
-UENUM(BlueprintType)
-enum class EAbility : uint8
-{
-	Str UMETA(DisplayName = "Strength"),
-	Dex UMETA(DisplayName = "Dexterity"),
-	Int UMETA(DisplayName = "Intelligence"),
-
-	COUNT
-};
 
 DECLARE_MULTICAST_DELEGATE(FOnStatusEmpty);
 
