@@ -34,6 +34,7 @@ public:
 	// OperType 기준 오름차순 정렬
 	// 정렬된대로 연산 진행
 
+	// 테스트를 위한 퀵슬롯 기능 필요
 
 	UPROPERTY()
 	bool bIsDead = false;
