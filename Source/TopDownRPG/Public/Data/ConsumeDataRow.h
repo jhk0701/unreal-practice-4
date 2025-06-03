@@ -16,9 +16,6 @@ struct TOPDOWNRPG_API FConsumeDataRow : public FItemDataRow
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere)
-	EConsumeType Type;
-
 	// 효과 적용 시간 (초단위)
 	// 1초 당 Value 값만큼 회복
 	// 0초 : 즉시 회복
@@ -28,4 +25,7 @@ public:
 	// 적용량
 	UPROPERTY(EditAnywhere)
 	uint32 Value;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<class UItemFuncBase> Funcion;
 };

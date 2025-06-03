@@ -16,11 +16,12 @@ class TOPDOWNRPG_API UItemBase : public UObject
 	GENERATED_BODY()
 
 public:
-	inline virtual void Init(FItemDataRow& InData) { Data = &InData; };
+	// 아이템 데이터 주입
+	inline virtual void Initialize(FItemDataRow& InData) { Data = &InData; };
 
 protected:
 	FItemDataRow* Data = nullptr;
 	
 	UPROPERTY(VisibleAnywhere)
-	int32 Quantity;
+	uint32 Quantity;
 };

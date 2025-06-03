@@ -16,5 +16,6 @@ class TOPDOWNRPG_API UItemFuncBase : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	inline virtual void Activate() {};
+	inline virtual void Activate(AActor* InTarget, uint32 InValue) {};
+	inline virtual void Deactivate(AActor* InTarget, uint32 InValue) {};
 };

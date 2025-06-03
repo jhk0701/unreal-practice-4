@@ -17,4 +17,6 @@ class TOPDOWNRPG_API URecoveryFunc : public UItemFuncBase
 public:
 	UPROPERTY(EditAnywhere)
 	EStatus TargetToRecover;
+
+	virtual void Activate(AActor* InTarget, uint32 InValue) override;
 };

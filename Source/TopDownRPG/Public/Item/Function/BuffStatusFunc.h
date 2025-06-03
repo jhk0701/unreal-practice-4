@@ -13,7 +13,14 @@ UCLASS()
 class TOPDOWNRPG_API UBuffStatusFunc : public UItemFuncBase
 {
 	GENERATED_BODY()
+
 public:
 	UPROPERTY(EditAnywhere)
+	EOperateType OperType;
+	
+	UPROPERTY(EditAnywhere)
 	EStatus TargetStatus;
+
+	virtual void Activate(AActor* InTarget, uint32 InValue) override;
+	virtual void Deactivate(AActor* InTarget, uint32 InValue) override;
 };

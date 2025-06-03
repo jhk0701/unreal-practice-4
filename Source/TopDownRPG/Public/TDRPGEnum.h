@@ -45,13 +45,9 @@ enum class EEquipType : uint8
 };
 
 UENUM(BlueprintType)
-enum class EConsumeType : uint8
+enum class EOperateType : uint8
 {
-	RecoverHP,
-	RecoverMP,
-	BuffHP,
-	BuffMP,
-	BuffStr,
-	BuffDex,
-	BuffInt,
+	Addictive,
+	Multiply,
+	Override,
 };

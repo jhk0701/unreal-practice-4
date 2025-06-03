@@ -22,11 +22,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "ID")
 	FString CharID;
 
-	// 체력, 마나
-	TMap<EStatus, TUniquePtr<Status>> Stat;
+	TMap<EStatus, TUniquePtr<Status>> Stat;	// 체력, 마나
+	TMap<EAbility, uint32> Ability;	// 힘, 민첩, 지능
 
-	// 힘, 민첩, 지능
-	TMap<EAbility, uint32> Ability;
+	// 버프 연산 : 합, 곱, 덮어쓰기
 
 	UPROPERTY()
 	bool bIsDead = false;
