@@ -7,20 +7,18 @@
 UENUM(BlueprintType)
 enum class EStatus : uint8
 {
-	Hp UMETA(DisplayName = "Health Point"),
-	Mp UMETA(DisplayName = "Mana Point"),
+	Hp		UMETA(DisplayName = "Health Point"),
+	Mp		UMETA(DisplayName = "Mana Point"),
 
-	COUNT
+	Shield,
 };
 
 UENUM(BlueprintType)
 enum class EAbility : uint8
 {
-	Str UMETA(DisplayName = "Strength"),
-	Dex UMETA(DisplayName = "Dexterity"),
-	Int UMETA(DisplayName = "Intelligence"),
-
-	COUNT
+	Str		UMETA(DisplayName = "Strength"),
+	Dex		UMETA(DisplayName = "Dexterity"),
+	Int		UMETA(DisplayName = "Intelligence"),
 };
 
 UENUM(BlueprintType)

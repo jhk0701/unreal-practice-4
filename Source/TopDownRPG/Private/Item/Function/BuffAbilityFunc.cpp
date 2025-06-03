@@ -11,11 +11,37 @@ void UBuffAbilityFunc::Activate(AActor* InTarget, uint32 InValue)
 	Super::Activate(InTarget, InValue);
 
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(InTarget))
-		Player->DataComp->Ability[TargetAbility] += InValue;
+	{
+		// Player->DataComp->Ability[TargetAbility] += InValue;
+		switch (OperType)
+		{
+		case EOperateType::Addictive:
+			break;
+		case EOperateType::Multiply:
+			break;
+		case EOperateType::Override:
+			break;
+		default: // Addictive
+			break;
+		}
+	}
 }
 
 void UBuffAbilityFunc::Deactivate(AActor* InTarget, uint32 InValue)
 {
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(InTarget))
-		Player->DataComp->Ability[TargetAbility] -= InValue;
+	{
+		// Player->DataComp->Ability[TargetAbility] -= InValue;
+		switch (OperType)
+		{
+		case EOperateType::Addictive:
+			break;
+		case EOperateType::Multiply:
+			break;
+		case EOperateType::Override:
+			break;
+		default: // Addictive
+			break;
+		}
+	}
 }

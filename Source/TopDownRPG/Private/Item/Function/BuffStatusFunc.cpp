@@ -13,16 +13,16 @@ void UBuffStatusFunc::Activate(AActor* InTarget, uint32 InValue)
 
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(InTarget))
 	{
+		// Player->DataComp->AddictiveStat[TargetStatus] += InValue;
 		switch (OperType)
 		{
 		case EOperateType::Addictive:
-			Player->DataComp->AddictiveStat[TargetStatus] += InValue;
 			break;
 		case EOperateType::Multiply:
 			break;
 		case EOperateType::Override:
 			break;
-		default:
+		default: // Addictive
 			break;
 		}
 	}
@@ -33,5 +33,18 @@ void UBuffStatusFunc::Deactivate(AActor* InTarget, uint32 InValue)
 	Super::Activate(InTarget, InValue);
 
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(InTarget))
-		Player->DataComp->Stat[TargetStatus]->Subtract(InValue);
+	{
+		// Player->DataComp->Stat[TargetStatus]->Subtract(InValue);
+		switch (OperType)
+		{
+		case EOperateType::Addictive:
+			break;
+		case EOperateType::Multiply:
+			break;
+		case EOperateType::Override:
+			break;
+		default: // Addictive
+			break;
+		}
+	}
 }
