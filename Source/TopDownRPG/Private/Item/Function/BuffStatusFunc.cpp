@@ -3,48 +3,20 @@
 
 #include "Item/Function/BuffStatusFunc.h"
 
-#include "Character/TDRPGPlayer.h"
-#include "Character/CharacterData.h"
-#include "Character/Status.h"
 
-void UBuffStatusFunc::Activate(AActor* InTarget, uint32 InValue)
+inline uint32 UBuffStatusFunc::Operate(uint32 Object, uint32 Value)
 {
-	Super::Activate(InTarget, InValue);
-
-	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(InTarget))
+	switch (OperType)
 	{
-		// Player->DataComp->AddictiveStat[TargetStatus] += InValue;
-		switch (OperType)
-		{
-		case EOperateType::Addictive:
-			break;
-		case EOperateType::Multiply:
-			break;
-		case EOperateType::Override:
-			break;
-		default: // Addictive
-			break;
-		}
+	case EOperateType::Addictive:
+		break;
+	case EOperateType::Multiply:
+		break;
+	case EOperateType::Override:
+		break;
+	default: // Addictive
+		break;
 	}
-}
 
-void UBuffStatusFunc::Deactivate(AActor* InTarget, uint32 InValue)
-{
-	Super::Activate(InTarget, InValue);
-
-	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(InTarget))
-	{
-		// Player->DataComp->Stat[TargetStatus]->Subtract(InValue);
-		switch (OperType)
-		{
-		case EOperateType::Addictive:
-			break;
-		case EOperateType::Multiply:
-			break;
-		case EOperateType::Override:
-			break;
-		default: // Addictive
-			break;
-		}
-	}
+	return uint32();
 }

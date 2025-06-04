@@ -7,10 +7,10 @@
 #include "Character/CharacterData.h"
 #include "Character/Status.h"
 
-void URecoveryFunc::Activate(AActor* InTarget, uint32 InValue)
+void URecoveryFunc::Operate(AActor* Object, uint32 Value)
 {
-	Super::Activate(InTarget, InValue);
+	Super::Operate(Object, Value);
 
-	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(InTarget))
-		Player->DataComp->Stat[TargetToRecover]->Add(InValue);
+	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Object))
+		Player->DataComp->Stat[TargetToRecover]->Add(Value);
 }

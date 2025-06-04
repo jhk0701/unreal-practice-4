@@ -17,7 +17,7 @@ class TOPDOWNRPG_API UConsumeItem : public UItemBase, public IQuickSlotHandler
 
 public:
 	void Use(AActor* Subject);
-	void OnDurationEnded();
+	// void OnDurationEnded();
 
 	virtual void InvokeSlot(AActor* Subject) override;
 };

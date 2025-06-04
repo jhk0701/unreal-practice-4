@@ -18,5 +18,5 @@ public:
 	UPROPERTY(EditAnywhere)
 	EStatus TargetToRecover;
 
-	virtual void Activate(AActor* InTarget, uint32 InValue) override;
+	void Operate(AActor* Object, uint32 Value) override;
 };

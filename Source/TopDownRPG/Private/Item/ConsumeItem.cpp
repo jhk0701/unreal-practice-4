@@ -2,13 +2,18 @@
 
 
 #include "Item/ConsumeItem.h"
-#include "Data/ConsumeDataRow.h"
 #include "Item/Function/ItemFuncBase.h"
+#include "Data/ConsumeDataRow.h"
+
+#include "Character/TDRPGPlayer.h"
+#include "Character/CharacterData.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
 void UConsumeItem::Use(AActor* Subject)
 {
+	// TODO : 아이템 쿨타임 적용
+
 	if (Quantity == 0)
 		return;
 
@@ -24,18 +29,21 @@ void UConsumeItem::Use(AActor* Subject)
 
 	PRINT_LOG(TEXT("Consume Item Called [%s] (%u)"), *ConsumeData->ItemName.ToString(), Quantity);
 	
-	// TODO : 아이템 쿨타임
-	// TODO : 아이템 지속 시간 기능
-	ConsumeData->Function->Activate(Subject, ConsumeData->Value);
+	// 0초라면 즉시 사용
+	// 1초 이상이라면 지속시간
+	if(ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Subject))
+	{
+		// 효과 객체로부터 맥락 구조체 생성
+		FFunctionContext& Context = ConsumeData->Function->GetContext(ConsumeData->Value, ConsumeData->Duration);
+
+		// 아이템에서 대상 캐릭터에게 효과 객체 적용
+		Player->DataComp->AddBuff(*ItemID, Context);
+	}
 }
 
-void UConsumeItem::OnDurationEnded()
-{
-
-}
 
 void UConsumeItem::InvokeSlot(AActor* Subject)
 {
-	// TODO : 더 필요사항이 많아지면 Context 구조체로 만들어서 사용할 것
+	// 더 필요사항이 많아지면 Context 구조체로 만들어서 사용할 것
 	Use(Subject);
 }

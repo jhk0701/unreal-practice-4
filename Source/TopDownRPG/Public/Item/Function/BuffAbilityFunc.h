@@ -21,6 +21,5 @@ public:
 	UPROPERTY(EditAnywhere)
 	EAbility TargetAbility;
 
-	virtual void Activate(AActor* InTarget, uint32 InValue) override;
-	virtual void Deactivate(AActor* InTarget, uint32 InValue) override;
+	virtual uint32 Operate(uint32 Object, uint32 Value) override;
 };

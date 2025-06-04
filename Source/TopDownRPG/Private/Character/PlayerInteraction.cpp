@@ -26,11 +26,12 @@ void UPlayerInteraction::InitializeComponent()
 	Super::InitializeComponent();
 
 	// 테스트용 퀵슬롯 기능 추가
+	FName TempID = TEXT("0000");
 	UGameDataManager* GameData = GetWorld()->GetGameInstance()->GetSubsystem<UGameDataManager>();
-	FConsumeDataRow* ItemData = GameData->GetRow<FConsumeDataRow>(ETableType::Consume, TEXT("0000"));
+	FConsumeDataRow* ItemData = GameData->GetRow<FConsumeDataRow>(ETableType::Consume, TempID);
 	
 	UConsumeItem* TestConsume = NewObject<UConsumeItem>();
-	TestConsume->Initialize(*ItemData);
+	TestConsume->Initialize(*ItemData, TempID);
 	uint8 Rest = 0;
 	TestConsume->TryAddItem(10, Rest);
 

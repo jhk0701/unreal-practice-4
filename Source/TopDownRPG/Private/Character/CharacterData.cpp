@@ -43,6 +43,7 @@ void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow* InData)
 
 	Stat.Add(EStatus::Hp, MakeUnique<Status>(Hp));
 	Stat.Add(EStatus::Mp, MakeUnique<Status>(Mp));
+	// Stat.Add(EStatus::Shield, MakeUnique<Status>(0));
 
 	Ability.Add(EAbility::Str, Str);
 	Ability.Add(EAbility::Dex, Dex);
@@ -54,6 +55,28 @@ void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow* InData)
 	// Debugging();
 }
 
+void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// 기한 만료된 버프 해제
+	if (BuffToBeReleased.Num() > 0)
+	{
+		for (auto& Key : BuffToBeReleased)
+		{
+			BuffFunc.Remove(Key);
+		}
+
+		BuffToBeReleased.Empty();
+	}
+
+	for (auto& Pair : BuffFunc)
+	{
+		Pair.Value->Duration -= DeltaTime;
+		if (Pair.Value->Duration < 0)
+			BuffToBeReleased.Add(Pair.Key); // 다음 틱에 버프 해제
+	}
+}
 
 void UCharacterData::CheckIsDead(uint32 Max, uint32 Current)
 {
@@ -79,6 +102,14 @@ uint32 UCharacterData::GetDefensePower()
 {
 	// TODO : 최종 방어력 계산
 	return uint32(100);
+}
+
+void UCharacterData::AddBuff(FName& InItemID, FFunctionContext& InContext)
+{
+	if(BuffFunc.Contains(InItemID))
+		BuffFunc[InItemID]->Duration += InContext.Duration;
+	else
+		BuffFunc.Add(InItemID, &InContext);
 }
 
 void UCharacterData::Debugging()

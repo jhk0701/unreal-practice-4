@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "Character/Status.h"
 #include "TDRPGEnum.h"
+#include "Item/Function/ItemFuncBase.h"
 #include "CharacterData.generated.h"
 
 struct FCharacterDataRow;
@@ -25,17 +26,16 @@ public:
 	TMap<EStatus, TUniquePtr<Status>> Stat;	// 체력, 마나
 	TMap<EAbility, uint32> Ability;	// 힘, 민첩, 지능
 
-	// TODO : 버프 연산 : 합, 곱, 오버라이드
-	// 오버라이드 시, 무조건 덮어쓰기
-	// 한번에 여러가지 버프를 우선순위대로 연산해야함
-	// 
 	// 버프를 받으면 컨테이너에 저장
-	// 컨테이너 구성에 OperType, Target, Value, ID
+	// 관리용 Map : ItemID - Func
+	TMap<FName, TWeakObjectPtr<FFunctionContext>> BuffFunc;
+	TArray<FName> BuffToBeReleased;
+
+	// TODO: 버프 연산 
+	// 한번에 여러가지 버프를 우선순위대로 연산해야함
 	// OperType 기준 오름차순 정렬
 	// 정렬된대로 연산 진행
-
-	// 테스트를 위한 퀵슬롯 기능 필요
-
+	
 	UPROPERTY()
 	bool bIsDead = false;
 	
@@ -45,6 +45,7 @@ public:
 	UCharacterData();
 
 	void Initialize(uint32 InLv, FCharacterDataRow* InData);
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	inline bool TrySubtractStat(EStatus Type, uint32 Value) const { return Stat[Type]->TrySubtract(Value); }
 	inline void SubtractStat(EStatus Type, uint32 Value) { Stat[Type]->Subtract(Value); }
@@ -52,6 +53,8 @@ public:
 
 	uint32 GetAttackPower();
 	uint32 GetDefensePower();
+
+	void AddBuff(FName& InItemID, FFunctionContext& InContext);
 
 	void Debugging();
 };

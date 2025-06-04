@@ -3,45 +3,19 @@
 
 #include "Item/Function/BuffAbilityFunc.h"
 
-#include "Character/TDRPGPlayer.h"
-#include "Character/CharacterData.h"
-
-void UBuffAbilityFunc::Activate(AActor* InTarget, uint32 InValue)
+inline uint32 UBuffAbilityFunc::Operate(uint32 Object, uint32 Value)
 {
-	Super::Activate(InTarget, InValue);
-
-	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(InTarget))
+	switch (OperType)
 	{
-		// Player->DataComp->Ability[TargetAbility] += InValue;
-		switch (OperType)
-		{
-		case EOperateType::Addictive:
-			break;
-		case EOperateType::Multiply:
-			break;
-		case EOperateType::Override:
-			break;
-		default: // Addictive
-			break;
-		}
+	case EOperateType::Addictive:
+		break;
+	case EOperateType::Multiply:
+		break;
+	case EOperateType::Override:
+		break;
+	default: // Addictive
+		break;
 	}
-}
 
-void UBuffAbilityFunc::Deactivate(AActor* InTarget, uint32 InValue)
-{
-	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(InTarget))
-	{
-		// Player->DataComp->Ability[TargetAbility] -= InValue;
-		switch (OperType)
-		{
-		case EOperateType::Addictive:
-			break;
-		case EOperateType::Multiply:
-			break;
-		case EOperateType::Override:
-			break;
-		default: // Addictive
-			break;
-		}
-	}
+	return uint32();
 }
