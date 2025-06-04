@@ -31,8 +31,8 @@ void UPlayerInteraction::InitializeComponent()
 	
 	UConsumeItem* TestConsume = NewObject<UConsumeItem>();
 	TestConsume->Initialize(*ItemData);
-	uint8 rest = 0;
-	TestConsume->TryAddItem(10, rest);
+	uint8 Rest = 0;
+	TestConsume->TryAddItem(10, Rest);
 
 	QuickSlot[0] = TestConsume;
 }

@@ -23,6 +23,9 @@ void UConsumeItem::Use(AActor* Subject)
 		return;
 
 	PRINT_LOG(TEXT("Consume Item Called [%s] (%u)"), *ConsumeData->ItemName.ToString(), Quantity);
+	
+	// TODO : 아이템 쿨타임
+	// TODO : 아이템 지속 시간 기능
 	ConsumeData->Function->Activate(Subject, ConsumeData->Value);
 }
 
