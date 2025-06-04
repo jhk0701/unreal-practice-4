@@ -26,6 +26,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	uint32 Value;
 
+	// 재사용 대기 시간
+	UPROPERTY(EditAnywhere)
+	uint8 Cooldown;
+
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<class UItemFuncBase> Funcion;
 };

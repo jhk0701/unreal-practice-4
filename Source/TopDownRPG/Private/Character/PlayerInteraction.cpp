@@ -3,7 +3,6 @@
 
 #include "Character/PlayerInteraction.h"
 
-#include "CommonConst.h"
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
 
@@ -50,12 +49,22 @@ void UPlayerInteraction::InvokeInteract(const FInputActionValue& Value)
 
 void UPlayerInteraction::TriggerQuickSlot(const FInputActionValue& Value)
 {
-	QuickSlotNum = (uint8)Value.Get<float>();
+	QuickSlotNum = (uint8)Value.Get<float>() - 1;
 }
 
 void UPlayerInteraction::ReleaseQuickSlot(const FInputActionValue& Value)
 {
-	// PRINT_LOG(TEXT("Quick Slot : %u"), QuickSlotNum);
-	// TODO : 퀵슬롯 연동
+	UseQuickSlot(QuickSlotNum);
+}
+
+void UPlayerInteraction::UseQuickSlot(uint8 Idx)
+{
+	if (QuickSlot.Num() <= Idx)
+		return;
+
+	if (!QuickSlot[Idx])
+		return;
+
+	QuickSlot[Idx]->InvokeSlot();
 }
 

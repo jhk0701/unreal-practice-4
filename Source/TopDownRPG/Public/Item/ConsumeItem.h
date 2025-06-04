@@ -4,17 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "Item/ItemBase.h"
+#include "Inherit/QuickSlotHandler.h"
 #include "ConsumeItem.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UConsumeItem : public UItemBase
+class TOPDOWNRPG_API UConsumeItem : public UItemBase, public IQuickSlotHandler
 {
 	GENERATED_BODY()
 
 public:
 	void Use();
 	void OnDurationEnded();
+
+	virtual void InvokeSlot() override;
 };
