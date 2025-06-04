@@ -31,5 +31,5 @@ public:
 	uint8 Cooldown;
 
 	UPROPERTY(EditAnywhere)
-	TObjectPtr<class UItemFuncBase> Funcion;
+	TObjectPtr<class UItemFuncBase> Function;
 };

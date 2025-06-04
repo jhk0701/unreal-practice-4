@@ -16,6 +16,8 @@ class TOPDOWNRPG_API UPlayerInteraction : public UPlayerInputComponent
 	GENERATED_BODY()
 	
 protected:
+	UPROPERTY(EditDefaultsOnly, Category = "QuickSlot")
+	uint8 QuickSlotMaxSize = 4;
 	UPROPERTY(VisibleAnywhere, Category = "QuickSlot")
 	uint8 QuickSlotNum = 0;
 
@@ -32,6 +34,7 @@ protected:
 
 public:
 	UPlayerInteraction();
+	virtual void InitializeComponent() override;
 	virtual void SetupInputBinding(class UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
 	// 유저 상호작용
 	void InvokeInteract(const FInputActionValue& Value);

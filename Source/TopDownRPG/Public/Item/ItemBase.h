@@ -18,10 +18,11 @@ class TOPDOWNRPG_API UItemBase : public UObject
 public:
 	// 아이템 데이터 주입
 	inline virtual void Initialize(FItemDataRow& InData) { Data = &InData; };
+	virtual bool TryAddItem(uint8 InAmount, uint8& OutRest);
 
 protected:
 	FItemDataRow* Data = nullptr;
 	
 	UPROPERTY(VisibleAnywhere)
-	uint32 Quantity;
+	uint8 Quantity;
 };

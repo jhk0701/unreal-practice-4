@@ -3,12 +3,17 @@
 
 #include "Item/ConsumeItem.h"
 #include "Data/ConsumeDataRow.h"
+#include "Item/Function/ItemFuncBase.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
-void UConsumeItem::Use()
+void UConsumeItem::Use(AActor* Subject)
 {
+	if (Quantity == 0)
+		return;
+
 	--Quantity;
+	// TODO: 남은 아이템을 다 썼을 때 후속조치
 
 	// 구조체는 다음과 같이 호출할 수 없음.
 	// Cast는 UObject 기반 클래스에만 동작
@@ -17,8 +22,8 @@ void UConsumeItem::Use()
 	if (!ConsumeData)
 		return;
 
-	// TODO : 아이템에 따른 효과 사용
-	PRINT_LOG(TEXT("Consume Item Called [%s]"), *ConsumeData->ItemName.ToString());
+	PRINT_LOG(TEXT("Consume Item Called [%s] (%u)"), *ConsumeData->ItemName.ToString(), Quantity);
+	ConsumeData->Function->Activate(Subject, ConsumeData->Value);
 }
 
 void UConsumeItem::OnDurationEnded()
@@ -26,7 +31,8 @@ void UConsumeItem::OnDurationEnded()
 
 }
 
-void UConsumeItem::InvokeSlot()
+void UConsumeItem::InvokeSlot(AActor* Subject)
 {
-	Use();
+	// TODO : 더 필요사항이 많아지면 Context 구조체로 만들어서 사용할 것
+	Use(Subject);
 }
