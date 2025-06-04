@@ -6,7 +6,6 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWQuickSlot.generated.h"
 
-
 /**
  * 
  */
@@ -20,5 +19,8 @@ public:
 	TObjectPtr<class UHorizontalBox> SlotContainer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement)
-	TArray<UTDRPGUserWidget*> SlotList;
+	TArray<class UTDRPGUWSlot*> SlotList;
+
+public:
+	virtual void NativeOnInitialized() override;
 };

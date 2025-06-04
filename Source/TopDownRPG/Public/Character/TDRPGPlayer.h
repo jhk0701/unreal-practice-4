@@ -49,6 +49,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UI)
 	TObjectPtr<class UTDRPGUWStatusBar> UIStatusBar;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UI)
+	TObjectPtr<class UTDRPGUWQuickSlot> UIQuickSlot;
+
 public:
 	ATDRPGPlayer();
 	virtual void BeginPlay() override;

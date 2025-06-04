@@ -17,6 +17,7 @@
 #include "UI/TDRPGUWStatusBar.h"
 #include "Data/CharacterDataRow.h"
 #include "Data/CharacterConfig.h"
+#include "UI/TDRPGUWQuickSlot.h"
 
 #include <EnhancedInputComponent.h>
 #include <Camera/CameraComponent.h>
@@ -141,6 +142,13 @@ void ATDRPGPlayer::Initialize()
 			})
 	);
 
+	UIManager->GetUI<UTDRPGUWQuickSlot>(
+		FOnLoadCompleted::CreateLambda(
+			[this](UTDRPGUserWidget* Loaded) {
+				UIQuickSlot = Cast<UTDRPGUWQuickSlot>(Loaded);
+				UIQuickSlot->AddToViewport();
+			})
+	);
 
 	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
 }
