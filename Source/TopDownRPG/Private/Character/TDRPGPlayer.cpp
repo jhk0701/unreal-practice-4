@@ -102,7 +102,7 @@ void ATDRPGPlayer::Initialize()
 	// 데이터 반영
 	UPlayerManager* Player = GameInst->GetSubsystem<UPlayerManager>();
 	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
-	DataComp->CharID = Player->GetPlayerData().CharID;
+	DataComp->CharID = Player->PlayerData->CharID;
 
 	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, *DataComp->CharID);
 	DataComp->Initialize(Player->Lv, Data);

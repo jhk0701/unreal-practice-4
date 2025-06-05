@@ -31,7 +31,6 @@ struct FPlayerData
 	// TODO : 인벤토리
 	// 소비, 재료 아이템 : ID, 갯수
 	// 장비 아이템 : ID, 특수 옵션들
-
 };
 
 /**
@@ -53,12 +52,9 @@ public:
 	// 골드
 	TUniquePtr<Currency> CurrencyGold;
 
-protected:
-	UPROPERTY(VisibleAnywhere)
-	FPlayerData PlayerData;
+	TUniquePtr<FPlayerData> PlayerData;
 
 public:
-	inline const FPlayerData& GetPlayerData() { return PlayerData; }
 	
 	void LoadData();
 	void SaveData();
