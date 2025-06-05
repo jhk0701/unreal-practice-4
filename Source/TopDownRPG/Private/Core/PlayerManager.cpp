@@ -4,6 +4,11 @@
 #include "Core/GameDataManager.h"
 #include "Data/LevelingDataRow.h"
 
+#include "Player/Inventory.h"
+
+#include "Item/IngredientItem.h"
+#include "Data/ItemDataRow.h"
+
 #include "TopDownRPG/TopDownRPG.h"
 
 void UPlayerManager::LoadData()
@@ -41,7 +46,25 @@ void UPlayerManager::LoadData()
 
 	Exp->OnValueChanged.AddUObject(this, &UPlayerManager::CheckExp);
 
-	// Inventory;
+	Inventory = NewObject<UInventory>();
+	Inventory->Initialize();
+
+	// TODO: 테스트 코드 삭제
+	FName IngreID1 = TEXT("0001");
+	FName IngreID2 = TEXT("0002");
+	FName IngreID3 = TEXT("0003");
+
+	FItemDataRow* IngreInfo1 = GameData->GetRow<FItemDataRow>(ETableType::Ingredient, IngreID1);
+	FItemDataRow* IngreInfo2 = GameData->GetRow<FItemDataRow>(ETableType::Ingredient, IngreID2);
+	FItemDataRow* IngreInfo3 = GameData->GetRow<FItemDataRow>(ETableType::Ingredient, IngreID3);
+
+	UIngredientItem* Ingre1 = NewObject<UIngredientItem>();
+	UIngredientItem* Ingre2 = NewObject<UIngredientItem>();
+	UIngredientItem* Ingre3 = NewObject<UIngredientItem>();
+
+	Ingre1->Initialize(IngreInfo1, IngreID1, 5);
+	Ingre2->Initialize(IngreInfo2, IngreID2, 10);
+	Ingre3->Initialize(IngreInfo3, IngreID3, 20);
 }
 
 void UPlayerManager::SaveData()

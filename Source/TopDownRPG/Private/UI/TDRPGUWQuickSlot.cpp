@@ -23,7 +23,7 @@ void UTDRPGUWQuickSlot::NativeOnInitialized()
 
 		if (UTDRPGUWSlot* SlotCast = Cast<UTDRPGUWSlot>(Widget)) 
 		{
-			SlotCast->SlotNumLabel->SetText(FText::FromString(FString::Printf(TEXT("%d"), i + 1)));
+			// SlotCast->SlotNumLabel->SetText(FText::FromString(FString::Printf(TEXT("%d"), i + 1)));
 			SlotList.Add(SlotCast);
 		}
 	}

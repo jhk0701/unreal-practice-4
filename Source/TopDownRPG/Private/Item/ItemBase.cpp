@@ -4,6 +4,18 @@
 #include "Item/ItemBase.h"
 #include "Data/ItemDataRow.h"
 
+void UItemBase::Initialize(FItemDataRow* InData, FName& InID)
+{
+    Data = InData;
+    ItemID = &InID;
+}
+
+void UItemBase::Initialize(FItemDataRow* InData, FName& InID, uint32 InAmount)
+{
+    Initialize(InData, InID);
+    Quantity = InAmount;
+}
+
 /// <summary>
 /// 이 아이템 객체에 새로 물량을 더 넣을 수 있는지 확인하고 넣는 메서드
 /// </summary>

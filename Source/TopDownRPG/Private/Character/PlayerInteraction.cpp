@@ -11,12 +11,8 @@
 
 #include "TopDownRPG/TopDownRPG.h"
 
-#include "Core/GameDataManager.h"
-#include "Item/ConsumeItem.h"
-#include "Data/ConsumeDataRow.h"
 
-
-UPlayerInteraction::UPlayerInteraction() : QuickSlotNum(0)
+UPlayerInteraction::UPlayerInteraction() : QuickSlotNum(0), QuickSlotMaxSize(4)
 {
 	QuickSlot.Init(nullptr, QuickSlotMaxSize);
 }
@@ -24,18 +20,6 @@ UPlayerInteraction::UPlayerInteraction() : QuickSlotNum(0)
 void UPlayerInteraction::InitializeComponent()
 {
 	Super::InitializeComponent();
-
-	// 테스트용 퀵슬롯 기능 추가
-	FName TempID = TEXT("0000");
-	UGameDataManager* GameData = GetWorld()->GetGameInstance()->GetSubsystem<UGameDataManager>();
-	FConsumeDataRow* ItemData = GameData->GetRow<FConsumeDataRow>(ETableType::Consume, TempID);
-	
-	UConsumeItem* TestConsume = NewObject<UConsumeItem>();
-	TestConsume->Initialize(*ItemData, TempID);
-	uint32 Rest = 0;
-	TestConsume->TryAddItem(10, Rest);
-
-	QuickSlot[0] = TestConsume;
 }
 
 void UPlayerInteraction::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)

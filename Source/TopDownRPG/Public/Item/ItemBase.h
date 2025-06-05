@@ -17,7 +17,8 @@ class TOPDOWNRPG_API UItemBase : public UObject
 
 public:
 	// 아이템 데이터 주입
-	inline virtual void Initialize(FItemDataRow& InData, FName& InID) { Data = &InData; ItemID = &InID; };
+	virtual void Initialize(FItemDataRow* InData, FName& InID);
+	virtual void Initialize(FItemDataRow* InData, FName& InID, uint32 InAmount);
 	virtual bool TryAddItem(uint32 InAmount, uint32& OutRest);
 
 protected:

@@ -6,8 +6,8 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWSlot.generated.h"
 
+class UBorder;
 class UImage;
-class UTextBlock;
 
 /**
  * 
@@ -18,15 +18,10 @@ class TOPDOWNRPG_API UTDRPGUWSlot : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta=(BindWidget))
-	TObjectPtr<UImage> BackImage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
+	TObjectPtr<UBorder> Background;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
-	TObjectPtr<UImage> ThumbnailImage;
+	TObjectPtr<UImage> IconImage;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidgetOptional))
-	TObjectPtr<UTextBlock> QuantityLabel;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidgetOptional))
-	TObjectPtr<UTextBlock> SlotNumLabel;
 };

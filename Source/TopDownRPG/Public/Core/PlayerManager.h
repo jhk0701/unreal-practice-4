@@ -49,12 +49,11 @@ public:
 	TUniquePtr<FPlayerData> PlayerData;
 
 	// 인벤토리
-	// 소비, 재료 아이템 : ID, 갯수
-	// 장비 아이템 : ID, 특수 옵션들
-	TArray<class UItemBase> Inventory;
+	UPROPERTY()
+	TObjectPtr<class UInventory> Inventory;
+
 
 public:
-	
 	void LoadData();
 	void SaveData();
 
