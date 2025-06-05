@@ -27,7 +27,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	FSoftObjectPath Thumbnail;
 
-	UPROPERTY(EditAnywhere)
-	FSoftObjectPath Mesh;
+	// UPROPERTY(EditAnywhere)
+	// FSoftObjectPath Mesh;
 
 };
