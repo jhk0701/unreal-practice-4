@@ -34,7 +34,7 @@ void UConsumeItem::Use(AActor* Subject)
 	if(ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Subject))
 	{
 		// 효과 객체로부터 맥락 구조체 생성
-		FFunctionContext& Context = ConsumeData->Function->GetContext(ConsumeData->Value, ConsumeData->Duration);
+		TSharedPtr<FFunctionContext> Context = ConsumeData->Function->GetContext(ConsumeData->Value, ConsumeData->Duration);
 
 		// 아이템에서 대상 캐릭터에게 효과 객체 적용
 		Player->DataComp->AddBuff(*ItemID, Context);

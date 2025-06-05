@@ -60,21 +60,18 @@ void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// 기한 만료된 버프 해제
-	if (BuffToBeReleased.Num() > 0)
+	while (!BuffReleaseQueue.IsEmpty())
 	{
-		for (auto& Key : BuffToBeReleased)
-		{
-			BuffFunc.Remove(Key);
-		}
-
-		BuffToBeReleased.Empty();
+		FName Key;
+		BuffReleaseQueue.Dequeue(Key);
+		BuffFunc.Remove(Key);
 	}
 
 	for (auto& Pair : BuffFunc)
 	{
 		Pair.Value->Duration -= DeltaTime;
 		if (Pair.Value->Duration < 0)
-			BuffToBeReleased.Add(Pair.Key); // 다음 틱에 버프 해제
+			BuffReleaseQueue.Enqueue(Pair.Key); // 다음 틱에 버프 해제
 	}
 }
 
@@ -104,12 +101,12 @@ uint32 UCharacterData::GetDefensePower()
 	return uint32(100);
 }
 
-void UCharacterData::AddBuff(FName& InItemID, FFunctionContext& InContext)
+void UCharacterData::AddBuff(FName& InItemID, TSharedPtr<FFunctionContext> InContext)
 {
 	if(BuffFunc.Contains(InItemID))
-		BuffFunc[InItemID]->Duration += InContext.Duration;
+		BuffFunc[InItemID]->Duration += InContext->Duration;
 	else
-		BuffFunc.Add(InItemID, &InContext);
+		BuffFunc.Add(InItemID, InContext);
 }
 
 void UCharacterData::Debugging()

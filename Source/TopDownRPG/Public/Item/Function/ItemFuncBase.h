@@ -8,11 +8,21 @@
 #include "ItemFuncBase.generated.h"
 
 
+USTRUCT()
 struct FFunctionContext
 {
+	GENERATED_BODY()
+
 	UItemFuncBase* Func;
 	uint32 Value;
 	float Duration;
+
+	FFunctionContext() {};
+	FFunctionContext(UItemFuncBase* InFunc, uint32 InValue, float InDuration) : 
+		Func(InFunc), 
+		Value(InValue), 
+		Duration(InDuration)
+	{};
 };
 
 /**
@@ -26,5 +36,8 @@ class TOPDOWNRPG_API UItemFuncBase : public UDataAsset
 public:
 	inline virtual uint32 Operate(uint32 Object, uint32 Value) { return Value; };
 	inline virtual void Operate(AActor* Object, uint32 Value) { };
-	FFunctionContext& GetContext(uint32 Value, float Duration);
+	inline TSharedPtr<FFunctionContext> GetContext(uint32 Value, float Duration) 
+	{ 
+		return MakeShared<FFunctionContext>(this, Value, Duration); 
+	};
 };

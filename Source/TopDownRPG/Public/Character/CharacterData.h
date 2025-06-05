@@ -28,8 +28,8 @@ public:
 
 	// 버프를 받으면 컨테이너에 저장
 	// 관리용 Map : ItemID - Func
-	TMap<FName, TWeakObjectPtr<FFunctionContext>> BuffFunc;
-	TArray<FName> BuffToBeReleased;
+	TMap<FName, TSharedPtr<FFunctionContext>> BuffFunc;
+	TQueue<FName> BuffReleaseQueue;
 
 	// TODO: 버프 연산 
 	// 한번에 여러가지 버프를 우선순위대로 연산해야함
@@ -54,7 +54,7 @@ public:
 	uint32 GetAttackPower();
 	uint32 GetDefensePower();
 
-	void AddBuff(FName& InItemID, FFunctionContext& InContext);
+	void AddBuff(FName& InItemID, TSharedPtr<FFunctionContext> InContext);
 
 	void Debugging();
 };
