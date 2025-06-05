@@ -32,7 +32,7 @@ void UPlayerInteraction::InitializeComponent()
 	
 	UConsumeItem* TestConsume = NewObject<UConsumeItem>();
 	TestConsume->Initialize(*ItemData, TempID);
-	uint8 Rest = 0;
+	uint32 Rest = 0;
 	TestConsume->TryAddItem(10, Rest);
 
 	QuickSlot[0] = TestConsume;

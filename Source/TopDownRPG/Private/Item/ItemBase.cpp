@@ -10,7 +10,7 @@
 /// <param name="InAmount">들어올 양</param> 
 /// <param name="OutRest">들어오고 남은 양</param>
 /// <returns>온전히 모두 받아들였는지 여부</returns>
-bool UItemBase::TryAddItem(uint8 InAmount, uint8& OutRest)
+bool UItemBase::TryAddItem(uint32 InAmount, uint32& OutRest)
 {
     if (Data->NumOfDuplicate < Quantity + InAmount)
     {

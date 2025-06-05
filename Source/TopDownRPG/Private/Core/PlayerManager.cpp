@@ -10,6 +10,7 @@ void UPlayerManager::LoadData()
 {
 	// TODO : 데이터 불러오기
 	PlayerData = MakeUnique<FPlayerData>();
+
 	PlayerData->PlayerID = TEXT("1");
 	PlayerData->CharID = TEXT("1001");
 	PlayerData->CharLv = 5;
@@ -39,6 +40,8 @@ void UPlayerManager::LoadData()
 	CurrencyGold = MakeUnique<Currency>(PlayerData->Gold);
 
 	Exp->OnValueChanged.AddUObject(this, &UPlayerManager::CheckExp);
+
+	// Inventory;
 }
 
 void UPlayerManager::SaveData()

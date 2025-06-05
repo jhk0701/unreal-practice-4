@@ -21,7 +21,7 @@ public:
 	ERarity Rarity;
 
 	UPROPERTY(EditAnywhere)
-	uint8 NumOfDuplicate;
+	uint32 NumOfDuplicate;
 
 	// 구성요소
 	UPROPERTY(EditAnywhere)
