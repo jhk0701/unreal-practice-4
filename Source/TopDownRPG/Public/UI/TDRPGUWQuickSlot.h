@@ -19,7 +19,7 @@ public:
 	TObjectPtr<class UHorizontalBox> SlotContainer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement)
-	TArray<class UTDRPGUWSlot*> SlotList;
+	TArray<class UTDRPGUWSlotBase*> SlotList;
 
 public:
 	virtual void NativeOnInitialized() override;

@@ -2,7 +2,7 @@
 
 
 #include "UI/TDRPGUWQuickSlot.h"
-#include "UI/Element/TDRPGUWSlot.h"
+#include "UI/Element/TDRPGUWSlotBase.h"
 
 #include <Components/TextBlock.h>
 #include <Components/HorizontalBox.h>
@@ -21,7 +21,7 @@ void UTDRPGUWQuickSlot::NativeOnInitialized()
 	{
 		auto* Widget = SlotContainer->GetChildAt(i);
 
-		if (UTDRPGUWSlot* SlotCast = Cast<UTDRPGUWSlot>(Widget)) 
+		if (UTDRPGUWSlotBase* SlotCast = Cast<UTDRPGUWSlotBase>(Widget))
 		{
 			// SlotCast->SlotNumLabel->SetText(FText::FromString(FString::Printf(TEXT("%d"), i + 1)));
 			SlotList.Add(SlotCast);

@@ -4,24 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "UI/TDRPGUserWidget.h"
-#include "TDRPGUWSlot.generated.h"
-
-class UBorder;
-class UImage;
+#include "TDRPGUWSlotBase.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UTDRPGUWSlot : public UTDRPGUserWidget
+class TOPDOWNRPG_API UTDRPGUWSlotBase : public UTDRPGUserWidget
 {
 	GENERATED_BODY()
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
-	TObjectPtr<UBorder> Background;
+	TObjectPtr<class UBorder> Background;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
-	TObjectPtr<UImage> IconImage;
+	TObjectPtr<class UImage> IconImage;
 
 };
