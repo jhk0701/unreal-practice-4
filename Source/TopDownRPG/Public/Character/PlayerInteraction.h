@@ -35,7 +35,6 @@ protected:
 
 public:
 	UPlayerInteraction();
-	virtual void InitializeComponent() override;
 	virtual void SetupInputBinding(class UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
 	
 	void InputInteract(const FInputActionValue& Value);

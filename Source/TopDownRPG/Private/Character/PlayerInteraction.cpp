@@ -15,15 +15,9 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-
 UPlayerInteraction::UPlayerInteraction() : QuickSlotNum(0), QuickSlotMaxSize(4)
 {
 	QuickSlot.Init(nullptr, QuickSlotMaxSize);
-}
-
-void UPlayerInteraction::InitializeComponent()
-{
-	Super::InitializeComponent();
 }
 
 void UPlayerInteraction::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)
