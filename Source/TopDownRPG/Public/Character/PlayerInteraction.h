@@ -7,6 +7,13 @@
 #include "Inherit/QuickSlotHandler.h"
 #include "PlayerInteraction.generated.h"
 
+UENUM(BlueprintType)
+enum class EShortCutType : uint8
+{
+	Interaction,
+	Inventory
+};
+
 /**
  * 
  */
@@ -25,23 +32,25 @@ protected:
 	// 우선 1~4번에 소비 아이템 할당 
 	// 인터페이스를 상속한 객체 담기
 	// 인터페이스를 담기 위해 TScriptInterface 사용
+	// 이 기능은 나중에 생각해볼것 만약 소비 아이템 외의 바인딩이 필요하다면?
+	// 슬롯 핸들러 : 아이템 외에도 여럿을 담을 수 있는 객체 or 인터페이스
 	UPROPERTY(VisibleAnywhere, Category = "QuickSlot")
 	TArray<TScriptInterface<IQuickSlotHandler>> QuickSlot;
 
-	// 이 기능은 나중에 생각해볼것
-	// 만약 소비 아이템 외의 바인딩이 필요하다면?
-	// 슬롯 핸들러 : 아이템 외에도 여럿을 담을 수 있는 객체 or 인터페이스
 
 public:
 	UPlayerInteraction();
 	virtual void InitializeComponent() override;
 	virtual void SetupInputBinding(class UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
-	// 유저 상호작용
-	void InvokeInteract(const FInputActionValue& Value);
+	
+	// 유저 상호작용 : 만약 단축키를 여럿 쓴다고 할 때 어떻게 쓸건지
+	void TriggerInteract(const FInputActionValue& Value);
+	
+	void InputInteract();
+	void InputInventory();
 	
 	// 퀵슬롯 입력
 	void TriggerQuickSlot(const FInputActionValue& Value);
 	void ReleaseQuickSlot(const FInputActionValue& Value);
-
 	void UseQuickSlot(uint8 Idx);
 };

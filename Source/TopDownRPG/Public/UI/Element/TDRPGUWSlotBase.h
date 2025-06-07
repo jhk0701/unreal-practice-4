@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UI/TDRPGUserWidget.h"
+#include "Item/ItemBase.h"
 #include "TDRPGUWSlotBase.generated.h"
 
 /**
@@ -21,4 +22,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
 	TObjectPtr<class UImage> IconImage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidgetOptional))
+	TObjectPtr<class UTextBlock> QuantityLabel;
+
+protected:
+	UItemBase* Item = nullptr;
+
+public:
+	virtual void NativeOnInitialized() override;
+	virtual void Clear();
+	virtual void SetData(UItemBase* InItem);
+	virtual void Update();
 };

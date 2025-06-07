@@ -4,16 +4,18 @@
 #include "Item/ItemBase.h"
 #include "Data/ItemDataRow.h"
 
-void UItemBase::Initialize(FItemDataRow* InData, FName& InID)
+void UItemBase::Initialize(FItemDataRow* InData, FName* InID)
 {
     Data = InData;
-    ItemID = &InID;
+    ItemID = InID;
+
+    OnItemUpdated.Broadcast(this);
 }
 
-void UItemBase::Initialize(FItemDataRow* InData, FName& InID, uint32 InAmount)
+void UItemBase::Initialize(FItemDataRow* InData, FName* InID, uint32 InAmount)
 {
-    Initialize(InData, InID);
     Quantity = InAmount;
+    Initialize(InData, InID);
 }
 
 /// <summary>
@@ -32,9 +34,11 @@ bool UItemBase::TryAddItem(uint32 InAmount, uint32& OutRest)
         // 나머지 계산해서 반환
         OutRest = (Quantity + InAmount) - Data->NumOfDuplicate;
 
+        OnItemUpdated.Broadcast(this);
         return false;
     }
 
     Quantity += InAmount;
+    OnItemUpdated.Broadcast(this);
     return true;
 }

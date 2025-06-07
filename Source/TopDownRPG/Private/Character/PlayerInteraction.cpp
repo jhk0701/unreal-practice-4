@@ -26,13 +26,28 @@ void UPlayerInteraction::SetupInputBinding(UEnhancedInputComponent* PlayerInputC
 {
 	Super::SetupInputBinding(PlayerInputComponent, InController);
 
-	PlayerInputComponent->BindAction(InController->InteractAction,	ETriggerEvent::Started, this, &UPlayerInteraction::InvokeInteract);
+	PlayerInputComponent->BindAction(InController->InteractAction,	ETriggerEvent::Started, this, &UPlayerInteraction::TriggerInteract);
 
 	PlayerInputComponent->BindAction(InController->QuickSlotAction, ETriggerEvent::Triggered, this, &UPlayerInteraction::TriggerQuickSlot);
 	PlayerInputComponent->BindAction(InController->QuickSlotAction, ETriggerEvent::Completed, this, &UPlayerInteraction::ReleaseQuickSlot);
 }
 
-void UPlayerInteraction::InvokeInteract(const FInputActionValue& Value)
+void UPlayerInteraction::TriggerInteract(const FInputActionValue& Value)
+{
+	uint8 Input = (uint8)Value.Get<float>();
+	
+	switch ((EShortCutType)Input)
+	{
+	case EShortCutType::Interaction:
+		InputInteract();
+		break;
+	case EShortCutType::Inventory:
+		InputInventory();
+		break;
+	}
+}
+
+void UPlayerInteraction::InputInteract()
 {
 	TArray<AActor*> Overlapped;
 	Player->InteractCollider->GetOverlappingActors(Overlapped, AActor::StaticClass());
@@ -40,7 +55,7 @@ void UPlayerInteraction::InvokeInteract(const FInputActionValue& Value)
 	// 없으면 실행 중지
 	if (Overlapped.Num() < 1)
 		return;
-	
+
 	for (auto Iter = Overlapped.CreateConstIterator(); Iter; ++Iter)
 	{
 		// 첫번째 객체만 실행
@@ -52,6 +67,15 @@ void UPlayerInteraction::InvokeInteract(const FInputActionValue& Value)
 		}
 	}
 }
+
+void UPlayerInteraction::InputInventory()
+{
+	// UI 열기
+	// 이미 열려있으면 닫기
+
+
+}
+
 
 void UPlayerInteraction::TriggerQuickSlot(const FInputActionValue& Value)
 {

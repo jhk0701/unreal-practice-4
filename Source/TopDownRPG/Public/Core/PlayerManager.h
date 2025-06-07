@@ -38,6 +38,8 @@ class TOPDOWNRPG_API UPlayerManager : public UGameInstanceSubsystem
 	GENERATED_BODY()
 	
 public:
+	TUniquePtr<FPlayerData> PlayerData;
+
 	// 레벨
 	UPROPERTY()
 	uint32 Lv;
@@ -45,9 +47,6 @@ public:
 	TUniquePtr<Status> Exp;
 	// 골드
 	TUniquePtr<Currency> CurrencyGold;
-
-	TUniquePtr<FPlayerData> PlayerData;
-
 	// 인벤토리
 	UPROPERTY()
 	TObjectPtr<class UInventory> Inventory;

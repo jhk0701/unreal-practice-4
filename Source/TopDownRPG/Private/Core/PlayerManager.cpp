@@ -62,9 +62,9 @@ void UPlayerManager::LoadData()
 	UIngredientItem* Ingre2 = NewObject<UIngredientItem>();
 	UIngredientItem* Ingre3 = NewObject<UIngredientItem>();
 
-	Ingre1->Initialize(IngreInfo1, IngreID1, 5);
-	Ingre2->Initialize(IngreInfo2, IngreID2, 10);
-	Ingre3->Initialize(IngreInfo3, IngreID3, 20);
+	Ingre1->Initialize(IngreInfo1, &IngreID1, 5);
+	Ingre2->Initialize(IngreInfo2, &IngreID2, 10);
+	Ingre3->Initialize(IngreInfo3, &IngreID3, 20);
 }
 
 void UPlayerManager::SaveData()

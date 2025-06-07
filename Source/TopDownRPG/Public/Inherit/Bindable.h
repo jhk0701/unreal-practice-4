@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "QuickSlotHandler.generated.h"
+#include "Bindable.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
-class UQuickSlotHandler : public UInterface
+class UBindable : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -16,11 +16,12 @@ class UQuickSlotHandler : public UInterface
 /**
  * 
  */
-class TOPDOWNRPG_API IQuickSlotHandler
+class TOPDOWNRPG_API IBindable
 {
 	GENERATED_BODY()
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual void InvokeSlot(AActor* Subject) = 0;
+	virtual void Bind() = 0;
+	virtual void Unbind() = 0;
 };
