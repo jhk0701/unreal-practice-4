@@ -6,10 +6,14 @@
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
 
+#include "Core/UIManager.h"
+#include "UI/TDRPGUWInventory.h"
+
 #include <EnhancedInputComponent.h>
 #include <Components/SphereComponent.h>
 
 #include "TopDownRPG/TopDownRPG.h"
+
 
 
 UPlayerInteraction::UPlayerInteraction() : QuickSlotNum(0), QuickSlotMaxSize(4)
@@ -26,28 +30,15 @@ void UPlayerInteraction::SetupInputBinding(UEnhancedInputComponent* PlayerInputC
 {
 	Super::SetupInputBinding(PlayerInputComponent, InController);
 
-	PlayerInputComponent->BindAction(InController->InteractAction,	ETriggerEvent::Started, this, &UPlayerInteraction::TriggerInteract);
+	PlayerInputComponent->BindAction(InController->InteractAction,	ETriggerEvent::Started, this, &UPlayerInteraction::InputInteract);
+	PlayerInputComponent->BindAction(InController->InventoryAction, ETriggerEvent::Started, this, &UPlayerInteraction::InputInventory);
 
 	PlayerInputComponent->BindAction(InController->QuickSlotAction, ETriggerEvent::Triggered, this, &UPlayerInteraction::TriggerQuickSlot);
 	PlayerInputComponent->BindAction(InController->QuickSlotAction, ETriggerEvent::Completed, this, &UPlayerInteraction::ReleaseQuickSlot);
 }
 
-void UPlayerInteraction::TriggerInteract(const FInputActionValue& Value)
-{
-	uint8 Input = (uint8)Value.Get<float>();
-	
-	switch ((EShortCutType)Input)
-	{
-	case EShortCutType::Interaction:
-		InputInteract();
-		break;
-	case EShortCutType::Inventory:
-		InputInventory();
-		break;
-	}
-}
 
-void UPlayerInteraction::InputInteract()
+void UPlayerInteraction::InputInteract(const FInputActionValue& Value)
 {
 	TArray<AActor*> Overlapped;
 	Player->InteractCollider->GetOverlappingActors(Overlapped, AActor::StaticClass());
@@ -68,12 +59,22 @@ void UPlayerInteraction::InputInteract()
 	}
 }
 
-void UPlayerInteraction::InputInventory()
+void UPlayerInteraction::InputInventory(const FInputActionValue& Value)
 {
 	// UI 열기
-	// 이미 열려있으면 닫기
+	UUIManager* UIManager = GetWorld()->GetGameInstance()->GetSubsystem<UUIManager>();
+	if (!UIManager)
+		return;
 
-
+	UIManager->GetUI<UTDRPGUWInventory>(
+		FOnLoadCompleted::CreateLambda(
+			[](UTDRPGUserWidget* Loaded) {
+				if (!Loaded->IsInViewport())
+					Loaded->Open();
+				else
+					Loaded->Close();
+			})
+	);
 }
 
 

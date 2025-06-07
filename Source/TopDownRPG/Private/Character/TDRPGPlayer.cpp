@@ -18,6 +18,7 @@
 #include "Data/CharacterDataRow.h"
 #include "Data/CharacterConfig.h"
 #include "UI/TDRPGUWQuickSlot.h"
+#include "UI/TDRPGUWInventory.h"
 
 #include <EnhancedInputComponent.h>
 #include <Camera/CameraComponent.h>
@@ -138,7 +139,7 @@ void ATDRPGPlayer::Initialize()
 			[this](UTDRPGUserWidget* Loaded) {
 				UIStatusBar = Cast<UTDRPGUWStatusBar>(Loaded);
 				UIStatusBar->InitStatusBar(this);
-				UIStatusBar->AddToViewport();
+				UIStatusBar->Open();
 			})
 	);
 
@@ -146,7 +147,7 @@ void ATDRPGPlayer::Initialize()
 		FOnLoadCompleted::CreateLambda(
 			[this](UTDRPGUserWidget* Loaded) {
 				UIQuickSlot = Cast<UTDRPGUWQuickSlot>(Loaded);
-				UIQuickSlot->AddToViewport();
+				UIQuickSlot->Open();
 			})
 	);
 

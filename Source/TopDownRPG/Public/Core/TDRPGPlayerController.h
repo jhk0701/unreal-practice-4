@@ -36,6 +36,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
 	TObjectPtr<UInputAction> QuickSlotAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
+	TObjectPtr<UInputAction> InventoryAction;
+
 
 public:
 	virtual void BeginPlay() override;

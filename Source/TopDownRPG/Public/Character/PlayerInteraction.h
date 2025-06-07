@@ -7,12 +7,7 @@
 #include "Inherit/QuickSlotHandler.h"
 #include "PlayerInteraction.generated.h"
 
-UENUM(BlueprintType)
-enum class EShortCutType : uint8
-{
-	Interaction,
-	Inventory
-};
+
 
 /**
  * 
@@ -43,11 +38,8 @@ public:
 	virtual void InitializeComponent() override;
 	virtual void SetupInputBinding(class UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
 	
-	// 유저 상호작용 : 만약 단축키를 여럿 쓴다고 할 때 어떻게 쓸건지
-	void TriggerInteract(const FInputActionValue& Value);
-	
-	void InputInteract();
-	void InputInventory();
+	void InputInteract(const FInputActionValue& Value);
+	void InputInventory(const FInputActionValue& Value);
 	
 	// 퀵슬롯 입력
 	void TriggerQuickSlot(const FInputActionValue& Value);
