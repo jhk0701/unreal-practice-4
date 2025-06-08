@@ -11,6 +11,7 @@
 #include <Components/TextBlock.h>
 #include <Components/Button.h>
 
+
 void UTDRPGUWInventory::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();

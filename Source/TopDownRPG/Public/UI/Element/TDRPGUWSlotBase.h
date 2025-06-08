@@ -30,7 +30,9 @@ protected:
 
 public:
 	virtual void NativeOnInitialized() override;
-	virtual void Clear();
+	
 	virtual void SetData(UItemBase* InItem);
-	virtual void Update();
+	
+	virtual void Clear();
+	virtual void Refresh();
 };

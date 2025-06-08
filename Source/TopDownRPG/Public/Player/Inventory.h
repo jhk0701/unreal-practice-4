@@ -22,4 +22,7 @@ public:
 
 	void Initialize();
 	void AddItem(class UItemBase& Item);
+
+private:
+	int16 GetBlackSpace();
 };

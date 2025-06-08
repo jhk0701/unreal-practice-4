@@ -9,7 +9,6 @@
 #include "Item/IngredientItem.h"
 #include "Data/ItemDataRow.h"
 
-#include "TopDownRPG/TopDownRPG.h"
 
 void UPlayerManager::LoadData()
 {
@@ -65,6 +64,10 @@ void UPlayerManager::LoadData()
 	Ingre1->Initialize(IngreInfo1, &IngreID1, 5);
 	Ingre2->Initialize(IngreInfo2, &IngreID2, 10);
 	Ingre3->Initialize(IngreInfo3, &IngreID3, 20);
+
+	Inventory->AddItem(*Ingre1);
+	Inventory->AddItem(*Ingre2);
+	Inventory->AddItem(*Ingre3);
 }
 
 void UPlayerManager::SaveData()

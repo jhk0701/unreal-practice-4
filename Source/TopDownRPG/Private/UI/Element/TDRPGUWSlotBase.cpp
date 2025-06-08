@@ -3,8 +3,12 @@
 
 #include "UI/Element/TDRPGUWSlotBase.h"
 
+#include "Item/ItemBase.h"
+#include "Data/ItemDataRow.h"
+
 #include <Components/TextBlock.h>
 #include <Components/Image.h>
+
 
 void UTDRPGUWSlotBase::NativeOnInitialized()
 {
@@ -16,7 +20,6 @@ void UTDRPGUWSlotBase::NativeOnInitialized()
 void UTDRPGUWSlotBase::Clear()
 {
 	QuantityLabel->SetVisibility(ESlateVisibility::Hidden);
-	
 	IconImage->SetVisibility(ESlateVisibility::Hidden);
 	IconImage->SetBrushResourceObject(nullptr);
 }
@@ -24,13 +27,16 @@ void UTDRPGUWSlotBase::Clear()
 void UTDRPGUWSlotBase::SetData(UItemBase* InItem)
 {
 	Item = InItem;
-	Update();
+	Refresh();
 }
 
-void UTDRPGUWSlotBase::Update()
+void UTDRPGUWSlotBase::Refresh()
 {
 	if (!Item)
 		return;
 
-
+	FItemDataRow* Data = Item->GetData();
+	// FSoftObjectPtr Thumbnail = FSoftObjectPtr(Data->Thumbnail);
+	QuantityLabel->SetVisibility(ESlateVisibility::Visible);
+	QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), Item->GetQuantity())));
 }

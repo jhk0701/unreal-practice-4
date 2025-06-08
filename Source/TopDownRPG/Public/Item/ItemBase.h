@@ -25,6 +25,9 @@ public:
 	virtual void Initialize(FItemDataRow* InData, FName* InID, uint32 InAmount);
 	virtual bool TryAddItem(uint32 InAmount, uint32& OutRest);
 
+	inline FItemDataRow* GetData() { return Data; }
+	inline uint32 GetQuantity() { return Quantity; }
+
 protected:
 	FName* ItemID = nullptr;
 	FItemDataRow* Data = nullptr;

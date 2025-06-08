@@ -17,7 +17,6 @@ void UResourceLoadSystem::Deinitialize()
 	Super::Deinitialize();
 }
 
-void UResourceLoadSystem::Load()
+void UResourceLoadSystem::Load(FSoftObjectPtr& SoftRef)
 {
-
 }
