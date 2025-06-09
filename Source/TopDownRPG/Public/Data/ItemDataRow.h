@@ -10,7 +10,7 @@
 USTRUCT(BlueprintType)
 struct TOPDOWNRPG_API FItemDataRow : public FTableRowBase
 {
-	GENERATED_BODY()
+	GENERATED_USTRUCT_BODY()
 
 public:
 	UPROPERTY(EditAnywhere)

@@ -17,7 +17,8 @@ void UInventory::Initialize()
 void UInventory::AddItem(UItemBase& Item)
 {
 	// 빈공간 찾기
-	uint8 Idx = GetBlackSpace();
+	uint8 Idx = GetBlankSpace();
+
 	if (Idx >= 0)
 		Items[Idx] = &Item;
 
@@ -27,7 +28,7 @@ void UInventory::AddItem(UItemBase& Item)
 	// 중복 시, 새로운 인덱스에 할당
 }
 
-int16 UInventory::GetBlackSpace()
+int16 UInventory::GetBlankSpace()
 {
 	for(int8 i = 0; i < MaxSize; ++i)
 	{

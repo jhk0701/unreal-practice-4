@@ -9,6 +9,8 @@
 #include "Item/IngredientItem.h"
 #include "Data/ItemDataRow.h"
 
+#include "TopDownRPG/TopDownRPG.h"
+
 
 void UPlayerManager::LoadData()
 {

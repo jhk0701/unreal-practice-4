@@ -24,5 +24,5 @@ public:
 	void AddItem(class UItemBase& Item);
 
 private:
-	int16 GetBlackSpace();
+	int16 GetBlankSpace();
 };

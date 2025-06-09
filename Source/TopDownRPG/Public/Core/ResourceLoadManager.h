@@ -4,18 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
-#include "ResourceLoadSystem.generated.h"
+#include "ResourceLoadManager.generated.h"
+
+DECLARE_DELEGATE_OneParam(FOnResourceLoaded, UObject*);
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UResourceLoadSystem : public UGameInstanceSubsystem
+class TOPDOWNRPG_API UResourceLoadManager : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 	
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
-	void Load(FSoftObjectPtr& SoftRef);
+
+	void Load(FSoftObjectPath& InPath, FOnResourceLoaded& OnCompleteDelegate);
 };

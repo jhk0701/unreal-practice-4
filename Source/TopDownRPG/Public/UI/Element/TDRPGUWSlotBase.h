@@ -35,4 +35,7 @@ public:
 	
 	virtual void Clear();
 	virtual void Refresh();
+
+protected:
+	void OnIconLoaded(UObject* Loaded);
 };
