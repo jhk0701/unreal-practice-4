@@ -7,6 +7,9 @@
 #include "Item/ItemBase.h"
 #include "TDRPGUWSlotBase.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMouseEnterDelegate, UItemBase*);
+DECLARE_MULTICAST_DELEGATE(FOnMouseLeaveDelegate);
+
 /**
  * 
  */
@@ -25,17 +28,24 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidgetOptional))
 	TObjectPtr<class UTextBlock> QuantityLabel;
 
+	// 마우스 호버링 이벤트
+	// 네이티브 메서드에서 Broadcast 해줄 것
+	FOnMouseEnterDelegate OnMouseEnterEvent;
+	FOnMouseLeaveDelegate OnMouseLeaveEvent;
+
 protected:
 	UItemBase* Item = nullptr;
 
 public:
-	virtual void NativeOnInitialized() override;
-	
 	virtual void SetData(UItemBase* InItem);
-	
+
+	virtual void NativeOnInitialized() override;
+	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
+
+protected:
 	virtual void Clear();
 	virtual void Refresh();
 
-protected:
 	void OnIconLoaded(UObject* Loaded);
 };

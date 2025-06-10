@@ -31,14 +31,30 @@ void UTDRPGUWSlotBase::SetData(UItemBase* InItem)
 {
 	Item = InItem;
 
-	if (!Item)
-		return;
-
 	Refresh();
+}
+
+void UTDRPGUWSlotBase::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
+
+	if (Item)
+		OnMouseEnterEvent.Broadcast(Item);
+}
+
+void UTDRPGUWSlotBase::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
+{
+	Super::NativeOnMouseLeave(InMouseEvent);
+
+	if (Item)
+		OnMouseLeaveEvent.Broadcast();
 }
 
 void UTDRPGUWSlotBase::Refresh()
 {
+	if (!Item)
+		return;
+
 	FItemDataRow* Data = Item->GetData();
 
 	QuantityLabel->SetVisibility(ESlateVisibility::Visible);

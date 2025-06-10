@@ -3,6 +3,7 @@
 
 #include "UI/TDRPGUWInventory.h"
 #include "UI/Element/TDRPGUWSlotBase.h"
+#include "UI/TDRPGUWItemDetail.h"
 
 #include "Core/PlayerManager.h"
 #include "Player/Inventory.h"
@@ -17,6 +18,7 @@ void UTDRPGUWInventory::NativeOnInitialized()
 	Super::NativeOnInitialized();
 
 	CloseButton->OnClicked.AddUniqueDynamic(this, &UTDRPGUserWidget::Close);
+	HideItemDetail();
 
 	int32 SlotCnt = SlotContainer->GetChildrenCount();
 
@@ -27,6 +29,11 @@ void UTDRPGUWInventory::NativeOnInitialized()
 	for (int32 i = 0; i < SlotCnt; ++i)
 	{
 		UTDRPGUWSlotBase* SlotInst = Cast<UTDRPGUWSlotBase>(SlotContainer->GetChildAt(i));
+		
+		// 슬롯 마우스 호버링 이벤트들 등록
+		SlotInst->OnMouseEnterEvent.AddUObject(this, &UTDRPGUWInventory::ShowItemDetail);
+		SlotInst->OnMouseLeaveEvent.AddUObject(this, &UTDRPGUWInventory::HideItemDetail);
+
 		if (SlotInst) 
 			Slots[i] = SlotInst;
 	}
@@ -50,4 +57,15 @@ void UTDRPGUWInventory::NativeOnInitialized()
 void UTDRPGUWInventory::UpdateGold(uint32 Gold)
 {
 	GoldLabel->SetText(FText::FromString(FString::Printf(TEXT("%u G"), Gold)));
+}
+
+void UTDRPGUWInventory::ShowItemDetail(UItemBase* InItem)
+{
+	DetailWindow->SetVisibility(ESlateVisibility::Visible);
+	DetailWindow->Update(InItem);
+}
+
+void UTDRPGUWInventory::HideItemDetail()
+{
+	DetailWindow->SetVisibility(ESlateVisibility::Hidden);
 }

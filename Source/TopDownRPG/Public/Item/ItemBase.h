@@ -4,9 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
+#include "TDRPGEnum.h"
 #include "ItemBase.generated.h"
 
 struct FItemDataRow;
+
+DECLARE_ENUM_TO_STRING(ERarity);
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnItemUpdated, UItemBase*);
 
@@ -33,8 +36,8 @@ public:
 	virtual bool TryAddItem(uint32 InAmount, uint32& OutRest);
 
 	virtual FItemDataRow* GetData();
-
 	inline const uint32 GetQuantity() { return Quantity; }
+	FString EnumToString(const ERarity InValue);
 
 	FOnItemUpdated OnItemUpdated;
 

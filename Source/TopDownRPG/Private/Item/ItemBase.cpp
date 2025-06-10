@@ -10,11 +10,8 @@
 
 void UItemBase::Initialize(FName InID, UGameInstance* InGameInst)
 {
-    // Data = *InData;
     ItemID = InID;
     GameInst = InGameInst;
-
-    PRINT_LOG(TEXT("Init Item ID :: %s"), *ItemID.ToString());
 
     OnItemUpdated.Broadcast(this);
 }
@@ -56,5 +53,15 @@ FItemDataRow* UItemBase::GetData()
 {
     UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
     return GameData->GetRow<FItemDataRow>(ETableType::Ingredient, ItemID);
+}
+
+
+FString UItemBase::EnumToString(const ERarity InValue)
+{
+    const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ERarity"), true);
+    if(!EnumPtr)
+        return FString("Invalid Enum");
+
+    return EnumPtr->GetDisplayNameTextByIndex((int32)InValue).ToString();
 }
 

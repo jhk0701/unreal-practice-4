@@ -10,6 +10,7 @@ class UTextBlock;
 class UButton;
 class UUniformGridPanel;
 class UTDRPGUWSlotBase;
+class UTDRPGUWItemDetail;
 /**
  * 
  */
@@ -24,6 +25,7 @@ public:
 	TObjectPtr<UButton> CloseButton;
 
 	// Body
+	UPROPERTY()
 	TArray<UTDRPGUWSlotBase*> Slots;
 
 	UPROPERTY(meta = (BindWidget))
@@ -32,8 +34,13 @@ public:
 	// Footer
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> GoldLabel;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTDRPGUWItemDetail> DetailWindow;
 	
 public:
 	virtual void NativeOnInitialized() override;
 	void UpdateGold(uint32 Gold);
+	void ShowItemDetail(class UItemBase* InItem);
+	void HideItemDetail();
 };

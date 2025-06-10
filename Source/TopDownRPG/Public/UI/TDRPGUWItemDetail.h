@@ -6,9 +6,10 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWItemDetail.generated.h"
 
-class UTextBlock;
-class UImage;
 class UItemBase;
+class UImage;
+class UTextBlock;
+
 /**
  * 
  */
@@ -30,5 +31,5 @@ public:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UImage> IconImage;
 
-	void Update(const UItemBase* InItem);
+	void Update(UItemBase* InItem);
 };
