@@ -13,5 +13,4 @@ UCLASS()
 class TOPDOWNRPG_API UIngredientItem : public UItemBase
 {
 	GENERATED_BODY()
-	
 };

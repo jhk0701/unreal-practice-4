@@ -26,7 +26,8 @@ void UPlayerManager::LoadData()
 	Lv = PlayerData->CharLv;
 
 	// 레벨링 데이터 불러오기
-	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
+	UGameInstance* GameInst = GetGameInstance();
+	UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
 
 	TArray<int32> Leveling;
 	GameData->GetLeveling(PlayerData->CharID, Lv, Leveling);
@@ -55,17 +56,13 @@ void UPlayerManager::LoadData()
 	FName IngreID2 = TEXT("0002");
 	FName IngreID3 = TEXT("0003");
 
-	FItemDataRow* IngreInfo1 = GameData->GetRow<FItemDataRow>(ETableType::Ingredient, IngreID1);
-	FItemDataRow* IngreInfo2 = GameData->GetRow<FItemDataRow>(ETableType::Ingredient, IngreID2);
-	FItemDataRow* IngreInfo3 = GameData->GetRow<FItemDataRow>(ETableType::Ingredient, IngreID3);
-
 	UIngredientItem* Ingre1 = NewObject<UIngredientItem>();
 	UIngredientItem* Ingre2 = NewObject<UIngredientItem>();
 	UIngredientItem* Ingre3 = NewObject<UIngredientItem>();
 
-	Ingre1->Initialize(IngreInfo1, &IngreID1, 5);
-	Ingre2->Initialize(IngreInfo2, &IngreID2, 10);
-	Ingre3->Initialize(IngreInfo3, &IngreID3, 20);
+	Ingre1->Initialize(&IngreID1, GameInst, 5);
+	Ingre2->Initialize(&IngreID2, GameInst, 10);
+	Ingre3->Initialize(&IngreID3, GameInst, 20);
 
 	Inventory->AddItem(*Ingre1);
 	Inventory->AddItem(*Ingre2);

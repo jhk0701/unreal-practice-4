@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
-#include "Data/ItemDataRow.h"
+#include "UObject/Object.h"
 #include "ItemBase.generated.h"
 
+struct FItemDataRow;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnItemUpdated, UItemBase*);
 
@@ -18,19 +18,26 @@ class TOPDOWNRPG_API UItemBase : public UObject
 
 public:
 	// 아이템 데이터 주입
-	virtual void Initialize(FItemDataRow* InData, FName* InID);
-	virtual void Initialize(FItemDataRow* InData, FName* InID, uint32 InAmount);
+	virtual void Initialize(FName* InID, UGameInstance* InGameInst);
+	virtual void Initialize(FName* InID, UGameInstance* InGameInst, uint32 InAmount);
 	virtual bool TryAddItem(uint32 InAmount, uint32& OutRest);
 
+	virtual FItemDataRow* GetData() const;
 	inline const uint32 GetQuantity() { return Quantity; }
-	inline FItemDataRow* GetData() { return &Data; }
-	
+	inline const FName& GetItemID() { return *ItemID; }
+
 	FOnItemUpdated OnItemUpdated;
+
+	UPROPERTY()
+	TSoftObjectPtr<UTexture2D> IconTex;
 
 protected:
 	FName* ItemID;
-	FItemDataRow Data;
 
 	UPROPERTY(VisibleAnywhere)
 	uint32 Quantity;
+
+	// TODO : 개선 방법 없는지 생각해야함
+	UPROPERTY(VisibleAnywhere)
+	UGameInstance* GameInst;
 };

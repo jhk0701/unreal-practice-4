@@ -2,4 +2,9 @@
 
 
 #include "UI/TDRPGUWItemDetail.h"
+#include "Item/ItemBase.h"
 
+void UTDRPGUWItemDetail::Update(const UItemBase* InItem)
+{
+	
+}

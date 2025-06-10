@@ -8,7 +8,7 @@
 
 class UTextBlock;
 class UImage;
-
+class UItemBase;
 /**
  * 
  */
@@ -29,4 +29,6 @@ public:
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UImage> IconImage;
+
+	void Update(const UItemBase* InItem);
 };

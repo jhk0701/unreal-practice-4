@@ -10,16 +10,6 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-void UResourceLoadManager::Initialize(FSubsystemCollectionBase& Collection)
-{
-	Super::Initialize(Collection);
-}
-
-void UResourceLoadManager::Deinitialize()
-{
-	Super::Deinitialize();
-}
-
 void UResourceLoadManager::Load(FSoftObjectPath& InPath, FOnResourceLoaded& OnCompleteDelegate)
 {
 	FStreamableManager& Stream = UAssetManager::GetStreamableManager();

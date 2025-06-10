@@ -2,20 +2,31 @@
 
 
 #include "Item/ItemBase.h"
+#include "Core/GameDataManager.h"
+#include "Data/ItemDataRow.h"
+
+#include "TopDownRPG/TopDownRPG.h"
 
 
-void UItemBase::Initialize(FItemDataRow* InData, FName* InID)
+void UItemBase::Initialize(FName* InID, UGameInstance* InGameInst)
 {
-    Data = *InData;
+    // Data = *InData;
     ItemID = InID;
+    GameInst = InGameInst;
+
+    FItemDataRow* Data = GetData();
+    check(Data);
+
+    IconTex = TSoftObjectPtr<UTexture2D>(Data->Thumbnail);
+    // PRINT_LOG(TEXT("Check Icon SoftPtr is null : %d"), IconTex.IsValid());
 
     OnItemUpdated.Broadcast(this);
 }
 
-void UItemBase::Initialize(FItemDataRow* InData, FName* InID, uint32 InAmount)
+void UItemBase::Initialize(FName* InID, UGameInstance* InGameInst, uint32 InAmount)
 {
     Quantity = InAmount;
-    Initialize(InData, InID);
+    Initialize(InID, InGameInst);
 }
 
 /// <summary>
@@ -26,13 +37,16 @@ void UItemBase::Initialize(FItemDataRow* InData, FName* InID, uint32 InAmount)
 /// <returns>온전히 모두 받아들였는지 여부</returns>
 bool UItemBase::TryAddItem(uint32 InAmount, uint32& OutRest)
 {
-    if (Data.NumOfDuplicate < Quantity + InAmount)
+    const FItemDataRow* Data = GetData();
+    check(Data);
+
+    if (Data->NumOfDuplicate < Quantity + InAmount)
     {
         // Quantity + InAmount 가 최대 수용치를 넘어섰음 
-        Quantity = Data.NumOfDuplicate; // 최대치 수용
+        Quantity = Data->NumOfDuplicate; // 최대치 수용
         
         // 나머지 계산해서 반환
-        OutRest = (Quantity + InAmount) - Data.NumOfDuplicate;
+        OutRest = (Quantity + InAmount) - Data->NumOfDuplicate;
 
         OnItemUpdated.Broadcast(this);
         return false;
@@ -42,3 +56,15 @@ bool UItemBase::TryAddItem(uint32 InAmount, uint32& OutRest)
     OnItemUpdated.Broadcast(this);
     return true;
 }
+
+FItemDataRow* UItemBase::GetData() const
+{
+    UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
+    FItemDataRow* Data = GameData->GetRow<FItemDataRow>(ETableType::Ingredient, *ItemID);
+
+    if (Data)
+        return Data;
+
+    return nullptr;
+}
+

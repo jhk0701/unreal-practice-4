@@ -17,8 +17,25 @@ class TOPDOWNRPG_API UResourceLoadManager : public UGameInstanceSubsystem
 	GENERATED_BODY()
 	
 public:
-	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-	virtual void Deinitialize() override;
-
 	void Load(FSoftObjectPath& InPath, FOnResourceLoaded& OnCompleteDelegate);
+
+	template<typename T>
+	void LoadTask(TSoftObjectPtr<T>& InSoft, FOnResourceLoaded& OnCompleteDelegate)
+	{
+		if (InSoft.IsValid())
+		{
+			OnCompleteDelegate.ExecuteIfBound(InSoft.Get());
+			return;
+		}
+
+		UE::Tasks::FTask Task = UE::Tasks::Launch(
+			UE_SOURCE_LOCATION, 
+			[&]() 
+			{
+				T* Loaded = InSoft.LoadSynchronous();
+				if (Loaded)
+					OnCompleteDelegate.ExecuteIfBound(Loaded);
+			});
+
+	};
 };

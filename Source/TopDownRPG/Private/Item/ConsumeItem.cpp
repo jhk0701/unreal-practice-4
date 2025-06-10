@@ -2,6 +2,8 @@
 
 
 #include "Item/ConsumeItem.h"
+
+#include "Core/GameDataManager.h"
 #include "Item/Function/ItemFuncBase.h"
 #include "Data/ConsumeDataRow.h"
 
@@ -20,10 +22,13 @@ void UConsumeItem::Use(AActor* Subject)
 	--Quantity;
 	// TODO: 남은 아이템을 다 썼을 때 후속조치
 
+	FItemDataRow* Data = GetData();
+	check(Data);
+
 	// 구조체는 다음과 같이 호출할 수 없음.
 	// Cast는 UObject 기반 클래스에만 동작
 	// Base가 실제로 하위 객체를 가리키고 있는 경우 static_cast<FConsumeDataRow*> 방식으로 호출 가능
-	FConsumeDataRow* ConsumeData = static_cast<FConsumeDataRow*>(&Data);
+	FConsumeDataRow* ConsumeData = static_cast<FConsumeDataRow*>(Data);
 	if (!ConsumeData)
 		return;
 
@@ -46,4 +51,15 @@ void UConsumeItem::InvokeSlot(AActor* Subject)
 {
 	// 더 필요사항이 많아지면 Context 구조체로 만들어서 사용할 것
 	Use(Subject);
+}
+
+FItemDataRow* UConsumeItem::GetData() const
+{
+	UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
+	FItemDataRow* Data = GameData->GetRow<FItemDataRow>(ETableType::Consume, *ItemID);
+
+	if (Data)
+		return Data;
+
+	return nullptr;
 }

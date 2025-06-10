@@ -12,6 +12,7 @@
 
 #include "TopDownRPG/TopDownRPG.h"
 
+
 void UTDRPGUWSlotBase::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
@@ -37,13 +38,20 @@ void UTDRPGUWSlotBase::Refresh()
 	if (!Item)
 		return;
 
+	PRINT_LOG(TEXT("Refresh"));
+
 	QuantityLabel->SetVisibility(ESlateVisibility::Visible);
 	QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), Item->GetQuantity())));
 
-	//
-	UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
-	FOnResourceLoaded Delegate = FOnResourceLoaded::CreateUObject(this, &UTDRPGUWSlotBase::OnIconLoaded);
-	Resource->Load(Item->GetData()->Thumbnail, Delegate);
+	if (!Item->IconTex.IsValid())
+	{
+		UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
+		FOnResourceLoaded Delegate = FOnResourceLoaded::CreateUObject(this, &UTDRPGUWSlotBase::OnIconLoaded);
+		Resource->LoadTask(Item->IconTex, Delegate);
+	}
+	else
+		OnIconLoaded(Item->IconTex.Get());
+	
 }
 
 void UTDRPGUWSlotBase::OnIconLoaded(UObject* Loaded)
