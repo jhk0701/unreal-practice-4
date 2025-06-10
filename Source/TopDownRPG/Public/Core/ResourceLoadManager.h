@@ -30,7 +30,7 @@ public:
 
 		UE::Tasks::FTask Task = UE::Tasks::Launch(
 			UE_SOURCE_LOCATION, 
-			[&]() 
+			[InSoft, OnCompleteDelegate]()
 			{
 				T* Loaded = InSoft.LoadSynchronous();
 				if (Loaded)

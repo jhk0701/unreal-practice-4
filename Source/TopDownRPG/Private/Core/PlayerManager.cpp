@@ -60,13 +60,13 @@ void UPlayerManager::LoadData()
 	UIngredientItem* Ingre2 = NewObject<UIngredientItem>();
 	UIngredientItem* Ingre3 = NewObject<UIngredientItem>();
 
-	Ingre1->Initialize(&IngreID1, GameInst, 5);
-	Ingre2->Initialize(&IngreID2, GameInst, 10);
-	Ingre3->Initialize(&IngreID3, GameInst, 20);
+	Ingre1->Initialize(IngreID1, GameInst, 5);
+	Ingre2->Initialize(IngreID2, GameInst, 10);
+	Ingre3->Initialize(IngreID3, GameInst, 20);
 
-	Inventory->AddItem(*Ingre1);
-	Inventory->AddItem(*Ingre2);
-	Inventory->AddItem(*Ingre3);
+	Inventory->AddItem(Ingre1);
+	Inventory->AddItem(Ingre2);
+	Inventory->AddItem(Ingre3);
 }
 
 void UPlayerManager::SaveData()

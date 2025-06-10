@@ -20,7 +20,7 @@ class TOPDOWNRPG_API UEquipmentItem : public UItemBase
 	// 장착 시, 추가 효과 제공
 
 public:
-	virtual FItemDataRow* GetData() const override;
+	virtual FItemDataRow* GetData() override;
 
 	// 아이템 활용
 	void Equip();

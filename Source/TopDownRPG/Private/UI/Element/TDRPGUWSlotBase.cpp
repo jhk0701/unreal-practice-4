@@ -30,28 +30,23 @@ void UTDRPGUWSlotBase::Clear()
 void UTDRPGUWSlotBase::SetData(UItemBase* InItem)
 {
 	Item = InItem;
+
+	if (!Item)
+		return;
+
 	Refresh();
 }
 
 void UTDRPGUWSlotBase::Refresh()
 {
-	if (!Item)
-		return;
-
-	PRINT_LOG(TEXT("Refresh"));
+	FItemDataRow* Data = Item->GetData();
 
 	QuantityLabel->SetVisibility(ESlateVisibility::Visible);
 	QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), Item->GetQuantity())));
 
-	if (!Item->IconTex.IsValid())
-	{
-		UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
-		FOnResourceLoaded Delegate = FOnResourceLoaded::CreateUObject(this, &UTDRPGUWSlotBase::OnIconLoaded);
-		Resource->LoadTask(Item->IconTex, Delegate);
-	}
-	else
-		OnIconLoaded(Item->IconTex.Get());
-	
+	UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
+	FOnResourceLoaded Delegate = FOnResourceLoaded::CreateUObject(this, &UTDRPGUWSlotBase::OnIconLoaded);
+	Resource->Load(Data->Thumbnail, Delegate);
 }
 
 void UTDRPGUWSlotBase::OnIconLoaded(UObject* Loaded)

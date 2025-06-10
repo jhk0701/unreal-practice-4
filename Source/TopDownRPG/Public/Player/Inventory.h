@@ -18,10 +18,11 @@ public:
 	uint8 MaxSize = 80;
 	// 소비, 재료 아이템 : ID, 갯수
 	// 장비 아이템 : ID, 특수 옵션들
+	UPROPERTY()
 	TArray<class UItemBase*> Items;
 
 	void Initialize();
-	void AddItem(class UItemBase& Item);
+	void AddItem(class UItemBase* Item);
 
 private:
 	int16 GetBlankSpace();

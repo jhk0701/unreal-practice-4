@@ -8,22 +8,18 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-void UItemBase::Initialize(FName* InID, UGameInstance* InGameInst)
+void UItemBase::Initialize(FName InID, UGameInstance* InGameInst)
 {
     // Data = *InData;
     ItemID = InID;
     GameInst = InGameInst;
 
-    FItemDataRow* Data = GetData();
-    check(Data);
-
-    IconTex = TSoftObjectPtr<UTexture2D>(Data->Thumbnail);
-    // PRINT_LOG(TEXT("Check Icon SoftPtr is null : %d"), IconTex.IsValid());
+    PRINT_LOG(TEXT("Init Item ID :: %s"), *ItemID.ToString());
 
     OnItemUpdated.Broadcast(this);
 }
 
-void UItemBase::Initialize(FName* InID, UGameInstance* InGameInst, uint32 InAmount)
+void UItemBase::Initialize(FName InID, UGameInstance* InGameInst, uint32 InAmount)
 {
     Quantity = InAmount;
     Initialize(InID, InGameInst);
@@ -37,8 +33,7 @@ void UItemBase::Initialize(FName* InID, UGameInstance* InGameInst, uint32 InAmou
 /// <returns>온전히 모두 받아들였는지 여부</returns>
 bool UItemBase::TryAddItem(uint32 InAmount, uint32& OutRest)
 {
-    const FItemDataRow* Data = GetData();
-    check(Data);
+    FItemDataRow* Data = GetData();
 
     if (Data->NumOfDuplicate < Quantity + InAmount)
     {
@@ -57,14 +52,9 @@ bool UItemBase::TryAddItem(uint32 InAmount, uint32& OutRest)
     return true;
 }
 
-FItemDataRow* UItemBase::GetData() const
+FItemDataRow* UItemBase::GetData()
 {
     UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
-    FItemDataRow* Data = GameData->GetRow<FItemDataRow>(ETableType::Ingredient, *ItemID);
-
-    if (Data)
-        return Data;
-
-    return nullptr;
+    return GameData->GetRow<FItemDataRow>(ETableType::Ingredient, ItemID);
 }
 

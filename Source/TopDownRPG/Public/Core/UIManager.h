@@ -60,7 +60,6 @@ public:
 						UTDRPGUserWidget* Widget = CreateWidget<UTDRPGUserWidget>(this->GetWorld(), WidgetClass);
 
 						this->UIMap.Add(Name, Widget);
-
 						OnCompleted.ExecuteIfBound(Widget);
 					}
 				}));

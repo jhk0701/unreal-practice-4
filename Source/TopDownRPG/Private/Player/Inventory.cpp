@@ -14,13 +14,13 @@ void UInventory::Initialize()
 	Items.Init(nullptr, MaxSize);
 }
 
-void UInventory::AddItem(UItemBase& Item)
+void UInventory::AddItem(UItemBase* Item)
 {
 	// 빈공간 찾기
 	uint8 Idx = GetBlankSpace();
 
 	if (Idx >= 0)
-		Items[Idx] = &Item;
+		Items[Idx] = Item;
 
 	// TODO : 기능 고도화
 	

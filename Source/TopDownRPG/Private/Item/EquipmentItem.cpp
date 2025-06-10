@@ -6,15 +6,10 @@
 #include "Core/GameDataManager.h"
 #include "Data/EquipmentDataRow.h"
 
-FItemDataRow* UEquipmentItem::GetData() const
+FItemDataRow* UEquipmentItem::GetData()
 {
     UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
-    FItemDataRow* Data = GameData->GetRow<FItemDataRow>(ETableType::Equipment, *ItemID);
-
-    if (Data)
-        return Data;
-
-    return nullptr;
+    return GameData->GetRow<FItemDataRow>(ETableType::Equipment, ItemID);
 }
 
 void UEquipmentItem::Equip()

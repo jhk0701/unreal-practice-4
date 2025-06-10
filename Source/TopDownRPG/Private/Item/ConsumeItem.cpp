@@ -23,7 +23,6 @@ void UConsumeItem::Use(AActor* Subject)
 	// TODO: 남은 아이템을 다 썼을 때 후속조치
 
 	FItemDataRow* Data = GetData();
-	check(Data);
 
 	// 구조체는 다음과 같이 호출할 수 없음.
 	// Cast는 UObject 기반 클래스에만 동작
@@ -42,7 +41,7 @@ void UConsumeItem::Use(AActor* Subject)
 		TSharedPtr<FFunctionContext> Context = ConsumeData->Function->GetContext(ConsumeData->Value, ConsumeData->Duration);
 
 		// 아이템에서 대상 캐릭터에게 효과 객체 적용
-		Player->DataComp->AddBuff(*ItemID, Context);
+		Player->DataComp->AddBuff(ItemID, Context);
 	}
 }
 
@@ -53,13 +52,8 @@ void UConsumeItem::InvokeSlot(AActor* Subject)
 	Use(Subject);
 }
 
-FItemDataRow* UConsumeItem::GetData() const
+FItemDataRow* UConsumeItem::GetData()
 {
 	UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
-	FItemDataRow* Data = GameData->GetRow<FItemDataRow>(ETableType::Consume, *ItemID);
-
-	if (Data)
-		return Data;
-
-	return nullptr;
+	return GameData->GetRow<FItemDataRow>(ETableType::Consume, ItemID);
 }
