@@ -18,6 +18,7 @@ class TOPDOWNRPG_API UPlayerInteraction : public UPlayerInputComponent
 	GENERATED_BODY()
 	
 protected:
+	// TODO 
 	UPROPERTY(EditDefaultsOnly, Category = "QuickSlot")
 	uint8 QuickSlotMaxSize = 4;
 	UPROPERTY(VisibleAnywhere, Category = "QuickSlot")

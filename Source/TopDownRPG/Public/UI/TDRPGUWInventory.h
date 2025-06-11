@@ -11,6 +11,8 @@ class UButton;
 class UUniformGridPanel;
 class UTDRPGUWSlotBase;
 class UTDRPGUWItemDetail;
+class UTDRPGUWItemMenu;
+
 /**
  * 
  */
@@ -37,6 +39,9 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTDRPGUWItemDetail> DetailWindow;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTDRPGUWItemMenu> MenuWindow;
 	
 public:
 	virtual void NativeOnInitialized() override;

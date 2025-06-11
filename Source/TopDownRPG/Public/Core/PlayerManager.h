@@ -50,6 +50,7 @@ public:
 	// 인벤토리
 	UPROPERTY()
 	TObjectPtr<class UInventory> Inventory;
+	// 퀵슬롯
 
 
 public:

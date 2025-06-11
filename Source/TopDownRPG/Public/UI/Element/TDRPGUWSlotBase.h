@@ -7,8 +7,8 @@
 #include "Item/ItemBase.h"
 #include "TDRPGUWSlotBase.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnMouseEnterDelegate, UItemBase*);
-DECLARE_MULTICAST_DELEGATE(FOnMouseLeaveDelegate);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnSlotInteractStarted, UItemBase*);
+DECLARE_MULTICAST_DELEGATE(FOnSlotInteractCompleted);
 
 /**
  * 
@@ -28,10 +28,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidgetOptional))
 	TObjectPtr<class UTextBlock> QuantityLabel;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidgetOptional))
+	TObjectPtr<class UButton> SlotButton;
+
 	// 마우스 호버링 이벤트
 	// 네이티브 메서드에서 Broadcast 해줄 것
-	FOnMouseEnterDelegate OnMouseEnterEvent;
-	FOnMouseLeaveDelegate OnMouseLeaveEvent;
+	FOnSlotInteractStarted OnCursorEnter;
+	FOnSlotInteractCompleted OnCursorLeave;
+
+	FOnSlotInteractStarted OnButtonClicked;
 
 protected:
 	UItemBase* Item = nullptr;
@@ -48,4 +53,7 @@ protected:
 	virtual void Refresh();
 
 	void OnIconLoaded(UObject* Loaded);
+
+	UFUNCTION()
+	void InvokeButtonClick();
 };

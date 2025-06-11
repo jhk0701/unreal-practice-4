@@ -7,7 +7,7 @@
 #include "Player/Inventory.h"
 
 #include "Item/IngredientItem.h"
-#include "Data/ItemDataRow.h"
+#include "Item/ConsumeItem.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -52,21 +52,23 @@ void UPlayerManager::LoadData()
 	Inventory->Initialize();
 
 	// TODO: 테스트 코드 삭제
-	FName IngreID1 = TEXT("0001");
-	FName IngreID2 = TEXT("0002");
-	FName IngreID3 = TEXT("0003");
-
 	UIngredientItem* Ingre1 = NewObject<UIngredientItem>();
 	UIngredientItem* Ingre2 = NewObject<UIngredientItem>();
 	UIngredientItem* Ingre3 = NewObject<UIngredientItem>();
 
-	Ingre1->Initialize(IngreID1, GameInst, 5);
-	Ingre2->Initialize(IngreID2, GameInst, 10);
-	Ingre3->Initialize(IngreID3, GameInst, 20);
-
+	Ingre1->Initialize(TEXT("0001"), GameInst, 5);
+	Ingre2->Initialize(TEXT("0002"), GameInst, 10);
+	Ingre3->Initialize(TEXT("0003"), GameInst, 20);
+	
 	Inventory->AddItem(Ingre1);
 	Inventory->AddItem(Ingre2);
 	Inventory->AddItem(Ingre3);
+
+	UConsumeItem* Consume = NewObject<UConsumeItem>();
+	
+	Consume->Initialize(TEXT("0001"), GameInst, 30);
+
+	Inventory->AddItem(Consume);
 }
 
 void UPlayerManager::SaveData()
@@ -95,5 +97,4 @@ void UPlayerManager::LevelUp()
 
 	uint32 MaxExp = Exp->GetMaxValue() + LevelData->ExpDemand;
 	Exp->ChangeMaxValue(MaxExp, 0);
-
 }

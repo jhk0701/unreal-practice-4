@@ -17,6 +17,8 @@ enum class ETableType : uint8
 	Character,
 	Leveling,
 	Stage,
+
+	// Item
 	Equipment,
 	Consume,
 	Ingredient,
@@ -35,13 +37,11 @@ class TOPDOWNRPG_API UGameDataManager : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 
-
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Table")
 	TMap<ETableType, class UDataTable*> GameDatabase;
 
-	// 레벨링 계산 편의용
-	// CharID - Lv : 레벨 범위
+	// 레벨링 계산 편의용 CharID - Lv : 레벨 범위
 	UPROPERTY()
 	TMap<FString, FInnerIntArray> LevelRange;
 
@@ -57,12 +57,13 @@ public:
 		return GameDatabase[Table]->FindRow<T>(ID, CommonConst::DATA_TABLE_CONTEXT);
 	}
 
+	const FString EnumToString(ETableType EnumValue);
+
 	void GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling);
+
 	const FString GetLevelingKey(const FString& CharID, const int32 Index);
 
 	UPrimaryDataAsset* LoadPrimaryAssetData(const FPrimaryAssetId& ID);
-
-	const FString EnumToString(ETableType EnumValue);
 
 protected:
 	void ProcessLevelData();

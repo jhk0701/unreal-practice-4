@@ -9,6 +9,7 @@
 
 #include <Components/TextBlock.h>
 #include <Components/Image.h>
+#include <Components/Button.h>
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -17,7 +18,26 @@ void UTDRPGUWSlotBase::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
+	if (SlotButton)
+		SlotButton->OnClicked.AddUniqueDynamic(this, &UTDRPGUWSlotBase::InvokeButtonClick);
+
 	Clear();
+}
+
+void UTDRPGUWSlotBase::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
+
+	if (Item)
+		OnCursorEnter.Broadcast(Item);
+}
+
+void UTDRPGUWSlotBase::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
+{
+	Super::NativeOnMouseLeave(InMouseEvent);
+
+	if (Item)
+		OnCursorLeave.Broadcast();
 }
 
 void UTDRPGUWSlotBase::Clear()
@@ -32,22 +52,6 @@ void UTDRPGUWSlotBase::SetData(UItemBase* InItem)
 	Item = InItem;
 
 	Refresh();
-}
-
-void UTDRPGUWSlotBase::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
-{
-	Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
-
-	if (Item)
-		OnMouseEnterEvent.Broadcast(Item);
-}
-
-void UTDRPGUWSlotBase::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
-{
-	Super::NativeOnMouseLeave(InMouseEvent);
-
-	if (Item)
-		OnMouseLeaveEvent.Broadcast();
 }
 
 void UTDRPGUWSlotBase::Refresh()
@@ -76,4 +80,10 @@ void UTDRPGUWSlotBase::OnIconLoaded(UObject* Loaded)
 		IconImage->SetOpacity(1.0f);
 		IconImage->SetVisibility(ESlateVisibility::Visible);
 	}
+}
+
+void UTDRPGUWSlotBase::InvokeButtonClick()
+{
+	if (Item)
+		OnButtonClicked.Broadcast(Item);
 }

@@ -31,8 +31,8 @@ void UTDRPGUWInventory::NativeOnInitialized()
 		UTDRPGUWSlotBase* SlotInst = Cast<UTDRPGUWSlotBase>(SlotContainer->GetChildAt(i));
 		
 		// 슬롯 마우스 호버링 이벤트들 등록
-		SlotInst->OnMouseEnterEvent.AddUObject(this, &UTDRPGUWInventory::ShowItemDetail);
-		SlotInst->OnMouseLeaveEvent.AddUObject(this, &UTDRPGUWInventory::HideItemDetail);
+		SlotInst->OnCursorEnter.AddUObject(this, &UTDRPGUWInventory::ShowItemDetail);
+		SlotInst->OnCursorLeave.AddUObject(this, &UTDRPGUWInventory::HideItemDetail);
 
 		if (SlotInst) 
 			Slots[i] = SlotInst;
