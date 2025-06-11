@@ -35,12 +35,15 @@ public:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UTextBlock> QuickSlotLabel;
 
+private:
+	UItemBase* SelectedItem;
+
 public:
 	virtual void NativeOnInitialized() override;
-
 	virtual void Close() override;
 
 	void Update(UItemBase* InItem);
 
+	UFUNCTION()
 	void RegisterQuickSlot();
 };

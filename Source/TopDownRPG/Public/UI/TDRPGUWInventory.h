@@ -12,6 +12,8 @@ class UUniformGridPanel;
 class UTDRPGUWSlotBase;
 class UTDRPGUWItemDetail;
 class UTDRPGUWItemMenu;
+class UItemBase;
+
 
 /**
  * 
@@ -46,6 +48,10 @@ public:
 public:
 	virtual void NativeOnInitialized() override;
 	void UpdateGold(uint32 Gold);
-	void ShowItemDetail(class UItemBase* InItem);
+
+	void ShowItemDetail(UItemBase* InItem);
 	void HideItemDetail();
+
+	void ShowItemMenu(UItemBase* InItem);
+	void HideItemMenu();
 };

@@ -4,6 +4,7 @@
 #include "UI/TDRPGUWInventory.h"
 #include "UI/Element/TDRPGUWSlotBase.h"
 #include "UI/TDRPGUWItemDetail.h"
+#include "UI/TDRPGUWItemMenu.h"
 
 #include "Core/PlayerManager.h"
 #include "Player/Inventory.h"
@@ -17,8 +18,10 @@ void UTDRPGUWInventory::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
-	CloseButton->OnClicked.AddUniqueDynamic(this, &UTDRPGUserWidget::Close);
 	HideItemDetail();
+	HideItemMenu();
+
+	CloseButton->OnClicked.AddUniqueDynamic(this, &UTDRPGUserWidget::Close);
 
 	int32 SlotCnt = SlotContainer->GetChildrenCount();
 
@@ -33,6 +36,9 @@ void UTDRPGUWInventory::NativeOnInitialized()
 		// 슬롯 마우스 호버링 이벤트들 등록
 		SlotInst->OnCursorEnter.AddUObject(this, &UTDRPGUWInventory::ShowItemDetail);
 		SlotInst->OnCursorLeave.AddUObject(this, &UTDRPGUWInventory::HideItemDetail);
+		
+		// 아이템 슬롯 클릭 시, 아이템 상호작용 메뉴 추가
+		SlotInst->OnButtonClicked.AddUObject(this, &UTDRPGUWInventory::ShowItemMenu);
 
 		if (SlotInst) 
 			Slots[i] = SlotInst;
@@ -68,4 +74,15 @@ void UTDRPGUWInventory::ShowItemDetail(UItemBase* InItem)
 void UTDRPGUWInventory::HideItemDetail()
 {
 	DetailWindow->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UTDRPGUWInventory::ShowItemMenu(UItemBase* InItem)
+{
+	MenuWindow->SetVisibility(ESlateVisibility::Visible);
+	MenuWindow->Update(InItem);
+}
+
+void UTDRPGUWInventory::HideItemMenu()
+{
+	MenuWindow->SetVisibility(ESlateVisibility::Hidden);
 }

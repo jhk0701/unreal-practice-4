@@ -12,6 +12,19 @@
 
 #include "TopDownRPG/TopDownRPG.h"
 
+
+FItemDataRow* UConsumeItem::GetData()
+{
+	UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
+	return GameData->GetRow<FItemDataRow>(ETableType::Consume, ItemID);
+}
+
+void UConsumeItem::InvokeSlot(AActor* Subject)
+{
+	// 더 필요사항이 많아지면 Context 구조체로 만들어서 사용할 것
+	Use(Subject);
+}
+
 void UConsumeItem::Use(AActor* Subject)
 {
 	// TODO : 아이템 쿨타임 적용
@@ -43,17 +56,4 @@ void UConsumeItem::Use(AActor* Subject)
 		// 아이템에서 대상 캐릭터에게 효과 객체 적용
 		Player->DataComp->AddBuff(ItemID, Context);
 	}
-}
-
-FItemDataRow* UConsumeItem::GetData()
-{
-	UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
-	return GameData->GetRow<FItemDataRow>(ETableType::Consume, ItemID);
-}
-
-
-void UConsumeItem::InvokeSlot(AActor* Subject)
-{
-	// 더 필요사항이 많아지면 Context 구조체로 만들어서 사용할 것
-	Use(Subject);
 }
