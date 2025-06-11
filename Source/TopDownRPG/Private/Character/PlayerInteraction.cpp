@@ -88,6 +88,6 @@ void UPlayerInteraction::ReleaseQuickSlot(const FInputActionValue& Value)
 void UPlayerInteraction::UseQuickSlot(uint8 Idx)
 {
 	UPlayerManager* PlayerManager = GetWorld()->GetGameInstance()->GetSubsystem<UPlayerManager>();
-	PlayerManager->QuickSlot->UseQuickSlot(Idx, Player);
+	PlayerManager->QuickSlot->Use(Idx, Player);
 }
 

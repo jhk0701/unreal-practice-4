@@ -132,6 +132,7 @@ void ATDRPGPlayer::Initialize()
 	MeshComp->SetAnimInstanceClass(Config->Animation.Get());
 	AnimInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
 
+	// TODO : UI 생성 분리
 	// UI 호출
 	UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>();
 	UIManager->GetUI<UTDRPGUWStatusBar>(
@@ -145,8 +146,10 @@ void ATDRPGPlayer::Initialize()
 
 	UIManager->GetUI<UTDRPGUWQuickSlot>(
 		FOnLoadCompleted::CreateLambda(
-			[this](UTDRPGUserWidget* Loaded) {
+			[this, Player](UTDRPGUserWidget* Loaded) {
 				UIQuickSlot = Cast<UTDRPGUWQuickSlot>(Loaded);
+
+				UIQuickSlot->Bind(Player->QuickSlot);
 				UIQuickSlot->Open();
 			})
 	);

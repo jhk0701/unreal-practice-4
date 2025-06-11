@@ -19,7 +19,7 @@ public:
 	void Use(AActor* Subject);
 	// void OnDurationEnded();
 
-	virtual FItemDataRow* GetData() override;
+	FItemDataRow* GetData() override;
 
-	virtual void InvokeSlot(AActor* Subject) override;
+	void InvokeSlot(AActor* Subject) override;
 };

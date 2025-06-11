@@ -6,6 +6,8 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWQuickSlot.generated.h"
 
+class UQuickSlot;
+
 /**
  * 
  */
@@ -15,6 +17,9 @@ class TOPDOWNRPG_API UTDRPGUWQuickSlot : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 public:
+	UPROPERTY()
+	TObjectPtr<UQuickSlot> BindedQuickSlot;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidgetOptional))
 	TObjectPtr<class UHorizontalBox> SlotContainer;
 
@@ -23,4 +28,6 @@ public:
 
 public:
 	virtual void NativeOnInitialized() override;
+	void Bind(UQuickSlot* InQuickSlot);
+	void UpdateSlot(uint8 Index);
 };

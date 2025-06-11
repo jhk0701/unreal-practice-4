@@ -45,15 +45,15 @@ void UConsumeItem::Use(AActor* Subject)
 	}
 }
 
+FItemDataRow* UConsumeItem::GetData()
+{
+	UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
+	return GameData->GetRow<FItemDataRow>(ETableType::Consume, ItemID);
+}
+
 
 void UConsumeItem::InvokeSlot(AActor* Subject)
 {
 	// 더 필요사항이 많아지면 Context 구조체로 만들어서 사용할 것
 	Use(Subject);
-}
-
-FItemDataRow* UConsumeItem::GetData()
-{
-	UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
-	return GameData->GetRow<FItemDataRow>(ETableType::Consume, ItemID);
 }

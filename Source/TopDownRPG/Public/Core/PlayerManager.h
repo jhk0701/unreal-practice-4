@@ -47,10 +47,13 @@ public:
 	TUniquePtr<Status> Exp;
 	// 골드
 	TUniquePtr<Currency> CurrencyGold;
+	
 	// 인벤토리
 	UPROPERTY()
 	TObjectPtr<class UInventory> Inventory;
+	
 	// 퀵슬롯
+	UPROPERTY()
 	TObjectPtr<class UQuickSlot> QuickSlot;
 
 public:

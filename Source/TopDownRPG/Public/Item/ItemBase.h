@@ -33,6 +33,7 @@ public:
 	// 아이템 데이터 주입
 	virtual void Initialize(FName InID, UGameInstance* InGameInst);
 	virtual void Initialize(FName InID, UGameInstance* InGameInst, uint32 InAmount);
+
 	virtual bool TryAddItem(uint32 InAmount, uint32& OutRest);
 
 	virtual FItemDataRow* GetData();
@@ -40,5 +41,4 @@ public:
 	FString EnumToString(const ERarity InValue);
 
 	FOnItemUpdated OnItemUpdated;
-
 };

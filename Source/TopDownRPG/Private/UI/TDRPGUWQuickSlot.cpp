@@ -4,6 +4,9 @@
 #include "UI/TDRPGUWQuickSlot.h"
 #include "UI/Element/TDRPGUWMenuSlot.h"
 
+#include "Player/QuickSlot.h"
+#include "Item/ItemBase.h"
+
 #include <Components/TextBlock.h>
 #include <Components/HorizontalBox.h>
 
@@ -27,4 +30,19 @@ void UTDRPGUWQuickSlot::NativeOnInitialized()
 			SlotList.Add(SlotInst);
 		}
 	}
+
+}
+
+void UTDRPGUWQuickSlot::Bind(UQuickSlot* InQuickSlot)
+{
+	BindedQuickSlot = InQuickSlot;
+	BindedQuickSlot->OnSlotRegistered.AddUObject(this, &UTDRPGUWQuickSlot::UpdateSlot);
+}
+
+void UTDRPGUWQuickSlot::UpdateSlot(uint8 Index)
+{
+	UObject* Handle = BindedQuickSlot->Slots[Index].GetObject();
+
+	if (UItemBase* Item = Cast<UItemBase>(Handle))
+		SlotList[Index]->SetData(Item);
 }
