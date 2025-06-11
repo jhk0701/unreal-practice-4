@@ -13,6 +13,8 @@
 #include "Item/EquipmentItem.h"
 #include "Item/IngredientItem.h"
 
+#include "TopDownRPG/TopDownRPG.h"
+
 void UTDRPGUWItemMenu::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
@@ -35,7 +37,8 @@ void UTDRPGUWItemMenu::Update(UItemBase* InItem)
 
 void UTDRPGUWItemMenu::RegisterQuickSlot()
 {
-	if(IQuickSlotHandler* SlotHandler =Cast<IQuickSlotHandler>(SelectedItem))
+
+	if(IQuickSlotHandler* SlotHandler = Cast<IQuickSlotHandler>(SelectedItem))
 	{
 		// 퀵슬롯 받아오기
 		UPlayerManager* PlayerManager = GetGameInstance()->GetSubsystem<UPlayerManager>();

@@ -12,9 +12,11 @@ bool UQuickSlot::Register(IQuickSlotHandler* InSlot)
 {
 	for(int32 i = 0; i < QuickSlotMaxSize; ++i)
 	{
-		if (!Slots[i].GetInterface())
+		if (!Slots[i].GetObject())
 		{
 			Slots[i].SetInterface(InSlot);
+			Slots[i].SetObject(InSlot->_getUObject());
+
 			OnSlotRegistered.Broadcast(i);
 			return true;
 		}
@@ -25,7 +27,7 @@ bool UQuickSlot::Register(IQuickSlotHandler* InSlot)
 
 void UQuickSlot::Use(uint8 Idx, AActor* Target)
 {
-	if (QuickSlotMaxSize <= Idx || !Slots[Idx].GetInterface())
+	if (QuickSlotMaxSize <= Idx || !Slots[Idx].GetObject())
 		return;
 
 	Slots[Idx]->InvokeSlot(Target);

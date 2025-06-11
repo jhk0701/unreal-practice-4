@@ -10,6 +10,8 @@
 #include <Components/TextBlock.h>
 #include <Components/HorizontalBox.h>
 
+#include "TopDownRPG/TopDownRPG.h"
+
 void UTDRPGUWQuickSlot::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
@@ -44,5 +46,7 @@ void UTDRPGUWQuickSlot::UpdateSlot(uint8 Index)
 	UObject* Handle = BindedQuickSlot->Slots[Index].GetObject();
 
 	if (UItemBase* Item = Cast<UItemBase>(Handle))
+	{
 		SlotList[Index]->SetData(Item);
+	}
 }

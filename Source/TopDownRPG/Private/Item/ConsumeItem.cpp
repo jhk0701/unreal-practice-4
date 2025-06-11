@@ -56,4 +56,6 @@ void UConsumeItem::Use(AActor* Subject)
 		// 아이템에서 대상 캐릭터에게 효과 객체 적용
 		Player->DataComp->AddBuff(ItemID, Context);
 	}
+
+	OnItemUpdated.Broadcast(this);
 }

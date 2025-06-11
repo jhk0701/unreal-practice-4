@@ -50,7 +50,7 @@ public:
 
 protected:
 	virtual void Clear();
-	virtual void Refresh();
+	virtual void Refresh(UItemBase* InItem);
 
 	void OnIconLoaded(UObject* Loaded);
 

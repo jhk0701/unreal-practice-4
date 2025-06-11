@@ -49,20 +49,32 @@ void UTDRPGUWSlotBase::Clear()
 
 void UTDRPGUWSlotBase::SetData(UItemBase* InItem)
 {
-	Item = InItem;
-
-	Refresh();
-}
-
-void UTDRPGUWSlotBase::Refresh()
-{
-	if (!Item)
+	if (!InItem)
 		return;
 
-	FItemDataRow* Data = Item->GetData();
+	if (Item)
+	{
+		// 델리게이트에 등록된 특정 오브젝트 메소드들을 제거
+		Item->OnItemUpdated.RemoveAll(this);
+	}
+		
+	Item = InItem;
+	Item->OnItemUpdated.AddUObject(this, &UTDRPGUWSlotBase::Refresh);
+
+	Refresh(Item);
+}
+
+void UTDRPGUWSlotBase::Refresh(UItemBase* InItem)
+{
+	if (!InItem)
+		return;
+
+	PRINT_LOG(TEXT("Refresh"));
+
+	FItemDataRow* Data = InItem->GetData();
 
 	QuantityLabel->SetVisibility(ESlateVisibility::Visible);
-	QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), Item->GetQuantity())));
+	QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), InItem->GetQuantity())));
 
 	UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
 	FOnResourceLoaded Delegate = FOnResourceLoaded::CreateUObject(this, &UTDRPGUWSlotBase::OnIconLoaded);
