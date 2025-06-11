@@ -5,12 +5,53 @@
 #include "Data/LevelingDataRow.h"
 
 #include "Player/Inventory.h"
+#include "Player/QuickSlot.h"
 
 #include "Item/IngredientItem.h"
 #include "Item/ConsumeItem.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
+
+void UPlayerManager::Initialize(FSubsystemCollectionBase& Collection)
+{
+	Super::Initialize(Collection);
+
+	InitManager();
+}
+
+void UPlayerManager::InitManager()
+{
+	// 인벤토리 초기화
+	Inventory = NewObject<UInventory>();
+	Inventory->Initialize();
+
+	// 퀵슬롯 초기화
+	QuickSlot = NewObject<UQuickSlot>();
+	QuickSlot->Initialize();
+
+
+	// TODO: 테스트 코드 삭제
+	UGameInstance* GameInst = GetGameInstance();
+
+	UIngredientItem* Ingre1 = NewObject<UIngredientItem>();
+	UIngredientItem* Ingre2 = NewObject<UIngredientItem>();
+	UIngredientItem* Ingre3 = NewObject<UIngredientItem>();
+
+	Ingre1->Initialize(TEXT("0001"), GameInst, 5);
+	Ingre2->Initialize(TEXT("0002"), GameInst, 10);
+	Ingre3->Initialize(TEXT("0003"), GameInst, 20);
+
+	Inventory->AddItem(Ingre1);
+	Inventory->AddItem(Ingre2);
+	Inventory->AddItem(Ingre3);
+
+	UConsumeItem* Consume = NewObject<UConsumeItem>();
+
+	Consume->Initialize(TEXT("0001"), GameInst, 30);
+
+	Inventory->AddItem(Consume);
+}
 
 void UPlayerManager::LoadData()
 {
@@ -26,8 +67,7 @@ void UPlayerManager::LoadData()
 	Lv = PlayerData->CharLv;
 
 	// 레벨링 데이터 불러오기
-	UGameInstance* GameInst = GetGameInstance();
-	UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
+	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
 
 	TArray<int32> Leveling;
 	GameData->GetLeveling(PlayerData->CharID, Lv, Leveling);
@@ -47,28 +87,6 @@ void UPlayerManager::LoadData()
 	CurrencyGold = MakeUnique<Currency>(PlayerData->Gold);
 
 	Exp->OnValueChanged.AddUObject(this, &UPlayerManager::CheckExp);
-
-	Inventory = NewObject<UInventory>();
-	Inventory->Initialize();
-
-	// TODO: 테스트 코드 삭제
-	UIngredientItem* Ingre1 = NewObject<UIngredientItem>();
-	UIngredientItem* Ingre2 = NewObject<UIngredientItem>();
-	UIngredientItem* Ingre3 = NewObject<UIngredientItem>();
-
-	Ingre1->Initialize(TEXT("0001"), GameInst, 5);
-	Ingre2->Initialize(TEXT("0002"), GameInst, 10);
-	Ingre3->Initialize(TEXT("0003"), GameInst, 20);
-	
-	Inventory->AddItem(Ingre1);
-	Inventory->AddItem(Ingre2);
-	Inventory->AddItem(Ingre3);
-
-	UConsumeItem* Consume = NewObject<UConsumeItem>();
-	
-	Consume->Initialize(TEXT("0001"), GameInst, 30);
-
-	Inventory->AddItem(Consume);
 }
 
 void UPlayerManager::SaveData()

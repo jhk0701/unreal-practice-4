@@ -38,7 +38,6 @@ public:
 public:
 	virtual void NativeOnInitialized() override;
 
-	UFUNCTION()
 	virtual void Close() override;
 
 	void Update(UItemBase* InItem);

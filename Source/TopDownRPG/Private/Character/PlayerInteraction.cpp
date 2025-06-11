@@ -6,6 +6,9 @@
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
 
+#include "Core/PlayerManager.h"
+#include "Player/QuickSlot.h"
+
 #include "Core/UIManager.h"
 #include "UI/TDRPGUWInventory.h"
 
@@ -15,9 +18,9 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-UPlayerInteraction::UPlayerInteraction() : QuickSlotNum(0), QuickSlotMaxSize(4)
+UPlayerInteraction::UPlayerInteraction()
 {
-	QuickSlot.Init(nullptr, QuickSlotMaxSize);
+	QuickSlotNumInput = 0;
 }
 
 void UPlayerInteraction::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)
@@ -74,19 +77,17 @@ void UPlayerInteraction::InputInventory(const FInputActionValue& Value)
 
 void UPlayerInteraction::TriggerQuickSlot(const FInputActionValue& Value)
 {
-	QuickSlotNum = (uint8)Value.Get<float>() - 1;
+	QuickSlotNumInput = (uint8)Value.Get<float>() - 1;
 }
 
 void UPlayerInteraction::ReleaseQuickSlot(const FInputActionValue& Value)
 {
-	UseQuickSlot(QuickSlotNum);
+	UseQuickSlot(QuickSlotNumInput);
 }
 
 void UPlayerInteraction::UseQuickSlot(uint8 Idx)
 {
-	if (QuickSlotMaxSize <= Idx || !QuickSlot[Idx])
-		return;
-
-	QuickSlot[Idx]->InvokeSlot(Player);
+	UPlayerManager* PlayerManager = GetWorld()->GetGameInstance()->GetSubsystem<UPlayerManager>();
+	PlayerManager->QuickSlot->UseQuickSlot(Idx, Player);
 }
 

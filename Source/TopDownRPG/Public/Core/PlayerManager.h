@@ -51,9 +51,12 @@ public:
 	UPROPERTY()
 	TObjectPtr<class UInventory> Inventory;
 	// 퀵슬롯
-
+	TObjectPtr<class UQuickSlot> QuickSlot;
 
 public:
+	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+
+	void InitManager();
 	void LoadData();
 	void SaveData();
 
