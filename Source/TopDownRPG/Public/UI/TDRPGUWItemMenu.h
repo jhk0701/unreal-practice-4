@@ -45,5 +45,8 @@ public:
 	void Update(UItemBase* InItem);
 
 	UFUNCTION()
+	void InvokeFunc();
+
+	UFUNCTION()
 	void RegisterQuickSlot();
 };

@@ -4,6 +4,7 @@
 #include "UI/TDRPGUWQuickSlot.h"
 #include "UI/Element/TDRPGUWMenuSlot.h"
 
+#include "Core/PlayerManager.h"
 #include "Player/QuickSlot.h"
 #include "Item/ItemBase.h"
 
@@ -33,13 +34,12 @@ void UTDRPGUWQuickSlot::NativeOnInitialized()
 		}
 	}
 
-}
+	UPlayerManager* PlayerManager = GetGameInstance()->GetSubsystem<UPlayerManager>();
 
-void UTDRPGUWQuickSlot::Bind(UQuickSlot* InQuickSlot)
-{
-	BindedQuickSlot = InQuickSlot;
+	BindedQuickSlot = PlayerManager->QuickSlot;
 	BindedQuickSlot->OnSlotRegistered.AddUObject(this, &UTDRPGUWQuickSlot::UpdateSlot);
 }
+
 
 void UTDRPGUWQuickSlot::UpdateSlot(uint8 Index)
 {

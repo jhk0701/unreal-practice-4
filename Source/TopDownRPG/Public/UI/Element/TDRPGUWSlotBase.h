@@ -43,13 +43,13 @@ protected:
 
 public:
 	virtual void SetData(UItemBase* InItem);
+	virtual void Clear();
 
 	virtual void NativeOnInitialized() override;
 	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
 
 protected:
-	virtual void Clear();
 	virtual void Refresh(UItemBase* InItem);
 
 	void OnIconLoaded(UObject* Loaded);

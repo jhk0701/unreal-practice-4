@@ -6,6 +6,7 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWEquipment.generated.h"
 
+class UEquipment;
 enum class EEquipType : uint8;
 class UTDRPGUWSlotBase;
 class UButton;
@@ -20,6 +21,9 @@ class TOPDOWNRPG_API UTDRPGUWEquipment : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 public:
+	UPROPERTY()
+	TObjectPtr<UEquipment> BindedEquipment;
+
 	UPROPERTY(EditAnywhere)
 	TMap<EEquipType, UTDRPGUWSlotBase*> Slots;
 
@@ -31,4 +35,5 @@ public:
 
 public:
 	virtual void NativeOnInitialized() override;
+	void UpdateSlot(EEquipType InEquipType);
 };

@@ -146,10 +146,8 @@ void ATDRPGPlayer::Initialize()
 
 	UIManager->GetUI<UTDRPGUWQuickSlot>(
 		FOnLoadCompleted::CreateLambda(
-			[this, Player](UTDRPGUserWidget* Loaded) {
+			[this](UTDRPGUserWidget* Loaded) {
 				UIQuickSlot = Cast<UTDRPGUWQuickSlot>(Loaded);
-
-				UIQuickSlot->Bind(Player->QuickSlot);
 				UIQuickSlot->Open();
 			})
 	);

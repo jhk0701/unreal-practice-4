@@ -5,6 +5,10 @@
 #include "UI/Element/TDRPGUWSlotBase.h"
 #include "TDRPGEnum.h"
 
+#include "Core/PlayerManager.h"
+#include "Player/Equipment.h"
+#include "Item/EquipmentItem.h"
+
 #include <Components/VerticalBox.h>
 #include <Components/Button.h>
 
@@ -30,4 +34,15 @@ void UTDRPGUWEquipment::NativeOnInitialized()
 		}
 	}
 
+	UPlayerManager* PlayerManager = GetGameInstance()->GetSubsystem<UPlayerManager>();
+	BindedEquipment = PlayerManager->Equipment;
+	BindedEquipment->OnEquipmentChanged.AddUObject(this, &UTDRPGUWEquipment::UpdateSlot);
+}
+
+void UTDRPGUWEquipment::UpdateSlot(EEquipType InEquipType)
+{
+	if (UItemBase* Item = BindedEquipment->Equipment[InEquipType])
+		Slots[InEquipType]->SetData(Item);
+	else
+		Slots[InEquipType]->Clear();
 }
