@@ -9,6 +9,7 @@
 enum class EEquipType : uint8;
 class UTDRPGUWSlotBase;
 class UButton;
+class UVerticalBox;
 
 /**
  * 
@@ -19,8 +20,11 @@ class TOPDOWNRPG_API UTDRPGUWEquipment : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere)
 	TMap<EEquipType, UTDRPGUWSlotBase*> Slots;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	TObjectPtr<UVerticalBox> SlotContainer;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;

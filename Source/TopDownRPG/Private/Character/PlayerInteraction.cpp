@@ -11,6 +11,7 @@
 
 #include "Core/UIManager.h"
 #include "UI/TDRPGUWInventory.h"
+#include "UI/TDRPGUWEquipment.h"
 
 #include <EnhancedInputComponent.h>
 #include <Components/SphereComponent.h>
@@ -29,6 +30,7 @@ void UPlayerInteraction::SetupInputBinding(UEnhancedInputComponent* PlayerInputC
 
 	PlayerInputComponent->BindAction(InController->InteractAction,	ETriggerEvent::Started, this, &UPlayerInteraction::InputInteract);
 	PlayerInputComponent->BindAction(InController->InventoryAction, ETriggerEvent::Started, this, &UPlayerInteraction::InputInventory);
+	PlayerInputComponent->BindAction(InController->EquipmentAction, ETriggerEvent::Started, this, &UPlayerInteraction::InputEquipment);
 
 	PlayerInputComponent->BindAction(InController->QuickSlotAction, ETriggerEvent::Triggered, this, &UPlayerInteraction::TriggerQuickSlot);
 	PlayerInputComponent->BindAction(InController->QuickSlotAction, ETriggerEvent::Completed, this, &UPlayerInteraction::ReleaseQuickSlot);
@@ -71,6 +73,23 @@ void UPlayerInteraction::InputInventory(const FInputActionValue& Value)
 				else
 					Loaded->Close();
 			})
+	);
+}
+
+void UPlayerInteraction::InputEquipment(const FInputActionValue& Value)
+{	
+	// UI 열기
+	UUIManager* UIManager = GetWorld()->GetGameInstance()->GetSubsystem<UUIManager>();
+	if (!UIManager)
+		return;
+
+	UIManager->GetUI<UTDRPGUWEquipment>(
+		FOnLoadCompleted::CreateLambda([](UTDRPGUserWidget* Loaded){
+			if (!Loaded->IsInViewport())
+				Loaded->Open();
+			else
+				Loaded->Close();
+		})
 	);
 }
 

@@ -4,9 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Character/PlayerInputComponent.h"
-#include "Inherit/QuickSlotHandler.h"
 #include "PlayerInteraction.generated.h"
-
 
 
 /**
@@ -27,9 +25,12 @@ public:
 	
 	void InputInteract(const FInputActionValue& Value);
 	void InputInventory(const FInputActionValue& Value);
-	
+	void InputEquipment(const FInputActionValue& Value);
+
 	// 퀵슬롯 입력
 	void TriggerQuickSlot(const FInputActionValue& Value);
 	void ReleaseQuickSlot(const FInputActionValue& Value);
 	void UseQuickSlot(uint8 Idx);
+
 };
+
