@@ -34,7 +34,7 @@ public:
 	FOnQuickSlotDelegate OnSlotRegistered;
 
 public:
-	void Initialize();
+	UQuickSlot();
 
 	bool Register(IQuickSlotHandler* InSlot);
 	void Use(uint8 Idx, AActor* Target);

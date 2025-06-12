@@ -9,7 +9,7 @@
 #include "Data/ConsumeDataRow.h"
 #include "Item/ConsumeItem.h"
 
-void UInventory::Initialize()
+UInventory::UInventory()
 {
 	Items.Init(nullptr, MaxSize);
 }

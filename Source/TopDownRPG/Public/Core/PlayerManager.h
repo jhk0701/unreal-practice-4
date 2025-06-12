@@ -56,6 +56,10 @@ public:
 	UPROPERTY()
 	TObjectPtr<class UQuickSlot> QuickSlot;
 
+	// 장비창
+	UPROPERTY()
+	TObjectPtr<class UEquipment> Equipment;
+
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 

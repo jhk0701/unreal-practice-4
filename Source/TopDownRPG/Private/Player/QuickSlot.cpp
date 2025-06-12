@@ -3,7 +3,7 @@
 #include "Player/QuickSlot.h"
 
 
-void UQuickSlot::Initialize()
+UQuickSlot::UQuickSlot()
 {
 	Slots.Init(nullptr, QuickSlotMaxSize);
 }

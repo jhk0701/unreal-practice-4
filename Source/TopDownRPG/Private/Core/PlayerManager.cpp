@@ -6,6 +6,7 @@
 
 #include "Player/Inventory.h"
 #include "Player/QuickSlot.h"
+#include "Player/Equipment.h"
 
 #include "Item/IngredientItem.h"
 #include "Item/ConsumeItem.h"
@@ -22,14 +23,9 @@ void UPlayerManager::Initialize(FSubsystemCollectionBase& Collection)
 
 void UPlayerManager::InitManager()
 {
-	// 인벤토리 초기화
-	Inventory = NewObject<UInventory>();
-	Inventory->Initialize();
-
-	// 퀵슬롯 초기화
-	QuickSlot = NewObject<UQuickSlot>();
-	QuickSlot->Initialize();
-
+	Inventory = NewObject<UInventory>();	// 인벤토리 초기화
+	QuickSlot = NewObject<UQuickSlot>();	// 퀵슬롯 초기화
+	Equipment = NewObject<UEquipment>();
 
 	// TODO: 테스트 코드 삭제
 	UGameInstance* GameInst = GetGameInstance();

@@ -40,6 +40,8 @@ enum class EEquipType : uint8
 	Bottom,
 	Glove,
 	Shoes,
+
+	COUNT
 };
 
 UENUM(BlueprintType)

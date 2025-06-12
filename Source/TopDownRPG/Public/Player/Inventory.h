@@ -21,7 +21,8 @@ public:
 	UPROPERTY()
 	TArray<class UItemBase*> Items;
 
-	void Initialize();
+public:
+	UInventory();
 	void AddItem(class UItemBase* Item);
 
 private:
