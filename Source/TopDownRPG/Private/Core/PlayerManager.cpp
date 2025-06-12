@@ -25,11 +25,12 @@ void UPlayerManager::InitManager()
 {
 	Inventory = NewObject<UInventory>();	// 인벤토리 초기화
 	QuickSlot = NewObject<UQuickSlot>();	// 퀵슬롯 초기화
-	Equipment = NewObject<UEquipment>();
+	Equipment = NewObject<UEquipment>();	// 장비창 초기화
 
 	// TODO: 테스트 코드 삭제
 	UGameInstance* GameInst = GetGameInstance();
 
+	// 테스트용 일반 아이템
 	UIngredientItem* Ingre1 = NewObject<UIngredientItem>();
 	UIngredientItem* Ingre2 = NewObject<UIngredientItem>();
 	UIngredientItem* Ingre3 = NewObject<UIngredientItem>();
@@ -42,10 +43,10 @@ void UPlayerManager::InitManager()
 	Inventory->AddItem(Ingre2);
 	Inventory->AddItem(Ingre3);
 
+	// 테스트용 소비 아이템
 	UConsumeItem* Consume = NewObject<UConsumeItem>();
-
 	Consume->Initialize(TEXT("0001"), GameInst, 30);
-
+	
 	Inventory->AddItem(Consume);
 }
 
