@@ -20,6 +20,7 @@ class TOPDOWNRPG_API UEquipmentItem : public UItemBase
 	// 장착 시, 추가 효과 제공
 
 public:
+	virtual void Initialize(FName InID, UGameInstance* InGameInst, uint32 InAmount) override;
 	virtual FItemDataRow* GetData() override;
 
 	// 아이템 활용

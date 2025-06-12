@@ -9,6 +9,7 @@
 #include "Data/ConsumeDataRow.h"
 #include "Item/ConsumeItem.h"
 
+
 UInventory::UInventory()
 {
 	Items.Init(nullptr, MaxSize);
@@ -26,6 +27,11 @@ void UInventory::AddItem(UItemBase* Item)
 	
 	// 중복 체크
 	// 중복 시, 새로운 인덱스에 할당
+}
+
+void UInventory::RemoveItem(int32 InIdx)
+{
+	Items[InIdx] = nullptr;
 }
 
 int16 UInventory::GetBlankSpace()

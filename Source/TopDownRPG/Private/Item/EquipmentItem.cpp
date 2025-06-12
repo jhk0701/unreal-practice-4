@@ -12,6 +12,12 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
+void UEquipmentItem::Initialize(FName InID, UGameInstance* InGameInst, uint32 InAmount)
+{
+    // 장비의 경우 무조건 갯수를 1로 고정
+    Super::Initialize(InID, InGameInst, 1);
+}
+
 FItemDataRow* UEquipmentItem::GetData()
 {
     UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
@@ -27,9 +33,8 @@ void UEquipmentItem::Equip()
 
     PlayerManager->Equipment->Equip(Data->EquipType, this);
 
-    PRINT_LOG(TEXT("Equip Item"));
-
-    // 인벤토리에서 해당 아이템 제거
+    // TODO : 인벤토리에서 해당 아이템 제거
+    
 }
 
 void UEquipmentItem::Unequip()

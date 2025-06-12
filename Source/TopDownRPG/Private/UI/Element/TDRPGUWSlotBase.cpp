@@ -42,7 +42,7 @@ void UTDRPGUWSlotBase::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
 
 void UTDRPGUWSlotBase::Clear()
 {
-	// Optional이라 방어코드 추가
+	// Optional이라 방어코드 추가 // TODO : 이 부분 구조적으로 해결 필요
 	if (QuantityLabel)
 		QuantityLabel->SetVisibility(ESlateVisibility::Hidden);
 
@@ -76,8 +76,11 @@ void UTDRPGUWSlotBase::Refresh(UItemBase* InItem)
 
 	FItemDataRow* Data = InItem->GetData();
 
-	QuantityLabel->SetVisibility(ESlateVisibility::Visible);
-	QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), InItem->GetQuantity())));
+	if (QuantityLabel) 
+	{
+		QuantityLabel->SetVisibility(ESlateVisibility::Visible);
+		QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), InItem->GetQuantity())));
+	}
 
 	UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
 	FOnResourceLoaded Delegate = FOnResourceLoaded::CreateUObject(this, &UTDRPGUWSlotBase::OnIconLoaded);

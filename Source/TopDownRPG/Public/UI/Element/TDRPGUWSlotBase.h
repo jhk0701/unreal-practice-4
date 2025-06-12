@@ -36,6 +36,7 @@ public:
 	FOnSlotInteractStarted OnCursorEnter;
 	FOnSlotInteractCompleted OnCursorLeave;
 
+	// 슬롯에 대한 클릭 이벤트
 	FOnSlotInteractStarted OnButtonClicked;
 
 protected:

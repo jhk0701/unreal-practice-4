@@ -10,6 +10,7 @@
 
 #include "Item/IngredientItem.h"
 #include "Item/ConsumeItem.h"
+#include "Item/EquipmentItem.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -31,23 +32,29 @@ void UPlayerManager::InitManager()
 	UGameInstance* GameInst = GetGameInstance();
 
 	// 테스트용 일반 아이템
-	UIngredientItem* Ingre1 = NewObject<UIngredientItem>();
-	UIngredientItem* Ingre2 = NewObject<UIngredientItem>();
-	UIngredientItem* Ingre3 = NewObject<UIngredientItem>();
+	UIngredientItem* TestIngre_1 = NewObject<UIngredientItem>();
+	UIngredientItem* TestIngre_2 = NewObject<UIngredientItem>();
+	UIngredientItem* TestIngre_3 = NewObject<UIngredientItem>();
 
-	Ingre1->Initialize(TEXT("0001"), GameInst, 5);
-	Ingre2->Initialize(TEXT("0002"), GameInst, 10);
-	Ingre3->Initialize(TEXT("0003"), GameInst, 20);
+	TestIngre_1->Initialize(TEXT("0001"), GameInst, 5);
+	TestIngre_2->Initialize(TEXT("0002"), GameInst, 10);
+	TestIngre_3->Initialize(TEXT("0003"), GameInst, 20);
 
-	Inventory->AddItem(Ingre1);
-	Inventory->AddItem(Ingre2);
-	Inventory->AddItem(Ingre3);
+	Inventory->AddItem(TestIngre_1);
+	Inventory->AddItem(TestIngre_2);
+	Inventory->AddItem(TestIngre_3);
 
 	// 테스트용 소비 아이템
-	UConsumeItem* Consume = NewObject<UConsumeItem>();
-	Consume->Initialize(TEXT("0001"), GameInst, 30);
+	UConsumeItem* TestConsume = NewObject<UConsumeItem>();
+	TestConsume->Initialize(TEXT("0001"), GameInst, 30);
 	
-	Inventory->AddItem(Consume);
+	Inventory->AddItem(TestConsume);
+
+	// 테스트용 장비 아이템 지급
+	UEquipmentItem* TestEquip = NewObject<UEquipmentItem>();
+	TestEquip->Initialize(TEXT("0001"), GameInst, 1);
+
+	Inventory->AddItem(TestEquip);
 }
 
 void UPlayerManager::LoadData()

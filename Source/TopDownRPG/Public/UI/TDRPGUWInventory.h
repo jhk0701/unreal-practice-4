@@ -14,7 +14,6 @@ class UTDRPGUWItemDetail;
 class UTDRPGUWItemMenu;
 class UItemBase;
 
-
 /**
  * 
  */

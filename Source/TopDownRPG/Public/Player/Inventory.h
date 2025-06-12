@@ -24,6 +24,7 @@ public:
 public:
 	UInventory();
 	void AddItem(class UItemBase* Item);
+	void RemoveItem(int32 InIdx);
 
 private:
 	int16 GetBlankSpace();
