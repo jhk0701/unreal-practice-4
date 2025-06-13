@@ -132,25 +132,14 @@ void ATDRPGPlayer::Initialize()
 	MeshComp->SetAnimInstanceClass(Config->Animation.Get());
 	AnimInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
 
-	// TODO : UI 생성 분리
 	// UI 호출
 	UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>();
-	UIManager->GetUI<UTDRPGUWStatusBar>(
-		FOnLoadCompleted::CreateLambda(
-			[this](UTDRPGUserWidget* Loaded) {
-				UIStatusBar = Cast<UTDRPGUWStatusBar>(Loaded);
-				UIStatusBar->InitStatusBar(this);
-				UIStatusBar->Open();
-			})
-	);
-
-	UIManager->GetUI<UTDRPGUWQuickSlot>(
-		FOnLoadCompleted::CreateLambda(
-			[this](UTDRPGUserWidget* Loaded) {
-				UIQuickSlot = Cast<UTDRPGUWQuickSlot>(Loaded);
-				UIQuickSlot->Open();
-			})
-	);
+	if (UTDRPGUWStatusBar* StatusUI = UIManager->GetUI<UTDRPGUWStatusBar>())
+	{
+		StatusUI->InitStatusBar(this);
+		StatusUI->Open();
+	}
+	// UIManager->GetUI<UTDRPGUWQuickSlot>();
 
 	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
 }

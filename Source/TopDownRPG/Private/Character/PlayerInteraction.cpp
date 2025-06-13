@@ -65,15 +65,8 @@ void UPlayerInteraction::InputInventory(const FInputActionValue& Value)
 	if (!UIManager)
 		return;
 
-	UIManager->GetUI<UTDRPGUWInventory>(
-		FOnLoadCompleted::CreateLambda(
-			[](UTDRPGUserWidget* Loaded) {
-				if (!Loaded->IsInViewport())
-					Loaded->Open();
-				else
-					Loaded->Close();
-			})
-	);
+	if(UTDRPGUWInventory* InvenUI = UIManager->GetUI<UTDRPGUWInventory>()) 
+		InvenUI->Toggle();
 }
 
 void UPlayerInteraction::InputEquipment(const FInputActionValue& Value)
@@ -83,14 +76,8 @@ void UPlayerInteraction::InputEquipment(const FInputActionValue& Value)
 	if (!UIManager)
 		return;
 
-	UIManager->GetUI<UTDRPGUWEquipment>(
-		FOnLoadCompleted::CreateLambda([](UTDRPGUserWidget* Loaded){
-			if (!Loaded->IsInViewport())
-				Loaded->Open();
-			else
-				Loaded->Close();
-		})
-	);
+	if (UTDRPGUWEquipment* EquipUI = UIManager->GetUI<UTDRPGUWEquipment>()) 
+		EquipUI->Toggle();
 }
 
 

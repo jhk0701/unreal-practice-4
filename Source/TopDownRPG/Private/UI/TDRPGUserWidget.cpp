@@ -3,12 +3,17 @@
 
 #include "UI/TDRPGUserWidget.h"
 
-inline void UTDRPGUserWidget::Open()
+void UTDRPGUserWidget::Open()
 {
 	SetVisibility(ESlateVisibility::Visible);
 }
 
-inline void UTDRPGUserWidget::Close()
+void UTDRPGUserWidget::Close()
 {
 	SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UTDRPGUserWidget::Toggle()
+{
+	IsVisible() ? Close() : Open();
 }

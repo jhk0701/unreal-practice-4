@@ -26,7 +26,7 @@ protected:
 
 public:
 	// 씬에 들어오면 UI 초기화
-	void BeginPlay() override;
-	virtual void Initialize();
+	virtual void PostInitializeComponents() override;
+	virtual void InitHUD();
 
 };

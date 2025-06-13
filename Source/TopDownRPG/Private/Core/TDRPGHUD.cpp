@@ -4,16 +4,20 @@
 #include "Core/UIManager.h"
 
 
-void ATDRPGHUD::BeginPlay()
+void ATDRPGHUD::PostInitializeComponents()
 {
-	Super::BeginPlay();
+	Super::PostInitializeComponents();
 
-	Initialize();
+	InitHUD();
 }
 
-void ATDRPGHUD::Initialize()
+void ATDRPGHUD::InitHUD()
 {
-	UUIManager* UIManager = GetGameInstance()->GetSubsystem<UUIManager>();
+	UGameInstance* GameInstance = GetGameInstance();
+	if (!GameInstance) 
+		return;
+
+	UUIManager* UIManager = GameInstance->GetSubsystem<UUIManager>();
 	UIManager->SetHUD(this);
 
 	UIManager->InitUIConfig(CommonUI);

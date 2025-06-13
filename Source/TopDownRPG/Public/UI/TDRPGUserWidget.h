@@ -19,4 +19,6 @@ public:
 	virtual void Open();
 	UFUNCTION()
 	virtual void Close();
+	UFUNCTION()
+	virtual void Toggle();
 };
