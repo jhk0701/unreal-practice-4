@@ -28,10 +28,6 @@ void UTDRPGUWItemMenu::NativeOnInitialized()
 	FuncButton->OnClicked.AddUniqueDynamic(this, &UTDRPGUWItemMenu::InvokeFunc);
 }
 
-void UTDRPGUWItemMenu::Close()
-{
-	SetVisibility(ESlateVisibility::Hidden);
-}
 
 void UTDRPGUWItemMenu::Update(UItemBase* InItem)
 {

@@ -38,7 +38,27 @@ public:
 
 	void InitUIConfig(UUIConfig* InConfig);
 
-	UTDRPGUserWidget* GetUI(const FString& InID);
+	template<typename T>
+	inline TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, T*>::type
+	GetUI() 
+	{
+		FString Name = FString::Printf(TEXT("WBP_%s_C"), *GetNameFromType<T>().ToString());
+
+		if (UIMap.Contains(Name))
+			return Cast<T>(UIMap[Name]);
+
+		return nullptr;
+	}
+
+	template<typename T>
+	inline TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, FName>::type
+	GetNameFromType()
+	{
+		UClass* Type = T::StaticClass();
+		check(Type); // 방어용
+
+		return Type->GetFName();
+	}
 
 	// 템플릿으로 작성
 	// 상속해서 만든 UserWidget에서 파생한 UI만 호출할 수 있도록 사용
@@ -54,9 +74,7 @@ public:
 	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, void>::type
 	CreateUI(FOnLoadCompleted& OnCompleted)
 	{
-		UClass* Type = T::StaticClass();
-		check(Type);	// 방어용으로 type이 nullptr이 아닌지 확인
-		FString Name = Type->GetFName().ToString();
+		FString Name = GetNameFromType<T>().ToString();
 
 		FStreamableManager& Stream = UAssetManager::GetStreamableManager();
 		FSoftClassPath Path(FString::Format(*CommonConst::PATH_FORMAT_UI, { Name }));
@@ -81,9 +99,7 @@ public:
 	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, void>::type
 	GetUI(FOnLoadCompleted&& OnCompleted)
 	{
-		UClass* Type = T::StaticClass();
-		check(Type);
-		FString Name = Type->GetFName().ToString();
+		FString Name = GetNameFromType<T>().ToString();
 
 		if (UIMap.Contains(Name) && IsValid(UIMap[Name]))
 		{

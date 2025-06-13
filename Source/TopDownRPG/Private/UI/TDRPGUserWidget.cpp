@@ -5,10 +5,10 @@
 
 inline void UTDRPGUserWidget::Open()
 {
-	AddToViewport();
+	SetVisibility(ESlateVisibility::Visible);
 }
 
 inline void UTDRPGUserWidget::Close()
 {
-	RemoveFromParent();
+	SetVisibility(ESlateVisibility::Hidden);
 }

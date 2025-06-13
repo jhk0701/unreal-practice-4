@@ -15,9 +15,5 @@ class TOPDOWNRPG_API ATitleHUD : public ATDRPGHUD
 	GENERATED_BODY()
 
 public:
-	ATitleHUD();
-	virtual void BeginPlay() override;
-
-	void Initialize();
-	void InitTitleUI(class UTDRPGUserWidget* TitleUI);
+	void Initialize() override;
 };

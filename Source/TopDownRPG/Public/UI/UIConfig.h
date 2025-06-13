@@ -13,9 +13,12 @@ USTRUCT(BlueprintType)
 struct FUIElementData 
 {
 	GENERATED_BODY()
-
+	
+	/*
+	// Type 명칭을 맵핑시도
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FString ElementID;
+	FString ElementID; 
+	*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<UTDRPGUserWidget> WidgetClass;
@@ -23,11 +26,8 @@ struct FUIElementData
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FVector2D Position;
 
-	/*
-	// 사이즈 조절은 이번 프로젝트에선 필요없음
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FVector2D Size;
-	*/
+	bool bCanOpenOnInit;
 };
 
 /**

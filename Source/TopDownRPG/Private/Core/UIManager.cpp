@@ -8,6 +8,7 @@
 
 #include <Components/CanvasPanelSlot.h>
 
+
 void UUIManager::SetHUD(ATDRPGHUD* InHUD)
 {
 	CurrentHUD = InHUD;
@@ -24,22 +25,18 @@ void UUIManager::InitUIConfig(UUIConfig* InConfig)
 		
 		if (!Widget) 
 			continue;
-			
-		UIMap.Add(Element.ElementID, Widget);
+
+		FString Key = Element.WidgetClass.Get()->GetFName().ToString();
+		UIMap.Add(Key, Widget);
 
 		Widget->AddToViewport();
+		
+		if (!Element.bCanOpenOnInit)
+			Widget->SetVisibility(ESlateVisibility::Hidden);
 
 		if (UCanvasPanelSlot* CanvasPanelSlot = Cast<UCanvasPanelSlot>(Widget))
 		{
 			CanvasPanelSlot->SetPosition(Element.Position);
 		}
 	}
-}
-
-UTDRPGUserWidget* UUIManager::GetUI(const FString& InID)
-{
-	if (UIMap.Contains(InID))
-		return UIMap[InID];
-
-	return nullptr;
 }

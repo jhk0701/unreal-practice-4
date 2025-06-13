@@ -40,7 +40,6 @@ private:
 
 public:
 	virtual void NativeOnInitialized() override;
-	virtual void Close() override;
 
 	void Update(UItemBase* InItem);
 

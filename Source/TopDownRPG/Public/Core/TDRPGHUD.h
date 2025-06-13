@@ -21,6 +21,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
 	TObjectPtr<UUIConfig> CommonUI;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
+	TObjectPtr<UUIConfig> LevelUI;
+
 public:
 	// 씬에 들어오면 UI 초기화
 	void BeginPlay() override;

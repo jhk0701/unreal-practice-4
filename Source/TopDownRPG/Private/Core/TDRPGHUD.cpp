@@ -17,8 +17,6 @@ void ATDRPGHUD::Initialize()
 	UUIManager* UIManager = GetGameInstance()->GetSubsystem<UUIManager>();
 	UIManager->SetHUD(this);
 
-	if (!CommonUI) 
-		return;
-
 	UIManager->InitUIConfig(CommonUI);
+	UIManager->InitUIConfig(LevelUI);
 }
