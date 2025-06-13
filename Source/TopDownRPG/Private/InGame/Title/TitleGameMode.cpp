@@ -2,7 +2,8 @@
 
 
 #include "InGame/Title/TitleGameMode.h"
-#include "InGame/Title/TitleHUD.h"
+#include "Core/TDRPGHUD.h"
+
 #include <Kismet/GameplayStatics.h>
 #include <Kismet/KismetSystemLibrary.h>
 
@@ -10,7 +11,7 @@
 
 ATitleGameMode::ATitleGameMode()
 {
-	HUDClass = ATitleHUD::StaticClass();
+	HUDClass = ATDRPGHUD::StaticClass();
 }
 
 void ATitleGameMode::ExitGame()
