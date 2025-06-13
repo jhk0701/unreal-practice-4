@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Core/TDRPGHUD.h"
 #include "Core/UIManager.h"
 
@@ -18,5 +17,7 @@ void ATDRPGHUD::Initialize()
 	UIManager->SetHUD(this);
 
 	UIManager->InitUIConfig(CommonUI);
-	UIManager->InitUIConfig(LevelUI);
+
+	for (auto Config : Configs) 
+		UIManager->InitUIConfig(Config);
 }

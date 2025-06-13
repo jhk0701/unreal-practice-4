@@ -22,7 +22,7 @@ protected:
 	TObjectPtr<UUIConfig> CommonUI;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
-	TObjectPtr<UUIConfig> LevelUI;
+	TArray<TObjectPtr<UUIConfig>> Configs;
 
 public:
 	// 씬에 들어오면 UI 초기화
