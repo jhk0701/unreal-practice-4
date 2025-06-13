@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameStateBase.h"
-#include "TDGameState.generated.h"
+#include "TDRPGGameState.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API ATDGameState : public AGameStateBase
+class TOPDOWNRPG_API ATDRPGGameState : public AGameStateBase
 {
 	GENERATED_BODY()
 

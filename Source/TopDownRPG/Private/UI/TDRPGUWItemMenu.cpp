@@ -8,7 +8,7 @@
 
 #include "Character/TDRPGPlayer.h"
 
-#include "Core/TDGameState.h"
+#include "Core/TDRPGGameState.h"
 #include "Core/PlayerManager.h"
 #include "Player/QuickSlot.h"
 
@@ -49,7 +49,7 @@ void UTDRPGUWItemMenu::InvokeFunc()
 {
 	if (UConsumeItem* Consumable = Cast<UConsumeItem>(SelectedItem))
 	{
-		ATDGameState* GameState = Cast<ATDGameState>(GetWorld()->GetGameState());
+		ATDRPGGameState* GameState = Cast<ATDRPGGameState>(GetWorld()->GetGameState());
 		
 		Consumable->Use(GameState->Player.Get());
 	}

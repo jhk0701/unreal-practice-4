@@ -7,7 +7,7 @@
 #include "Inherit/PhaseHandler.h"
 #include "BasePhase.generated.h"
 
-class ATDGameState;
+class ATDRPGGameState;
 
 /**
  * 
@@ -19,10 +19,10 @@ class TOPDOWNRPG_API UBasePhase : public UObject, public IPhaseHandler
 	
 protected:
 	UPROPERTY()
-	TObjectPtr<ATDGameState> State;
+	TObjectPtr<ATDRPGGameState> State;
 
 public:
-	inline void InitPhase(ATDGameState* InState) { State = InState; };
+	inline void InitPhase(ATDRPGGameState* InState) { State = InState; };
 
 	virtual void Enter() override {};
 	virtual void Exit() override {};

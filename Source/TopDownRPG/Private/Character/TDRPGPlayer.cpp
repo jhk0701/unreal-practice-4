@@ -7,7 +7,7 @@
 
 #include "CommonConst.h"
 #include "Core/TDRPGPlayerController.h"
-#include "Core/TDGameState.h"
+#include "Core/TDRPGGameState.h"
 #include "Core/GameDataManager.h"
 #include "Core/PlayerManager.h"
 #include "Core/UIManager.h"
@@ -82,7 +82,7 @@ void ATDRPGPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ATDGameState* State = Cast<ATDGameState>(GetWorld()->GetGameState());
+	ATDRPGGameState* State = Cast<ATDRPGGameState>(GetWorld()->GetGameState());
 	State->Player = this;
 
 	Initialize();

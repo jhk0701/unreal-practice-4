@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Core/TDGameState.h"
+#include "Core/TDRPGGameState.h"
 #include "LobbyGameState.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API ALobbyGameState : public ATDGameState
+class TOPDOWNRPG_API ALobbyGameState : public ATDRPGGameState
 {
 	GENERATED_BODY()
 

@@ -5,12 +5,15 @@
 #include "InGame/Title/TitleGameMode.h"
 #include <Components/Button.h>
 
+#include "TopDownRPG/TopDownRPG.h"
+
 void UTDRPGUWTitle::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
 	BindButton();
 }
+
 
 void UTDRPGUWTitle::BindButton()
 {

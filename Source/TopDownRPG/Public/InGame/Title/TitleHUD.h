@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/HUD.h"
+#include "Core/TDRPGHUD.h"
 #include "TitleHUD.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API ATitleHUD : public AHUD
+class TOPDOWNRPG_API ATitleHUD : public ATDRPGHUD
 {
 	GENERATED_BODY()
 

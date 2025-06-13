@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Core/TDGameState.h"
+#include "Core/TDRPGGameState.h"
 #include "DungeonGameState.generated.h"
 
 class UBasePhase;
@@ -27,7 +27,7 @@ enum class EStageResult : uint8
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API ADungeonGameState : public ATDGameState
+class TOPDOWNRPG_API ADungeonGameState : public ATDRPGGameState
 {
 	GENERATED_BODY()
 
