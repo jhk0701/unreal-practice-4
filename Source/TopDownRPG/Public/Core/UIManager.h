@@ -33,6 +33,7 @@ protected:
 
 public:
 	void SetHUD(ATDRPGHUD* InHUD);
+	inline ATDRPGHUD* GetHUD() { return CurrentHUD; };
 
 	inline void ClearUIMap() { UIMap.Empty(); };
 
