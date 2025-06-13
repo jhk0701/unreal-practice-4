@@ -11,6 +11,8 @@
 #include <Engine/StreamableManager.h>
 #include "UIManager.generated.h"
 
+class UUIConfig;
+class ATDRPGHUD;
 
 DECLARE_DELEGATE_OneParam(FOnLoadCompleted, UTDRPGUserWidget*);
 
@@ -23,10 +25,20 @@ class TOPDOWNRPG_API UUIManager : public UGameInstanceSubsystem
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	UPROPERTY()
 	TMap<FString, UTDRPGUserWidget*> UIMap;
 
+	UPROPERTY()
+	TObjectPtr<ATDRPGHUD> CurrentHUD;
+
 public:
+	void SetHUD(ATDRPGHUD* InHUD);
+
+	inline void ClearUIMap() { UIMap.Empty(); };
+
+	void InitUIConfig(UUIConfig* InConfig);
+
+	UTDRPGUserWidget* GetUI(const FString& InID);
 
 	// 템플릿으로 작성
 	// 상속해서 만든 UserWidget에서 파생한 UI만 호출할 수 있도록 사용
