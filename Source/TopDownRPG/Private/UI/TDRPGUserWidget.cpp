@@ -3,6 +3,7 @@
 
 #include "UI/TDRPGUserWidget.h"
 
+
 void UTDRPGUserWidget::Open()
 {
 	SetVisibility(ESlateVisibility::Visible);

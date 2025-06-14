@@ -15,7 +15,7 @@ struct FUIElementData
 	GENERATED_BODY()
 	
 	/*
-	// Type 명칭을 맵핑시도
+	// Type 명칭으로 맵핑시도
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FString ElementID; 
 	*/

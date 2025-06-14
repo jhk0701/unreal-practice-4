@@ -32,7 +32,7 @@ protected:
 	TObjectPtr<ATDRPGHUD> CurrentHUD;
 
 public:
-	void SetHUD(ATDRPGHUD* InHUD);
+	inline void SetHUD(ATDRPGHUD* InHUD) { CurrentHUD = InHUD; }
 	inline ATDRPGHUD* GetHUD() { return CurrentHUD; };
 
 	inline void ClearUIMap() { UIMap.Empty(); };

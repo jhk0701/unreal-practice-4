@@ -7,6 +7,7 @@
 #include "TDRPGHUD.generated.h"
 
 class UUIConfig;
+class UTDRPGUWCanvas;
 
 /**
  * 
@@ -17,6 +18,9 @@ class TOPDOWNRPG_API ATDRPGHUD : public AHUD
 	GENERATED_BODY()
 
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI");
+	TSubclassOf<UTDRPGUWCanvas> CanvasFactory;
+
 	// 특정 HUD가 관리할 UI 모음집
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
 	TObjectPtr<UUIConfig> CommonUI;
@@ -24,8 +28,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
 	TArray<TObjectPtr<UUIConfig>> Configs;
 
-public:
-	// 씬에 들어오면 UI 초기화
+protected:
 	virtual void PostInitializeComponents() override;
 	virtual void InitHUD();
 

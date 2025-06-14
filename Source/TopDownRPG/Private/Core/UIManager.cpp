@@ -9,11 +9,6 @@
 #include <Components/CanvasPanelSlot.h>
 
 
-void UUIManager::SetHUD(ATDRPGHUD* InHUD)
-{
-	CurrentHUD = InHUD;
-}
-
 void UUIManager::InitUIConfig(UUIConfig* InConfig)
 {
 	if (!InConfig) 

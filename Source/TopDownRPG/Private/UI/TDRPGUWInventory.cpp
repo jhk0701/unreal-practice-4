@@ -5,21 +5,39 @@
 #include "UI/Element/TDRPGUWSlotBase.h"
 #include "UI/TDRPGUWItemDetail.h"
 #include "UI/TDRPGUWItemMenu.h"
+#include "UI/TDRPGUWCanvas.h"
 
+#include "Core/UIManager.h"
 #include "Core/PlayerManager.h"
 #include "Player/Inventory.h"
 
+#include <Components/CanvasPanel.h>
 #include <Components/UniformGridPanel.h>
 #include <Components/TextBlock.h>
 #include <Components/Button.h>
 
+#include "TopDownRPG/TopDownRPG.h"
+
+
+UTDRPGUWInventory::UTDRPGUWInventory()
+{
+	ConstructorHelpers::FClassFinder<UTDRPGUWItemMenu> TempMenu(TEXT("WidgetBlueprint'/Game/4-UI/WBP_TDRPGUWItemMenu.WBP_TDRPGUWItemMenu_C'"));
+	ConstructorHelpers::FClassFinder<UTDRPGUWItemDetail> TempDetail(TEXT("WidgetBlueprint'/Game/4-UI/WBP_TDRPGUWItemDetail.WBP_TDRPGUWItemDetail_C'"));
+
+	if (TempMenu.Succeeded())
+		MenuWindowFactory = TempMenu.Class;
+
+	if (TempDetail.Succeeded())
+		DetailWindowFactory = TempDetail.Class;
+}
 
 void UTDRPGUWInventory::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
-	HideItemDetail();
-	HideItemMenu();
+	PRINT_LOG(TEXT("UI Inventory Native Init"));
+
+	InitSubWidget();
 
 	CloseButton->OnClicked.AddUniqueDynamic(this, &UTDRPGUserWidget::Close);
 
@@ -65,24 +83,45 @@ void UTDRPGUWInventory::UpdateGold(uint32 Gold)
 	GoldLabel->SetText(FText::FromString(FString::Printf(TEXT("%u G"), Gold)));
 }
 
+void UTDRPGUWInventory::InitSubWidget()
+{
+	UCanvasPanel* ParentCanvas = Cast<UCanvasPanel>(GetParent());
+
+	if (MenuWindowFactory && !MenuWindow)
+	{
+		MenuWindow = CreateWidget<UTDRPGUWItemMenu>(this, MenuWindowFactory);
+		ParentCanvas->AddChildToCanvas(MenuWindow);
+		
+		HideItemMenu();
+	}
+
+	if (DetailWindowFactory && !DetailWindow)
+	{
+		DetailWindow = CreateWidget<UTDRPGUWItemDetail>(this, DetailWindowFactory);
+		ParentCanvas->AddChildToCanvas(DetailWindow);
+
+		HideItemDetail();
+	}
+}
+
 void UTDRPGUWInventory::ShowItemDetail(UItemBase* InItem)
 {
-	DetailWindow->SetVisibility(ESlateVisibility::Visible);
+	DetailWindow->Open();
 	DetailWindow->Update(InItem);
 }
 
 void UTDRPGUWInventory::HideItemDetail()
 {
-	DetailWindow->SetVisibility(ESlateVisibility::Hidden);
+	DetailWindow->Close();
 }
 
 void UTDRPGUWInventory::ShowItemMenu(UItemBase* InItem)
 {
-	MenuWindow->SetVisibility(ESlateVisibility::Visible);
+	MenuWindow->Open();
 	MenuWindow->Update(InItem);
 }
 
 void UTDRPGUWInventory::HideItemMenu()
 {
-	MenuWindow->SetVisibility(ESlateVisibility::Hidden);
+	MenuWindow->Close();
 }

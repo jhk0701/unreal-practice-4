@@ -46,13 +46,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	TObjectPtr<class UCameraComponent> Camera;
 
-	// TODO : UI 관리 분리
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UI)
-	TObjectPtr<class UTDRPGUWStatusBar> UIStatusBar;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UI)
-	TObjectPtr<class UTDRPGUWQuickSlot> UIQuickSlot;
-
 public:
 	ATDRPGPlayer();
 	virtual void BeginPlay() override;

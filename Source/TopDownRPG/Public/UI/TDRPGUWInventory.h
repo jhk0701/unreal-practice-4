@@ -31,21 +31,31 @@ public:
 	UPROPERTY()
 	TArray<UTDRPGUWSlotBase*> Slots;
 
-	UPROPERTY(meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> SlotContainer;
 
 	// Footer
-	UPROPERTY(meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
 	TObjectPtr<UTextBlock> GoldLabel;
 
-	UPROPERTY(meta = (BindWidget))
+	// Sub UIs
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|Factory")
+	TSubclassOf<UTDRPGUWItemDetail> DetailWindowFactory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SubWidget")
 	TObjectPtr<UTDRPGUWItemDetail> DetailWindow;
 
-	UPROPERTY(meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|Factory")
+	TSubclassOf<UTDRPGUWItemMenu> MenuWindowFactory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SubWidget")
 	TObjectPtr<UTDRPGUWItemMenu> MenuWindow;
+
 	
 public:
+	UTDRPGUWInventory();
 	virtual void NativeOnInitialized() override;
+	
 	void UpdateGold(uint32 Gold);
 
 	void ShowItemDetail(UItemBase* InItem);
@@ -53,4 +63,7 @@ public:
 
 	void ShowItemMenu(UItemBase* InItem);
 	void HideItemMenu();
+
+protected:
+	void InitSubWidget();
 };
