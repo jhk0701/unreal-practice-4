@@ -12,6 +12,7 @@
 #include "Player/Inventory.h"
 
 #include <Components/CanvasPanel.h>
+#include <Components/CanvasPanelSlot.h>
 #include <Components/UniformGridPanel.h>
 #include <Components/TextBlock.h>
 #include <Components/Button.h>
@@ -34,8 +35,6 @@ UTDRPGUWInventory::UTDRPGUWInventory()
 void UTDRPGUWInventory::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
-
-	PRINT_LOG(TEXT("UI Inventory Native Init"));
 
 	InitSubWidget();
 
@@ -91,7 +90,13 @@ void UTDRPGUWInventory::InitSubWidget()
 	{
 		MenuWindow = CreateWidget<UTDRPGUWItemMenu>(this, MenuWindowFactory);
 		ParentCanvas->AddChildToCanvas(MenuWindow);
-		
+
+		if (UCanvasPanelSlot* WindowSlot = Cast<UCanvasPanelSlot>(MenuWindow->Slot))
+		{
+			WindowSlot->SetSize(MenuWindowSize);
+			WindowSlot->SetPosition(FVector2D::ZeroVector);
+		}
+
 		HideItemMenu();
 	}
 
@@ -99,6 +104,12 @@ void UTDRPGUWInventory::InitSubWidget()
 	{
 		DetailWindow = CreateWidget<UTDRPGUWItemDetail>(this, DetailWindowFactory);
 		ParentCanvas->AddChildToCanvas(DetailWindow);
+
+		if (UCanvasPanelSlot* WindowSlot = Cast<UCanvasPanelSlot>(DetailWindow->Slot))
+		{
+			WindowSlot->SetSize(DetailWindowSize);
+			WindowSlot->SetPosition(FVector2D::ZeroVector);
+		}
 
 		HideItemDetail();
 	}

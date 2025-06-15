@@ -13,15 +13,9 @@ void UTDRPGUWPlayerUI::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
-	PRINT_LOG(TEXT("Init Player UI"));
-
 	if (Inventory)
 		Inventory->Close();
-	else
-		PRINT_LOG(TEXT("Inventory is null"));
 
 	if (Equipment)
 		Equipment->Close();
-	else
-		PRINT_LOG(TEXT("Equipment is null"));
 }

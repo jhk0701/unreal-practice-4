@@ -10,6 +10,7 @@
 #include "Player/QuickSlot.h"
 
 #include "Core/UIManager.h"
+#include "UI/TDRPGUWPlayerUI.h"
 #include "UI/TDRPGUWInventory.h"
 #include "UI/TDRPGUWEquipment.h"
 
@@ -65,7 +66,7 @@ void UPlayerInteraction::InputInventory(const FInputActionValue& Value)
 	if (!UIManager)
 		return;
 
-	if(UTDRPGUWInventory* InvenUI = UIManager->GetUI<UTDRPGUWInventory>()) 
+	if(UTDRPGUWInventory* InvenUI = UIManager->GetUI<UTDRPGUWPlayerUI>()->Inventory)
 		InvenUI->Toggle();
 }
 
@@ -76,7 +77,7 @@ void UPlayerInteraction::InputEquipment(const FInputActionValue& Value)
 	if (!UIManager)
 		return;
 
-	if (UTDRPGUWEquipment* EquipUI = UIManager->GetUI<UTDRPGUWEquipment>()) 
+	if (UTDRPGUWEquipment* EquipUI = UIManager->GetUI<UTDRPGUWPlayerUI>()->Equipment)
 		EquipUI->Toggle();
 }
 

@@ -25,9 +25,7 @@ void UUIManager::InitUIConfig(UUIConfig* InConfig)
 		UIMap.Add(Key, Widget);
 
 		Widget->AddToViewport();
-		
-		if (!Element.bCanOpenOnInit)
-			Widget->SetVisibility(ESlateVisibility::Hidden);
+		Widget->SetVisibility(Element.bCanOpenOnInit ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 
 		if (UCanvasPanelSlot* CanvasPanelSlot = Cast<UCanvasPanelSlot>(Widget))
 		{
