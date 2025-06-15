@@ -61,6 +61,8 @@ public:
 	UTDRPGUWInventory();
 	virtual void NativeOnInitialized() override;
 	
+	void Bind(class UPlayerManager* InManager);
+
 	void UpdateGold(uint32 Gold);
 
 	void ShowItemDetail(UItemBase* InItem);

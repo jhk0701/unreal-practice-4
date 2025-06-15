@@ -5,7 +5,6 @@
 #include "UI/Element/TDRPGUWSlotBase.h"
 #include "TDRPGEnum.h"
 
-#include "Core/PlayerManager.h"
 #include "Player/Equipment.h"
 #include "Item/EquipmentItem.h"
 
@@ -33,9 +32,11 @@ void UTDRPGUWEquipment::NativeOnInitialized()
 			}
 		}
 	}
+}
 
-	UPlayerManager* PlayerManager = GetGameInstance()->GetSubsystem<UPlayerManager>();
-	BindedEquipment = PlayerManager->Equipment;
+void UTDRPGUWEquipment::Bind(UEquipment* InEquipment)
+{
+	BindedEquipment = InEquipment;
 	BindedEquipment->OnEquipmentChanged.AddUObject(this, &UTDRPGUWEquipment::UpdateSlot);
 }
 

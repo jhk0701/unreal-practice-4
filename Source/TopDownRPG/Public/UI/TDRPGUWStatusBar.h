@@ -37,7 +37,7 @@ protected:
 	TObjectPtr<UTextBlock> ManaLabel;
 
 public:
-	void InitStatusBar(ATDRPGPlayer* NewPlayer);
+	void Bind(ATDRPGPlayer* InPlayer);
 
 	void OnHpChanged(uint32 Max, uint32 Current);
 	void OnMpChanged(uint32 Max, uint32 Current);

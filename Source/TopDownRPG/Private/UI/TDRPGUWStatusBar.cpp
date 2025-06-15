@@ -9,13 +9,13 @@
 #include <Components/ProgressBar.h>
 
 
-void UTDRPGUWStatusBar::InitStatusBar(ATDRPGPlayer* NewPlayer)
+void UTDRPGUWStatusBar::Bind(ATDRPGPlayer* InPlayer)
 {
-	Player = NewPlayer;
+	Player = InPlayer;
 	PlayerNameLabel->SetText(FText::FromString(Player->GetActorNameOrLabel()));
 
 	UCharacterData* Data = Player->DataComp;
-	
+
 	Data->Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UTDRPGUWStatusBar::OnHpChanged);
 	Data->Stat[EStatus::Mp]->OnValueChanged.AddUObject(this, &UTDRPGUWStatusBar::OnMpChanged);
 

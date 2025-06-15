@@ -60,20 +60,20 @@ void UTDRPGUWInventory::NativeOnInitialized()
 		if (SlotInst) 
 			Slots[i] = SlotInst;
 	}
+}
 
+void UTDRPGUWInventory::Bind(UPlayerManager* InManager)
+{
 	// 플레이어 데이터 받아오기
-	UPlayerManager* PlayerManager = GetGameInstance()->GetSubsystem<UPlayerManager>();
-	if (!PlayerManager)
-		return;
-
-	UInventory* Inventory = PlayerManager->Inventory;
+	UInventory* Inventory = InManager->Inventory;
 
 	// 1. 골드
-	PlayerManager->CurrencyGold->OnValueChanged.AddUObject(this, &UTDRPGUWInventory::UpdateGold);
-	UpdateGold(PlayerManager->CurrencyGold->GetCurrency());
-	
+	InManager->CurrencyGold->OnValueChanged.AddUObject(this, &UTDRPGUWInventory::UpdateGold);
+	UpdateGold(InManager->CurrencyGold->GetCurrency());
+
 	// 2. 인벤토리 정보 연동
-	for (int32 i = 0; i < SlotCnt; ++i) 
+	int32 SlotCnt = SlotContainer->GetChildrenCount();
+	for (int32 i = 0; i < SlotCnt; ++i)
 		Slots[i]->SetData(Inventory->Items[i]);
 }
 

@@ -4,14 +4,12 @@
 #include "UI/TDRPGUWQuickSlot.h"
 #include "UI/Element/TDRPGUWMenuSlot.h"
 
-#include "Core/PlayerManager.h"
 #include "Player/QuickSlot.h"
 #include "Item/ItemBase.h"
 
 #include <Components/TextBlock.h>
 #include <Components/HorizontalBox.h>
 
-#include "TopDownRPG/TopDownRPG.h"
 
 void UTDRPGUWQuickSlot::NativeOnInitialized()
 {
@@ -33,13 +31,14 @@ void UTDRPGUWQuickSlot::NativeOnInitialized()
 			SlotList.Add(SlotInst);
 		}
 	}
-
-	UPlayerManager* PlayerManager = GetGameInstance()->GetSubsystem<UPlayerManager>();
-
-	BindedQuickSlot = PlayerManager->QuickSlot;
-	BindedQuickSlot->OnSlotRegistered.AddUObject(this, &UTDRPGUWQuickSlot::UpdateSlot);
 }
 
+
+void UTDRPGUWQuickSlot::Bind(UQuickSlot* InQuickSlot)
+{
+	BindedQuickSlot = InQuickSlot;
+	BindedQuickSlot->OnSlotRegistered.AddUObject(this, &UTDRPGUWQuickSlot::UpdateSlot);
+}
 
 void UTDRPGUWQuickSlot::UpdateSlot(uint8 Index)
 {

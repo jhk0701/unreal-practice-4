@@ -16,6 +16,10 @@
 
 #include "UI/TDRPGUWPlayerUI.h"
 #include "UI/TDRPGUWStatusBar.h"
+#include "UI/TDRPGUWQuickSlot.h"
+#include "UI/TDRPGUWInventory.h"
+#include "UI/TDRPGUWEquipment.h"
+
 #include "Data/CharacterDataRow.h"
 #include "Data/CharacterConfig.h"
 
@@ -135,7 +139,10 @@ void ATDRPGPlayer::Initialize()
 	UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>();
 	if (UTDRPGUWPlayerUI* PlayerUI = UIManager->GetUI<UTDRPGUWPlayerUI>()) 
 	{
-		PlayerUI->StatusBar->InitStatusBar(this);
+		PlayerUI->StatusBar->Bind(this);
+		PlayerUI->Inventory->Bind(Player);
+		PlayerUI->QuickSlot->Bind(Player->QuickSlot);
+		PlayerUI->Equipment->Bind(Player->Equipment);
 	}
 
 	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
