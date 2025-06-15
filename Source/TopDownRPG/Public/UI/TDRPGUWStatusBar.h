@@ -38,6 +38,7 @@ protected:
 
 public:
 	void InitStatusBar(ATDRPGPlayer* NewPlayer);
+
 	void OnHpChanged(uint32 Max, uint32 Current);
 	void OnMpChanged(uint32 Max, uint32 Current);
 };

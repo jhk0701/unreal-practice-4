@@ -84,6 +84,7 @@ void UTDRPGUWInventory::UpdateGold(uint32 Gold)
 
 void UTDRPGUWInventory::InitSubWidget()
 {
+	// TODO : 리팩토링 해볼 것
 	UCanvasPanel* ParentCanvas = Cast<UCanvasPanel>(GetParent());
 
 	if (MenuWindowFactory && !MenuWindow)

@@ -14,11 +14,10 @@
 
 #include "InGame/Dungeon/DungeonGameState.h"
 
+#include "UI/TDRPGUWPlayerUI.h"
 #include "UI/TDRPGUWStatusBar.h"
 #include "Data/CharacterDataRow.h"
 #include "Data/CharacterConfig.h"
-#include "UI/TDRPGUWQuickSlot.h"
-#include "UI/TDRPGUWInventory.h"
 
 #include <EnhancedInputComponent.h>
 #include <Camera/CameraComponent.h>
@@ -132,14 +131,12 @@ void ATDRPGPlayer::Initialize()
 	MeshComp->SetAnimInstanceClass(Config->Animation.Get());
 	AnimInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
 
-	// UI 호출
+	// UI 바인딩
 	UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>();
-	if (UTDRPGUWStatusBar* StatusUI = UIManager->GetUI<UTDRPGUWStatusBar>())
+	if (UTDRPGUWPlayerUI* PlayerUI = UIManager->GetUI<UTDRPGUWPlayerUI>()) 
 	{
-		StatusUI->InitStatusBar(this);
-		StatusUI->Open();
+		PlayerUI->StatusBar->InitStatusBar(this);
 	}
-	// UIManager->GetUI<UTDRPGUWQuickSlot>();
 
 	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
 }

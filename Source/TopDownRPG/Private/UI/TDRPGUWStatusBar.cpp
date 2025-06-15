@@ -4,6 +4,7 @@
 #include "UI/TDRPGUWStatusBar.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/CharacterData.h"
+
 #include <Components/TextBlock.h>
 #include <Components/ProgressBar.h>
 

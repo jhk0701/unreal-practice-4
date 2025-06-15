@@ -8,6 +8,7 @@
 
 #include <Components/CanvasPanelSlot.h>
 
+#include "TopDownRPG/TopDownRPG.h"
 
 void UUIManager::InitUIConfig(UUIConfig* InConfig)
 {
