@@ -83,8 +83,7 @@ void UTDRPGUWSlotBase::Refresh(UItemBase* InItem)
 	}
 
 	UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
-	FOnResourceLoaded Delegate = FOnResourceLoaded::CreateUObject(this, &UTDRPGUWSlotBase::OnIconLoaded);
-	Resource->Load(Data->Thumbnail, Delegate);
+	Resource->Load(Data->Thumbnail, FOnResourceLoaded::CreateUObject(this, &UTDRPGUWSlotBase::OnIconLoaded));
 }
 
 void UTDRPGUWSlotBase::OnIconLoaded(UObject* Loaded)

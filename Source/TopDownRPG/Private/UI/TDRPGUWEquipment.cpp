@@ -38,6 +38,10 @@ void UTDRPGUWEquipment::Bind(UEquipment* InEquipment)
 {
 	BindedEquipment = InEquipment;
 	BindedEquipment->OnEquipmentChanged.AddUObject(this, &UTDRPGUWEquipment::UpdateSlot);
+
+	uint8 Cnt = (uint8)EEquipType::COUNT;
+	for (uint8 i = 0; i < Cnt; ++i) 
+		UpdateSlot((EEquipType)i);
 }
 
 void UTDRPGUWEquipment::UpdateSlot(EEquipType InEquipType)

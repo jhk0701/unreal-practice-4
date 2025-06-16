@@ -20,7 +20,7 @@ class TOPDOWNRPG_API UItemBase : public UObject
 	GENERATED_BODY()
 
 protected:
-	FName ItemID;
+	FString ItemID;
 
 	UPROPERTY(VisibleAnywhere)
 	uint32 Quantity;
@@ -31,8 +31,8 @@ protected:
 
 public:
 	// 아이템 데이터 주입
-	virtual void Initialize(FName InID, UGameInstance* InGameInst);
-	virtual void Initialize(FName InID, UGameInstance* InGameInst, uint32 InAmount);
+	virtual void Initialize(FString InID, UGameInstance* InGameInst);
+	virtual void Initialize(FString InID, UGameInstance* InGameInst, uint32 InAmount);
 	virtual bool TryAddItem(uint32 InAmount, uint32& OutRest);
 	virtual FItemDataRow* GetData();
 

@@ -17,13 +17,15 @@ class TOPDOWNRPG_API UTDRPGUWPlayerUI : public UTDRPGUserWidget
 	
 public:
 	UPROPERTY(EditAnywhere, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<class UTDRPGUWQuickSlot> QuickSlot;
-	UPROPERTY(EditAnywhere, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<class UTDRPGUWStatusBar> StatusBar;
 	UPROPERTY(EditAnywhere, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<class UTDRPGUWEquipment> Equipment;
+	TObjectPtr<class UTDRPGUWStatusWindow> StatusWindow;
 	UPROPERTY(EditAnywhere, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<class UTDRPGUWInventory> Inventory;
+	UPROPERTY(EditAnywhere, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<class UTDRPGUWQuickSlot> QuickSlot;
+	UPROPERTY(EditAnywhere, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<class UTDRPGUWEquipment> Equipment;
 
 public:
 	virtual void NativeOnInitialized() override;

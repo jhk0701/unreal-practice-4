@@ -19,6 +19,7 @@
 #include "UI/TDRPGUWQuickSlot.h"
 #include "UI/TDRPGUWInventory.h"
 #include "UI/TDRPGUWEquipment.h"
+#include "UI/TDRPGUWStatusWindow.h"
 
 #include "Data/CharacterDataRow.h"
 #include "Data/CharacterConfig.h"
@@ -106,35 +107,14 @@ void ATDRPGPlayer::Initialize()
 	// 데이터 반영
 	UPlayerManager* Player = GameInst->GetSubsystem<UPlayerManager>();
 	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
-	DataComp->CharID = Player->PlayerData->CharID;
+	DataComp->CharID = Player->PlayerData.CharID;
 
 	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, *DataComp->CharID);
 	DataComp->Initialize(Player->Lv, Data);
 
 	// 캐릭터 동적 구성
-	FPrimaryAssetId ConfigID(CommonConst::AssetType_CharacterConfig, *DataComp->CharID);
-	UPrimaryDataAsset* LoadedDataAsset = Database->LoadPrimaryAssetData(ConfigID);
-
-	UCharacterConfig* Config = Cast<UCharacterConfig>(LoadedDataAsset);
-
-	USkeletalMeshComponent* MeshComp = GetMesh();
-
-	/*
-	if (Config->SkeletalMesh.IsPending())
-		Config->SkeletalMesh.LoadSynchronous();
-	*/
-
-	MeshComp->SetSkeletalMesh(Config->SkeletalMesh.Get());
-	MeshComp->SetRelativeLocationAndRotation(FVector(0, 0, -90.f), FRotator(0, -90.f, 0));
-
-	/*
-	if (Config->Animation.IsPending())
-		Config->Animation.LoadSynchronous();
-	*/
-
-	MeshComp->SetAnimInstanceClass(Config->Animation.Get());
-	AnimInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
-
+	LoadConfig();
+	
 	// UI 바인딩
 	UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>();
 	if (UTDRPGUWPlayerUI* PlayerUI = UIManager->GetUI<UTDRPGUWPlayerUI>()) 
@@ -143,9 +123,28 @@ void ATDRPGPlayer::Initialize()
 		PlayerUI->Inventory->Bind(Player);
 		PlayerUI->QuickSlot->Bind(Player->QuickSlot);
 		PlayerUI->Equipment->Bind(Player->Equipment);
+		PlayerUI->StatusWindow->Bind(Player);
 	}
 
 	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
+}
+
+void ATDRPGPlayer::LoadConfig()
+{
+	UGameInstance* GameInst = GetGameInstance();
+	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
+
+	FPrimaryAssetId ConfigID(CommonConst::AssetType_CharacterConfig, *DataComp->CharID);
+	UPrimaryDataAsset* LoadedDataAsset = Database->LoadPrimaryAssetData(ConfigID);
+	UCharacterConfig* Config = Cast<UCharacterConfig>(LoadedDataAsset);
+
+	USkeletalMeshComponent* MeshComp = GetMesh();
+	MeshComp->SetSkeletalMesh(Config->SkeletalMesh);
+	MeshComp->SetRelativeLocationAndRotation(FVector(0, 0, -90.f), FRotator(0, -90.f, 0));
+
+	MeshComp->SetAnimInstanceClass(Config->Animation);
+	AnimInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
+
 }
 
 void ATDRPGPlayer::InvokeAttackDelegate()

@@ -32,7 +32,7 @@ void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow* InData)
 	for (int32 i = 0; i < Leveling.Num(); ++i)
 	{
 		FString key = GameData->GetLevelingKey(CharID, i);
-		FLevelingDataRow* row = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, FName(key));
+		FLevelingDataRow* row = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, key);
 
 		Hp += row->Hp * Leveling[i];
 		Mp += row->Mp * Leveling[i];
@@ -63,7 +63,7 @@ void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	// 기한 만료된 버프 해제
 	while (!BuffReleaseQueue.IsEmpty())
 	{
-		FName Key;
+		FString Key;
 		BuffReleaseQueue.Dequeue(Key);
 		BuffFunc.Remove(Key);
 	}
@@ -79,7 +79,7 @@ void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 
 	//while (!RecoverReleaseQueue.IsEmpty())
 	//{
-	//	FName Key;
+	//	FString Key;
 	//	RecoverReleaseQueue.Dequeue(Key);
 	//	RecoverFunc.Remove(Key);
 	//}
@@ -137,7 +137,7 @@ uint32 UCharacterData::GetDefensePower()
 //		RecoverFunc.Add(InItemID, InContext);
 //}
 
-void UCharacterData::AddBuff(FName& InItemID, FFunctionContext InContext)
+void UCharacterData::AddBuff(FString& InItemID, FFunctionContext InContext)
 {
 	// 버프 중복 사용 시, 시간 추가
 	if (BuffFunc.Contains(InItemID))

@@ -10,7 +10,7 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-void UResourceLoadManager::Load(FSoftObjectPath& InPath, FOnResourceLoaded& OnCompleteDelegate)
+void UResourceLoadManager::Load(FSoftObjectPath& InPath, FOnResourceLoaded&& OnCompleteDelegate)
 {
 	FStreamableManager& Stream = UAssetManager::GetStreamableManager();
 	Stream.RequestAsyncLoad(InPath,

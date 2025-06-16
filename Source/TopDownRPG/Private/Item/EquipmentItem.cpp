@@ -12,7 +12,7 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-void UEquipmentItem::Initialize(FName InID, UGameInstance* InGameInst, uint32 InAmount)
+void UEquipmentItem::Initialize(FString InID, UGameInstance* InGameInst, uint32 InAmount)
 {
     // 장비의 경우 무조건 갯수를 1로 고정
     Super::Initialize(InID, InGameInst, 1);

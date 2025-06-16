@@ -29,13 +29,15 @@ void UTDRPGUWItemDetail::Update(UItemBase* InItem)
 	else
 	{
 		UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
-		FOnResourceLoaded Delegate = FOnResourceLoaded::CreateLambda([this](UObject* Loaded) 
-			{
-				if(UTexture2D* Tex = Cast<UTexture2D>(Loaded))
+		Resource->Load(Data->Thumbnail, 
+			FOnResourceLoaded::CreateLambda(
+				[this](UObject* Loaded)
 				{
-					this->IconImage->SetBrushFromTexture(Tex);
-				}
-			});
-		Resource->Load(Data->Thumbnail, Delegate);
+					if (UTexture2D* Tex = Cast<UTexture2D>(Loaded))
+					{
+						this->IconImage->SetBrushFromTexture(Tex);
+					}
+				})
+		);
 	}
 }

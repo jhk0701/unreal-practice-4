@@ -58,7 +58,7 @@ void ATDRPGEnemy::BeginPlay()
 
 	if (UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>())
 	{
-		FCharacterDataRow* Data = GameData->GetRow<FCharacterDataRow>(ETableType::Character, FName(DataComp->CharID));
+		FCharacterDataRow* Data = GameData->GetRow<FCharacterDataRow>(ETableType::Character, DataComp->CharID);
 		DataComp->Initialize(1, Data);
 	}
 

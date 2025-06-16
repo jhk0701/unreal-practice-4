@@ -13,6 +13,7 @@
 #include "UI/TDRPGUWPlayerUI.h"
 #include "UI/TDRPGUWInventory.h"
 #include "UI/TDRPGUWEquipment.h"
+#include "UI/TDRPGUWStatusWindow.h"
 
 #include <EnhancedInputComponent.h>
 #include <Components/SphereComponent.h>
@@ -32,6 +33,7 @@ void UPlayerInteraction::SetupInputBinding(UEnhancedInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(InController->InteractAction,	ETriggerEvent::Started, this, &UPlayerInteraction::InputInteract);
 	PlayerInputComponent->BindAction(InController->InventoryAction, ETriggerEvent::Started, this, &UPlayerInteraction::InputInventory);
 	PlayerInputComponent->BindAction(InController->EquipmentAction, ETriggerEvent::Started, this, &UPlayerInteraction::InputEquipment);
+	PlayerInputComponent->BindAction(InController->StatusWindAction, ETriggerEvent::Started, this, &UPlayerInteraction::InputStatusWind);
 
 	PlayerInputComponent->BindAction(InController->QuickSlotAction, ETriggerEvent::Triggered, this, &UPlayerInteraction::TriggerQuickSlot);
 	PlayerInputComponent->BindAction(InController->QuickSlotAction, ETriggerEvent::Completed, this, &UPlayerInteraction::ReleaseQuickSlot);
@@ -79,6 +81,16 @@ void UPlayerInteraction::InputEquipment(const FInputActionValue& Value)
 
 	if (UTDRPGUWEquipment* EquipUI = UIManager->GetUI<UTDRPGUWPlayerUI>()->Equipment)
 		EquipUI->Toggle();
+}
+
+void UPlayerInteraction::InputStatusWind(const FInputActionValue& Value)
+{
+	UUIManager* UIManager = GetWorld()->GetGameInstance()->GetSubsystem<UUIManager>();
+	if (!UIManager)
+		return;
+
+	if (UTDRPGUWStatusWindow* StatUI = UIManager->GetUI<UTDRPGUWPlayerUI>()->StatusWindow)
+		StatUI->Toggle();
 }
 
 

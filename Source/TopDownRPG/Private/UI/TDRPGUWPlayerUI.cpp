@@ -5,6 +5,7 @@
 
 #include "UI/TDRPGUWInventory.h"
 #include "UI/TDRPGUWEquipment.h"
+#include "UI/TDRPGUWStatusWindow.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -18,4 +19,7 @@ void UTDRPGUWPlayerUI::NativeOnInitialized()
 
 	if (Equipment)
 		Equipment->Close();
+
+	if (StatusWindow)
+		StatusWindow->Close();
 }

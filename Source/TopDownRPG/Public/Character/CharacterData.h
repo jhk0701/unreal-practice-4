@@ -28,12 +28,12 @@ public:
 	TMap<EAbility, uint32> Ability;	// 힘, 민첩, 지능
 
 	//// 회복 계열 관리용
-	//TMap<FName, FFunctionContext> RecoverFunc;
-	//TQueue<FName> RecoverReleaseQueue;
+	//TMap<FString, FFunctionContext> RecoverFunc;
+	//TQueue<FString> RecoverReleaseQueue;
 
 	// 버프 계열 관리용 Map : ItemID - Func
-	TMap<FName, FFunctionContext> BuffFunc;
-	TQueue<FName> BuffReleaseQueue;
+	TMap<FString, FFunctionContext> BuffFunc;
+	TQueue<FString> BuffReleaseQueue;
 
 	// TODO: 버프 연산 
 	// 한번에 여러가지 버프를 우선순위대로 연산해야함
@@ -59,7 +59,7 @@ public:
 	uint32 GetDefensePower();
 
 	// void AddRecover(FName& InItemID, FFunctionContext InContext);
-	void AddBuff(FName& InItemID, FFunctionContext InContext);
+	void AddBuff(FString& InItemID, FFunctionContext InContext);
 
 	void Debugging();
 };

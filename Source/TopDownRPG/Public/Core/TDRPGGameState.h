@@ -17,5 +17,5 @@ class TOPDOWNRPG_API ATDRPGGameState : public AGameStateBase
 public:
 	// 플레이어 접근용
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Player)
-	TWeakObjectPtr<class ATDRPGPlayer> Player;
+	TObjectPtr<class ATDRPGPlayer> Player;
 };

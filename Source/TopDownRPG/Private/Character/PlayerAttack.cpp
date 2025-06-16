@@ -39,7 +39,7 @@ void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)
 
 void UPlayerAttack::InvokeAttack()
 {
-	if (Player->AnimInst->IsAttackPlaying())
+	if (!Player->AnimInst || Player->AnimInst->IsAttackPlaying())
 		return;
 
 	Player->InvokeAttackDelegate(); // 이동 기능은 꺼질 것

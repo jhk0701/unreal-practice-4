@@ -14,6 +14,9 @@ struct FPlayerData
 	GENERATED_BODY()
 
 	UPROPERTY()
+	FName PlayerName;
+
+	UPROPERTY()
 	FString PlayerID;
 	
 	UPROPERTY()
@@ -38,7 +41,12 @@ class TOPDOWNRPG_API UPlayerManager : public UGameInstanceSubsystem
 	GENERATED_BODY()
 	
 public:
-	TUniquePtr<FPlayerData> PlayerData;
+	UPROPERTY()
+	FPlayerData PlayerData;
+
+	// 캐릭터 클래스
+	UPROPERTY()
+	FName ClassName;
 
 	// 레벨
 	UPROPERTY()

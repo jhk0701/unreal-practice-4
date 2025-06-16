@@ -17,10 +17,10 @@ class TOPDOWNRPG_API UResourceLoadManager : public UGameInstanceSubsystem
 	GENERATED_BODY()
 	
 public:
-	void Load(FSoftObjectPath& InPath, FOnResourceLoaded& OnCompleteDelegate);
+	void Load(FSoftObjectPath& InPath, FOnResourceLoaded&& OnCompleteDelegate);
 
 	template<typename T>
-	void LoadTask(TSoftObjectPtr<T>& InSoft, FOnResourceLoaded& OnCompleteDelegate)
+	void LoadTask(TSoftObjectPtr<T>& InSoft, FOnResourceLoaded&& OnCompleteDelegate)
 	{
 		if (InSoft.IsValid())
 		{

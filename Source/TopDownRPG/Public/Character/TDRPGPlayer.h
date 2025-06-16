@@ -51,13 +51,16 @@ public:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void Initialize();
+	inline const TObjectPtr<UCharacterData> GetData() const { return DataComp; }
 
 	void InvokeAttackDelegate();
-	inline const TObjectPtr<UCharacterData> GetData() const { return DataComp; }
 
 	void TakeDamage(int32 Damage);
 	void Die();
 
 	bool GetMouseToWorld(FHitResult& OutResult);
+
+private:
+	void Initialize();
+	void LoadConfig();
 };

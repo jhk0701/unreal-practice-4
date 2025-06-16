@@ -52,9 +52,9 @@ public:
 	// 외부에서 특정 테이블에 접근해서 열을 받기 위한 용도
 	template<typename T>
 	inline TEnableIf<TIsDerivedFrom<T, FTableRowBase>::Value, T*>::type
-	GetRow(ETableType Table, const FName& ID)
+	GetRow(ETableType Table, const FString& ID)
 	{
-		return GameDatabase[Table]->FindRow<T>(ID, CommonConst::DATA_TABLE_CONTEXT);
+		return GameDatabase[Table]->FindRow<T>(FName(ID), CommonConst::DATA_TABLE_CONTEXT);
 	}
 
 	const FString EnumToString(ETableType EnumValue) const;

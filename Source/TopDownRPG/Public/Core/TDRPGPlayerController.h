@@ -42,6 +42,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
 	TObjectPtr<UInputAction> EquipmentAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
+	TObjectPtr<UInputAction> StatusWindAction;
+
 
 public:
 	virtual void BeginPlay() override;
