@@ -4,6 +4,7 @@
 #include "Item/ConsumeItem.h"
 
 #include "Core/GameDataManager.h"
+
 #include "Item/Function/ItemFuncBase.h"
 #include "Data/ConsumeDataRow.h"
 
@@ -46,15 +47,15 @@ void UConsumeItem::Use(AActor* Subject)
 
 	PRINT_LOG(TEXT("Consume Item Called [%s] (%u)"), *ConsumeData->ItemName.ToString(), Quantity);
 	
-	// 0초라면 즉시 사용
-	// 1초 이상이라면 지속시간
 	if(ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Subject))
 	{
 		// 효과 객체로부터 맥락 구조체 생성
-		TSharedPtr<FFunctionContext> Context = ConsumeData->Function->GetContext(ConsumeData->Value, ConsumeData->Duration);
+		FFunctionContext Context = ConsumeData->Function->GetContext(ConsumeData->Value, ConsumeData->Duration);
 
-		// 아이템에서 대상 캐릭터에게 효과 객체 적용
-		Player->DataComp->AddBuff(ItemID, Context);
+		if (Context.bOperateOneTime) // 즉발형
+			Context.Func->Operate(Player, Context.Value);
+		else 
+			Player->DataComp->AddBuff(ItemID, Context); // 아이템에서 대상 캐릭터에게 효과 객체 적용
 	}
 
 	OnItemUpdated.Broadcast(this);

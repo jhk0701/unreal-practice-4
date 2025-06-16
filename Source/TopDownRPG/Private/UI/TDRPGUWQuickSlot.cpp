@@ -38,10 +38,18 @@ void UTDRPGUWQuickSlot::Bind(UQuickSlot* InQuickSlot)
 {
 	BindedQuickSlot = InQuickSlot;
 	BindedQuickSlot->OnSlotRegistered.AddUObject(this, &UTDRPGUWQuickSlot::UpdateSlot);
+	
+	// 기존에 퀵슬롯에 있는 정보 반영
+	uint8 Cnt = InQuickSlot->QuickSlotMaxSize;
+	for (uint8 i = 0; i < Cnt; ++i) 
+		UpdateSlot(i);
 }
 
 void UTDRPGUWQuickSlot::UpdateSlot(uint8 Index)
 {
+	if (BindedQuickSlot->Slots[Index].GetInterface() == nullptr)
+		return;
+
 	UObject* Handle = BindedQuickSlot->Slots[Index].GetObject();
 
 	if (UItemBase* Item = Cast<UItemBase>(Handle))

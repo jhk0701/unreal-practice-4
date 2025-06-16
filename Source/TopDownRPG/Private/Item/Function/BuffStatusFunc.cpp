@@ -26,3 +26,8 @@ inline uint32 UBuffStatusFunc::Operate(uint32 Object, uint32 Value)
 
 	return Result;
 }
+
+void UBuffStatusFunc::Operate(AActor* Object, uint32 Value)
+{
+	return;
+}

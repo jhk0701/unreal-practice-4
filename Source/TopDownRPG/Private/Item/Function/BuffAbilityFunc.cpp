@@ -25,3 +25,8 @@ inline uint32 UBuffAbilityFunc::Operate(uint32 Object, uint32 Value)
 
 	return Result;
 }
+
+void UBuffAbilityFunc::Operate(AActor* Object, uint32 Value)
+{
+	return;
+}

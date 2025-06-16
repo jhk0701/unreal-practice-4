@@ -19,4 +19,5 @@ public:
 	EStatus TargetToRecover;
 
 	void Operate(AActor* Object, uint32 Value) override;
+	uint32 Operate(uint32 Object, uint32 Value) override;
 };

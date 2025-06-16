@@ -17,27 +17,35 @@ struct FFunctionContext
 	uint32 Value;
 	float Duration;
 
+	bool bOperateOneTime;
+	float IntervalSec;
+	float CurrentSec;
+
 	FFunctionContext() {};
-	FFunctionContext(UItemFuncBase* InFunc, uint32 InValue, float InDuration) : 
-		Func(InFunc), 
-		Value(InValue), 
-		Duration(InDuration)
-	{};
+	FFunctionContext(UItemFuncBase* InFunc, uint32 InValue, float InDuration) :
+		Func(InFunc),
+		Value(InValue),
+		Duration(InDuration),
+		bOperateOneTime(FMath::IsNearlyZero(InDuration) ? true : false),
+		IntervalSec(1.0f),
+		CurrentSec(0.0f)
+	{
+	};
 };
 
 /**
  * 
  */
-UCLASS(Abstract)
+UCLASS()
 class TOPDOWNRPG_API UItemFuncBase : public UDataAsset
 {
 	GENERATED_BODY()
 
 public:
-	inline virtual uint32 Operate(uint32 Object, uint32 Value) { return Value; };
-	inline virtual void Operate(AActor* Object, uint32 Value) { };
-	inline TSharedPtr<FFunctionContext> GetContext(uint32 Value, float Duration) 
+	virtual void Operate(AActor* Object, uint32 Value);
+	inline virtual uint32 Operate(uint32 Object, uint32 Value) { return 0; };
+	inline FFunctionContext GetContext(uint32 Value, float Duration)
 	{ 
-		return MakeShared<FFunctionContext>(this, Value, Duration); 
+		return FFunctionContext(this, Value, Duration);
 	};
 };

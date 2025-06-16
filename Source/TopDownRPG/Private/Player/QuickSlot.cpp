@@ -2,6 +2,7 @@
 
 #include "Player/QuickSlot.h"
 
+#include "TopDownRPG/TopDownRPG.h"
 
 UQuickSlot::UQuickSlot()
 {

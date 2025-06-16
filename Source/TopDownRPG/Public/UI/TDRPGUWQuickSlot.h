@@ -30,5 +30,6 @@ public:
 	virtual void NativeOnInitialized() override;
 
 	void Bind(class UQuickSlot* InQuickSlot);
+
 	void UpdateSlot(uint8 Index);
 };

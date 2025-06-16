@@ -2,6 +2,7 @@
 
 
 #include "Character/CharacterData.h"
+#include "TDRPGEnum.h"
 #include "Character/Status.h"
 
 #include "Core/GameDataManager.h"
@@ -43,14 +44,14 @@ void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow* InData)
 
 	Stat.Add(EStatus::Hp, MakeUnique<Status>(Hp));
 	Stat.Add(EStatus::Mp, MakeUnique<Status>(Mp));
-	// Stat.Add(EStatus::Shield, MakeUnique<Status>(0));
+	Stat.Add(EStatus::Shield, MakeUnique<Status>(0));
 
 	Ability.Add(EAbility::Str, Str);
 	Ability.Add(EAbility::Dex, Dex);
 	Ability.Add(EAbility::Int, Int);
 
-	// TODO : 스킬 반영
 	Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UCharacterData::CheckIsDead);
+	// TODO : 스킬 반영
 
 	// Debugging();
 }
@@ -69,8 +70,8 @@ void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 
 	for (auto& Pair : BuffFunc)
 	{
-		Pair.Value->Duration -= DeltaTime;
-		if (Pair.Value->Duration < 0)
+		Pair.Value.Duration -= DeltaTime;
+		if (Pair.Value.Duration < 0)
 			BuffReleaseQueue.Enqueue(Pair.Key); // 다음 틱에 버프 해제
 	}
 }
@@ -101,12 +102,18 @@ uint32 UCharacterData::GetDefensePower()
 	return uint32(100);
 }
 
-void UCharacterData::AddBuff(FName& InItemID, TSharedPtr<FFunctionContext> InContext)
+void UCharacterData::AddBuff(FName& InItemID, FFunctionContext InContext)
 {
-	if(BuffFunc.Contains(InItemID))
-		BuffFunc[InItemID]->Duration += InContext->Duration;
+	if (BuffFunc.Contains(InItemID))
+	{
+		// 버프 중복 사용 시, 시간 추가
+		BuffFunc[InItemID].Duration += InContext.Duration;
+	}
 	else
+	{
+		// 신규 버프 추가
 		BuffFunc.Add(InItemID, InContext);
+	}
 }
 
 void UCharacterData::Debugging()

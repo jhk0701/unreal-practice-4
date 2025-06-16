@@ -5,10 +5,11 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Character/Status.h"
-#include "TDRPGEnum.h"
 #include "Item/Function/ItemFuncBase.h"
 #include "CharacterData.generated.h"
 
+enum class EStatus : uint8;
+enum class EAbility : uint8;
 struct FCharacterDataRow;
 
 DECLARE_MULTICAST_DELEGATE(FOnStatusEmpty);
@@ -28,7 +29,7 @@ public:
 
 	// 버프를 받으면 컨테이너에 저장
 	// 관리용 Map : ItemID - Func
-	TMap<FName, TSharedPtr<FFunctionContext>> BuffFunc;
+	TMap<FName, FFunctionContext> BuffFunc;
 	TQueue<FName> BuffReleaseQueue;
 
 	// TODO: 버프 연산 
@@ -54,7 +55,7 @@ public:
 	uint32 GetAttackPower();
 	uint32 GetDefensePower();
 
-	void AddBuff(FName& InItemID, TSharedPtr<FFunctionContext> InContext);
+	void AddBuff(FName& InItemID, FFunctionContext InContext);
 
 	void Debugging();
 };
