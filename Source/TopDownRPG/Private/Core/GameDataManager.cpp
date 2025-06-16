@@ -55,7 +55,7 @@ void UGameDataManager::ProcessLevelData()
 	}
 }
 
-void UGameDataManager::GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling)
+void UGameDataManager::GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling) const
 {
 	// 초기화
 	OutLeveling.Empty(); // 이 배열을 가지고 외부에서 스펙을 더한다.
@@ -86,13 +86,28 @@ void UGameDataManager::GetLeveling(const FString& CharID, const int32 Lv, TArray
 	}
 }
 
-const FString UGameDataManager::GetLevelingKey(const FString& CharID, const int32 Index)
+const FString UGameDataManager::GetLevelingKey(const FString& CharID, const int32 Index) const
 {
 	int32 Range = LevelRange[CharID].Array[Index];
 	return CharID + FString::Printf(TEXT("%03d"), Range);
 }
 
-const FString UGameDataManager::EnumToString(ETableType EnumValue)
+const int32 UGameDataManager::GetLevelingIndex(const FString& CharID, const int32 Lv) const
+{
+	if (!LevelRange.Contains(CharID))
+		return -1;
+
+	int32 Cnt = LevelRange[CharID].Array.Num();
+	for (int32 i = 0; i < Cnt; ++i)
+	{
+		if (Lv < LevelRange[CharID].Array[i])
+			return i - 1;
+	}
+
+	return -1;
+}
+
+const FString UGameDataManager::EnumToString(ETableType EnumValue) const
 {
 	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ETableType"), true);
 	

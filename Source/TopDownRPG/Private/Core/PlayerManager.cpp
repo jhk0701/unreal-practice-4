@@ -114,7 +114,9 @@ void UPlayerManager::LevelUp()
 
 	// 레벨링 데이터에서 새로운 레벨의 경험치 요구량 받아오기
 	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
-	FString Key = GameData->GetLevelingKey(PlayerData->CharID, Lv);
+
+	int32 Index = GameData->GetLevelingIndex(PlayerData->CharID, Lv);
+	FString Key = GameData->GetLevelingKey(PlayerData->CharID, Index);
 	FLevelingDataRow* LevelData = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, *Key);
 
 	uint32 MaxExp = Exp->GetMaxValue() + LevelData->ExpDemand;

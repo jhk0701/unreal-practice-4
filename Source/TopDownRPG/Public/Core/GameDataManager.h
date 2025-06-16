@@ -57,11 +57,13 @@ public:
 		return GameDatabase[Table]->FindRow<T>(ID, CommonConst::DATA_TABLE_CONTEXT);
 	}
 
-	const FString EnumToString(ETableType EnumValue);
+	const FString EnumToString(ETableType EnumValue) const;
 
-	void GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling);
+	void GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling) const;
 
-	const FString GetLevelingKey(const FString& CharID, const int32 Index);
+	const FString GetLevelingKey(const FString& CharID, const int32 Index) const;
+
+	const int32 GetLevelingIndex(const FString& CharID, const int32 Lv) const;
 
 	UPrimaryDataAsset* LoadPrimaryAssetData(const FPrimaryAssetId& ID);
 

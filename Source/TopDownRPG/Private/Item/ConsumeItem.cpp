@@ -55,14 +55,12 @@ void UConsumeItem::Use(AActor* Subject)
 
 		if (ConsumeData->Function->IsA<URecoveryFunc>()) 
 		{
-			if (Context.bOperateOneTime) // 즉발형
-			{
-				Context.Func->Operate(Player, Context.Value);
-			}
-			else
-			{
-				Player->DataComp->AddRecover(ItemID, Context);
-			}
+			Context.Func->Operate(Player, Context.Value);
+
+			//if (Context.bOperateOneTime) // 즉발형
+			//	Context.Func->Operate(Player, Context.Value);
+			//else // 지속 회복형 버프
+			//	Player->DataComp->AddRecover(ItemID, Context);
 		}
 		else 
 			Player->DataComp->AddBuff(ItemID, Context); // 아이템에서 대상 캐릭터에게 효과 객체 적용

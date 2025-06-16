@@ -27,9 +27,9 @@ public:
 	TMap<EStatus, TUniquePtr<Status>> Stat;	// 체력, 마나
 	TMap<EAbility, uint32> Ability;	// 힘, 민첩, 지능
 
-	// 회복 계열 관리용
-	TMap<FName, FFunctionContext> RecoverFunc;
-	TQueue<FName> RecoverReleaseQueue;
+	//// 회복 계열 관리용
+	//TMap<FName, FFunctionContext> RecoverFunc;
+	//TQueue<FName> RecoverReleaseQueue;
 
 	// 버프 계열 관리용 Map : ItemID - Func
 	TMap<FName, FFunctionContext> BuffFunc;
@@ -58,7 +58,7 @@ public:
 	uint32 GetAttackPower();
 	uint32 GetDefensePower();
 
-	void AddRecover(FName& InItemID, FFunctionContext InContext);
+	// void AddRecover(FName& InItemID, FFunctionContext InContext);
 	void AddBuff(FName& InItemID, FFunctionContext InContext);
 
 	void Debugging();
