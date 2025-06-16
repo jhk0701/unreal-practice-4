@@ -6,6 +6,7 @@
 #include "Core/GameDataManager.h"
 
 #include "Item/Function/ItemFuncBase.h"
+#include "Item/Function/RecoveryFunc.h"
 #include "Data/ConsumeDataRow.h"
 
 #include "Character/TDRPGPlayer.h"
@@ -52,8 +53,17 @@ void UConsumeItem::Use(AActor* Subject)
 		// 효과 객체로부터 맥락 구조체 생성
 		FFunctionContext Context = ConsumeData->Function->GetContext(ConsumeData->Value, ConsumeData->Duration);
 
-		if (Context.bOperateOneTime) // 즉발형
-			Context.Func->Operate(Player, Context.Value);
+		if (ConsumeData->Function->IsA<URecoveryFunc>()) 
+		{
+			if (Context.bOperateOneTime) // 즉발형
+			{
+				Context.Func->Operate(Player, Context.Value);
+			}
+			else
+			{
+				Player->DataComp->AddRecover(ItemID, Context);
+			}
+		}
 		else 
 			Player->DataComp->AddBuff(ItemID, Context); // 아이템에서 대상 캐릭터에게 효과 객체 적용
 	}

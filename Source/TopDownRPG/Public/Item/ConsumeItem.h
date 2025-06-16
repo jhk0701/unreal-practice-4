@@ -18,6 +18,5 @@ class TOPDOWNRPG_API UConsumeItem : public UItemBase, public IQuickSlotHandler
 public:
 	FItemDataRow* GetData() override;
 	void InvokeSlot(AActor* Subject) override;
-
 	void Use(AActor* Subject);
 };

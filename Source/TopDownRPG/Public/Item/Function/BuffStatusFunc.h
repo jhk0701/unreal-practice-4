@@ -21,8 +21,6 @@ public:
 	UPROPERTY(EditAnywhere)
 	EStatus TargetStatus;
 
-	virtual uint32 Operate(uint32 Object, uint32 Value) override;
-
-	// Inherited via UItemFuncBase
 	void Operate(AActor* Object, uint32 Value) override;
+	virtual uint32 Operate(uint32 Object, uint32 Value) override;
 };

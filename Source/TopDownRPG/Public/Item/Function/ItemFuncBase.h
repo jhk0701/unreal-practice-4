@@ -13,6 +13,7 @@ struct FFunctionContext
 {
 	GENERATED_BODY()
 
+public:
 	UItemFuncBase* Func;
 	uint32 Value;
 	float Duration;
@@ -26,7 +27,7 @@ struct FFunctionContext
 		Func(InFunc),
 		Value(InValue),
 		Duration(InDuration),
-		bOperateOneTime(FMath::IsNearlyZero(InDuration) ? true : false),
+		bOperateOneTime(FMath::IsNearlyZero(Duration) ? true : false),
 		IntervalSec(1.0f),
 		CurrentSec(0.0f)
 	{
@@ -42,9 +43,9 @@ class TOPDOWNRPG_API UItemFuncBase : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	virtual void Operate(AActor* Object, uint32 Value);
+	inline virtual void Operate(AActor* Object, uint32 Value) {};
 	inline virtual uint32 Operate(uint32 Object, uint32 Value) { return 0; };
-	inline FFunctionContext GetContext(uint32 Value, float Duration)
+	inline virtual FFunctionContext GetContext(uint32 Value, float Duration)
 	{ 
 		return FFunctionContext(this, Value, Duration);
 	};

@@ -13,7 +13,7 @@
 
 UCharacterData::UCharacterData()
 {
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 }
 
 void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow* InData)
@@ -70,10 +70,37 @@ void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 
 	for (auto& Pair : BuffFunc)
 	{
+		// 버프 기한 체크
 		Pair.Value.Duration -= DeltaTime;
+
 		if (Pair.Value.Duration < 0)
 			BuffReleaseQueue.Enqueue(Pair.Key); // 다음 틱에 버프 해제
 	}
+
+	while (!RecoverReleaseQueue.IsEmpty())
+	{
+		FName Key;
+		RecoverReleaseQueue.Dequeue(Key);
+		RecoverFunc.Remove(Key);
+	}
+
+	for (auto& Pair : RecoverFunc)
+	{
+		Pair.Value.CurrentSec -= DeltaTime;
+
+		if (Pair.Value.CurrentSec < 0)
+		{
+			Pair.Value.Func->Operate(GetOwner(), Pair.Value.Value);
+			Pair.Value.CurrentSec = Pair.Value.IntervalSec;
+		}
+
+		// 버프 기한 체크
+		Pair.Value.Duration -= DeltaTime;
+
+		if (Pair.Value.Duration < 0)
+			RecoverReleaseQueue.Enqueue(Pair.Key); // 다음 틱에 버프 해제
+	}
+
 }
 
 void UCharacterData::CheckIsDead(uint32 Max, uint32 Current)
@@ -102,18 +129,21 @@ uint32 UCharacterData::GetDefensePower()
 	return uint32(100);
 }
 
+void UCharacterData::AddRecover(FName& InItemID, FFunctionContext InContext)
+{
+	if (RecoverFunc.Contains(InItemID))
+		RecoverFunc[InItemID].Duration += InContext.Duration;
+	else
+		RecoverFunc.Add(InItemID, InContext);
+}
+
 void UCharacterData::AddBuff(FName& InItemID, FFunctionContext InContext)
 {
+	// 버프 중복 사용 시, 시간 추가
 	if (BuffFunc.Contains(InItemID))
-	{
-		// 버프 중복 사용 시, 시간 추가
 		BuffFunc[InItemID].Duration += InContext.Duration;
-	}
 	else
-	{
-		// 신규 버프 추가
 		BuffFunc.Add(InItemID, InContext);
-	}
 }
 
 void UCharacterData::Debugging()
