@@ -10,7 +10,7 @@
 #include "Player/QuickSlot.h"
 #include "Player/Equipment.h"
 
-#include "Item/IngredientItem.h"
+#include "Item/ItemBase.h"
 #include "Item/ConsumeItem.h"
 #include "Item/EquipmentItem.h"
 #include "Item/WeaponItem.h"
@@ -75,9 +75,9 @@ void UPlayerManager::LoadData()
 	UGameInstance* GameInst = GetGameInstance();
 
 	// 테스트용 일반 아이템
-	UIngredientItem* TestIngre_1 = NewObject<UIngredientItem>();
-	UIngredientItem* TestIngre_2 = NewObject<UIngredientItem>();
-	UIngredientItem* TestIngre_3 = NewObject<UIngredientItem>();
+	UItemBase* TestIngre_1 = NewObject<UItemBase>();
+	UItemBase* TestIngre_2 = NewObject<UItemBase>();
+	UItemBase* TestIngre_3 = NewObject<UItemBase>();
 
 	TestIngre_1->Initialize(TEXT("0001"), GameInst, 5);
 	TestIngre_2->Initialize(TEXT("0002"), GameInst, 10);

@@ -14,7 +14,6 @@
 
 #include "Item/ConsumeItem.h"
 #include "Item/EquipmentItem.h"
-#include "Item/IngredientItem.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
