@@ -9,7 +9,7 @@
 
 class UEquipmentItem;
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnEquipmentChanged, EEquipType);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnEquipmentUpdated, EEquipType);
 
 /**
  * 
@@ -23,7 +23,7 @@ public:
 	UPROPERTY()
 	TMap<EEquipType, UEquipmentItem*> Equipment;
 
-	FOnEquipmentChanged OnEquipmentChanged;
+	FOnEquipmentUpdated OnEquipmentUpdated;
 
 public:
 	UEquipment();

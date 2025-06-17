@@ -7,7 +7,7 @@
 #include "Inherit/QuickSlotHandler.h"
 #include "QuickSlot.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnQuickSlotDelegate, uint8);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnQuickSlotUpdated, uint8);
 
 /**
  * 
@@ -31,7 +31,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "QuickSlot")
 	TArray<TScriptInterface<IQuickSlotHandler>> Slots;
 
-	FOnQuickSlotDelegate OnSlotRegistered;
+	FOnQuickSlotUpdated OnSlotUpdated;
 
 public:
 	UQuickSlot();

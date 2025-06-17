@@ -18,7 +18,7 @@ bool UQuickSlot::Register(IQuickSlotHandler* InSlot)
 			Slots[i].SetInterface(InSlot);
 			Slots[i].SetObject(InSlot->_getUObject());
 
-			OnSlotRegistered.Broadcast(i);
+			OnSlotUpdated.Broadcast(i);
 			return true;
 		}
 	}

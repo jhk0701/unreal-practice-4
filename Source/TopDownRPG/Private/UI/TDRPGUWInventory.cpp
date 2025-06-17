@@ -65,7 +65,7 @@ void UTDRPGUWInventory::NativeOnInitialized()
 void UTDRPGUWInventory::Bind(UPlayerManager* InManager)
 {
 	// 플레이어 데이터 받아오기
-	UInventory* Inventory = InManager->Inventory;
+	BindedInventory = InManager->Inventory;
 
 	// 1. 골드
 	InManager->CurrencyGold->OnValueChanged.AddUObject(this, &UTDRPGUWInventory::UpdateGold);
@@ -74,7 +74,15 @@ void UTDRPGUWInventory::Bind(UPlayerManager* InManager)
 	// 2. 인벤토리 정보 연동
 	int32 SlotCnt = SlotContainer->GetChildrenCount();
 	for (int32 i = 0; i < SlotCnt; ++i)
-		Slots[i]->SetData(Inventory->Items[i]);
+		Slots[i]->Bind(BindedInventory->Items[i]);
+
+	BindedInventory->OnInventoryUpdated.AddUObject(this, &UTDRPGUWInventory::UpdateInventory);
+}
+
+void UTDRPGUWInventory::UpdateInventory(uint8 Index)
+{
+	Slots[Index]->Clear();
+	Slots[Index]->Bind(BindedInventory->Items[Index]);
 }
 
 void UTDRPGUWInventory::UpdateGold(uint32 Gold)

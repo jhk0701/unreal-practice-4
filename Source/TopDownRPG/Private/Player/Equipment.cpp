@@ -21,12 +21,12 @@ void UEquipment::Equip(EEquipType InType, UEquipmentItem* InItem)
 	Equipment[InType] = InItem;
 
 	// 변경 사항 이벤트 알림
-	OnEquipmentChanged.Broadcast(InType);
+	OnEquipmentUpdated.Broadcast(InType);
 }
 
 void UEquipment::Unequip(EEquipType InType)
 {
 	Equipment[InType] = nullptr;
 
-	OnEquipmentChanged.Broadcast(InType);
+	OnEquipmentUpdated.Broadcast(InType);
 }

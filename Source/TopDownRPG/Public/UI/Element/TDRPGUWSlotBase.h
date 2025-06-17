@@ -43,7 +43,7 @@ protected:
 	UItemBase* Item = nullptr;
 
 public:
-	virtual void SetData(UItemBase* InItem);
+	virtual void Bind(UItemBase* InItem);
 	virtual void Clear();
 
 	virtual void NativeOnInitialized() override;

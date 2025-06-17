@@ -36,7 +36,7 @@ public:
 public:
 	virtual void NativeOnInitialized() override;
 
-	void Bind(class UEquipment* InEquipment);
+	void Bind(UEquipment* InEquipment);
 
 	void UpdateSlot(EEquipType InEquipType);
 };

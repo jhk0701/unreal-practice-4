@@ -37,7 +37,7 @@ void UTDRPGUWEquipment::NativeOnInitialized()
 void UTDRPGUWEquipment::Bind(UEquipment* InEquipment)
 {
 	BindedEquipment = InEquipment;
-	BindedEquipment->OnEquipmentChanged.AddUObject(this, &UTDRPGUWEquipment::UpdateSlot);
+	BindedEquipment->OnEquipmentUpdated.AddUObject(this, &UTDRPGUWEquipment::UpdateSlot);
 
 	uint8 Cnt = (uint8)EEquipType::COUNT;
 	for (uint8 i = 0; i < Cnt; ++i) 
@@ -47,7 +47,7 @@ void UTDRPGUWEquipment::Bind(UEquipment* InEquipment)
 void UTDRPGUWEquipment::UpdateSlot(EEquipType InEquipType)
 {
 	if (UItemBase* Item = BindedEquipment->Equipment[InEquipType])
-		Slots[InEquipType]->SetData(Item);
+		Slots[InEquipType]->Bind(Item);
 	else
 		Slots[InEquipType]->Clear();
 }

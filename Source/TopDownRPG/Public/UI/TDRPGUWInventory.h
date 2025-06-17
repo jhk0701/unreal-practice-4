@@ -6,6 +6,8 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWInventory.generated.h"
 
+class UPlayerManager;
+class UInventory;
 class UTextBlock;
 class UButton;
 class UUniformGridPanel;
@@ -23,6 +25,9 @@ class TOPDOWNRPG_API UTDRPGUWInventory : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 public:
+	UPROPERTY()
+	TObjectPtr<UInventory> BindedInventory;
+
 	// Header
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
@@ -61,8 +66,9 @@ public:
 	UTDRPGUWInventory();
 	virtual void NativeOnInitialized() override;
 	
-	void Bind(class UPlayerManager* InManager);
+	void Bind(UPlayerManager* InManager);
 
+	void UpdateInventory(uint8 Index);
 	void UpdateGold(uint32 Gold);
 
 	void ShowItemDetail(UItemBase* InItem);

@@ -10,7 +10,6 @@
 struct FItemDataRow;
 
 DECLARE_ENUM_TO_STRING(ERarity);
-
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnItemUpdated, UItemBase*);
 
 
@@ -22,6 +21,8 @@ class TOPDOWNRPG_API UItemBase : public UObject
 public:
 	uint8 InventoryIndex;
 	uint32 Quantity;
+
+	FOnItemUpdated OnItemUpdated;
 
 protected:
 	FString ItemID;
@@ -40,6 +41,4 @@ public:
 	inline const FString& GetItemID() { return ItemID; }
 
 	FString EnumToString(const ERarity InValue) const;
-
-	FOnItemUpdated OnItemUpdated;
 };

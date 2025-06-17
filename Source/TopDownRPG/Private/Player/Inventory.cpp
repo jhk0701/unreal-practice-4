@@ -29,7 +29,10 @@ bool UInventory::AddItem(UItemBase* InItem)
 		uint32 RestAmount = 0;
 
 		if (Items[Index]->TryAddItem(InItem->Quantity, RestAmount))
+		{
+			OnInventoryUpdated.Broadcast(Index);
 			return true;
+		}
 		else // 나머지가 남은 경우 처리->새로운 인덱스의 슬롯에 할당
 			InItem->Quantity = RestAmount;
 	}
@@ -43,7 +46,11 @@ bool UInventory::AddItem(UItemBase* InItem)
 
 void UInventory::RemoveItem(uint8 InIdx)
 {
+	if (InIdx >= MaxSize)
+		return;
+
 	Items[InIdx] = nullptr;
+	OnInventoryUpdated.Broadcast(InIdx);
 }
 
 bool UInventory::GetBlankSpace(uint8& OutIndex)
@@ -93,6 +100,8 @@ bool UInventory::AssignNewItem(UItemBase* InItem)
 	{
 		Items[Index] = InItem;
 		InItem->InventoryIndex = Index;
+
+		OnInventoryUpdated.Broadcast(Index);
 
 		return true;
 	}

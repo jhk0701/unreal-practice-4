@@ -42,6 +42,12 @@ void UTDRPGUWSlotBase::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
 
 void UTDRPGUWSlotBase::Clear()
 {
+	if (Item)
+	{
+		Item->OnItemUpdated.RemoveAll(this);
+		Item = nullptr;
+	}
+
 	// Optional이라 방어코드 추가 // TODO : 이 부분 구조적으로 해결 필요
 	if (QuantityLabel)
 		QuantityLabel->SetVisibility(ESlateVisibility::Hidden);
@@ -50,16 +56,13 @@ void UTDRPGUWSlotBase::Clear()
 	IconImage->SetBrushResourceObject(nullptr);
 }
 
-void UTDRPGUWSlotBase::SetData(UItemBase* InItem)
+void UTDRPGUWSlotBase::Bind(UItemBase* InItem)
 {
 	if (!InItem)
 		return;
 
 	if (Item)
-	{
-		// 델리게이트에 등록된 특정 오브젝트 메소드들을 제거
 		Item->OnItemUpdated.RemoveAll(this);
-	}
 		
 	Item = InItem;
 	Item->OnItemUpdated.AddUObject(this, &UTDRPGUWSlotBase::Refresh);

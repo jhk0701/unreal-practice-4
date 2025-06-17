@@ -7,6 +7,8 @@
 #include "TDRPGUWQuickSlot.generated.h"
 
 class UQuickSlot;
+class UHorizontalBox;
+class UTDRPGUWSlotBase;
 
 /**
  * 
@@ -21,15 +23,15 @@ public:
 	TObjectPtr<UQuickSlot> BindedQuickSlot;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidgetOptional))
-	TObjectPtr<class UHorizontalBox> SlotContainer;
+	TObjectPtr<UHorizontalBox> SlotContainer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement)
-	TArray<class UTDRPGUWSlotBase*> SlotList;
+	TArray<UTDRPGUWSlotBase*> SlotList;
 
 public:
 	virtual void NativeOnInitialized() override;
 
-	void Bind(class UQuickSlot* InQuickSlot);
+	void Bind(UQuickSlot* InQuickSlot);
 
 	void UpdateSlot(uint8 Index);
 };
