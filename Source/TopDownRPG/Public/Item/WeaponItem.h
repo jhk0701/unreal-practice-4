@@ -15,5 +15,5 @@ class TOPDOWNRPG_API UWeaponItem : public UEquipmentItem
 	GENERATED_BODY()
 	
 public:
-	virtual FItemDataRow* GetData() override;
+	virtual ETableType GetItemType() override;
 };

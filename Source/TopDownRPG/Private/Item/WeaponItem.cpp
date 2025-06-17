@@ -2,11 +2,11 @@
 
 
 #include "Item/WeaponItem.h"
+#include "TDRPGEnum.h"
 #include "Core/GameDataManager.h"
 #include "Data/ItemDataRow.h"
 
-FItemDataRow* UWeaponItem::GetData()
+ETableType UWeaponItem::GetItemType()
 {
-    UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
-    return GameData->GetRow<FItemDataRow>(ETableType::Weapon, ItemID);
+    return ETableType::Weapon;
 }

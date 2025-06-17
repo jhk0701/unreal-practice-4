@@ -2,15 +2,19 @@
 
 
 #include "Core/GameDataManager.h"
-#include "Data/LevelingDataRow.h"
-#include "CommonConst.h"
+
 #include <Engine/DataTable.h>
+
+#include "CommonConst.h"
+#include "TDRPGEnum.h"
+#include "Data/LevelingDataRow.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
 
 void UGameDataManager::LoadGameDatas()
 {
+
 	// 게임 데이터 준비
 	// 데이터 테이블 로드
 	FStreamableManager& Stream = UAssetManager::Get().GetStreamableManager();

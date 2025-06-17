@@ -56,13 +56,15 @@ void UTDRPGUWItemMenu::InvokeFunc()
 
 void UTDRPGUWItemMenu::RegisterQuickSlot()
 {
-
 	if(IQuickSlotHandler* SlotHandler = Cast<IQuickSlotHandler>(SelectedItem))
 	{
 		// 퀵슬롯 받아오기
 		UPlayerManager* PlayerManager = GetGameInstance()->GetSubsystem<UPlayerManager>();
 
 		// 등록
-		PlayerManager->QuickSlot->Register(SlotHandler);
+		uint8 Index = 0;
+
+		if (PlayerManager->QuickSlot->Register(SlotHandler, Index))
+			SelectedItem->QuickSlotIndex = Index;
 	}
 }

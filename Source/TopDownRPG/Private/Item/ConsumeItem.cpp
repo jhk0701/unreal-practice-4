@@ -2,7 +2,7 @@
 
 
 #include "Item/ConsumeItem.h"
-
+#include "TDRPGEnum.h"
 #include "Core/GameDataManager.h"
 
 #include "Item/Function/ItemFuncBase.h"
@@ -14,11 +14,9 @@
 
 #include "TopDownRPG/TopDownRPG.h"
 
-
-FItemDataRow* UConsumeItem::GetData()
+ETableType UConsumeItem::GetItemType()
 {
-	UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
-	return GameData->GetRow<FItemDataRow>(ETableType::Consume, ItemID);
+	return ETableType::Consume;
 }
 
 void UConsumeItem::InvokeSlot(AActor* Subject)

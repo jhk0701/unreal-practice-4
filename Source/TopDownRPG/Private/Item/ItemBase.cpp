@@ -2,6 +2,8 @@
 
 
 #include "Item/ItemBase.h"
+
+#include "TDRPGEnum.h"
 #include "Core/GameDataManager.h"
 #include "Data/ItemDataRow.h"
 
@@ -52,7 +54,12 @@ bool UItemBase::TryAddItem(uint32 InAmount, uint32& OutRest)
 FItemDataRow* UItemBase::GetData()
 {
     UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
-    return GameData->GetRow<FItemDataRow>(ETableType::Ingredient, ItemID);
+    return GameData->GetRow<FItemDataRow>(GetItemType(), ItemID);
+}
+
+ETableType UItemBase::GetItemType()
+{
+    return ETableType::Ingredient;
 }
 
 

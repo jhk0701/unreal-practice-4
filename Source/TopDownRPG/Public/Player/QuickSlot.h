@@ -36,8 +36,12 @@ public:
 public:
 	UQuickSlot();
 
-	bool Register(IQuickSlotHandler* InSlot);
+	bool Register(IQuickSlotHandler* InSlot, uint8& OutIndex);
+	void Unregister(uint8 InIdx);
+
 	void Use(uint8 Idx, AActor* Target);
 
+private:
+	bool GetBlankSpace(uint8& OutIndex);
 
 };

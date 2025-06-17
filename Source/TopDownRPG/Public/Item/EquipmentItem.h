@@ -21,7 +21,7 @@ class TOPDOWNRPG_API UEquipmentItem : public UItemBase
 
 public:
 	virtual void Initialize(FString InID, UGameInstance* InGameInst, uint32 InAmount) override;
-	virtual FItemDataRow* GetData() override;
+	virtual ETableType GetItemType() override;
 
 	// 아이템 활용
 	void Equip();

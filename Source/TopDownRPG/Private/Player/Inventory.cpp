@@ -5,6 +5,8 @@
 #include "Item/ItemBase.h"
 #include "Data/ItemDataRow.h"
 
+#include "TopDownRPG/TopDownRPG.h"
+
 UInventory::UInventory()
 {
 	Items.Init(nullptr, MaxSize);
@@ -14,7 +16,7 @@ bool UInventory::AddItem(UItemBase* InItem)
 {
 	// 인벤토리에 동일한 아이템이 있는지 체크
 	uint8 Index = 0;
-	bool bIsFound = FindItem(InItem->GetItemID(), 
+	bool bIsFound = FindItem(InItem, 
 		Index, 
 		[](UItemBase* CheckingItem) 
 		{ 
@@ -68,11 +70,15 @@ bool UInventory::GetBlankSpace(uint8& OutIndex)
 	return false;
 }
 
-bool UInventory::FindItem(const FString& InItemID, uint8& OutIndex, TFunction<bool(UItemBase*)> InQuery)
+bool UInventory::FindItem(UItemBase* InItem, uint8& OutIndex, TFunction<bool(UItemBase*)> InQuery)
 {
 	for (uint8 i = 0; i < MaxSize; ++i)
 	{
-		if (Items[i]->GetItemID() == InItemID)
+		if (!Items[i])
+			continue;
+
+		if (Items[i]->GetItemType() == InItem->GetItemType() &&
+			Items[i]->GetItemID() == InItem->GetItemID())
 		{
 			if (!InQuery)
 			{

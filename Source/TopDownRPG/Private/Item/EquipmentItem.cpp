@@ -2,6 +2,7 @@
 
 
 #include "Item/EquipmentItem.h"
+#include "TDRPGEnum.h"
 
 #include "Core/PlayerManager.h"
 #include "Player/Inventory.h"
@@ -10,8 +11,6 @@
 #include "Core/GameDataManager.h"
 #include "Data/EquipmentDataRow.h"
 
-#include "TopDownRPG/TopDownRPG.h"
-
 
 void UEquipmentItem::Initialize(FString InID, UGameInstance* InGameInst, uint32 InAmount)
 {
@@ -19,25 +18,31 @@ void UEquipmentItem::Initialize(FString InID, UGameInstance* InGameInst, uint32 
     Super::Initialize(InID, InGameInst, 1);
 }
 
-FItemDataRow* UEquipmentItem::GetData()
+ETableType UEquipmentItem::GetItemType()
 {
-    UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
-    return GameData->GetRow<FItemDataRow>(ETableType::Equipment, ItemID);
+    return ETableType::Equipment;
 }
 
 void UEquipmentItem::Equip()
 {
     UPlayerManager* PlayerManager = GameInst->GetSubsystem<UPlayerManager>();
+    FEquipmentDataRow* Data = static_cast<FEquipmentDataRow*>(GetData());
 
-    auto* BaseData = GetData();
-    FEquipmentDataRow* Data = static_cast<FEquipmentDataRow*>(BaseData);
-
+    // 장비창에 추가
     PlayerManager->Equipment->Equip(Data->EquipType, this);
 
-    // TODO : 인벤토리에서 해당 아이템 제거
-    // PlayerManager->Inventory->RemoveItem();
+    // 인벤토리에서 제거
+    PlayerManager->Inventory->RemoveItem(InventoryIndex);
 }
 
 void UEquipmentItem::Unequip()
 {
+    UPlayerManager* PlayerManager = GameInst->GetSubsystem<UPlayerManager>();
+    FEquipmentDataRow* Data = static_cast<FEquipmentDataRow*>(GetData());
+
+    // 장비창에서 제거
+    PlayerManager->Equipment->Unequip(Data->EquipType);
+
+    // 인벤토리에 추가
+    PlayerManager->Inventory->AddItem(this);
 }

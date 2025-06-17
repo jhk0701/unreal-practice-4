@@ -5,6 +5,23 @@
 #include "CoreMinimal.h"
 
 UENUM(BlueprintType)
+enum class ETableType : uint8
+{
+	Character,
+	Leveling,
+	Stage,
+
+	// Item
+	Weapon,
+	Equipment,
+	Consume,
+	Ingredient,
+
+	COUNT
+};
+
+
+UENUM(BlueprintType)
 enum class EStatus : uint8
 {
 	Hp		UMETA(DisplayName = "Health Point"),

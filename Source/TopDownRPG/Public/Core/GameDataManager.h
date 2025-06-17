@@ -11,22 +11,7 @@
 #include "GameDataManager.generated.h"
 
 
-UENUM(BlueprintType)
-enum class ETableType : uint8
-{
-	Character,
-	Leveling,
-	Stage,
-
-	// Item
-	Weapon,
-	Equipment,
-	Consume,
-	Ingredient,
-
-	COUNT
-};
-
+enum class ETableType : uint8;
 
 DECLARE_ENUM_TO_STRING(ETableType);
 

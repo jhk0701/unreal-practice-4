@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
-#include "TDRPGEnum.h"
 #include "ItemBase.generated.h"
 
 struct FItemDataRow;
+
+enum class ETableType :uint8;
+enum class ERarity :uint8;
 
 DECLARE_ENUM_TO_STRING(ERarity);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnItemUpdated, UItemBase*);
@@ -20,6 +22,8 @@ class TOPDOWNRPG_API UItemBase : public UObject
 
 public:
 	uint8 InventoryIndex;
+	uint8 QuickSlotIndex;
+	
 	uint32 Quantity;
 
 	FOnItemUpdated OnItemUpdated;
@@ -28,15 +32,17 @@ protected:
 	FString ItemID;
 
 	// TODO : 개선 방법 없는지 생각해야함
-	UPROPERTY(VisibleAnywhere)
-	UGameInstance* GameInst;
+	UPROPERTY()
+	TObjectPtr<UGameInstance> GameInst;
 
 public:
 	// 아이템 데이터 주입
 	virtual void Initialize(FString InID, UGameInstance* InGameInst);
 	virtual void Initialize(FString InID, UGameInstance* InGameInst, uint32 InAmount);
 	virtual bool TryAddItem(uint32 InAmount, uint32& OutRest);
+	
 	virtual FItemDataRow* GetData();
+	virtual ETableType GetItemType();
 
 	inline const FString& GetItemID() { return ItemID; }
 

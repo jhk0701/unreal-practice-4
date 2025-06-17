@@ -41,7 +41,7 @@ private:
 
 	// 쿼리 형태로 검색 조건을 받기
 	// 유연하게 쿼리를 받기 위해서 TFunction 사용
-	bool FindItem(const FString& InItemID, uint8& OutIndex, TFunction<bool(UItemBase*)> InQuery = nullptr);
+	bool FindItem(UItemBase* InItem, uint8& OutIndex, TFunction<bool(UItemBase*)> InQuery = nullptr);
 
 	bool AssignNewItem(UItemBase* InItem);
 };
