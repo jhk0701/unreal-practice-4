@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Data/ItemDataRow.h"
-#include "TDRPGEnum.h"
 #include "EquipmentDataRow.generated.h"
+
+enum class EEquipType : uint8;
 
 USTRUCT(BlueprintType)
 struct TOPDOWNRPG_API FEquipmentDataRow : public FItemDataRow

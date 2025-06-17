@@ -76,39 +76,12 @@ void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 		if (Pair.Value.Duration < 0)
 			BuffReleaseQueue.Enqueue(Pair.Key); // 다음 틱에 버프 해제
 	}
-
-	//while (!RecoverReleaseQueue.IsEmpty())
-	//{
-	//	FString Key;
-	//	RecoverReleaseQueue.Dequeue(Key);
-	//	RecoverFunc.Remove(Key);
-	//}
-
-	//for (auto& Pair : RecoverFunc)
-	//{
-	//	Pair.Value.CurrentSec -= DeltaTime;
-
-	//	if (Pair.Value.CurrentSec < 0)
-	//	{
-	//		Pair.Value.Func->Operate(GetOwner(), Pair.Value.Value);
-	//		Pair.Value.CurrentSec = Pair.Value.IntervalSec;
-	//	}
-
-	//	// 버프 기한 체크
-	//	Pair.Value.Duration -= DeltaTime;
-
-	//	if (Pair.Value.Duration < 0)
-	//		RecoverReleaseQueue.Enqueue(Pair.Key); // 다음 틱에 버프 해제
-	//}
-
 }
 
 void UCharacterData::CheckIsDead(uint32 Max, uint32 Current)
 {
 	if (bIsDead)
 		return;
-
-	PRINT_LOG(TEXT("Check player is dead :: %u / %u"), Current, Max);
 
 	if (Current <= 0)
 	{
@@ -129,14 +102,6 @@ uint32 UCharacterData::GetDefensePower()
 	return uint32(100);
 }
 
-//void UCharacterData::AddRecover(FName& InItemID, FFunctionContext InContext)
-//{
-//	if (RecoverFunc.Contains(InItemID))
-//		RecoverFunc[InItemID].Duration += InContext.Duration;
-//	else
-//		RecoverFunc.Add(InItemID, InContext);
-//}
-
 void UCharacterData::AddBuff(FString& InItemID, FFunctionContext InContext)
 {
 	// 버프 중복 사용 시, 시간 추가
@@ -150,7 +115,6 @@ void UCharacterData::Debugging()
 {
 	PRINT_LOG(TEXT("HP : %u"), Stat[EStatus::Hp]->GetMaxValue());
 	PRINT_LOG(TEXT("MP : %u"), Stat[EStatus::Mp]->GetMaxValue());
-	// PRINT_LOG(TEXT("EXP : %u"), Exp->GetMaxValue());
 
 	PRINT_LOG(TEXT("STR : %d"), Ability[EAbility::Str]);
 	PRINT_LOG(TEXT("Dex : %d"), Ability[EAbility::Dex]);

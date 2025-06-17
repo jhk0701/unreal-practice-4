@@ -13,6 +13,7 @@
 #include "Item/IngredientItem.h"
 #include "Item/ConsumeItem.h"
 #include "Item/EquipmentItem.h"
+#include "Item/WeaponItem.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -57,6 +58,12 @@ void UPlayerManager::InitManager()
 	TestEquip->Initialize(TEXT("0001"), GameInst, 1);
 
 	Inventory->AddItem(TestEquip);
+
+	// 테스트용 무기 아이템 지급
+	UWeaponItem* TestWeapon = NewObject<UWeaponItem>();
+	TestWeapon->Initialize(TEXT("0001"), GameInst, 1);
+
+	Inventory->AddItem(TestWeapon);
 }
 
 void UPlayerManager::LoadData()

@@ -20,17 +20,15 @@ void UGameDataManager::LoadGameDatas()
 	
 	for (int32 i = 0; i < Cnt; ++i)
 	{
-		ETableType Table = (ETableType)(i);
+		ETableType Table = (ETableType)i;
 
 		// 1. 경로에서 에셋 로드
 		FSoftObjectPath Path(FString::Format(*CommonConst::PATH_FORMAT_DATA_TABLE, { EnumToString(Table) }));
+		auto Handle = Stream.RequestSyncLoad(Path);
 
-		// 비동기 방식 -> 동기 방식으로 변경
-		auto handle = Stream.RequestSyncLoad(Path);
-		
 		// 2. 로드한 에셋 캐싱
-		if (UDataTable* loaded = Cast<UDataTable>(Path.ResolveObject()))
-			GameDatabase.Add(Table, loaded);
+		if (UDataTable* Loaded = Cast<UDataTable>(Path.ResolveObject()))
+			GameDatabase.Add(Table, Loaded);
 	}
 
 	// 로드한 데이터 후처리

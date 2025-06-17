@@ -27,14 +27,11 @@ public:
 	TMap<EStatus, TUniquePtr<Status>> Stat;	// 체력, 마나
 	TMap<EAbility, uint32> Ability;	// 힘, 민첩, 지능
 
-	//// 회복 계열 관리용
-	//TMap<FString, FFunctionContext> RecoverFunc;
-	//TQueue<FString> RecoverReleaseQueue;
-
 	// 버프 계열 관리용 Map : ItemID - Func
 	TMap<FString, FFunctionContext> BuffFunc;
 	TQueue<FString> BuffReleaseQueue;
 
+	// TODO: 장비 아이템 기능 반영
 	// TODO: 버프 연산 
 	// 한번에 여러가지 버프를 우선순위대로 연산해야함
 	// OperType 기준 오름차순 정렬

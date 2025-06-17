@@ -6,6 +6,7 @@
 #include <Engine/DataTable.h>
 #include "CharacterDataRow.generated.h"
 
+
 USTRUCT(BlueprintType)
 struct TOPDOWNRPG_API FCharacterDataRow : public FTableRowBase
 {
@@ -15,7 +16,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FName CharName;
 
-	// Ability
+	// Ability 기초값
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 Str;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -23,13 +24,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 Int;
 
-	// Status
+	// Status 기초값
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 Hp;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 Mp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<int32> SkillId;
+	TArray<int32> SkillID;
 
 };
