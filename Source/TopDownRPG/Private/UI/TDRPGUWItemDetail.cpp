@@ -18,7 +18,7 @@ void UTDRPGUWItemDetail::Update(UItemBase* InItem)
 	FItemDataRow* Data = InItem->GetData();
 	
 	NameLabel->SetText(FText::FromName(Data->ItemName));
-	QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), InItem->GetQuantity())));
+	QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), InItem->Quantity)));
 	RarityLabel->SetText(FText::FromString(InItem->EnumToString(Data->Rarity)));
 
 	if (Data->Thumbnail.IsValid())

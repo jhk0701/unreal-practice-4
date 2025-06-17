@@ -6,6 +6,8 @@
 #include "UObject/NoExportTypes.h"
 #include "Inventory.generated.h"
 
+class UItemBase;
+
 /**
  * 
  */
@@ -19,13 +21,18 @@ public:
 	// 소비, 재료 아이템 : ID, 갯수
 	// 장비 아이템 : ID, 특수 옵션들
 	UPROPERTY()
-	TArray<class UItemBase*> Items;
+	TArray<UItemBase*> Items;
 
 public:
 	UInventory();
-	void AddItem(class UItemBase* Item);
-	void RemoveItem(int32 InIdx);
+	bool AddItem(UItemBase* InItem);
+	void RemoveItem(uint8 InIdx);
 
 private:
-	int16 GetBlankSpace();
+	bool GetBlankSpace(uint8& OutIndex);
+	// 쿼리 형태로 검색 조건을 받기
+	// 유연하게 쿼리를 받기 위해서 TFunction 사용
+	bool FindItem(const FString& InItemID, uint8& OutIndex, TFunction<bool(UItemBase*)> InQuery = nullptr);
+
+	bool AssignNewItem(UItemBase* InItem);
 };

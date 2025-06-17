@@ -56,7 +56,7 @@ FItemDataRow* UItemBase::GetData()
 }
 
 
-FString UItemBase::EnumToString(const ERarity InValue)
+FString UItemBase::EnumToString(const ERarity InValue) const
 {
     const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ERarity"), true);
     if(!EnumPtr)

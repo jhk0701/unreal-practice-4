@@ -37,19 +37,19 @@ void UGameDataManager::LoadGameDatas()
 
 void UGameDataManager::ProcessLevelData()
 {
-	TArray<FName> keys = GameDatabase[ETableType::Leveling]->GetRowNames();
+	TArray<FName> Keys = GameDatabase[ETableType::Leveling]->GetRowNames();
 
-	for (int32 i = 0; i < keys.Num(); ++i)
+	for (int32 i = 0; i < Keys.Num(); ++i)
 	{
 		// id 분리
-		FString fullID = keys[i].ToString();
-		FString charID = fullID.Left(4);	// 앞에 4글자 : 캐릭터 ID
-		FString lv = fullID.Right(3);		// 뒤에 3글자 : 레벨
+		FString FullID = Keys[i].ToString();
+		FString CharID = FullID.Left(4);	// 앞에 4글자 : 캐릭터 ID
+		FString Lv = FullID.Right(3);		// 뒤에 3글자 : 레벨
 
-		if (!LevelRange.Contains(charID))
-			LevelRange.Add(charID);
+		if (!LevelRange.Contains(CharID))
+			LevelRange.Add(CharID);
 
-		LevelRange[charID].Array.Add(FCString::Atoi(*lv));
+		LevelRange[CharID].Array.Add(FCString::Atoi(*Lv));
 	}
 }
 

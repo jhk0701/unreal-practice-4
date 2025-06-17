@@ -46,7 +46,6 @@ void UTDRPGUWItemMenu::InvokeFunc()
 	if (UConsumeItem* Consumable = Cast<UConsumeItem>(SelectedItem))
 	{
 		ATDRPGGameState* GameState = Cast<ATDRPGGameState>(GetWorld()->GetGameState());
-		
 		Consumable->Use(GameState->Player.Get());
 	}
 	else if (UEquipmentItem* Equipment = Cast<UEquipmentItem>(SelectedItem)) 

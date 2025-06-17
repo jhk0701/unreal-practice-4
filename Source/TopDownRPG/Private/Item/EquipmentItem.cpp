@@ -4,6 +4,7 @@
 #include "Item/EquipmentItem.h"
 
 #include "Core/PlayerManager.h"
+#include "Player/Inventory.h"
 #include "Player/Equipment.h"
 
 #include "Core/GameDataManager.h"
@@ -34,7 +35,7 @@ void UEquipmentItem::Equip()
     PlayerManager->Equipment->Equip(Data->EquipType, this);
 
     // TODO : 인벤토리에서 해당 아이템 제거
-    
+    // PlayerManager->Inventory->RemoveItem();
 }
 
 void UEquipmentItem::Unequip()

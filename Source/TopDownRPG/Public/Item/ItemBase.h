@@ -19,11 +19,12 @@ class TOPDOWNRPG_API UItemBase : public UObject
 {
 	GENERATED_BODY()
 
+public:
+	uint8 InventoryIndex;
+	uint32 Quantity;
+
 protected:
 	FString ItemID;
-
-	UPROPERTY(VisibleAnywhere)
-	uint32 Quantity;
 
 	// TODO : 개선 방법 없는지 생각해야함
 	UPROPERTY(VisibleAnywhere)
@@ -36,9 +37,9 @@ public:
 	virtual bool TryAddItem(uint32 InAmount, uint32& OutRest);
 	virtual FItemDataRow* GetData();
 
-	inline const uint32 GetQuantity() { return Quantity; }
+	inline const FString& GetItemID() { return ItemID; }
 
-	FString EnumToString(const ERarity InValue);
+	FString EnumToString(const ERarity InValue) const;
 
 	FOnItemUpdated OnItemUpdated;
 };

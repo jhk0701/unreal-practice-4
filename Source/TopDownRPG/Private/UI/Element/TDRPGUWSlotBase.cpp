@@ -79,7 +79,7 @@ void UTDRPGUWSlotBase::Refresh(UItemBase* InItem)
 	if (QuantityLabel) 
 	{
 		QuantityLabel->SetVisibility(ESlateVisibility::Visible);
-		QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), InItem->GetQuantity())));
+		QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), InItem->Quantity)));
 	}
 
 	UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
