@@ -14,5 +14,6 @@ class TOPDOWNRPG_API UTDRPGUWEquipmentMenu : public UTDRPGUWItemMenu
 {
 	GENERATED_BODY()
 	
-
+public:
+	virtual void InvokeFunc() override;
 };

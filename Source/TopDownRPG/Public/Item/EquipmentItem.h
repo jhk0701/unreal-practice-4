@@ -6,6 +6,7 @@
 #include "Item/ItemBase.h"
 #include "EquipmentItem.generated.h"
 
+class UPlayerManager;
 
 /**
  * 
@@ -24,6 +25,6 @@ public:
 	virtual ETableType GetItemType() override;
 
 	// 아이템 활용
-	void Equip();
-	void Unequip();
+	void Equip(UPlayerManager* InPlayer);
+	void Unequip(UPlayerManager* InPlayer);
 };

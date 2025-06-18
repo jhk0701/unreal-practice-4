@@ -23,7 +23,6 @@ public:
 
 public:
 	virtual void NativeOnInitialized() override;
-
 	virtual void Update(UItemBase* InItem) override;
 	virtual void InvokeFunc() override;
 

@@ -23,26 +23,24 @@ ETableType UEquipmentItem::GetItemType()
     return ETableType::Equipment;
 }
 
-void UEquipmentItem::Equip()
+void UEquipmentItem::Equip(UPlayerManager* InPlayer)
 {
-    UPlayerManager* PlayerManager = GameInst->GetSubsystem<UPlayerManager>();
     FEquipmentDataRow* Data = static_cast<FEquipmentDataRow*>(GetData());
 
     // 장비창에 추가
-    PlayerManager->Equipment->Equip(Data->EquipType, this);
+    InPlayer->Equipment->Equip(Data->EquipType, this);
 
     // 인벤토리에서 제거
-    PlayerManager->Inventory->RemoveItem(InventoryIndex);
+    InPlayer->Inventory->RemoveItem(InventoryIndex);
 }
 
-void UEquipmentItem::Unequip()
+void UEquipmentItem::Unequip(UPlayerManager* InPlayer)
 {
-    UPlayerManager* PlayerManager = GameInst->GetSubsystem<UPlayerManager>();
     FEquipmentDataRow* Data = static_cast<FEquipmentDataRow*>(GetData());
 
     // 장비창에서 제거
-    PlayerManager->Equipment->Unequip(Data->EquipType);
+    InPlayer->Equipment->Unequip(Data->EquipType);
 
     // 인벤토리에 추가
-    PlayerManager->Inventory->AddItem(this);
+    InPlayer->Inventory->AddItem(this);
 }

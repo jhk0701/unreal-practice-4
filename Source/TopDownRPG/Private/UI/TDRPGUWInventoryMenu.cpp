@@ -54,7 +54,8 @@ void UTDRPGUWInventoryMenu::InvokeFunc()
 	}
 	else if (UEquipmentItem* Equipment = Cast<UEquipmentItem>(SelectedItem))
 	{
-		Equipment->Equip();
+		UPlayerManager* PlayerManager = GetGameInstance()->GetSubsystem<UPlayerManager>();
+		Equipment->Equip(PlayerManager);
 	}
 
 	Super::InvokeFunc();

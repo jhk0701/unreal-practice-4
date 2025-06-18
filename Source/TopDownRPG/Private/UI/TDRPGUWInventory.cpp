@@ -23,12 +23,11 @@
 
 UTDRPGUWInventory::UTDRPGUWInventory()
 {
-	ConstructorHelpers::FClassFinder<UTDRPGUWInventoryMenu> TempMenu(TEXT("WidgetBlueprint'/Game/4-UI/WBP_InventoryMenu.WBP_InventoryMenu_C'"));
-	ConstructorHelpers::FClassFinder<UTDRPGUWItemDetail> TempDetail(TEXT("WidgetBlueprint'/Game/4-UI/WBP_ItemDetail.WBP_ItemDetail_C'"));
-
+	ConstructorHelpers::FClassFinder<UTDRPGUWInventoryMenu> TempMenu(TEXT("WidgetBlueprint'/Game/4-UI/WBP_TDRPGUWInventoryMenu.WBP_TDRPGUWInventoryMenu_C'"));
 	if (TempMenu.Succeeded())
 		MenuWindowFactory = TempMenu.Class;
 
+	ConstructorHelpers::FClassFinder<UTDRPGUWItemDetail> TempDetail(TEXT("WidgetBlueprint'/Game/4-UI/WBP_TDRPGUWItemDetail.WBP_TDRPGUWItemDetail_C'"));
 	if (TempDetail.Succeeded())
 		DetailWindowFactory = TempDetail.Class;
 }

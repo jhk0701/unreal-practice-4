@@ -3,6 +3,8 @@
 
 #include "UI/TDRPGUWEquipment.h"
 #include "UI/Element/TDRPGUWSlotBase.h"
+#include "UI/TDRPGUWEquipmentMenu.h"
+
 #include "TDRPGEnum.h"
 
 #include "Player/Equipment.h"
@@ -10,7 +12,17 @@
 
 #include <Components/VerticalBox.h>
 #include <Components/Button.h>
+#include <Components/CanvasPanel.h>
+#include <Components/CanvasPanelSlot.h>
 
+
+
+UTDRPGUWEquipment::UTDRPGUWEquipment()
+{
+	ConstructorHelpers::FClassFinder<UTDRPGUWEquipmentMenu> TempMenu(TEXT("WidgetBlueprint'/Game/4-UI/WBP_TDRPGUWEquipmentMenu.WBP_TDRPGUWEquipmentMenu_C'"));
+	if (TempMenu.Succeeded())
+		MenuWindowFactory = TempMenu.Class;
+}
 
 void UTDRPGUWEquipment::NativeOnInitialized()
 {
@@ -28,9 +40,32 @@ void UTDRPGUWEquipment::NativeOnInitialized()
 			if (UTDRPGUWSlotBase* SlotInst = Cast<UTDRPGUWSlotBase>(SlotContainer->GetChildAt(i)))
 			{
 				EEquipType Type = (EEquipType)i;
+
 				Slots.Add(Type, SlotInst);
+
+				Slots[Type]->OnButtonClicked.AddUObject(this, &UTDRPGUWEquipment::ShowMenu);
 			}
 		}
+	}
+
+	// Sub UI 생성
+	if (!MenuWindow && MenuWindowFactory) 
+	{
+		MenuWindow = CreateWidget<UTDRPGUWEquipmentMenu>(this, MenuWindowFactory);
+
+		UCanvasPanel* ParentCanvas = Cast<UCanvasPanel>(GetParent());
+		ParentCanvas->AddChildToCanvas(MenuWindow);
+
+		if (UCanvasPanelSlot* WindowSlot = Cast<UCanvasPanelSlot>(MenuWindow->Slot))
+		{
+			WindowSlot->SetAnchors(FAnchors(0.5f, 0.5f));
+			WindowSlot->SetAlignment(FVector2D::ZeroVector);
+
+			WindowSlot->SetSize(MenuWindowSize);
+			WindowSlot->SetPosition(FVector2D::ZeroVector);
+		}
+
+		HideMenu();
 	}
 }
 
@@ -50,4 +85,25 @@ void UTDRPGUWEquipment::UpdateSlot(EEquipType InEquipType)
 		Slots[InEquipType]->Bind(Item);
 	else
 		Slots[InEquipType]->Clear();
+}
+
+void UTDRPGUWEquipment::ShowMenu(UTDRPGUWSlotBase* InSlot)
+{
+	UCanvasPanelSlot* EquipmentSlot = Cast<UCanvasPanelSlot>(Slot);
+	UCanvasPanelSlot* MenuSlot = Cast<UCanvasPanelSlot>(MenuWindow);
+	if (EquipmentSlot && MenuSlot)
+	{
+		FVector2D Size = EquipmentSlot->GetSize();
+		FVector2D Pos = EquipmentSlot->GetPosition();
+		Pos.X += Size.X;
+		MenuSlot->SetPosition(Pos);
+	}
+
+	MenuWindow->Open();
+	MenuWindow->Update(InSlot->GetBindedItem());
+}
+
+void UTDRPGUWEquipment::HideMenu()
+{
+	MenuWindow->Close();
 }

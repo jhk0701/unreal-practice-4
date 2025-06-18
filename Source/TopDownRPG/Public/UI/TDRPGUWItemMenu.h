@@ -34,7 +34,6 @@ protected:
 
 public:
 	virtual void NativeOnInitialized() override;
-
 	virtual void Update(UItemBase* InItem);
 
 	UFUNCTION()

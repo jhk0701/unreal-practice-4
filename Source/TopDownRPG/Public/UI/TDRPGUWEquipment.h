@@ -8,6 +8,8 @@
 
 class UEquipment;
 enum class EEquipType : uint8;
+
+class UTDRPGUWEquipmentMenu;
 class UTDRPGUWSlotBase;
 class UButton;
 class UVerticalBox;
@@ -24,20 +26,31 @@ public:
 	UPROPERTY()
 	TObjectPtr<UEquipment> BindedEquipment;
 
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
 
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UVerticalBox> SlotContainer;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement")
 	TMap<EEquipType, UTDRPGUWSlotBase*> Slots;
 
+	// SubUI
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|Factory")
+	TSubclassOf<UTDRPGUWEquipmentMenu> MenuWindowFactory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SubWidget")
+	TObjectPtr<UTDRPGUWEquipmentMenu> MenuWindow;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SubWidget")
+	FVector2D MenuWindowSize;
 
 public:
+	UTDRPGUWEquipment();
 	virtual void NativeOnInitialized() override;
 
 	void Bind(UEquipment* InEquipment);
-
 	void UpdateSlot(EEquipType InEquipType);
+
+	void ShowMenu(UTDRPGUWSlotBase* InSlot);
+	void HideMenu();
 };
