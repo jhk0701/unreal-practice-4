@@ -24,14 +24,15 @@ public:
 	UPROPERTY()
 	TObjectPtr<UEquipment> BindedEquipment;
 
-	UPROPERTY(EditAnywhere)
-	TMap<EEquipType, UTDRPGUWSlotBase*> Slots;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	TObjectPtr<UButton> CloseButton;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UVerticalBox> SlotContainer;
 
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	TObjectPtr<UButton> CloseButton;
+	UPROPERTY(EditAnywhere)
+	TMap<EEquipType, UTDRPGUWSlotBase*> Slots;
+
 
 public:
 	virtual void NativeOnInitialized() override;

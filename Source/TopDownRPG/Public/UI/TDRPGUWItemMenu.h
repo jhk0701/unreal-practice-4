@@ -29,23 +29,14 @@ public:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
 
-	// TODO : 퀵슬롯 등록 및 해제 -> 드래그앤 드롭 가능하게
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	TObjectPtr<UButton> QuickSlotButton;
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	TObjectPtr<UTextBlock> QuickSlotLabel;
-
-private:
+protected:
 	UItemBase* SelectedItem;
 
 public:
 	virtual void NativeOnInitialized() override;
 
-	void Update(UItemBase* InItem);
+	virtual void Update(UItemBase* InItem);
 
 	UFUNCTION()
-	void InvokeFunc();
-
-	UFUNCTION()
-	void RegisterQuickSlot();
+	virtual void InvokeFunc();
 };

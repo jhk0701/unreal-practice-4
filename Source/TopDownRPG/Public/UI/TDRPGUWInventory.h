@@ -13,7 +13,7 @@ class UButton;
 class UUniformGridPanel;
 class UTDRPGUWSlotBase;
 class UTDRPGUWItemDetail;
-class UTDRPGUWItemMenu;
+class UTDRPGUWInventoryMenu;
 
 
 /**
@@ -54,10 +54,10 @@ public:
 	FVector2D DetailWindowSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|Factory")
-	TSubclassOf<UTDRPGUWItemMenu> MenuWindowFactory;
+	TSubclassOf<UTDRPGUWInventoryMenu> MenuWindowFactory;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SubWidget")
-	TObjectPtr<UTDRPGUWItemMenu> MenuWindow;
+	TObjectPtr<UTDRPGUWInventoryMenu> MenuWindow;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SubWidget")
 	FVector2D MenuWindowSize;

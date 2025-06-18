@@ -4,7 +4,7 @@
 #include "UI/TDRPGUWInventory.h"
 #include "UI/Element/TDRPGUWSlotBase.h"
 #include "UI/TDRPGUWItemDetail.h"
-#include "UI/TDRPGUWItemMenu.h"
+#include "UI/TDRPGUWInventoryMenu.h"
 #include "UI/TDRPGUWCanvas.h"
 
 #include "Core/UIManager.h"
@@ -23,8 +23,8 @@
 
 UTDRPGUWInventory::UTDRPGUWInventory()
 {
-	ConstructorHelpers::FClassFinder<UTDRPGUWItemMenu> TempMenu(TEXT("WidgetBlueprint'/Game/4-UI/WBP_TDRPGUWItemMenu.WBP_TDRPGUWItemMenu_C'"));
-	ConstructorHelpers::FClassFinder<UTDRPGUWItemDetail> TempDetail(TEXT("WidgetBlueprint'/Game/4-UI/WBP_TDRPGUWItemDetail.WBP_TDRPGUWItemDetail_C'"));
+	ConstructorHelpers::FClassFinder<UTDRPGUWInventoryMenu> TempMenu(TEXT("WidgetBlueprint'/Game/4-UI/WBP_InventoryMenu.WBP_InventoryMenu_C'"));
+	ConstructorHelpers::FClassFinder<UTDRPGUWItemDetail> TempDetail(TEXT("WidgetBlueprint'/Game/4-UI/WBP_ItemDetail.WBP_ItemDetail_C'"));
 
 	if (TempMenu.Succeeded())
 		MenuWindowFactory = TempMenu.Class;
@@ -106,7 +106,7 @@ void UTDRPGUWInventory::InitSubWidget()
 
 	if (MenuWindowFactory && !MenuWindow)
 	{
-		MenuWindow = CreateWidget<UTDRPGUWItemMenu>(this, MenuWindowFactory);
+		MenuWindow = CreateWidget<UTDRPGUWInventoryMenu>(this, MenuWindowFactory);
 		ParentCanvas->AddChildToCanvas(MenuWindow);
 
 		if (UCanvasPanelSlot* WindowSlot = Cast<UCanvasPanelSlot>(MenuWindow->Slot))
