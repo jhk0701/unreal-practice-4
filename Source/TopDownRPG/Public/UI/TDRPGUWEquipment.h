@@ -47,6 +47,7 @@ public:
 public:
 	UTDRPGUWEquipment();
 	virtual void NativeOnInitialized() override;
+	virtual void Close() override;
 
 	void Bind(UEquipment* InEquipment);
 	void UpdateSlot(EEquipType InEquipType);

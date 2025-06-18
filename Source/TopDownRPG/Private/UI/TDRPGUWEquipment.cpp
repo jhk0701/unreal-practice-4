@@ -15,6 +15,7 @@
 #include <Components/CanvasPanel.h>
 #include <Components/CanvasPanelSlot.h>
 
+#include "TopDownRPG/TopDownRPG.h"
 
 
 UTDRPGUWEquipment::UTDRPGUWEquipment()
@@ -69,6 +70,13 @@ void UTDRPGUWEquipment::NativeOnInitialized()
 	}
 }
 
+void UTDRPGUWEquipment::Close()
+{
+	Super::Close();
+
+	HideMenu();
+}
+
 void UTDRPGUWEquipment::Bind(UEquipment* InEquipment)
 {
 	BindedEquipment = InEquipment;
@@ -90,12 +98,13 @@ void UTDRPGUWEquipment::UpdateSlot(EEquipType InEquipType)
 void UTDRPGUWEquipment::ShowMenu(UTDRPGUWSlotBase* InSlot)
 {
 	UCanvasPanelSlot* EquipmentSlot = Cast<UCanvasPanelSlot>(Slot);
-	UCanvasPanelSlot* MenuSlot = Cast<UCanvasPanelSlot>(MenuWindow);
+	UCanvasPanelSlot* MenuSlot = Cast<UCanvasPanelSlot>(MenuWindow->Slot);
 	if (EquipmentSlot && MenuSlot)
 	{
-		FVector2D Size = EquipmentSlot->GetSize();
 		FVector2D Pos = EquipmentSlot->GetPosition();
+		FVector2D Size = EquipmentSlot->GetSize();
 		Pos.X += Size.X;
+
 		MenuSlot->SetPosition(Pos);
 	}
 
