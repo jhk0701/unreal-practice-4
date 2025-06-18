@@ -19,14 +19,14 @@ public:
 
 	// 아이템이 제공할 혜택
 	UPROPERTY(EditAnywhere)
-	uint32 AttackPower;
+	int32 AttackPower;
 	UPROPERTY(EditAnywhere)
-	uint32 DefensePower;
+	int32 DefensePower;
 
 	// 추가 어빌리티
 	UPROPERTY(EditAnywhere)
-	TMap<EAbility, uint32> Ability;
+	TMap<EAbility, int32> Ability;
 	// 추가 스탯
 	UPROPERTY(EditAnywhere)
-	TMap<EStatus, uint32> Status;
+	TMap<EStatus, int32> Status;
 };

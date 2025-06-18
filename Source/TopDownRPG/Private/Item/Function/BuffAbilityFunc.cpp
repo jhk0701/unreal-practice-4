@@ -2,6 +2,7 @@
 
 
 #include "Item/Function/BuffAbilityFunc.h"
+#include "TDRPGEnum.h"
 
 inline uint32 UBuffAbilityFunc::Operate(uint32 Object, uint32 Value)
 {

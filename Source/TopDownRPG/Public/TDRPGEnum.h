@@ -28,6 +28,8 @@ enum class EStatus : uint8
 	Mp		UMETA(DisplayName = "Mana Point"),
 
 	Shield,
+
+	COUNT
 };
 
 UENUM(BlueprintType)
@@ -36,6 +38,8 @@ enum class EAbility : uint8
 	Str		UMETA(DisplayName = "Strength"),
 	Dex		UMETA(DisplayName = "Dexterity"),
 	Int		UMETA(DisplayName = "Intelligence"),
+
+	COUNT
 };
 
 UENUM(BlueprintType)

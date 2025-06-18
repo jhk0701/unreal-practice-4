@@ -15,8 +15,6 @@
 #include <Components/CanvasPanel.h>
 #include <Components/CanvasPanelSlot.h>
 
-#include "TopDownRPG/TopDownRPG.h"
-
 
 UTDRPGUWEquipment::UTDRPGUWEquipment()
 {
@@ -89,7 +87,7 @@ void UTDRPGUWEquipment::Bind(UEquipment* InEquipment)
 
 void UTDRPGUWEquipment::UpdateSlot(EEquipType InEquipType)
 {
-	if (UItemBase* Item = BindedEquipment->Equipment[InEquipType])
+	if (UItemBase* Item = BindedEquipment->GetEquipment(InEquipType))
 		Slots[InEquipType]->Bind(Item);
 	else
 		Slots[InEquipType]->Clear();

@@ -5,6 +5,7 @@
 #include "TDRPGEnum.h"
 #include "Core/GameDataManager.h"
 
+#include "Item/Function/FunctionContext.h"
 #include "Item/Function/ItemFuncBase.h"
 #include "Item/Function/RecoveryFunc.h"
 #include "Data/ConsumeDataRow.h"

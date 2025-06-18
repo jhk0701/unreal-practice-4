@@ -2,7 +2,7 @@
 
 
 #include "Item/Function/BuffStatusFunc.h"
-
+#include "TDRPGEnum.h"
 
 inline uint32 UBuffStatusFunc::Operate(uint32 Object, uint32 Value)
 {

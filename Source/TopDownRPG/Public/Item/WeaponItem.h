@@ -6,6 +6,8 @@
 #include "Item/EquipmentItem.h"
 #include "WeaponItem.generated.h"
 
+enum class EAbility : uint8;
+
 /**
  * 
  */
@@ -16,4 +18,5 @@ class TOPDOWNRPG_API UWeaponItem : public UEquipmentItem
 	
 public:
 	virtual ETableType GetItemType() override;
+	EAbility GetDamageBase();
 };

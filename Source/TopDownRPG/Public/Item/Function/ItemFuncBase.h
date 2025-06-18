@@ -4,35 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
-#include "TDRPGEnum.h"
 #include "ItemFuncBase.generated.h"
 
+enum class EOperateType : uint8;
+enum class EStatus : uint8;
+enum class EAbility : uint8;
 
-USTRUCT()
-struct FFunctionContext
-{
-	GENERATED_BODY()
-
-public:
-	UItemFuncBase* Func;
-	uint32 Value;
-	float Duration;
-
-	bool bOperateOneTime;
-	float IntervalSec;
-	float CurrentSec;
-
-	FFunctionContext() {};
-	FFunctionContext(UItemFuncBase* InFunc, uint32 InValue, float InDuration) :
-		Func(InFunc),
-		Value(InValue),
-		Duration(InDuration),
-		bOperateOneTime(FMath::IsNearlyZero(Duration) ? true : false),
-		IntervalSec(1.0f),
-		CurrentSec(0.0f)
-	{
-	};
-};
+struct FFunctionContext;
 
 /**
  * 
@@ -45,8 +23,5 @@ class TOPDOWNRPG_API UItemFuncBase : public UDataAsset
 public:
 	inline virtual void Operate(AActor* Object, uint32 Value) {};
 	inline virtual uint32 Operate(uint32 Object, uint32 Value) { return 0; };
-	inline virtual FFunctionContext GetContext(uint32 Value, float Duration)
-	{ 
-		return FFunctionContext(this, Value, Duration);
-	};
+	virtual FFunctionContext GetContext(uint32 Value, float Duration);
 };

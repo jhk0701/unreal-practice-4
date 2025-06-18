@@ -4,10 +4,12 @@
 #include "Character/EnemyAttack.h"
 #include "Character/EnemyMove.h"
 #include "Character/EnemyAnim.h"
+
 #include <Components/CapsuleComponent.h>
 #include <Components/SphereComponent.h>
 
 #include "CommonConst.h"
+#include "TDRPGEnum.h"
 #include "InGame/Dungeon/DungeonGameState.h"
 #include "Core/GameDataManager.h"
 #include "Data/CharacterDataRow.h"
@@ -59,7 +61,7 @@ void ATDRPGEnemy::BeginPlay()
 	if (UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>())
 	{
 		FCharacterDataRow* Data = GameData->GetRow<FCharacterDataRow>(ETableType::Character, DataComp->CharID);
-		DataComp->Initialize(1, Data);
+		DataComp->Initialize(1, *Data, nullptr);
 	}
 
 	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGEnemy::Die);

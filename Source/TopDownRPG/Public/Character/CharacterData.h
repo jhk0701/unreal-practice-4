@@ -5,15 +5,16 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Character/Status.h"
-#include "Item/Function/ItemFuncBase.h"
+#include "Item/Function/FunctionContext.h"
 #include "CharacterData.generated.h"
 
 enum class EStatus : uint8;
 enum class EAbility : uint8;
+class UEquipment;
+class UItemFuncBase;
 struct FCharacterDataRow;
 
 DECLARE_MULTICAST_DELEGATE(FOnStatusEmpty);
-
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TOPDOWNRPG_API UCharacterData : public UActorComponent
@@ -27,35 +28,38 @@ public:
 	TMap<EStatus, TUniquePtr<Status>> Stat;	// 체력, 마나
 	TMap<EAbility, uint32> Ability;	// 힘, 민첩, 지능
 
-	// 버프 계열 관리용 Map : ItemID - Func
-	TMap<FString, FFunctionContext> BuffFunc;
-	TQueue<FString> BuffReleaseQueue;
-
-	// TODO: 장비 아이템 기능 반영
 	// TODO: 버프 연산 
 	// 한번에 여러가지 버프를 우선순위대로 연산해야함
 	// OperType 기준 오름차순 정렬
 	// 정렬된대로 연산 진행
 	
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	bool bIsDead = false;
 	
 	FOnStatusEmpty OnCharacterDead;
 
+private:
+	UPROPERTY()
+	TObjectPtr<UEquipment> Equipment;
+
+	// 버프 계열 관리용 Map : ItemID - Func
+	TMap<FString, FFunctionContext> BuffFunc;
+	TQueue<FString> BuffReleaseQueue;
+
 public:	
 	UCharacterData();
 
-	void Initialize(uint32 InLv, FCharacterDataRow* InData);
+	void Initialize(uint32 InLv, FCharacterDataRow& InData, UEquipment* InEquipment);
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	inline bool TrySubtractStat(EStatus Type, uint32 Value) const { return Stat[Type]->TrySubtract(Value); }
+	inline bool TrySubtractStat(EStatus Type, uint32 Value) { return Stat[Type]->TrySubtract(Value); }
 	inline void SubtractStat(EStatus Type, uint32 Value) { Stat[Type]->Subtract(Value); }
+	
 	void CheckIsDead(uint32 Max, uint32 Current);
 
 	uint32 GetAttackPower();
 	uint32 GetDefensePower();
 
-	// void AddRecover(FName& InItemID, FFunctionContext InContext);
 	void AddBuff(FString& InItemID, FFunctionContext InContext);
 
 	void Debugging();

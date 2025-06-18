@@ -3,10 +3,16 @@
 
 #include "Item/WeaponItem.h"
 #include "TDRPGEnum.h"
-#include "Core/GameDataManager.h"
-#include "Data/ItemDataRow.h"
+
+#include "Data/WeaponDataRow.h"
 
 ETableType UWeaponItem::GetItemType()
 {
     return ETableType::Weapon;
+}
+
+EAbility UWeaponItem::GetDamageBase()
+{
+    FWeaponDataRow* Data = static_cast<FWeaponDataRow*>(GetData());
+    return Data->DamageBase;
 }

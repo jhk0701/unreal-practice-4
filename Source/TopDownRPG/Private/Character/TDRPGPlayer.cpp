@@ -6,6 +6,7 @@
 #include "Character/PlayerAnim.h"
 
 #include "CommonConst.h"
+#include "TDRPGEnum.h"
 #include "Core/TDRPGPlayerController.h"
 #include "Core/TDRPGGameState.h"
 #include "Core/GameDataManager.h"
@@ -110,7 +111,7 @@ void ATDRPGPlayer::Initialize()
 	DataComp->CharID = Player->PlayerData.CharID;
 
 	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, *DataComp->CharID);
-	DataComp->Initialize(Player->Lv, Data);
+	DataComp->Initialize(Player->Lv, *Data, Player->Equipment);
 
 	// 캐릭터 동적 구성
 	LoadConfig();

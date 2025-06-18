@@ -3,11 +3,17 @@
 
 #include "Character/CharacterData.h"
 #include "TDRPGEnum.h"
-#include "Character/Status.h"
 
 #include "Core/GameDataManager.h"
 #include "Data/CharacterDataRow.h"
 #include "Data/LevelingDataRow.h"
+
+#include "Core/PlayerManager.h"
+#include "Player/Equipment.h"
+
+#include "Item/Function/ItemFuncBase.h"
+#include "Item/EquipmentItem.h"
+#include "Item/WeaponItem.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -16,13 +22,17 @@ UCharacterData::UCharacterData()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow* InData)
+void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow& InData, UEquipment* InEquipment)
 {
 	bIsDead = false;
 
 	// 초기 데이터
-	uint32	Hp = InData->Hp,	Mp = InData->Mp;
-	int32	Str = InData->Str,	Dex = InData->Dex,	Int = InData->Int;
+	uint32	Hp = InData.Hp,	Mp = InData.Mp;
+	int32	Str = InData.Str,	Dex = InData.Dex,	Int = InData.Int;
+	
+	// 장비 의존성 주입
+	// nullptr일 수 있으니 유효성 주의
+	Equipment = InEquipment;
 
 	// 레벨링 반영
 	TArray<int32> Leveling;
@@ -93,13 +103,38 @@ void UCharacterData::CheckIsDead(uint32 Max, uint32 Current)
 uint32 UCharacterData::GetAttackPower()
 {
 	// TODO : 최종 공격력 계산
-	return Ability[EAbility::Str];
+	uint32 Result = 0;
+
+	if (Equipment)
+	{
+		// 1. 추가 공격력
+		Result += Equipment->GetAddictiveAttack();
+
+		// 2. 무기에 따른 스탯 반영
+		UEquipmentItem* Equip = Equipment->GetEquipment(EEquipType::Weapon);
+		if (Equip)
+		{
+			UWeaponItem* Weapon = Cast<UWeaponItem>(Equip);
+			EAbility DamageBase = Weapon->GetDamageBase();
+
+			// TODO : 보정치 매직 넘버 제거 필요
+			Result += Ability[DamageBase] / 3;
+		}
+	}
+	
+	// TODO : 버프 반영
+
+	return Result;
 }
 
 uint32 UCharacterData::GetDefensePower()
 {
-	// TODO : 최종 방어력 계산
-	return uint32(100);
+	uint32 Result = 0;
+
+	if (Equipment)
+		Result += Equipment->GetAddictiveDefense();
+
+	return Result;
 }
 
 void UCharacterData::AddBuff(FString& InItemID, FFunctionContext InContext)
