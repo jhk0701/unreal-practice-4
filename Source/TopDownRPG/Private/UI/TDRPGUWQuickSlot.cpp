@@ -45,10 +45,18 @@ void UTDRPGUWQuickSlot::Bind(UQuickSlot* InQuickSlot)
 		UpdateSlot(i);
 }
 
+void UTDRPGUWQuickSlot::Clear(uint8 Index)
+{
+	SlotList[Index]->Clear();
+}
+
 void UTDRPGUWQuickSlot::UpdateSlot(uint8 Index)
 {
 	if (BindedQuickSlot->Slots[Index].GetInterface() == nullptr)
+	{
+		Clear(Index);
 		return;
+	}
 
 	UObject* Handle = BindedQuickSlot->Slots[Index].GetObject();
 

@@ -23,4 +23,18 @@ class TOPDOWNRPG_API IQuickSlotHandler
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	virtual void InvokeSlot(AActor* Subject) = 0;
+
+	inline virtual void RegisterSlot(uint8 InIndex) 
+	{
+		bIsInQuickSlot = true;
+		QuickSlotIndex = InIndex;
+	}
+	inline virtual void UnregisterSlot() { bIsInQuickSlot = false; }
+	
+	inline virtual bool IsRegistered() const { return bIsInQuickSlot; }
+	inline virtual uint8 GetSlotIndex() const { return QuickSlotIndex; }
+
+protected:
+	bool bIsInQuickSlot = false;
+	uint8 QuickSlotIndex = 0;
 };

@@ -17,6 +17,7 @@ bool UQuickSlot::Register(IQuickSlotHandler* InSlot, uint8& OutIndex)
 		Slots[OutIndex].SetObject(InSlot->_getUObject());
 
 		OnSlotUpdated.Broadcast(OutIndex);
+
 		return true;
 	}
 
@@ -25,6 +26,17 @@ bool UQuickSlot::Register(IQuickSlotHandler* InSlot, uint8& OutIndex)
 
 void UQuickSlot::Unregister(uint8 InIdx)
 {
+	if (InIdx >= QuickSlotMaxSize)
+		return;
+
+	if (!Slots[InIdx].GetObject())
+		return;
+
+	Slots[InIdx]->UnregisterSlot();
+	
+	Slots[InIdx].SetInterface(nullptr);
+	Slots[InIdx].SetObject(nullptr);
+
 	OnSlotUpdated.Broadcast(InIdx);
 }
 

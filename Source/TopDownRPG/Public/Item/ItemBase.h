@@ -21,9 +21,7 @@ class TOPDOWNRPG_API UItemBase : public UObject
 	GENERATED_BODY()
 
 public:
-	uint8 InventoryIndex;
-	uint8 QuickSlotIndex;
-	
+	uint8 InventoryIndex = 0;
 	uint32 Quantity;
 
 	FOnItemUpdated OnItemUpdated;

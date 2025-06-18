@@ -65,7 +65,8 @@ public:
 public:
 	UTDRPGUWInventory();
 	virtual void NativeOnInitialized() override;
-	
+	virtual void Close() override;
+
 	void Bind(UPlayerManager* InManager);
 
 	void UpdateInventory(uint8 Index);

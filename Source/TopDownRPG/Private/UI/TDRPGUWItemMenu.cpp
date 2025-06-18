@@ -34,10 +34,21 @@ void UTDRPGUWItemMenu::Update(UItemBase* InItem)
 
 	SelectedItem = InItem;
 
-	if (SelectedItem->IsA<UConsumeItem>())
+	if (UConsumeItem* Consumable = Cast<UConsumeItem>(SelectedItem))
+	{
 		FuncLabel->SetText(FText::FromString(TEXT("Use")));
+		
+		// 퀵슬롯 설정
+		FText QuickLabel = FText::FromString(Consumable->IsRegistered() ? TEXT("Unregister") : TEXT("Register"));
+		QuickSlotLabel->SetText(QuickLabel);
+		QuickSlotButton->SetVisibility(ESlateVisibility::Visible);
+	}
 	else if (SelectedItem->IsA<UEquipmentItem>())
+	{
 		FuncLabel->SetText(FText::FromString(TEXT("Equip")));
+
+		QuickSlotButton->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void UTDRPGUWItemMenu::InvokeFunc()
@@ -51,19 +62,29 @@ void UTDRPGUWItemMenu::InvokeFunc()
 	{
 		Equipment->Equip();
 	}
+
+	Close();
 }
 
 void UTDRPGUWItemMenu::RegisterQuickSlot()
 {
+	// 퀵슬롯 받아오기
+	UPlayerManager* PlayerManager = GetGameInstance()->GetSubsystem<UPlayerManager>();
+
 	if(IQuickSlotHandler* SlotHandler = Cast<IQuickSlotHandler>(SelectedItem))
 	{
-		// 퀵슬롯 받아오기
-		UPlayerManager* PlayerManager = GetGameInstance()->GetSubsystem<UPlayerManager>();
+		if (SlotHandler->IsRegistered())
+		{
+			PlayerManager->QuickSlot->Unregister(SlotHandler->GetSlotIndex()); // 등록 해제
+		}
+		else
+		{
+			uint8 Index = 0; // 등록
 
-		// 등록
-		uint8 Index = 0;
-
-		if (PlayerManager->QuickSlot->Register(SlotHandler, Index))
-			SelectedItem->QuickSlotIndex = Index;
+			if (PlayerManager->QuickSlot->Register(SlotHandler, Index))
+				SlotHandler->RegisterSlot(Index);
+		}
 	}
+
+	Close();
 }

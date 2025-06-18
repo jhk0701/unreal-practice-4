@@ -19,5 +19,8 @@ public:
 	ETableType GetItemType() override;
 
 	void InvokeSlot(AActor* Subject) override;
+
 	void Use(AActor* Subject);
+
+
 };

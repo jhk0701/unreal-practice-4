@@ -63,6 +63,14 @@ void UTDRPGUWInventory::NativeOnInitialized()
 	}
 }
 
+void UTDRPGUWInventory::Close()
+{
+	HideItemDetail();
+	HideItemMenu();
+
+	Super::Close();
+}
+
 void UTDRPGUWInventory::Bind(UPlayerManager* InManager)
 {
 	// 플레이어 데이터 받아오기
