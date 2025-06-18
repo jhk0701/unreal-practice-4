@@ -29,7 +29,7 @@ void UTDRPGUWSlotBase::NativeOnMouseEnter(const FGeometry& InGeometry, const FPo
 	Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
 
 	if (Item)
-		OnCursorEnter.Broadcast(Item);
+		OnCursorEnter.Broadcast(this);
 }
 
 void UTDRPGUWSlotBase::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
@@ -105,5 +105,5 @@ void UTDRPGUWSlotBase::OnIconLoaded(UObject* Loaded)
 void UTDRPGUWSlotBase::InvokeButtonClick()
 {
 	if (Item)
-		OnButtonClicked.Broadcast(Item);
+		OnButtonClicked.Broadcast(this);
 }

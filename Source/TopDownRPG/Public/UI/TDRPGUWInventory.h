@@ -14,7 +14,7 @@ class UUniformGridPanel;
 class UTDRPGUWSlotBase;
 class UTDRPGUWItemDetail;
 class UTDRPGUWItemMenu;
-class UItemBase;
+
 
 /**
  * 
@@ -61,7 +61,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SubWidget")
 	FVector2D MenuWindowSize;
-	
+
 public:
 	UTDRPGUWInventory();
 	virtual void NativeOnInitialized() override;
@@ -71,10 +71,10 @@ public:
 	void UpdateInventory(uint8 Index);
 	void UpdateGold(uint32 Gold);
 
-	void ShowItemDetail(UItemBase* InItem);
+	void ShowItemDetail(UTDRPGUWSlotBase* InSlot);
 	void HideItemDetail();
 
-	void ShowItemMenu(UItemBase* InItem);
+	void ShowItemMenu(UTDRPGUWSlotBase* InSlot);
 	void HideItemMenu();
 
 protected:

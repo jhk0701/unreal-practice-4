@@ -15,6 +15,8 @@ class TOPDOWNRPG_API UTDRPGUserWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+
+
 	UFUNCTION()
 	virtual void Open();
 	UFUNCTION()

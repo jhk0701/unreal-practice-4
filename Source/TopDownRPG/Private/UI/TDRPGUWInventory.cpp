@@ -14,6 +14,7 @@
 #include <Components/CanvasPanel.h>
 #include <Components/CanvasPanelSlot.h>
 #include <Components/UniformGridPanel.h>
+#include <Components/UniformGridSlot.h>
 #include <Components/TextBlock.h>
 #include <Components/Button.h>
 
@@ -102,8 +103,11 @@ void UTDRPGUWInventory::InitSubWidget()
 
 		if (UCanvasPanelSlot* WindowSlot = Cast<UCanvasPanelSlot>(MenuWindow->Slot))
 		{
+			WindowSlot->SetAnchors(FAnchors(0.5f, 0.5f));
+			WindowSlot->SetAlignment(FVector2D::ZeroVector);
+
 			WindowSlot->SetSize(MenuWindowSize);
-			WindowSlot->SetPosition(FVector2D::ZeroVector);
+			WindowSlot->SetPosition(FVector2D::ZeroVector);	
 		}
 
 		HideItemMenu();
@@ -116,6 +120,9 @@ void UTDRPGUWInventory::InitSubWidget()
 
 		if (UCanvasPanelSlot* WindowSlot = Cast<UCanvasPanelSlot>(DetailWindow->Slot))
 		{
+			WindowSlot->SetAnchors(FAnchors(0.5f, 0.5f));
+			WindowSlot->SetAlignment(FVector2D::ZeroVector);
+
 			WindowSlot->SetSize(DetailWindowSize);
 			WindowSlot->SetPosition(FVector2D::ZeroVector);
 		}
@@ -124,10 +131,19 @@ void UTDRPGUWInventory::InitSubWidget()
 	}
 }
 
-void UTDRPGUWInventory::ShowItemDetail(UItemBase* InItem)
+void UTDRPGUWInventory::ShowItemDetail(UTDRPGUWSlotBase* InSlot)
 {
+	UCanvasPanelSlot* InvenCanvasSlot = Cast<UCanvasPanelSlot>(Slot);
+	UCanvasPanelSlot* DetailSlot = Cast<UCanvasPanelSlot>(DetailWindow->Slot);
+	if (InvenCanvasSlot && DetailSlot)
+	{
+		FVector2D Pos = InvenCanvasSlot->GetPosition();
+		Pos.X -= DetailWindowSize.X;
+		DetailSlot->SetPosition(Pos);
+	}
+
 	DetailWindow->Open();
-	DetailWindow->Update(InItem);
+	DetailWindow->Update(InSlot->GetBindedItem());
 }
 
 void UTDRPGUWInventory::HideItemDetail()
@@ -135,10 +151,20 @@ void UTDRPGUWInventory::HideItemDetail()
 	DetailWindow->Close();
 }
 
-void UTDRPGUWInventory::ShowItemMenu(UItemBase* InItem)
+void UTDRPGUWInventory::ShowItemMenu(UTDRPGUWSlotBase* InSlot)
 {
+	UCanvasPanelSlot* InvenCanvasSlot = Cast<UCanvasPanelSlot>(Slot);
+	UCanvasPanelSlot* MenuSlot = Cast<UCanvasPanelSlot>(MenuWindow->Slot);
+	if (InvenCanvasSlot && MenuSlot)
+	{
+		FVector2D Pos = InvenCanvasSlot->GetPosition();
+		Pos.X -= MenuWindowSize.X;
+		Pos.Y += DetailWindowSize.Y;
+		MenuSlot->SetPosition(Pos);
+	}
+
 	MenuWindow->Open();
-	MenuWindow->Update(InItem);
+	MenuWindow->Update(InSlot->GetBindedItem());
 }
 
 void UTDRPGUWInventory::HideItemMenu()

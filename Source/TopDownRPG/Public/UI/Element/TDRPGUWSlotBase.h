@@ -7,7 +7,7 @@
 #include "Item/ItemBase.h"
 #include "TDRPGUWSlotBase.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnSlotInteractStarted, UItemBase*);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnSlotInteractStarted, UTDRPGUWSlotBase*);
 DECLARE_MULTICAST_DELEGATE(FOnSlotInteractCompleted);
 
 /**
@@ -50,6 +50,8 @@ public:
 	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
 
+	inline UItemBase* GetBindedItem() const { return Item; }
+
 protected:
 	virtual void Refresh(UItemBase* InItem);
 
@@ -58,3 +60,4 @@ protected:
 	UFUNCTION()
 	void InvokeButtonClick();
 };
+
