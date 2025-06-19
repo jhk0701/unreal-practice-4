@@ -25,14 +25,18 @@ UCharacterData::UCharacterData()
 void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow& InData, UEquipment* InEquipment)
 {
 	bIsDead = false;
+	ApplyData(InLv, InData);	// 데이터 반영
+	ApplyEquipment(InEquipment);	// 장비 의존성 주입
 
+	Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UCharacterData::CheckIsDead);
+	// TODO : 스킬 반영
+}
+
+void UCharacterData::ApplyData(uint32 InLv, FCharacterDataRow& InData)
+{
 	// 초기 데이터
-	uint32	Hp = InData.Hp,	Mp = InData.Mp;
-	int32	Str = InData.Str,	Dex = InData.Dex,	Int = InData.Int;
-	
-	// 장비 의존성 주입
-	// nullptr일 수 있으니 유효성 주의
-	Equipment = InEquipment;
+	uint32	Hp = InData.Hp, Mp = InData.Mp;
+	int32	Str = InData.Str, Dex = InData.Dex, Int = InData.Int;
 
 	// 레벨링 반영
 	TArray<int32> Leveling;
@@ -52,19 +56,62 @@ void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow& InData, UEquipme
 		Int += row->Int * Leveling[i];
 	}
 
+	BaseStatus.Add(EStatus::Hp, Hp);
+	BaseStatus.Add(EStatus::Mp, Mp);
+	BaseStatus.Add(EStatus::Shield, 0);
+
+	BaseAbility.Add(EAbility::Str, Str);
+	BaseAbility.Add(EAbility::Dex, Dex);
+	BaseAbility.Add(EAbility::Int, Int);
+
+	// Stat 초기화
 	Stat.Add(EStatus::Hp, MakeUnique<Status>(Hp));
 	Stat.Add(EStatus::Mp, MakeUnique<Status>(Mp));
 	Stat.Add(EStatus::Shield, MakeUnique<Status>(0));
-
-	Ability.Add(EAbility::Str, Str);
-	Ability.Add(EAbility::Dex, Dex);
-	Ability.Add(EAbility::Int, Int);
-
-	Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UCharacterData::CheckIsDead);
-	// TODO : 스킬 반영
-
-	// Debugging();
 }
+
+void UCharacterData::ApplyEquipment(UEquipment* InEquipment)
+{
+	if (!InEquipment)
+		return;
+
+	Equipment = InEquipment;
+	
+	UpdateEquipment(EEquipType::COUNT);
+
+	Equipment->OnEquipmentUpdated.AddUObject(this, &UCharacterData::UpdateEquipment);
+}
+
+void UCharacterData::UpdateEquipment(EEquipType InType)
+{
+	uint8 Cnt = (uint8)EStatus::COUNT;
+	for (uint8 i = 0; i < Cnt; ++i)
+	{
+		EStatus Type = (EStatus)i;
+
+		if (!EquipmentStatus.Contains(Type))
+			EquipmentStatus.Add(Type, 0);
+
+		EquipmentStatus[Type] = Equipment->GetAddictiveStatus(Type);
+
+		// Stat 업데이트
+		uint32 CurVal = Stat[Type]->GetCurrentValue();
+		uint32 NewVal = BaseStatus[Type] + EquipmentStatus[Type];
+		NewVal < CurVal ? Stat[Type]->ChangeMaxValue(NewVal, NewVal) : Stat[Type]->ChangeMaxValue(NewVal);
+	}
+
+	Cnt = (uint8)EAbility::COUNT;
+	for (uint8 i = 0; i < Cnt; ++i)
+	{
+		EAbility Type = (EAbility)i;
+
+		if (!EquipmentAbility.Contains(Type))
+			EquipmentAbility.Add(Type, 0);
+
+		EquipmentAbility[Type] = Equipment->GetAddictiveAbility(Type);
+	}
+}
+
 
 void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -88,6 +135,16 @@ void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	}
 }
 
+void UCharacterData::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	// 종료 시, 구독 해제
+	if (Equipment) 
+		Equipment->OnEquipmentUpdated.RemoveAll(this);
+}
+
+
 void UCharacterData::CheckIsDead(uint32 Max, uint32 Current)
 {
 	if (bIsDead)
@@ -107,7 +164,7 @@ uint32 UCharacterData::GetAttackPower()
 
 	if (Equipment)
 	{
-		// 1. 추가 공격력
+		// 1. 공격력
 		Result += Equipment->GetAddictiveAttack();
 
 		// 2. 무기에 따른 스탯 반영
@@ -118,7 +175,7 @@ uint32 UCharacterData::GetAttackPower()
 			EAbility DamageBase = Weapon->GetDamageBase();
 
 			// TODO : 보정치 매직 넘버 제거 필요
-			Result += Ability[DamageBase] / 3;
+			Result += (BaseAbility[DamageBase] + EquipmentAbility[DamageBase]) / 3;
 		}
 	}
 	
@@ -144,14 +201,4 @@ void UCharacterData::AddBuff(FString& InItemID, FFunctionContext InContext)
 		BuffFunc[InItemID].Duration += InContext.Duration;
 	else
 		BuffFunc.Add(InItemID, InContext);
-}
-
-void UCharacterData::Debugging()
-{
-	PRINT_LOG(TEXT("HP : %u"), Stat[EStatus::Hp]->GetMaxValue());
-	PRINT_LOG(TEXT("MP : %u"), Stat[EStatus::Mp]->GetMaxValue());
-
-	PRINT_LOG(TEXT("STR : %d"), Ability[EAbility::Str]);
-	PRINT_LOG(TEXT("Dex : %d"), Ability[EAbility::Dex]);
-	PRINT_LOG(TEXT("Int : %d"), Ability[EAbility::Int]);
 }

@@ -6,6 +6,8 @@
 #include "Core/GameDataManager.h"
 #include "Data/StageDataRow.h"
 
+#include "TDRPGEnum.h"
+
 void UWavePhase::Enter()
 {
 	ADungeonGameState* GameState = Cast<ADungeonGameState>(State);

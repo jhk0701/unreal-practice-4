@@ -9,6 +9,7 @@
 
 #include "Core/GameDataManager.h"
 #include "Data/StageDataRow.h"
+#include "TDRPGEnum.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 

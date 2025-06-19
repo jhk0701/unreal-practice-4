@@ -6,7 +6,12 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWStatusWindow.generated.h"
 
+enum class EStatus : uint8;
+enum class EAbility : uint8;
+
 class UPlayerManager;
+class UCharacterData;
+
 class UTextBlock;
 class UButton;
 
@@ -57,4 +62,8 @@ public:
 
 	void Bind(UPlayerManager* InPlayer);
 	void Refresh();
+
+private:
+	void GetStatusText(UCharacterData* InCharData, EStatus InType, FText& OutText);
+	void GetAbilityText(UCharacterData* InCharData, EAbility InType, FText& OutText);
 };

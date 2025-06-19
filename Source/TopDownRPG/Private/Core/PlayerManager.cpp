@@ -2,6 +2,7 @@
 
 #include "Core/PlayerManager.h"
 #include "Core/GameDataManager.h"
+#include "TDRPGEnum.h"
 
 #include "Data/CharacterDataRow.h"
 #include "Data/LevelingDataRow.h"

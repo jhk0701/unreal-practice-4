@@ -2,8 +2,9 @@
 
 
 #include "UI/TDRPGUWStatusWindow.h"
-#include "Core/PlayerManager.h"
 
+#include "TDRPGEnum.h"
+#include "Core/PlayerManager.h"
 #include "Core/TDRPGGameState.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/CharacterData.h"
@@ -49,18 +50,38 @@ void UTDRPGUWStatusWindow::Refresh()
 	ATDRPGGameState* GameState = Cast<ATDRPGGameState>(GetWorld()->GetGameState());
 	UCharacterData* CharData = GameState->Player->DataComp;
 
-	uint32 CurHp = CharData->Stat[EStatus::Hp]->GetCurrentValue();
-	uint32 MaxHp = CharData->Stat[EStatus::Hp]->GetMaxValue();
-	HpLabel->SetText(FText::FromString(FString::Printf(TEXT("%u / %u"), CurHp, MaxHp)));
+	
+	FText ContentText;
+	GetStatusText(CharData, EStatus::Hp, ContentText);
+	HpLabel->SetText(ContentText);
+	GetStatusText(CharData, EStatus::Mp, ContentText);
+	MpLabel->SetText(ContentText);
 
-	uint32 CurMp = CharData->Stat[EStatus::Mp]->GetCurrentValue();
-	uint32 MaxMp = CharData->Stat[EStatus::Mp]->GetMaxValue();
-	MpLabel->SetText(FText::FromString(FString::Printf(TEXT("%u / %u"), CurMp, MaxMp)));
 
-	StrLabel->SetText(FText::FromString(FString::FromInt(CharData->Ability[EAbility::Str])));
-	DexLabel->SetText(FText::FromString(FString::FromInt(CharData->Ability[EAbility::Dex])));
-	IntLabel->SetText(FText::FromString(FString::FromInt(CharData->Ability[EAbility::Int])));
+	GetAbilityText(CharData, EAbility::Str, ContentText);
+	StrLabel->SetText(ContentText);
+	GetAbilityText(CharData, EAbility::Dex, ContentText);
+	DexLabel->SetText(ContentText);
+	GetAbilityText(CharData, EAbility::Int, ContentText);
+	IntLabel->SetText(ContentText);
 	
 	AtkLabel->SetText(FText::FromString(FString::FromInt(CharData->GetAttackPower())));
 	DefLabel->SetText(FText::FromString(FString::FromInt(CharData->GetDefensePower())));
+}
+
+void UTDRPGUWStatusWindow::GetStatusText(UCharacterData* InCharData, EStatus InType, FText& OutText)
+{
+	uint32 CurHp = InCharData->Stat[InType]->GetCurrentValue();
+	uint32 MaxHp = InCharData->Stat[InType]->GetMaxValue();
+
+	OutText = FText::FromString(FString::Printf(TEXT("%u / %u"), CurHp, MaxHp));
+}
+
+void UTDRPGUWStatusWindow::GetAbilityText(UCharacterData* InCharData, EAbility InType, FText& OutText)
+{
+	uint32 Base = InCharData->BaseAbility[InType];
+	uint32 Equip = InCharData->EquipmentAbility[InType];
+	uint32 Total = Base + Equip;
+
+	OutText = FText::FromString(FString::Printf(TEXT("%u (%u + %u)"), Total, Base, Equip));
 }

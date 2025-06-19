@@ -45,6 +45,8 @@ public:
 	// 합계 요소 getter
 	inline const int32 GetAddictiveAttack() { return AddictiveAttack; }
 	inline const int32 GetAddictiveDefense() { return AddictiveDefense; }
+	inline const int32 GetAddictiveStatus(EStatus InType) { return AddictiveStatus[InType]; }
+	inline const int32 GetAddictiveAbility(EAbility InType) { return AddictiveAbility[InType]; }
 
 private:
 	void ApplyEquipment(EEquipType InType);

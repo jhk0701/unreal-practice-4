@@ -72,6 +72,8 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
 	void InitManager();
+
+	// TODO : 세이브 기능은 아예 분리할 것
 	void LoadData();
 	void SaveData();
 

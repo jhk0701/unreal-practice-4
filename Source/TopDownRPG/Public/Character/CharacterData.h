@@ -10,6 +10,7 @@
 
 enum class EStatus : uint8;
 enum class EAbility : uint8;
+enum class EEquipType : uint8;
 class UEquipment;
 class UItemFuncBase;
 struct FCharacterDataRow;
@@ -21,12 +22,16 @@ class TOPDOWNRPG_API UCharacterData : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	UPROPERTY(EditAnywhere, Category = "ID")
 	FString CharID;
-
 	TMap<EStatus, TUniquePtr<Status>> Stat;	// 체력, 마나
-	TMap<EAbility, uint32> Ability;	// 힘, 민첩, 지능
+
+	TMap<EStatus, uint32> BaseStatus;
+	TMap<EAbility, uint32> BaseAbility;
+
+	TMap<EStatus, uint32> EquipmentStatus;
+	TMap<EAbility, uint32> EquipmentAbility;
 
 	// TODO: 버프 연산 
 	// 한번에 여러가지 버프를 우선순위대로 연산해야함
@@ -50,7 +55,9 @@ public:
 	UCharacterData();
 
 	void Initialize(uint32 InLv, FCharacterDataRow& InData, UEquipment* InEquipment);
+
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 	inline bool TrySubtractStat(EStatus Type, uint32 Value) { return Stat[Type]->TrySubtract(Value); }
 	inline void SubtractStat(EStatus Type, uint32 Value) { Stat[Type]->Subtract(Value); }
@@ -62,5 +69,9 @@ public:
 
 	void AddBuff(FString& InItemID, FFunctionContext InContext);
 
-	void Debugging();
+private:
+	void ApplyData(uint32 InLv, FCharacterDataRow& InData);
+	void ApplyEquipment(UEquipment* InEquipment);
+	void UpdateEquipment(EEquipType InType);
+
 };
