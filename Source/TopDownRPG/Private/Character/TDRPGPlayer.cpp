@@ -145,7 +145,6 @@ void ATDRPGPlayer::LoadConfig()
 
 	MeshComp->SetAnimInstanceClass(Config->Animation);
 	AnimInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
-
 }
 
 void ATDRPGPlayer::InvokeAttackDelegate()
@@ -155,6 +154,9 @@ void ATDRPGPlayer::InvokeAttackDelegate()
 
 void ATDRPGPlayer::TakeDamage(int32 Damage)
 {
+	uint32 Def = DataComp->GetDefensePower();
+	Damage = FMath::Max<int32>(Damage - Def, 0);
+
 	DataComp->SubtractStat(EStatus::Hp, (uint32)Damage);
 	AnimInst->PlayHit();
 }

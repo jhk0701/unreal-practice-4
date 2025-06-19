@@ -159,7 +159,8 @@ void UCharacterData::CheckIsDead(uint32 Max, uint32 Current)
 
 uint32 UCharacterData::GetAttackPower()
 {
-	// TODO : 최종 공격력 계산
+	// 최종 공격력 계산
+	uint32 AdjustVal = 3; // TODO : 보정치 매직 넘버 제거 필요
 	uint32 Result = 0;
 
 	if (Equipment)
@@ -174,9 +175,12 @@ uint32 UCharacterData::GetAttackPower()
 			UWeaponItem* Weapon = Cast<UWeaponItem>(Equip);
 			EAbility DamageBase = Weapon->GetDamageBase();
 
-			// TODO : 보정치 매직 넘버 제거 필요
-			Result += (BaseAbility[DamageBase] + EquipmentAbility[DamageBase]) / 3;
+			Result += (BaseAbility[DamageBase] + EquipmentAbility[DamageBase]) / AdjustVal;
 		}
+	}
+	else
+	{
+		Result = BaseAbility[EAbility::Str] / AdjustVal;
 	}
 	
 	// TODO : 버프 반영
