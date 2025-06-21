@@ -15,7 +15,4 @@ void UTDRPGInstance::Init()
 
 	UGameDataManager* GameData = GetSubsystem<UGameDataManager>();
 	GameData->LoadGameDatas();
-
-	UPlayerManager* Player = GetSubsystem<UPlayerManager>();
-	Player->LoadData();
 }

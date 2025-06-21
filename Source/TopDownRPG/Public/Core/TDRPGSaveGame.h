@@ -20,7 +20,7 @@ public:
 	FString PlayerID;
 
 	UPROPERTY()
-	FString CharID;
+	FString ClassID;
 
 	UPROPERTY()
 	uint32 CharLv;

@@ -1,8 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Core/PlayerManager.h"
-#include "Core/GameDataManager.h"
+
 #include "TDRPGEnum.h"
+#include "Core/GameDataManager.h"
+
+#include "Kismet/GameplayStatics.h"
+#include "Core/TDRPGSaveGame.h"
 
 #include "Data/CharacterDataRow.h"
 #include "Data/LevelingDataRow.h"
@@ -19,13 +23,6 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-void UPlayerManager::Initialize(FSubsystemCollectionBase& Collection)
-{
-	Super::Initialize(Collection);
-
-	InitManager();
-}
-
 void UPlayerManager::InitManager()
 {
 	Inventory = NewObject<UInventory>();	// 인벤토리 초기화
@@ -33,8 +30,24 @@ void UPlayerManager::InitManager()
 	Equipment = NewObject<UEquipment>();	// 장비창 초기화
 }
 
-void UPlayerManager::LoadData()
+void UPlayerManager::InitData(const FString& InPlayerName, const FString& InCharID)
 {
+	Data = Cast<UTDRPGSaveGame>(UGameplayStatics::CreateSaveGameObject(UTDRPGSaveGame::StaticClass()));
+	
+	Data->PlayerName = FName(InPlayerName);
+	Data->ClassID = InCharID;
+}
+
+void UPlayerManager::LoadData(const FString& InSlotName, const int32 InIndex)
+{
+	UGameplayStatics::AsyncLoadGameFromSlot(
+		InSlotName,
+		InIndex, 
+		FAsyncLoadGameFromSlotDelegate::CreateLambda([&](const FString& SlotName, const int32 Index, USaveGame* SaveGame) 
+			{
+				Data = Cast<UTDRPGSaveGame>(SaveGame);
+			}));
+
 	// TODO : 데이터 불러오기
 	PlayerData = FPlayerData();
 	PlayerData.PlayerName = TEXT("Test Player");
@@ -113,6 +126,7 @@ void UPlayerManager::SaveData()
 	PlayerData.CharExp = Exp->GetCurrentValue();
 
 	PlayerData.Gold = CurrencyGold->GetCurrency();
+
 	// TODO : Save
 }
 

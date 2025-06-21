@@ -18,7 +18,7 @@
 
 UTDRPGUWEquipment::UTDRPGUWEquipment()
 {
-	ConstructorHelpers::FClassFinder<UTDRPGUWEquipmentMenu> TempMenu(TEXT("WidgetBlueprint'/Game/4-UI/WBP_TDRPGUWEquipmentMenu.WBP_TDRPGUWEquipmentMenu_C'"));
+	ConstructorHelpers::FClassFinder<UTDRPGUWEquipmentMenu> TempMenu(TEXT("WidgetBlueprint'/Game/4-UI/SubWBP_EquipmentMenu.SubWBP_EquipmentMenu_C'"));
 	if (TempMenu.Succeeded())
 		MenuWindowFactory = TempMenu.Class;
 }

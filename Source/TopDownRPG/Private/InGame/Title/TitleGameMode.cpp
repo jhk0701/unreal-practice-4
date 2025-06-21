@@ -34,13 +34,14 @@ void ATitleGameMode::StartGame()
 
 void ATitleGameMode::StartNewGame()
 {
-	// TODO : 새로운 게임 데이터
-	// 새 게임 시작 -> 클래스 선택 UI
-	// 아직 클래스가 없음
-	// PlayerName 이름 입력
+	// 새로운 게임 데이터
+	// 새 게임 시작
+	// 1. 클래스 선택 UI
+	// 2. PlayerName 이름 입력
 
 	StartGame();
 }
+
 
 void ATitleGameMode::ContinueGame()
 {

@@ -8,6 +8,8 @@
 #include "Property/Currency.h"
 #include "PlayerManager.generated.h"
 
+class UTDRPGSaveGame;
+
 USTRUCT(BlueprintType)
 struct FPlayerData
 {
@@ -44,6 +46,9 @@ public:
 	UPROPERTY()
 	FPlayerData PlayerData;
 
+	UPROPERTY()
+	TObjectPtr<UTDRPGSaveGame> Data;
+
 	// 캐릭터 클래스
 	UPROPERTY()
 	FName ClassName;
@@ -69,17 +74,16 @@ public:
 	TObjectPtr<class UEquipment> Equipment;
 
 public:
-	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-
+	// virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	void InitManager();
 
 	// TODO : 세이브 기능은 아예 분리할 것
-	void LoadData();
+	void InitData(const FString& InPlayerName, const FString& InCharID);
+	void LoadData(const FString& InSlotName, const int32 InIndex);
 	void SaveData();
 
 	// 레벨 관리
 	inline void AddExp(uint32 Value) { Exp->Add(Value); }
 	void CheckExp(uint32 Max, uint32 Current);
 	void LevelUp();
-
 };
