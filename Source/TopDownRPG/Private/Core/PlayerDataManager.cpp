@@ -37,7 +37,7 @@ void UPlayerDataManager::CreateData(const FString& InPlayerName, const FString& 
 
 	GetGameInstance()->GetSubsystem<UPlayerManager>()->SetPlayerData(Data);
 
-	//초기 세이브
+	// 초기 세이브
 	UGameplayStatics::AsyncSaveGameToSlot(Data, Data->PlayerID, Data->UserIndex);
 }
 
@@ -52,7 +52,7 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 	Data->Equipment.Init(FEquipmentSaveData(), (int32)EEquipType::COUNT);
 	Data->QuickSlot.Init(-1, UQuickSlot::MAX_SIZE);
 
-	// TODO : Save
+	// Save
 	UGameplayStatics::AsyncSaveGameToSlot(Data, Data->PlayerID, Data->UserIndex);
 }
 
@@ -66,5 +66,6 @@ void UPlayerDataManager::LoadData(const FString& InSlotName, const int32 InIndex
 			{
 				Data = Cast<UTDRPGSaveGame>(SaveGame);
 				GetGameInstance()->GetSubsystem<UPlayerManager>()->SetPlayerData(Data);
-			}));
+			})
+	);
 }

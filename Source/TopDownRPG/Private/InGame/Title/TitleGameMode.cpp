@@ -7,6 +7,7 @@
 #include "Core/TDRPGHUD.h"
 #include "Core/UIManager.h"
 #include "UI/TDRPGUWNewGameUI.h"
+#include "UI/TDRPGUWLoadGameUI.h"
 
 #include "Core/PlayerDataManager.h"
 
@@ -40,7 +41,7 @@ void ATitleGameMode::ExitGame()
 void ATitleGameMode::StartGame()
 {
 	// TODO : 레벨 매니저 추가
-	// 비동기 로딩 기능
+	// TODO : 비동기 로딩 기능
 	UGameplayStatics::OpenLevel(this, CommonConst::SCENE_LOBBY);
 }
 
@@ -48,8 +49,7 @@ void ATitleGameMode::StartNewGame()
 {
 	// 새 게임 시작 UI
 	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
-	UTDRPGUWNewGameUI* NewGameUI = UI->GetUI<UTDRPGUWNewGameUI>();
-	NewGameUI->Open();
+	UI->GetUI<UTDRPGUWNewGameUI>()->Open();
 }
 
 void ATitleGameMode::CreateNewGameData(const FString& InClassID, const FString& InName)
@@ -64,8 +64,11 @@ void ATitleGameMode::CreateNewGameData(const FString& InClassID, const FString& 
 
 void ATitleGameMode::ContinueGame()
 {
-	// TODO : 이전 게임 데이터 로드
-	// 게임 데이터 UI
+	// TODO
+	// 1. 이전 게임 데이터 로드
+	// 2. 게임 데이터 UI
+	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
+	UI->GetUI<UTDRPGUWLoadGameUI>()->Open();
 
-	StartGame();
+	// StartGame();
 }
