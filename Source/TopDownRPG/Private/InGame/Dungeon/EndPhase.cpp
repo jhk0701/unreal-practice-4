@@ -4,6 +4,7 @@
 #include "InGame/Dungeon/EndPhase.h"
 #include "InGame/Dungeon/DungeonGameState.h"
 
+#include "TDRPGEnum.h"
 #include "Core/GameDataManager.h"
 #include "Core/PlayerManager.h"
 #include "Core/UIManager.h"
@@ -29,11 +30,11 @@ void UEndPhase::Enter()
 		UGameDataManager* GameData = GameInstance->GetSubsystem<UGameDataManager>();
 		FStageDataRow* StageData = GameData->GetRow<FStageDataRow>(ETableType::Stage, *GameState->CurStageId);
 
-		UPlayerManager* PlayerData = GameInstance->GetSubsystem<UPlayerManager>();
+		UPlayerManager* Player = GameInstance->GetSubsystem<UPlayerManager>();
 
 		// 골드 보상 수령
-		PlayerData->CurrencyGold->Add(StageData->GoldReward);
-		PlayerData->Exp->Add(StageData->ExpReward);
+		Player->AddGold(StageData->GoldReward);
+		Player->AddExp(StageData->ExpReward);
 	}
 
 	// 스테이지 종료 UI

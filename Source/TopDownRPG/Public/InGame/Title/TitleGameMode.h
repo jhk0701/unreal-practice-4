@@ -16,13 +16,20 @@ class TOPDOWNRPG_API ATitleGameMode : public AGameModeBase
 	
 public:
 	ATitleGameMode();
+	void BeginPlay() override;
 
 	UFUNCTION()
 	void ExitGame();
+	
 	UFUNCTION()
 	void StartGame();
+	
 	UFUNCTION()
 	void StartNewGame();
+
+	UFUNCTION()
+	void CreateNewGameData(const FString& InClassID, const FString& InName);
+	
 	UFUNCTION()
 	void ContinueGame();
 };

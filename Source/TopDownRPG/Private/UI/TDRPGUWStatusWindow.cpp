@@ -36,7 +36,7 @@ void UTDRPGUWStatusWindow::Refresh()
 	if (!BindedPlayer)
 		return;
 
-	NameLabel->SetText(FText::FromName(BindedPlayer->PlayerData.PlayerName));
+	NameLabel->SetText(FText::FromName(BindedPlayer->PlayerData->PlayerName));
 	ClassLabel->SetText(FText::FromName(BindedPlayer->ClassName));
 
 	LvLabel->SetText(FText::FromString(FString::Printf(TEXT("Lv. %u"), BindedPlayer->Lv)));

@@ -44,8 +44,6 @@ ATDRPGEnemy::ATDRPGEnemy()
 
 	StateMachine = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSMComp"));
 
-	Tags.Add(CommonConst::EnemyTag);
-
 	// 임시 히트박스
 	HitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
 	HitCollider->SetupAttachment(RootComponent);
@@ -58,9 +56,11 @@ void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Tags.Add(CommonConst::ENEMY_TAG);
+
 	if (UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>())
 	{
-		FCharacterDataRow* Data = GameData->GetRow<FCharacterDataRow>(ETableType::Character, DataComp->CharID);
+		FCharacterDataRow* Data = GameData->GetRow<FCharacterDataRow>(ETableType::Character, DataComp->ClassID);
 		DataComp->Initialize(1, *Data, nullptr);
 	}
 

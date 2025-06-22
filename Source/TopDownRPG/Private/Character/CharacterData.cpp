@@ -41,11 +41,11 @@ void UCharacterData::ApplyData(uint32 InLv, FCharacterDataRow& InData)
 	// 레벨링 반영
 	TArray<int32> Leveling;
 	UGameDataManager* GameData = GetWorld()->GetGameInstance()->GetSubsystem<UGameDataManager>();
-	GameData->GetLeveling(CharID, InLv, Leveling);
+	GameData->GetLeveling(ClassID, InLv, Leveling);
 
 	for (int32 i = 0; i < Leveling.Num(); ++i)
 	{
-		FString key = GameData->GetLevelingKey(CharID, i);
+		FString key = GameData->GetLevelingKey(ClassID, i);
 		FLevelingDataRow* row = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, key);
 
 		Hp += row->Hp * Leveling[i];

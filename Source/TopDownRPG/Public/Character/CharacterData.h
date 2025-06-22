@@ -24,7 +24,8 @@ class TOPDOWNRPG_API UCharacterData : public UActorComponent
 
 public:
 	UPROPERTY(EditAnywhere, Category = "ID")
-	FString CharID;
+	FString ClassID;
+
 	TMap<EStatus, TUniquePtr<Status>> Stat;	// 체력, 마나
 
 	TMap<EStatus, uint32> BaseStatus;

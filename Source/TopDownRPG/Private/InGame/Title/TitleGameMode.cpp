@@ -2,16 +2,28 @@
 
 
 #include "InGame/Title/TitleGameMode.h"
+
+#include "CommonConst.h"
 #include "Core/TDRPGHUD.h"
+#include "Core/UIManager.h"
+#include "UI/TDRPGUWNewGameUI.h"
+
+#include "Core/PlayerDataManager.h"
 
 #include <Kismet/GameplayStatics.h>
 #include <Kismet/KismetSystemLibrary.h>
 
-#include "CommonConst.h"
 
 ATitleGameMode::ATitleGameMode()
 {
 	HUDClass = ATDRPGHUD::StaticClass();
+}
+
+void ATitleGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
 }
 
 void ATitleGameMode::ExitGame()
@@ -34,10 +46,17 @@ void ATitleGameMode::StartGame()
 
 void ATitleGameMode::StartNewGame()
 {
+	// 새 게임 시작 UI
+	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
+	UTDRPGUWNewGameUI* NewGameUI = UI->GetUI<UTDRPGUWNewGameUI>();
+	NewGameUI->Open();
+}
+
+void ATitleGameMode::CreateNewGameData(const FString& InClassID, const FString& InName)
+{
 	// 새로운 게임 데이터
-	// 새 게임 시작
-	// 1. 클래스 선택 UI
-	// 2. PlayerName 이름 입력
+	UPlayerDataManager* PlayerData = GetGameInstance()->GetSubsystem<UPlayerDataManager>();
+	PlayerData->CreateData(InName, InClassID);
 
 	StartGame();
 }

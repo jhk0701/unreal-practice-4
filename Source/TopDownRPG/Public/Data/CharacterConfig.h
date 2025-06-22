@@ -35,6 +35,6 @@ public:
 
 	inline virtual FPrimaryAssetId GetPrimaryAssetId() const override
 	{
-		return FPrimaryAssetId(CommonConst::AssetType_CharacterConfig, GetFName());
+		return FPrimaryAssetId(CommonConst::CONFIG_CHARACTER, GetFName());
 	};
 };

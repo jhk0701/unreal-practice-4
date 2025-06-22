@@ -19,8 +19,7 @@ class TOPDOWNRPG_API UTDRPGUWClassSelection : public UTDRPGUserWidget
 	GENERATED_BODY()
 	
 public:
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta=(BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UButton> NextButton;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
@@ -34,10 +33,13 @@ public:
 	TObjectPtr<UVerticalBox> ClassList;
 
 	// TODO : 임시 클래스 버튼 제거
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Sub", meta = (BindWidget))
 	TObjectPtr<UButton> TempClassButton;
 
 
 public:
 	void InitClassList();
+
+	UFUNCTION()
+	void SelectClass(int32 Index);
 };

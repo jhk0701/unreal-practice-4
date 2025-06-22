@@ -4,35 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
+#include "Core/TDRPGSaveGame.h"
 #include "Character/Status.h"
 #include "Property/Currency.h"
 #include "PlayerManager.generated.h"
-
-class UTDRPGSaveGame;
-
-USTRUCT(BlueprintType)
-struct FPlayerData
-{
-	GENERATED_BODY()
-
-	UPROPERTY()
-	FName PlayerName;
-
-	UPROPERTY()
-	FString PlayerID;
-	
-	UPROPERTY()
-	FString CharID;
-
-	UPROPERTY()
-	uint32 CharLv;
-
-	UPROPERTY()
-	uint32 CharExp;
-
-	UPROPERTY()
-	uint32 Gold;
-};
 
 /**
  * 
@@ -44,20 +19,18 @@ class TOPDOWNRPG_API UPlayerManager : public UGameInstanceSubsystem
 	
 public:
 	UPROPERTY()
-	FPlayerData PlayerData;
-
-	UPROPERTY()
-	TObjectPtr<UTDRPGSaveGame> Data;
-
-	// 캐릭터 클래스
-	UPROPERTY()
-	FName ClassName;
+	TObjectPtr<UTDRPGSaveGame> PlayerData;
 
 	// 레벨
 	UPROPERTY()
 	uint32 Lv;
+
+	UPROPERTY()
+	FName ClassName;
+
 	// 경험치
 	TUniquePtr<Status> Exp;
+	
 	// 골드
 	TUniquePtr<Currency> CurrencyGold;
 	
@@ -74,16 +47,17 @@ public:
 	TObjectPtr<class UEquipment> Equipment;
 
 public:
-	// virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	void InitManager();
 
-	// TODO : 세이브 기능은 아예 분리할 것
-	void InitData(const FString& InPlayerName, const FString& InCharID);
-	void LoadData(const FString& InSlotName, const int32 InIndex);
-	void SaveData();
+	void SetPlayerData(UTDRPGSaveGame* InPlayerData);
+
+	inline FString GetClassID() const { return PlayerData->ClassID; }
 
 	// 레벨 관리
-	inline void AddExp(uint32 Value) { Exp->Add(Value); }
+	void AddExp(uint32 Value);
 	void CheckExp(uint32 Max, uint32 Current);
 	void LevelUp();
+
+	void AddGold(uint32 Value);
 };

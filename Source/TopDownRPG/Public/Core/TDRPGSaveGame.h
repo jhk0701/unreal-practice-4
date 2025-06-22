@@ -14,10 +14,13 @@ class TOPDOWNRPG_API UTDRPGSaveGame : public USaveGame
 
 public:
 	UPROPERTY()
-	FName PlayerName;
+	FString PlayerID;
 
 	UPROPERTY()
-	FString PlayerID;
+	FName PlayerName;
+	
+	UPROPERTY()
+	int32 UserIndex;
 
 	UPROPERTY()
 	FString ClassID;

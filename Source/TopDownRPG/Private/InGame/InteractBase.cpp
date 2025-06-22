@@ -15,7 +15,7 @@ AInteractBase::AInteractBase()
 	InteractCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("Interact Collider"));
 	InteractCollider->InitBoxExtent(FVector(300));
 	InteractCollider->SetGenerateOverlapEvents(true);
-	InteractCollider->SetCollisionProfileName(CommonConst::Interaction_ProfileName);
+	InteractCollider->SetCollisionProfileName(CommonConst::INTERACT_PROFILE);
 }
 
 void AInteractBase::BeginPlay()

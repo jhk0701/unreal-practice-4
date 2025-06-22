@@ -2,18 +2,16 @@
 
 #include "Core/PlayerManager.h"
 
-#include "TDRPGEnum.h"
-#include "Core/GameDataManager.h"
-
-#include "Kismet/GameplayStatics.h"
-#include "Core/TDRPGSaveGame.h"
-
-#include "Data/CharacterDataRow.h"
-#include "Data/LevelingDataRow.h"
-
 #include "Player/Inventory.h"
 #include "Player/QuickSlot.h"
 #include "Player/Equipment.h"
+
+#include <Kismet/GameplayStatics.h>
+#include "TDRPGEnum.h"
+
+#include "Core/GameDataManager.h"
+#include "Data/CharacterDataRow.h"
+#include "Data/LevelingDataRow.h"
 
 #include "Item/ItemBase.h"
 #include "Item/ConsumeItem.h"
@@ -23,6 +21,13 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
+void UPlayerManager::Initialize(FSubsystemCollectionBase& Collection)
+{
+	Super::Initialize(Collection);
+
+	InitManager();
+}
+
 void UPlayerManager::InitManager()
 {
 	Inventory = NewObject<UInventory>();	// 인벤토리 초기화
@@ -30,57 +35,36 @@ void UPlayerManager::InitManager()
 	Equipment = NewObject<UEquipment>();	// 장비창 초기화
 }
 
-void UPlayerManager::InitData(const FString& InPlayerName, const FString& InCharID)
+void UPlayerManager::SetPlayerData(UTDRPGSaveGame* InPlayerData)
 {
-	Data = Cast<UTDRPGSaveGame>(UGameplayStatics::CreateSaveGameObject(UTDRPGSaveGame::StaticClass()));
-	
-	Data->PlayerName = FName(InPlayerName);
-	Data->ClassID = InCharID;
-}
+	if (!InPlayerData)
+		return;
 
-void UPlayerManager::LoadData(const FString& InSlotName, const int32 InIndex)
-{
-	UGameplayStatics::AsyncLoadGameFromSlot(
-		InSlotName,
-		InIndex, 
-		FAsyncLoadGameFromSlotDelegate::CreateLambda([&](const FString& SlotName, const int32 Index, USaveGame* SaveGame) 
-			{
-				Data = Cast<UTDRPGSaveGame>(SaveGame);
-			}));
+	PlayerData = InPlayerData;
 
-	// TODO : 데이터 불러오기
-	PlayerData = FPlayerData();
-	PlayerData.PlayerName = TEXT("Test Player");
-	PlayerData.PlayerID = TEXT("1");
-	PlayerData.CharID = TEXT("1001");
-	PlayerData.CharLv = 5;
-	PlayerData.CharExp = 0;
-	PlayerData.Gold = uint32(100);
-
-	// PlayerData->CharID
 	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
-	FCharacterDataRow* CharData = GameData->GetRow<FCharacterDataRow>(ETableType::Character, PlayerData.CharID);
+	FCharacterDataRow* CharData = GameData->GetRow<FCharacterDataRow>(ETableType::Character, PlayerData->ClassID);
 	ClassName = CharData->CharName;
 
 	// 레벨링 데이터 불러오기
-	Lv = PlayerData.CharLv;
+	Lv = PlayerData->CharLv;
 
 	TArray<int32> Leveling;
-	GameData->GetLeveling(PlayerData.CharID, Lv, Leveling);
+	GameData->GetLeveling(PlayerData->ClassID, Lv, Leveling);
 
 	// Exp 파트 더하기
 	uint32 MaxExp = 0;
 	int32 Cnt = Leveling.Num();
 	for (int32 i = 0; i < Cnt; i++)
 	{
-		FString Key = GameData->GetLevelingKey(PlayerData.CharID, i);
+		FString Key = GameData->GetLevelingKey(PlayerData->ClassID, i);
 		FLevelingDataRow* LevelData = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, *Key);
-		
+
 		MaxExp += LevelData->ExpDemand;
 	}
 
-	Exp = MakeUnique<Status>(MaxExp, PlayerData.CharExp);
-	CurrencyGold = MakeUnique<Currency>(PlayerData.Gold);
+	Exp = MakeUnique<Status>(MaxExp, PlayerData->CharExp);
+	CurrencyGold = MakeUnique<Currency>(PlayerData->Gold);
 
 	Exp->OnValueChanged.AddUObject(this, &UPlayerManager::CheckExp);
 
@@ -120,14 +104,9 @@ void UPlayerManager::LoadData(const FString& InSlotName, const int32 InIndex)
 	Inventory->AddItem(TestWeapon);
 }
 
-void UPlayerManager::SaveData()
+void UPlayerManager::AddExp(uint32 Value)
 {
-	PlayerData.CharLv = Lv;
-	PlayerData.CharExp = Exp->GetCurrentValue();
-
-	PlayerData.Gold = CurrencyGold->GetCurrency();
-
-	// TODO : Save
+	Exp->Add(Value);
 }
 
 void UPlayerManager::CheckExp(uint32 Max, uint32 Current)
@@ -143,10 +122,15 @@ void UPlayerManager::LevelUp()
 	// 레벨링 데이터에서 새로운 레벨의 경험치 요구량 받아오기
 	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
 
-	int32 Index = GameData->GetLevelingIndex(PlayerData.CharID, Lv);
-	FString Key = GameData->GetLevelingKey(PlayerData.CharID, Index);
+	int32 Index = GameData->GetLevelingIndex(PlayerData->ClassID, Lv);
+	FString Key = GameData->GetLevelingKey(PlayerData->ClassID, Index);
 	FLevelingDataRow* LevelData = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, *Key);
 
 	uint32 MaxExp = Exp->GetMaxValue() + LevelData->ExpDemand;
 	Exp->ChangeMaxValue(MaxExp, 0);
+}
+
+void UPlayerManager::AddGold(uint32 Value)
+{
+	CurrencyGold->Add(Value);
 }

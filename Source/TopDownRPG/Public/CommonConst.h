@@ -11,18 +11,19 @@ class TOPDOWNRPG_API CommonConst
 {
 
 public:
- 	static const FName Interaction_ProfileName;
-    static const FName PlayerTag;
-    static const FName EnemyTag;
+ 	static const FName INTERACT_PROFILE;
+    static const FName PLAYER_TAG;
+    static const FName ENEMY_TAG;
 
     static const FString PATH_FORMAT_UI;
     static const FString PATH_FORMAT_DATA_TABLE;
-
     static const FString DATA_TABLE_CONTEXT;
 
     static const FName SCENE_LOBBY;
     static const FName SCENE_GAME;
 
-    static const FName AssetType_CharacterConfig;
+    static const FName CONFIG_CHARACTER;
+
+    static const FString GAME_DATA_SLOT;
 };
 

@@ -69,8 +69,6 @@ ATDRPGPlayer::ATDRPGPlayer()
 	Camera->SetRelativeRotation(FRotator(-60, 0, 0));
 	Camera->bUsePawnControlRotation = false;
 
-	Tags.Add(CommonConst::PlayerTag);
-
 	// 임시 히트박스
 	HitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
 	HitCollider->SetRelativeLocation(FVector(70.f, 0.0f, 0.0f));
@@ -79,13 +77,15 @@ ATDRPGPlayer::ATDRPGPlayer()
 
 	InteractCollider = CreateDefaultSubobject<USphereComponent>(TEXT("InteractionCollider"));
 	InteractCollider->SetSphereRadius(300);
-	InteractCollider->SetCollisionProfileName(CommonConst::Interaction_ProfileName);
+	InteractCollider->SetCollisionProfileName(CommonConst::INTERACT_PROFILE);
 	InteractCollider->SetupAttachment(RootComponent);
 }
 
 void ATDRPGPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Tags.Add(CommonConst::PLAYER_TAG);
 
 	ATDRPGGameState* State = Cast<ATDRPGGameState>(GetWorld()->GetGameState());
 	State->Player = this;
@@ -108,9 +108,9 @@ void ATDRPGPlayer::Initialize()
 	// 데이터 반영
 	UPlayerManager* Player = GameInst->GetSubsystem<UPlayerManager>();
 	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
-	DataComp->CharID = Player->PlayerData.CharID;
+	DataComp->ClassID = Player->GetClassID();
 
-	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, *DataComp->CharID);
+	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, DataComp->ClassID);
 	DataComp->Initialize(Player->Lv, *Data, Player->Equipment);
 
 	// 캐릭터 동적 구성
@@ -135,7 +135,7 @@ void ATDRPGPlayer::LoadConfig()
 	UGameInstance* GameInst = GetGameInstance();
 	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
 
-	FPrimaryAssetId ConfigID(CommonConst::AssetType_CharacterConfig, *DataComp->CharID);
+	FPrimaryAssetId ConfigID(CommonConst::CONFIG_CHARACTER, *DataComp->ClassID);
 	UPrimaryDataAsset* LoadedDataAsset = Database->LoadPrimaryAssetData(ConfigID);
 	UCharacterConfig* Config = Cast<UCharacterConfig>(LoadedDataAsset);
 
