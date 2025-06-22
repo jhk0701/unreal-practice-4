@@ -6,6 +6,7 @@
 #include "Core/TDRPGSaveGame.h"
 
 #include "CommonConst.h"
+#include "TDRPGEnum.h"
 
 #include "Character/Status.h"
 #include "Property/Currency.h"
@@ -14,6 +15,9 @@
 #include "Item/ConsumeItem.h"
 #include "Item/EquipmentItem.h"
 #include "Item/WeaponItem.h"
+
+#include "Player/Inventory.h"
+#include "Player/QuickSlot.h"
 
 #include <Kismet/GameplayStatics.h>
 
@@ -31,6 +35,8 @@ void UPlayerDataManager::CreateData(const FString& InPlayerName, const FString& 
 	Data->CharExp = 0;
 	Data->Gold = uint32(1000);
 
+	GetGameInstance()->GetSubsystem<UPlayerManager>()->SetPlayerData(Data);
+
 	//초기 세이브
 	UGameplayStatics::AsyncSaveGameToSlot(Data, Data->PlayerID, Data->UserIndex);
 }
@@ -41,6 +47,10 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 	Data->CharExp = InPlayer->Exp->GetCurrentValue();
 
 	Data->Gold = InPlayer->CurrencyGold->GetCurrency();
+	
+	Data->Inventory.Init(FInventorySaveData(), UInventory::MAX_SIZE);
+	Data->Equipment.Init(FEquipmentSaveData(), (int32)EEquipType::COUNT);
+	Data->QuickSlot.Init(-1, UQuickSlot::MAX_SIZE);
 
 	// TODO : Save
 	UGameplayStatics::AsyncSaveGameToSlot(Data, Data->PlayerID, Data->UserIndex);
@@ -55,5 +65,6 @@ void UPlayerDataManager::LoadData(const FString& InSlotName, const int32 InIndex
 		FAsyncLoadGameFromSlotDelegate::CreateLambda([&](const FString& SlotName, const int32 Index, USaveGame* SaveGame)
 			{
 				Data = Cast<UTDRPGSaveGame>(SaveGame);
+				GetGameInstance()->GetSubsystem<UPlayerManager>()->SetPlayerData(Data);
 			}));
 }

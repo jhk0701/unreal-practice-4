@@ -9,7 +9,7 @@
 
 UInventory::UInventory()
 {
-	Items.Init(nullptr, MaxSize);
+	Items.Init(nullptr, MAX_SIZE);
 }
 
 bool UInventory::AddItem(UItemBase* InItem)
@@ -48,7 +48,7 @@ bool UInventory::AddItem(UItemBase* InItem)
 
 void UInventory::RemoveItem(uint8 InIdx)
 {
-	if (InIdx >= MaxSize)
+	if (InIdx >= MAX_SIZE)
 		return;
 
 	Items[InIdx] = nullptr;
@@ -58,7 +58,7 @@ void UInventory::RemoveItem(uint8 InIdx)
 bool UInventory::GetBlankSpace(uint8& OutIndex)
 {
 	// 빈공간 찾기
-	for(uint8 i = 0; i < MaxSize; ++i)
+	for(uint8 i = 0; i < MAX_SIZE; ++i)
 	{
 		if (!Items[i])
 		{
@@ -72,7 +72,7 @@ bool UInventory::GetBlankSpace(uint8& OutIndex)
 
 bool UInventory::FindItem(UItemBase* InItem, uint8& OutIndex, TFunction<bool(UItemBase*)> InQuery)
 {
-	for (uint8 i = 0; i < MaxSize; ++i)
+	for (uint8 i = 0; i < MAX_SIZE; ++i)
 	{
 		if (!Items[i])
 			continue;

@@ -20,7 +20,7 @@ class TOPDOWNRPG_API UInventory : public UObject
 	GENERATED_BODY()
 	
 public:
-	uint8 MaxSize = 80;
+	const static uint8 MAX_SIZE = 80;
 
 	// 소비, 재료 아이템 : ID, 갯수
 	// 장비 아이템 : ID, 특수 옵션들

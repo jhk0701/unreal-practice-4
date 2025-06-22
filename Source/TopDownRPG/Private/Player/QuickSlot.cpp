@@ -4,7 +4,7 @@
 
 UQuickSlot::UQuickSlot()
 {
-	Slots.Init(nullptr, QuickSlotMaxSize);
+	Slots.Init(nullptr, MAX_SIZE);
 }
 
 bool UQuickSlot::Register(IQuickSlotHandler* InSlot, uint8& OutIndex)
@@ -24,7 +24,7 @@ bool UQuickSlot::Register(IQuickSlotHandler* InSlot, uint8& OutIndex)
 
 void UQuickSlot::Unregister(uint8 InIdx)
 {
-	if (InIdx >= QuickSlotMaxSize)
+	if (InIdx >= MAX_SIZE)
 		return;
 
 	if (!Slots[InIdx].GetObject())
@@ -40,7 +40,7 @@ void UQuickSlot::Unregister(uint8 InIdx)
 
 void UQuickSlot::Use(uint8 Idx, AActor* Target)
 {
-	if (QuickSlotMaxSize <= Idx || !Slots[Idx].GetObject())
+	if (MAX_SIZE <= Idx || !Slots[Idx].GetObject())
 		return;
 
 	Slots[Idx]->InvokeSlot(Target);
@@ -48,7 +48,7 @@ void UQuickSlot::Use(uint8 Idx, AActor* Target)
 
 bool UQuickSlot::GetBlankSpace(uint8& OutIndex)
 {
-	for (uint8 i = 0; i < QuickSlotMaxSize; ++i)
+	for (uint8 i = 0; i < MAX_SIZE; ++i)
 	{
 		if (!Slots[i].GetObject())
 		{

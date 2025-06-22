@@ -6,6 +6,24 @@
 #include "GameFramework/SaveGame.h"
 #include "TDRPGSaveGame.generated.h"
 
+USTRUCT(BlueprintType)
+struct FInventorySaveData
+{
+	GENERATED_BODY()
+
+	FString ItemID;
+	int32 Quantity;
+};
+
+USTRUCT(BlueprintType)
+struct FEquipmentSaveData
+{
+	GENERATED_BODY()
+
+	FString EquipmentID;
+	int32 EquipType;
+};
+
 
 UCLASS()
 class TOPDOWNRPG_API UTDRPGSaveGame : public USaveGame
@@ -36,10 +54,17 @@ public:
 	uint32 Gold;
 
 	// 인벤토리 정보
+	UPROPERTY(SaveGame)
+	TArray<FInventorySaveData> Inventory;
 
 	// 장비창 정보
+	// EquipType => Index
+	UPROPERTY(SaveGame)
+	TArray<FEquipmentSaveData> Equipment;
 
 	// 큇슬롯 정보
+	UPROPERTY()
+	TArray<int32> QuickSlot;
 };
 
 // 0. 새 게임 기능

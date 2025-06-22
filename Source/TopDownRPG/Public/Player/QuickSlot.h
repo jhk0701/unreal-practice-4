@@ -18,8 +18,7 @@ class TOPDOWNRPG_API UQuickSlot : public UObject
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(EditDefaultsOnly, Category = "QuickSlot")
-	uint8 QuickSlotMaxSize = 4;
+	const static uint8 MAX_SIZE = 4;
 
 	/*
 		우선 1~4번에 소비 아이템 할당 

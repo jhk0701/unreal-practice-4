@@ -40,7 +40,7 @@ void UTDRPGUWQuickSlot::Bind(UQuickSlot* InQuickSlot)
 	BindedQuickSlot->OnSlotUpdated.AddUObject(this, &UTDRPGUWQuickSlot::UpdateSlot);
 	
 	// 기존에 퀵슬롯에 있는 정보 반영
-	uint8 Cnt = InQuickSlot->QuickSlotMaxSize;
+	uint8 Cnt = InQuickSlot->MAX_SIZE;
 	for (uint8 i = 0; i < Cnt; ++i) 
 		UpdateSlot(i);
 }

@@ -49,7 +49,6 @@ void UTDRPGUWStatusWindow::Refresh()
 	// TODO : 캐릭터 인스턴스 데이터 통합 방법 생각
 	ATDRPGGameState* GameState = Cast<ATDRPGGameState>(GetWorld()->GetGameState());
 	UCharacterData* CharData = GameState->Player->DataComp;
-
 	
 	FText ContentText;
 	GetStatusText(CharData, EStatus::Hp, ContentText);
