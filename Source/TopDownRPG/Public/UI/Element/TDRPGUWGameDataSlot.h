@@ -9,6 +9,8 @@
 class UTextBlock;
 class UButton;
 
+DECLARE_DELEGATE_OneParam(FOnSlotClicked, FString&);
+
 /**
  * 
  */
@@ -18,8 +20,13 @@ class TOPDOWNRPG_API UTDRPGUWGameDataSlot : public UTDRPGUserWidget
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY()
 	int32 Index;
+
+	UPROPERTY()
+	FString SlotName;
+
+	FOnSlotClicked OnSlotClicked;
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UTextBlock> NumLabel;
@@ -32,4 +39,13 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UButton> SlotButton;
+
+public:
+	virtual void NativeOnInitialized() override;
+
+	inline void InitSlot(int32 InIndex, FString& InSlotName) { Index = InIndex; SlotName = InSlotName; };
+
+private:
+	UFUNCTION()
+	void OnClickButton();
 };

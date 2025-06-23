@@ -9,6 +9,8 @@
 class UTDRPGSaveGame;
 class UPlayerManager;
 
+DECLARE_DELEGATE(FOnDataLoadCompleted);
+
 /**
  * 
  */
@@ -27,11 +29,13 @@ private:
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
+	inline const TArray<FString>& GetPlayerData() const { return PlayerDataDir; };
+
 	void CreateData(const FString& InPlayerName, const FString& InClassID);
 	
 	void SaveData(const UPlayerManager* InPlayer);
 
-	void LoadData(const FString& InSlotName, const int32 InIndex);
+	void LoadData(const FString& InSlotName, FOnDataLoadCompleted&& Callback);
 
 private:
 	void GetPlayerDatas(TArray<FString>& OutDirectories);

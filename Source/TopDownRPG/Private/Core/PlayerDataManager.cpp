@@ -50,7 +50,8 @@ void UPlayerDataManager::GetPlayerDatas(TArray<FString>& OutDirectories)
 	}
 
 	FString SaveFilePath = SaveDir / TEXT("*.sav");
-	IFileManager::Get().FindFiles(OutDirectories, *SaveFilePath, true, false);
+	IFileManager& FileManager = IFileManager::Get();
+	FileManager.FindFiles(OutDirectories, *SaveFilePath, true, false);
 }
 
 void UPlayerDataManager::CreateData(const FString& InPlayerName, const FString& InClassID)
@@ -88,16 +89,19 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 	UGameplayStatics::AsyncSaveGameToSlot(Data, Data->PlayerID, Data->UserIndex);
 }
 
-void UPlayerDataManager::LoadData(const FString& InSlotName, const int32 InIndex)
+void UPlayerDataManager::LoadData(const FString& InSlotName, FOnDataLoadCompleted&& Callback)
 {
 	// 데이터 불러오기
 	UGameplayStatics::AsyncLoadGameFromSlot(
 		InSlotName,
-		InIndex,
-		FAsyncLoadGameFromSlotDelegate::CreateLambda([&](const FString& SlotName, const int32 Index, USaveGame* SaveGame)
+		0,
+		FAsyncLoadGameFromSlotDelegate::CreateLambda(
+			[this, Callback](const FString& SlotName, const int32 Index, USaveGame* SaveGame)
 			{
 				Data = Cast<UTDRPGSaveGame>(SaveGame);
 				GetGameInstance()->GetSubsystem<UPlayerManager>()->SetPlayerData(Data);
+
+				Callback.ExecuteIfBound();
 			})
 	);
 }

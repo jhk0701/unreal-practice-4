@@ -9,6 +9,8 @@
 class UScrollBox;
 class UTDRPGUWGameDataSlot;
 
+DECLARE_DELEGATE(FOnDataLoadCompleted);
+
 /**
  * 
  */
@@ -16,20 +18,32 @@ UCLASS()
 class TOPDOWNRPG_API UTDRPGUWLoadGameUI : public UTDRPGUserWidget
 {
 	GENERATED_BODY()
-	
+
 public:
+	FOnDataLoadCompleted LoadCompleteCallback;
+	
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|Scroll")
+	int32 ScrollIndex = 0;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SlotCount")
-	int8 SlotCount = 10;
+	int32 SlotCount = 15;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<UScrollBox> SlotContainer;
+	TObjectPtr<UScrollBox> Scroll;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")
 	TSubclassOf<UTDRPGUWGameDataSlot> SlotFactory;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement")
+	TArray<UTDRPGUWGameDataSlot*> SlotInstances;
 
 public:
 	virtual void NativeOnInitialized() override;
 
 private:
 	void InitSlots();
+	void ShowScroll(int32 InIndex);
+	void OnSlotClicked(FString& InSlotName);
+	void InvokeLoadCompleteCallback();
 };
