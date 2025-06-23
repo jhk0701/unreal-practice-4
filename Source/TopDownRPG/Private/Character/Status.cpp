@@ -3,21 +3,21 @@
 
 #include "Character/Status.h"
 
-Status::Status(uint32 InitMaxValue) : 
+FStatus::FStatus(uint32 InitMaxValue) :
 	MaxValue(InitMaxValue),
 	CurValue(MaxValue)
 {
 }
 
-Status::Status(uint32 InitMaxValue, uint32 InitCurrentValue) : 
+FStatus::FStatus(uint32 InitMaxValue, uint32 InitCurrentValue) :
 	MaxValue(InitMaxValue),
 	CurValue(InitCurrentValue)
 {
 }
 
-Status::~Status(){}
+FStatus::~FStatus(){}
 
-uint32 Status::Add(uint32 Value)
+uint32 FStatus::Add(uint32 Value)
 {
 	CurValue = FMath::Min(CurValue + Value, MaxValue);
 	OnValueChanged.Broadcast(MaxValue, CurValue);
@@ -25,7 +25,7 @@ uint32 Status::Add(uint32 Value)
 	return CurValue;
 }
 
-uint32 Status::Subtract(uint32 Value)
+uint32 FStatus::Subtract(uint32 Value)
 {
 	if (CurValue < Value)
 		Value = CurValue;
@@ -35,7 +35,7 @@ uint32 Status::Subtract(uint32 Value)
 	return CurValue;
 }
 
-bool Status::TrySubtract(uint32 Value)
+bool FStatus::TrySubtract(uint32 Value)
 {
 	if (CurValue < Value)
 		return false;
@@ -44,7 +44,7 @@ bool Status::TrySubtract(uint32 Value)
 	return true;
 }
 
-void Status::ChangeMaxValue(uint32 NewMaxValue)
+void FStatus::ChangeMaxValue(uint32 NewMaxValue)
 {
 	MaxValue = NewMaxValue;
 	CurValue = NewMaxValue;
@@ -52,7 +52,7 @@ void Status::ChangeMaxValue(uint32 NewMaxValue)
 	OnValueChanged.Broadcast(NewMaxValue, NewMaxValue);
 }
 
-void Status::ChangeMaxValue(uint32 NewMaxValue, uint32 NewCurValue)
+void FStatus::ChangeMaxValue(uint32 NewMaxValue, uint32 NewCurValue)
 {
 	MaxValue = NewMaxValue;
 	CurValue = NewCurValue;

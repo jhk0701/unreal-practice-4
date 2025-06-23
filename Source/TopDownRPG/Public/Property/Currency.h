@@ -6,7 +6,7 @@
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnCyurrencyChanged, uint32 InValue);
 
-class TOPDOWNRPG_API Currency
+class TOPDOWNRPG_API FCurrency
 {
 public:
 	FOnCyurrencyChanged OnValueChanged;
@@ -15,9 +15,9 @@ protected:
 	uint32 Value;
 
 public:
-	Currency();
-	Currency(uint32 InValue);
-	~Currency();
+	FCurrency();
+	FCurrency(uint32 InValue);
+	~FCurrency();
 
 	inline const uint32 GetCurrency() { return Value; }
 	void Add(uint32 InValue);

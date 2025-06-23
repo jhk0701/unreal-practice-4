@@ -65,9 +65,9 @@ void UCharacterData::ApplyData(uint32 InLv, FCharacterDataRow& InData)
 	BaseAbility.Add(EAbility::Int, Int);
 
 	// Stat 초기화
-	Stat.Add(EStatus::Hp, MakeUnique<Status>(Hp));
-	Stat.Add(EStatus::Mp, MakeUnique<Status>(Mp));
-	Stat.Add(EStatus::Shield, MakeUnique<Status>(0));
+	Stat.Add(EStatus::Hp, MakeUnique<FStatus>(Hp));
+	Stat.Add(EStatus::Mp, MakeUnique<FStatus>(Mp));
+	Stat.Add(EStatus::Shield, MakeUnique<FStatus>(0));
 }
 
 void UCharacterData::ApplyEquipment(UEquipment* InEquipment)

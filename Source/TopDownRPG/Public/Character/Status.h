@@ -6,13 +6,13 @@
 
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnValueChanged, uint32, uint32);
 
-class TOPDOWNRPG_API Status
+class TOPDOWNRPG_API FStatus
 {
 
 public:
-	Status(uint32 InitMaxValue);
-	Status(uint32 InitMaxValue, uint32 InitCurrentValue);
-	~Status();
+	FStatus(uint32 InitMaxValue);
+	FStatus(uint32 InitMaxValue, uint32 InitCurrentValue);
+	~FStatus();
 
 	FOnValueChanged OnValueChanged;
 

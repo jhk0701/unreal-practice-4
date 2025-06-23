@@ -3,26 +3,26 @@
 
 #include "Property/Currency.h"
 
-Currency::Currency() : Value(0)
+FCurrency::FCurrency() : Value(0)
 {
 }
 
-Currency::Currency(uint32 InValue) : Value(InValue)
+FCurrency::FCurrency(uint32 InValue) : Value(InValue)
 {
 }
 
-Currency::~Currency()
+FCurrency::~FCurrency()
 {
 }
 
-void Currency::Add(uint32 InValue)
+void FCurrency::Add(uint32 InValue)
 {	
 	Value += InValue;
 
 	OnValueChanged.Broadcast(Value);
 }
 
-bool Currency::SafeSub(uint32 InValue)
+bool FCurrency::SafeSub(uint32 InValue)
 {
 	if(Value - InValue < 0)
 		return false;

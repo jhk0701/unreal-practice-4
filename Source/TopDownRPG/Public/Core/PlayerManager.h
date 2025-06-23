@@ -29,10 +29,10 @@ public:
 	FName ClassName;
 
 	// 경험치
-	TUniquePtr<Status> Exp;
+	TUniquePtr<FStatus> Exp;
 	
 	// 골드
-	TUniquePtr<Currency> CurrencyGold;
+	TUniquePtr<FCurrency> CurrencyGold;
 	
 	// 인벤토리
 	UPROPERTY()

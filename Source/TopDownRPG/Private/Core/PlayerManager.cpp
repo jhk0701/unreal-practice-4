@@ -63,8 +63,8 @@ void UPlayerManager::SetPlayerData(UTDRPGSaveGame* InPlayerData)
 		MaxExp += LevelData->ExpDemand;
 	}
 
-	Exp = MakeUnique<Status>(MaxExp, PlayerData->CharExp);
-	CurrencyGold = MakeUnique<Currency>(PlayerData->Gold);
+	Exp = MakeUnique<FStatus>(MaxExp, PlayerData->CharExp);
+	CurrencyGold = MakeUnique<FCurrency>(PlayerData->Gold);
 
 	Exp->OnValueChanged.AddUObject(this, &UPlayerManager::CheckExp);
 

@@ -26,7 +26,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "ID")
 	FString ClassID;
 
-	TMap<EStatus, TUniquePtr<Status>> Stat;	// 체력, 마나
+	TMap<EStatus, TUniquePtr<FStatus>> Stat;	// 체력, 마나
 
 	TMap<EStatus, uint32> BaseStatus;
 	TMap<EAbility, uint32> BaseAbility;
