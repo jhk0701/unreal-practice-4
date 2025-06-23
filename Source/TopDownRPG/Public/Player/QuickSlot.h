@@ -34,8 +34,8 @@ public:
 
 public:
 	UQuickSlot();
-
-	bool Register(IQuickSlotHandler* InSlot, uint8& OutIndex);
+	void InitSlot(uint8 InIndex, IQuickSlotHandler* InSlot);
+	bool Register(IQuickSlotHandler* InSlot);
 	void Unregister(uint8 InIdx);
 
 	void Use(uint8 Idx, AActor* Target);

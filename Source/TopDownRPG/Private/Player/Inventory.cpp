@@ -12,6 +12,14 @@ UInventory::UInventory()
 	Items.Init(nullptr, MAX_SIZE);
 }
 
+void UInventory::InitInventory(uint8 InIdx, UItemBase* InItem)
+{
+	if (!InItem)
+		return;
+
+	Items[InIdx] = InItem;
+}
+
 bool UInventory::AddItem(UItemBase* InItem)
 {
 	// 인벤토리에 동일한 아이템이 있는지 체크

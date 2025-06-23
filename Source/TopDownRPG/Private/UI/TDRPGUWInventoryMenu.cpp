@@ -75,9 +75,7 @@ void UTDRPGUWInventoryMenu::RegisterQuickSlot()
 		else
 		{
 			uint8 Index = 0; // 등록
-
-			if (PlayerManager->QuickSlot->Register(SlotHandler, Index))
-				SlotHandler->RegisterSlot(Index);
+			PlayerManager->QuickSlot->Register(SlotHandler);
 		}
 	}
 

@@ -63,5 +63,8 @@ public:
 
 private:
 	void InitLvAndExp(uint32 InLv, uint32 InExp);
-
+	void InitGold(uint32 InGold);
+	void InitInventory();
+	void InitEquipment();
+	void InitQuickSlot();
 };

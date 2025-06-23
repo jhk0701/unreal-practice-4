@@ -93,6 +93,7 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 		if (Item)
 		{
 			Data->Inventory[i].ItemID = Item->GetItemID();
+			Data->Inventory[i].ItemType = (int32)Item->GetItemType();
 			Data->Inventory[i].Quantity = Item->Quantity;
 		}
 		else
@@ -119,9 +120,8 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 	Cnt = InPlayer->QuickSlot->Slots.Num();
 	for (int32 i = 0; i < Cnt; ++i) 
 	{
-		TScriptInterface<IQuickSlotHandler> QuickSlot = InPlayer->QuickSlot->Slots[i];
-		if (QuickSlot) 
-			Data->QuickSlot[i] = QuickSlot->GetIndex();
+		if (InPlayer->QuickSlot->Slots[i])
+			Data->QuickSlot[i] = InPlayer->QuickSlot->Slots[i]->GetIndex();
 		else
 			Data->QuickSlot[i] = -1;
 	}

@@ -7,14 +7,25 @@ UQuickSlot::UQuickSlot()
 	Slots.Init(nullptr, MAX_SIZE);
 }
 
-bool UQuickSlot::Register(IQuickSlotHandler* InSlot, uint8& OutIndex)
+void UQuickSlot::InitSlot(uint8 InIndex, IQuickSlotHandler* InSlot)
 {
-	if (GetBlankSpace(OutIndex))
-	{
-		Slots[OutIndex].SetInterface(InSlot);
-		Slots[OutIndex].SetObject(InSlot->_getUObject());
+	Slots[InIndex].SetInterface(InSlot);
+	Slots[InIndex].SetObject(InSlot->_getUObject());
 
-		OnSlotUpdated.Broadcast(OutIndex);
+	InSlot->RegisterSlot(InIndex);
+}
+
+bool UQuickSlot::Register(IQuickSlotHandler* InSlot)
+{
+	uint8 Index;
+	if (GetBlankSpace(Index))
+	{
+		Slots[Index].SetInterface(InSlot);
+		Slots[Index].SetObject(InSlot->_getUObject());
+
+		InSlot->RegisterSlot(Index);
+
+		OnSlotUpdated.Broadcast(Index);
 
 		return true;
 	}

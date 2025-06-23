@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CommonConst.h"
 #include "GameFramework/SaveGame.h"
 #include "TDRPGSaveGame.generated.h"
 
@@ -12,9 +13,10 @@ struct FInventorySaveData
 	GENERATED_BODY()
 
 	FString ItemID;
+	int32 ItemType;
 	int32 Quantity;
 
-	FInventorySaveData() : ItemID(TEXT("0")), Quantity(0) {};
+	FInventorySaveData() : ItemID(CommonConst::EMPTY_ITEM_ID), ItemType(-1), Quantity(0) {};
 };
 
 USTRUCT(BlueprintType)
@@ -25,7 +27,7 @@ struct FEquipmentSaveData
 	FString EquipmentID;
 	int32 EquipType;
 
-	FEquipmentSaveData() : EquipmentID(TEXT("0")), EquipType(-1) {};
+	FEquipmentSaveData() : EquipmentID(CommonConst::EMPTY_ITEM_ID), EquipType(-1) {};
 };
 
 

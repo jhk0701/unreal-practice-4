@@ -1,10 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Core/PlayerManager.h"
-
-#include "Player/Inventory.h"
-#include "Player/QuickSlot.h"
-#include "Player/Equipment.h"
+#include "Core/TDRPGSaveGame.h"
 
 #include <Kismet/GameplayStatics.h>
 #include "TDRPGEnum.h"
@@ -12,6 +9,15 @@
 #include "Core/GameDataManager.h"
 #include "Data/CharacterDataRow.h"
 #include "Data/LevelingDataRow.h"
+
+#include "Core/ItemFactory.h"
+#include "Player/Inventory.h"
+#include "Player/QuickSlot.h"
+#include "Player/Equipment.h"
+
+#include "Item/ItemBase.h"
+#include "Item/EquipmentItem.h"
+#include "Item/WeaponItem.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -44,10 +50,12 @@ void UPlayerManager::SetPlayerData(UTDRPGSaveGame* InPlayerData)
 	// 레벨링 데이터 불러오기
 	InitLvAndExp(PlayerData->CharLv, PlayerData->CharExp);
 
-	if (CurrencyGold)
-		CurrencyGold.Reset();
+	// 재화 반영
+	InitGold(PlayerData->Gold);
 
-	CurrencyGold = MakeUnique<FCurrency>(PlayerData->Gold);
+	InitInventory();
+	InitEquipment();
+	InitQuickSlot();
 }
 
 void UPlayerManager::InitLvAndExp(uint32 InLv, uint32 InExp)
@@ -74,6 +82,67 @@ void UPlayerManager::InitLvAndExp(uint32 InLv, uint32 InExp)
 	Exp = MakeUnique<FStatus>(MaxExp, PlayerData->CharExp);
 
 	Exp->OnValueChanged.AddUObject(this, &UPlayerManager::CheckExp);
+}
+
+void UPlayerManager::InitGold(uint32 InGold)
+{
+	if (CurrencyGold)
+		CurrencyGold.Reset();
+
+	CurrencyGold = MakeUnique<FCurrency>(InGold);
+}
+
+void UPlayerManager::InitInventory()
+{
+	UItemFactory* ItemFactory = GetGameInstance()->GetSubsystem<UItemFactory>();
+
+	int32 Cnt = PlayerData->Inventory.Num();
+	for (int32 i = 0; i < Cnt; ++i) 
+	{
+		auto& ItemData = PlayerData->Inventory[i];
+
+		if (ItemData.ItemID == CommonConst::EMPTY_ITEM_ID)
+			continue;
+
+		UItemBase* Item = ItemFactory->GetItem((ETableType)ItemData.ItemType, ItemData.ItemID, ItemData.Quantity);
+		Inventory->InitInventory(i, Item);
+	}
+}
+
+void UPlayerManager::InitEquipment()
+{
+	UItemFactory* ItemFactory = GetGameInstance()->GetSubsystem<UItemFactory>();
+
+	int32 Cnt = PlayerData->Equipment.Num();
+	for (int32 i = 0; i < Cnt; ++i) 
+	{
+		auto& EquipData = PlayerData->Equipment[i];
+		
+		if (EquipData.EquipmentID == CommonConst::EMPTY_ITEM_ID)
+			continue;
+
+		EEquipType Type = (EEquipType)EquipData.EquipType;
+		UEquipmentItem* EquipItem = nullptr;
+
+		Type == EEquipType::Weapon ? 
+			EquipItem = ItemFactory->GetItem<UWeaponItem>(EquipData.EquipmentID) :
+			EquipItem = ItemFactory->GetItem<UEquipmentItem>(EquipData.EquipmentID);
+
+		if (EquipItem)
+			Equipment->Equip(Type, EquipItem);
+	}
+}
+
+
+void UPlayerManager::InitQuickSlot()
+{
+	int32 Cnt = PlayerData->QuickSlot.Num();
+	for (int32 i = 0; i < Cnt; ++i) 
+	{
+		int32 Index = PlayerData->QuickSlot[i];
+		if (Index >= 0)
+			QuickSlot->InitSlot(Index, Cast<IQuickSlotHandler>(Inventory->Items[Index]));
+	}
 }
 
 

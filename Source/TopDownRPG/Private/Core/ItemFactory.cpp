@@ -3,6 +3,7 @@
 
 #include "Core/ItemFactory.h"
 
+#include "TDRPGEnum.h"
 #include "Item/ItemBase.h"
 #include "Item/ConsumeItem.h"
 #include "Item/EquipmentItem.h"
@@ -45,3 +46,29 @@
 //
 //	// Inventory->AddItem(TestWeapon);
 //}
+
+UItemBase* UItemFactory::GetItem(ETableType ItemType, const FString& InItemID, uint32 InQuantity)
+{
+	if (InItemID == CommonConst::EMPTY_ITEM_ID)
+		return nullptr;
+
+	UItemBase* Result = nullptr;
+
+	switch (ItemType)
+	{
+	case ETableType::Weapon:
+		Result = GetItem<UWeaponItem>(InItemID, InQuantity);
+		break;
+	case ETableType::Equipment:
+		Result = GetItem<UEquipmentItem>(InItemID, InQuantity);
+		break;
+	case ETableType::Consume:
+		Result = GetItem<UConsumeItem>(InItemID, InQuantity);
+		break;
+	case ETableType::Ingredient:
+		Result = GetItem<UItemBase>(InItemID, InQuantity);
+		break;
+	}
+
+	return Result;
+}

@@ -31,9 +31,9 @@ public:
 
 public:
 	UInventory();
+	void InitInventory(uint8 InIdx, UItemBase* InItem);
 
 	bool AddItem(UItemBase* InItem);
-
 	void RemoveItem(uint8 InIdx);
 
 private:

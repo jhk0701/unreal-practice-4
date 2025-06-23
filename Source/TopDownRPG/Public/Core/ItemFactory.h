@@ -3,11 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Subsystems/GameInstanceSubsystem.h"
+#include "CommonConst.h"
 #include "Templates/EnableIf.h"
+#include "Subsystems/GameInstanceSubsystem.h"
 #include "ItemFactory.generated.h"
 
 class UItemBase;
+enum class ETableType :uint8;
 /**
  * 
  */
@@ -19,10 +21,16 @@ class TOPDOWNRPG_API UItemFactory : public UGameInstanceSubsystem
 public:
 	template<typename T>
 	inline TEnableIf<TIsDerivedFrom<T, UItemBase>::Value, T*>::Type
-	GetItem(const FString& InItemID, const uint32 InQuantity = 1)
+	GetItem(const FString& InItemID, uint32 InQuantity = 1)
 	{
+		if (InItemID == CommonConst::EMPTY_ITEM_ID)
+			return nullptr;
+
 		T* Item = NewObject<T>();
 		Item->Initialize(InItemID, GetGameInstance(), InQuantity);
+
+		return Item;
 	};
 
+	UItemBase* GetItem(ETableType ItemType, const FString& InItemID, uint32 InQuantity = 1);
 };
