@@ -21,6 +21,38 @@
 
 #include <Kismet/GameplayStatics.h>
 
+#include <Misc/Paths.h>
+#include <HAL/FileManager.h>
+
+#include "TopDownRPG/TopDownRPG.h"
+
+
+void UPlayerDataManager::Initialize(FSubsystemCollectionBase& Collection)
+{
+	Super::Initialize(Collection);
+
+	GetPlayerDatas(PlayerDataDir);
+}
+
+void UPlayerDataManager::GetPlayerDatas(TArray<FString>& OutDirectories)
+{
+	OutDirectories.Empty();
+
+	// 메모하기 : 프로젝트 SaveGames 경로 찾기
+	FString SaveDir = FPaths::ProjectSavedDir() / TEXT("SaveGames");
+
+	// PRINT_LOG(TEXT("[SaveDir] %s"), *SaveDir);
+	
+	if (!FPaths::DirectoryExists(SaveDir))
+	{
+		PRINT_LOG(TEXT("There is no save directory"));
+		return;
+	}
+
+	FString SaveFilePath = SaveDir / TEXT("*.sav");
+	IFileManager::Get().FindFiles(OutDirectories, *SaveFilePath, true, false);
+}
+
 void UPlayerDataManager::CreateData(const FString& InPlayerName, const FString& InClassID)
 {
 	// 초기 데이터 생성

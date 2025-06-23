@@ -21,6 +21,4 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "NewGame")
 	FString NewPlayerName;
-
-	TArray<FString> SlotNames;
 };

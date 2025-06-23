@@ -2,7 +2,6 @@
 
 
 #include "InGame/Title/TitleGameMode.h"
-#include "InGame/Title/TitleGameState.h"
 
 #include "CommonConst.h"
 #include "Core/TDRPGHUD.h"
@@ -14,10 +13,6 @@
 
 #include <Kismet/GameplayStatics.h>
 #include <Kismet/KismetSystemLibrary.h>
-
-#include <Misc/Paths.h>
-#include <HAL/PlatformFile.h>
-#include <HAL/PlatformFileManager.h>
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -71,24 +66,9 @@ void ATitleGameMode::CreateNewGameData(const FString& InClassID, const FString& 
 
 void ATitleGameMode::ContinueGame()
 {
-	// TODO
-	// 1. 이전 게임 데이터 로드
-	ATitleGameState* State = GetGameState<ATitleGameState>();
-	if (State) 
-	{
-		FString SaveDir = FPaths::ProjectSavedDir() / TEXT("SaveGames");
-		// PRINT_LOG(TEXT("[SaveDir] %s"), *SaveDir);
-		// IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
-		// IPlatformFile::FDirectoryVisitor* Visitor = new 
-
-		return;
-	}
-	
+	// 1. 이전 게임 데이터 로드 PlayerDataManager에서 처리
 	// 2. 게임 데이터 UI
 	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
-	UI->GetUI<UTDRPGUWLoadGameUI>()->Open();
-
-	// UI에 로드한 데이터 리스트 전달
-	
-	// StartGame();
+	UTDRPGUWLoadGameUI* LoadUI = UI->GetUI<UTDRPGUWLoadGameUI>();
+	LoadUI->Open();
 }

@@ -3,3 +3,16 @@
 
 #include "UI/TDRPGUWLoadGameUI.h"
 
+void UTDRPGUWLoadGameUI::NativeOnInitialized()
+{
+	Super::NativeOnInitialized();
+
+	InitSlots();
+}
+
+void UTDRPGUWLoadGameUI::InitSlots()
+{
+	if (!SlotFactory)  return;
+
+	
+}

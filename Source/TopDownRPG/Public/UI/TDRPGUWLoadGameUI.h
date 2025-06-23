@@ -18,6 +18,9 @@ class TOPDOWNRPG_API UTDRPGUWLoadGameUI : public UTDRPGUserWidget
 	GENERATED_BODY()
 	
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SlotCount")
+	int8 SlotCount = 10;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UScrollBox> SlotContainer;
 
@@ -25,5 +28,8 @@ public:
 	TSubclassOf<UTDRPGUWGameDataSlot> SlotFactory;
 
 public:
-	// void InitSlot();
+	virtual void NativeOnInitialized() override;
+
+private:
+	void InitSlots();
 };
