@@ -13,11 +13,6 @@
 #include "Data/CharacterDataRow.h"
 #include "Data/LevelingDataRow.h"
 
-#include "Item/ItemBase.h"
-#include "Item/ConsumeItem.h"
-#include "Item/EquipmentItem.h"
-#include "Item/WeaponItem.h"
-
 #include "TopDownRPG/TopDownRPG.h"
 
 
@@ -41,13 +36,23 @@ void UPlayerManager::SetPlayerData(UTDRPGSaveGame* InPlayerData)
 		return;
 
 	PlayerData = InPlayerData;
-
+	
 	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
 	FCharacterDataRow* CharData = GameData->GetRow<FCharacterDataRow>(ETableType::Character, PlayerData->ClassID);
 	ClassName = CharData->CharName;
 
 	// 레벨링 데이터 불러오기
-	Lv = PlayerData->CharLv;
+	InitLvAndExp(PlayerData->CharLv, PlayerData->CharExp);
+
+	if (CurrencyGold)
+		CurrencyGold.Reset();
+
+	CurrencyGold = MakeUnique<FCurrency>(PlayerData->Gold);
+}
+
+void UPlayerManager::InitLvAndExp(uint32 InLv, uint32 InExp)
+{
+	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
 
 	TArray<int32> Leveling;
 	GameData->GetLeveling(PlayerData->ClassID, Lv, Leveling);
@@ -63,46 +68,14 @@ void UPlayerManager::SetPlayerData(UTDRPGSaveGame* InPlayerData)
 		MaxExp += LevelData->ExpDemand;
 	}
 
+	if (Exp)
+		Exp.Reset();
+
 	Exp = MakeUnique<FStatus>(MaxExp, PlayerData->CharExp);
-	CurrencyGold = MakeUnique<FCurrency>(PlayerData->Gold);
 
 	Exp->OnValueChanged.AddUObject(this, &UPlayerManager::CheckExp);
-
-
-	// TODO: 테스트 코드 삭제
-	UGameInstance* GameInst = GetGameInstance();
-
-	// 테스트용 일반 아이템
-	UItemBase* TestIngre_1 = NewObject<UItemBase>();
-	UItemBase* TestIngre_2 = NewObject<UItemBase>();
-	UItemBase* TestIngre_3 = NewObject<UItemBase>();
-
-	TestIngre_1->Initialize(TEXT("0001"), GameInst, 5);
-	TestIngre_2->Initialize(TEXT("0002"), GameInst, 10);
-	TestIngre_3->Initialize(TEXT("0003"), GameInst, 20);
-
-	Inventory->AddItem(TestIngre_1);
-	Inventory->AddItem(TestIngre_2);
-	Inventory->AddItem(TestIngre_3);
-
-	// 테스트용 소비 아이템
-	UConsumeItem* TestConsume = NewObject<UConsumeItem>();
-	TestConsume->Initialize(TEXT("0001"), GameInst, 30);
-
-	Inventory->AddItem(TestConsume);
-
-	// 테스트용 장비 아이템 지급
-	UEquipmentItem* TestEquip = NewObject<UEquipmentItem>();
-	TestEquip->Initialize(TEXT("0001"), GameInst, 1);
-
-	Inventory->AddItem(TestEquip);
-
-	// 테스트용 무기 아이템 지급
-	UWeaponItem* TestWeapon = NewObject<UWeaponItem>();
-	TestWeapon->Initialize(TEXT("0001"), GameInst, 1);
-
-	Inventory->AddItem(TestWeapon);
 }
+
 
 void UPlayerManager::AddExp(uint32 Value)
 {

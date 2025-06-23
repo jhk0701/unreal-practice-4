@@ -60,4 +60,8 @@ public:
 	void LevelUp();
 
 	void AddGold(uint32 Value);
+
+private:
+	void InitLvAndExp(uint32 InLv, uint32 InExp);
+
 };
