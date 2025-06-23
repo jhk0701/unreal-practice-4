@@ -22,12 +22,11 @@ class TOPDOWNRPG_API UEquipment : public UObject
 	GENERATED_BODY()
 
 public:
+	TMap<EEquipType, UEquipmentItem*> Equipment;
+
 	FOnEquipmentUpdated OnEquipmentUpdated;
 
 private:
-	UPROPERTY()
-	TMap<EEquipType, UEquipmentItem*> Equipment;
-
 	// 공통요소 합산
 	int32 AddictiveAttack;
 	int32 AddictiveDefense;

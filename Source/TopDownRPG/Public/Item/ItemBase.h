@@ -27,6 +27,7 @@ public:
 	FOnItemUpdated OnItemUpdated;
 
 protected:
+	UPROPERTY()
 	FString ItemID;
 
 	// TODO : 개선 방법 없는지 생각해야함
@@ -42,7 +43,7 @@ public:
 	virtual FItemDataRow* GetData();
 	virtual ETableType GetItemType();
 
-	inline const FString& GetItemID() { return ItemID; }
+	inline const FString& GetItemID() const { return ItemID; }
 
 	FString EnumToString(const ERarity InValue) const;
 };

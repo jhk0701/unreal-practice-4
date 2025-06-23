@@ -48,8 +48,8 @@ public:
 
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-	void InitManager();
 
+	void InitManager();
 	void SetPlayerData(UTDRPGSaveGame* InPlayerData);
 
 	inline FString GetClassID() const { return PlayerData->ClassID; }

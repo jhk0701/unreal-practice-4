@@ -13,6 +13,8 @@ struct FInventorySaveData
 
 	FString ItemID;
 	int32 Quantity;
+
+	FInventorySaveData() : ItemID(TEXT("0")), Quantity(0) {};
 };
 
 USTRUCT(BlueprintType)
@@ -22,6 +24,8 @@ struct FEquipmentSaveData
 
 	FString EquipmentID;
 	int32 EquipType;
+
+	FEquipmentSaveData() : EquipmentID(TEXT("0")), EquipType(-1) {};
 };
 
 
@@ -39,6 +43,7 @@ public:
 	
 	UPROPERTY()
 	int32 UserIndex;
+
 
 	UPROPERTY()
 	FString ClassID;

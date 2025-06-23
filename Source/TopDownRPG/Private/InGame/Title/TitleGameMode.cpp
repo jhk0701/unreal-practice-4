@@ -70,6 +70,8 @@ void ATitleGameMode::ContinueGame()
 	// 2. 게임 데이터 UI
 	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
 	UTDRPGUWLoadGameUI* LoadUI = UI->GetUI<UTDRPGUWLoadGameUI>();
+
 	LoadUI->LoadCompleteCallback.BindUObject(this, &ATitleGameMode::StartGame);
+
 	LoadUI->Open();
 }

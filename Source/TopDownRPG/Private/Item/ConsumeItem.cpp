@@ -67,3 +67,8 @@ void UConsumeItem::Use(AActor* Subject)
 
 	OnItemUpdated.Broadcast(this);
 }
+
+uint8 UConsumeItem::GetIndex()
+{
+	return InventoryIndex;
+}

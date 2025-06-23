@@ -20,3 +20,5 @@ const FName CommonConst::SCENE_GAME = FName(TEXT("2-Game"));
 const FName CommonConst::CONFIG_CHARACTER = FName(TEXT("CharacterConfig"));
 
 const FString CommonConst::GAME_DATA_SLOT = FString(TEXT("GameDataSlot"));
+
+const FString CommonConst::EMPTY_ITEM_ID = FString(TEXT("0000"));

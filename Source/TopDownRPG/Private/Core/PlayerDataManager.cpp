@@ -17,6 +17,7 @@
 #include "Item/WeaponItem.h"
 
 #include "Player/Inventory.h"
+#include "Player/Equipment.h"
 #include "Player/QuickSlot.h"
 
 #include <Kismet/GameplayStatics.h>
@@ -68,6 +69,10 @@ void UPlayerDataManager::CreateData(const FString& InPlayerName, const FString& 
 	Data->CharExp = 0;
 	Data->Gold = uint32(1000);
 
+	Data->Inventory.Init(FInventorySaveData(), UInventory::MAX_SIZE);
+	Data->Equipment.Init(FEquipmentSaveData(), (int32)EEquipType::COUNT);
+	Data->QuickSlot.Init(-1, UQuickSlot::MAX_SIZE);
+
 	GetGameInstance()->GetSubsystem<UPlayerManager>()->SetPlayerData(Data);
 
 	// 초기 세이브
@@ -78,12 +83,48 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 {
 	Data->CharLv = InPlayer->Lv;
 	Data->CharExp = InPlayer->Exp->GetCurrentValue();
-
 	Data->Gold = InPlayer->CurrencyGold->GetCurrency();
-	
-	Data->Inventory.Init(FInventorySaveData(), UInventory::MAX_SIZE);
-	Data->Equipment.Init(FEquipmentSaveData(), (int32)EEquipType::COUNT);
-	Data->QuickSlot.Init(-1, UQuickSlot::MAX_SIZE);
+
+	// Inventory
+	int32 Cnt = InPlayer->Inventory->Items.Num();
+	for (int32 i = 0; i < Cnt; ++i) 
+	{
+		UItemBase* Item = InPlayer->Inventory->Items[i];
+		if (Item)
+		{
+			Data->Inventory[i].ItemID = Item->GetItemID();
+			Data->Inventory[i].Quantity = Item->Quantity;
+		}
+		else
+			Data->Inventory[i].ItemID = CommonConst::EMPTY_ITEM_ID;
+	}
+
+	// Equipment
+	Cnt = (int32)EEquipType::COUNT;
+	for (int32 i = 0; i < Cnt; ++i)
+	{
+		EEquipType Type = (EEquipType)i;
+
+		UEquipmentItem* Equipment = InPlayer->Equipment->GetEquipment(Type);
+		if (Equipment)
+		{
+			Data->Equipment[i].EquipmentID = Equipment->GetItemID();
+			Data->Equipment[i].EquipType = i;
+		}
+		else
+			Data->Equipment[i].EquipmentID = CommonConst::EMPTY_ITEM_ID;
+	}
+
+	// QuickSlot
+	Cnt = InPlayer->QuickSlot->Slots.Num();
+	for (int32 i = 0; i < Cnt; ++i) 
+	{
+		TScriptInterface<IQuickSlotHandler> QuickSlot = InPlayer->QuickSlot->Slots[i];
+		if (QuickSlot) 
+			Data->QuickSlot[i] = QuickSlot->GetIndex();
+		else
+			Data->QuickSlot[i] = -1;
+	}
 
 	// Save
 	UGameplayStatics::AsyncSaveGameToSlot(Data, Data->PlayerID, Data->UserIndex);

@@ -25,5 +25,8 @@ public:
     static const FName CONFIG_CHARACTER;
 
     static const FString GAME_DATA_SLOT;
+
+    // item
+    static const FString EMPTY_ITEM_ID;
 };
 
