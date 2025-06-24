@@ -6,6 +6,8 @@
 #include "Character/NPC/TDRPGNPCBase.h"
 #include "NPCMerchant.generated.h"
 
+struct FMerchantDataRow;
+
 /**
  * 
  */
@@ -18,8 +20,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPCData")
 	FString MerchantID;
 
+
 public:
 	ANPCMerchant();
 	virtual void BeginPlay() override;
 	virtual void Interact() override;
+
+	void InitMerchant();
+
+	FMerchantDataRow* GetData();
+
 };

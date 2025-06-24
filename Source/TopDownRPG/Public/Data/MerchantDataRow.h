@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include <Engine/DataTable.h>
+#include "TDRPGEnum.h"
+#include "Data/InnerStringArray.h"
 #include "MerchantDataRow.generated.h"
+
 
 USTRUCT(BlueprintType)
 struct TOPDOWNRPG_API FMerchantDataRow : public FTableRowBase
@@ -24,14 +27,6 @@ public:
 	int32 ResellCost;
 
 	UPROPERTY(EditAnywhere)
-	TArray<FString> IngredientID;
+	TMap<ETableType, FInnerStringArray> ProductID;
 
-	UPROPERTY(EditAnywhere)
-	TArray<FString> ConsumeID;
-
-	UPROPERTY(EditAnywhere)
-	TArray<FString> EquipmentID;
-
-	UPROPERTY(EditAnywhere)
-	TArray<FString> WeaponID;
 };

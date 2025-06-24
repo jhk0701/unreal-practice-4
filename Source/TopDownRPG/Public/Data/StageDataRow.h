@@ -7,7 +7,6 @@
 #include <Engine/DataTable.h>
 #include "StageDataRow.generated.h"
 
-struct FInnerIntArray;
 
 USTRUCT(BlueprintType)
 struct TOPDOWNRPG_API FStageDataRow : public FTableRowBase
