@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Character/NPC/TDRPGNPCBase.h"
-#include "Inherit/Interactable.h"
 #include "NPCMerchant.generated.h"
 
 /**
@@ -14,6 +13,10 @@ UCLASS()
 class TOPDOWNRPG_API ANPCMerchant : public ATDRPGNPCBase
 {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPCData")
+	FString MerchantID;
 
 public:
 	ANPCMerchant();
