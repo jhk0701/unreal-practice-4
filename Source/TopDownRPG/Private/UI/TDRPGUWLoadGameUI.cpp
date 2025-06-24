@@ -9,10 +9,15 @@
 #include <Components/Button.h>
 #include <Components/TextBlock.h>
 
+#include "TopDownRPG/TopDownRPG.h"
+
 
 void UTDRPGUWLoadGameUI::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
+
+	Scroll->OnUserScrolled.AddUniqueDynamic(this, &UTDRPGUWLoadGameUI::OnScrollChanged);
+	CloseButton->OnClicked.AddUniqueDynamic(this, &UTDRPGUserWidget::Close);
 
 	InitSlots();
 	ShowScroll(0);
@@ -63,6 +68,35 @@ void UTDRPGUWLoadGameUI::ShowScroll(int32 InIndex)
 		SlotInst->PlayerInfoLabel->SetText(FText());
 
 		SlotInst->SetVisibility(ESlateVisibility::Visible);
+	}
+}
+
+void UTDRPGUWLoadGameUI::OnScrollChanged(float InOffset)
+{
+	OffsetDelta = InOffset - CurrentOffset;
+	CurrentOffset = InOffset;
+
+	if (FMath::IsNearlyZero(CurrentOffset) && FMath::IsNearlyZero(OffsetDelta))
+	{
+		// Page Up
+		// PRINT_LOG(TEXT("Page Up"));
+		
+		ShowScroll(FMath::Max(ScrollIndex - SlotCount, 0));
+	}
+	else if (FMath::IsNearlyEqual(CurrentOffset, Scroll->GetScrollOffsetOfEnd()) && FMath::IsNearlyZero(OffsetDelta))
+	{
+		// Page Down
+		// PRINT_LOG(TEXT("Page Down"));
+
+		UPlayerDataManager* PlayerData = GetGameInstance()->GetSubsystem<UPlayerDataManager>();
+		int32 DataCnt = PlayerData->GetPlayerData().Num();
+
+		int32 NewIndex = ScrollIndex + SlotCount;
+		NewIndex >= DataCnt ? NewIndex = DataCnt - SlotCount - 1 : NewIndex;
+
+		ShowScroll(NewIndex);
+
+		Scroll->SetScrollOffset(10);
 	}
 }
 

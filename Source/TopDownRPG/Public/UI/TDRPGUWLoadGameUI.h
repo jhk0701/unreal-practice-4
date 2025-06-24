@@ -7,6 +7,7 @@
 #include "TDRPGUWLoadGameUI.generated.h"
 
 class UScrollBox;
+class UButton;
 class UTDRPGUWGameDataSlot;
 
 DECLARE_DELEGATE(FOnDataLoadCompleted);
@@ -32,11 +33,20 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UScrollBox> Scroll;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<UButton> CloseButton;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")
 	TSubclassOf<UTDRPGUWGameDataSlot> SlotFactory;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement")
 	TArray<UTDRPGUWGameDataSlot*> SlotInstances;
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Scroll")
+	float CurrentOffset;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Scroll")
+	float OffsetDelta;
 
 public:
 	virtual void NativeOnInitialized() override;
@@ -44,6 +54,10 @@ public:
 private:
 	void InitSlots();
 	void ShowScroll(int32 InIndex);
+
+	UFUNCTION()
+	void OnScrollChanged(float InOffset);
+
 	void OnSlotClicked(FString& InSlotName);
 	void InvokeLoadCompleteCallback();
 };

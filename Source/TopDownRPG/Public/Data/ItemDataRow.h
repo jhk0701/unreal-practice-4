@@ -30,4 +30,7 @@ public:
 	// UPROPERTY(EditAnywhere)
 	// FSoftObjectPath Mesh;
 
+	UPROPERTY(EditAnywhere) // 기본 가격
+	uint32 Price;
+
 };

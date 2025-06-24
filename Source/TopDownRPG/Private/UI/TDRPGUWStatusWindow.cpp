@@ -44,7 +44,7 @@ void UTDRPGUWStatusWindow::Refresh()
 	uint32 CurExp = BindedPlayer->Exp->GetCurrentValue();
 	uint32 MaxExp = BindedPlayer->Exp->GetMaxValue();
 	float ExpPer = (float)CurExp / MaxExp;
-	ExpLabel->SetText(FText::FromString(FString::Printf(TEXT("%0.2f% (%u / %u)"), ExpPer, CurExp, MaxExp)));
+	ExpLabel->SetText(FText::FromString(FString::Printf(TEXT("%0.2f %% (%u / %u)"), ExpPer, CurExp, MaxExp)));
 
 	// TODO : 캐릭터 인스턴스 데이터 통합 방법 생각
 	ATDRPGGameState* GameState = Cast<ATDRPGGameState>(GetWorld()->GetGameState());
@@ -55,7 +55,6 @@ void UTDRPGUWStatusWindow::Refresh()
 	HpLabel->SetText(ContentText);
 	GetStatusText(CharData, EStatus::Mp, ContentText);
 	MpLabel->SetText(ContentText);
-
 
 	GetAbilityText(CharData, EAbility::Str, ContentText);
 	StrLabel->SetText(ContentText);

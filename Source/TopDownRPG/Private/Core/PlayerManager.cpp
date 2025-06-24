@@ -60,8 +60,10 @@ void UPlayerManager::SetPlayerData(UTDRPGSaveGame* InPlayerData)
 
 void UPlayerManager::InitLvAndExp(uint32 InLv, uint32 InExp)
 {
-	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
+	Lv = InLv;
 
+	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
+	
 	TArray<int32> Leveling;
 	GameData->GetLeveling(PlayerData->ClassID, Lv, Leveling);
 
