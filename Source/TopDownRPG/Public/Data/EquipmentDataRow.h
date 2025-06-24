@@ -7,6 +7,8 @@
 #include "EquipmentDataRow.generated.h"
 
 enum class EEquipType : uint8;
+enum class EAbility : uint8;
+enum class EStatus : uint8;
 
 USTRUCT(BlueprintType)
 struct TOPDOWNRPG_API FEquipmentDataRow : public FItemDataRow

@@ -17,6 +17,9 @@ enum class ETableType : uint8
 	Consume,
 	Ingredient,
 
+	// 
+	Merchant,
+
 	COUNT
 };
 

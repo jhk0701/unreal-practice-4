@@ -10,7 +10,6 @@
 #include <Engine/AssetManager.h>
 #include "GameDataManager.generated.h"
 
-
 enum class ETableType : uint8;
 
 DECLARE_ENUM_TO_STRING(ETableType);
