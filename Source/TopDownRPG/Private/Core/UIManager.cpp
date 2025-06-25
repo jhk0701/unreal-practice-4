@@ -4,7 +4,7 @@
 #include "Core/UIManager.h"
 
 #include "UI/UIConfig.h"
-#include "UI/TDRPGUserWidget.h"
+#include "UI/UIBase.h"
 
 #include <Components/CanvasPanelSlot.h>
 
@@ -17,7 +17,7 @@ void UUIManager::InitUIConfig(UUIConfig* InConfig)
 
 	for (auto& Element : InConfig->Elements) 
 	{
-		UTDRPGUserWidget* Widget = CreateWidget<UTDRPGUserWidget>(GetWorld(), Element.WidgetClass);
+		UUIBase* Widget = CreateWidget<UUIBase>(GetWorld(), Element.WidgetClass);
 		
 		if (!Widget) 
 			continue;

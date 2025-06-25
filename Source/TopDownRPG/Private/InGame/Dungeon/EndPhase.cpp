@@ -10,7 +10,7 @@
 #include "Core/UIManager.h"
 #include "Data/StageDataRow.h"
 
-#include "UI/TDRPGUWStageResult.h"
+#include "UI/UIStageResult.h"
 
 #include <GameFramework/PlayerController.h>
 #include <Kismet/GameplayStatics.h>
@@ -40,7 +40,7 @@ void UEndPhase::Enter()
 	// 스테이지 종료 UI
 	UUIManager* UI = GameInstance->GetSubsystem<UUIManager>();
 
-	if (UTDRPGUWStageResult* ResultUI = UI->GetUI<UTDRPGUWStageResult>())
+	if (UUIStageResult* ResultUI = UI->GetUI<UUIStageResult>())
 	{
 		ResultUI->SetResult(bIsCleared);
 		ResultUI->Open();

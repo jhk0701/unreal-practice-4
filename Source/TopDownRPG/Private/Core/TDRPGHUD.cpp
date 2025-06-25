@@ -3,7 +3,7 @@
 #include "Core/TDRPGHUD.h"
 #include "Core/UIManager.h"
 
-#include "UI/TDRPGUWCanvas.h"
+#include "UI/UICanvas.h"
 
 
 void ATDRPGHUD::PostInitializeComponents()

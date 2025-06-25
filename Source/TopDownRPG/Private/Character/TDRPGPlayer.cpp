@@ -15,12 +15,12 @@
 
 #include "InGame/Dungeon/DungeonGameState.h"
 
-#include "UI/TDRPGUWPlayerUI.h"
-#include "UI/TDRPGUWStatusBar.h"
-#include "UI/TDRPGUWQuickSlot.h"
-#include "UI/TDRPGUWInventory.h"
-#include "UI/TDRPGUWEquipment.h"
-#include "UI/TDRPGUWStatusWindow.h"
+#include "UI/UIPlayerHUD.h"
+#include "UI/UIStatusBar.h"
+#include "UI/UIQuickSlot.h"
+#include "UI/UIInventory.h"
+#include "UI/UIEquipment.h"
+#include "UI/UIStatusWindow.h"
 
 #include "Data/CharacterDataRow.h"
 #include "Data/CharacterConfig.h"
@@ -118,7 +118,7 @@ void ATDRPGPlayer::Initialize()
 	
 	// UI 바인딩
 	UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>();
-	if (UTDRPGUWPlayerUI* PlayerUI = UIManager->GetUI<UTDRPGUWPlayerUI>()) 
+	if (UUIPlayerHUD* PlayerUI = UIManager->GetUI<UUIPlayerHUD>())
 	{
 		PlayerUI->StatusBar->Bind(this);
 		PlayerUI->Inventory->Bind(Player);

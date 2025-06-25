@@ -7,7 +7,7 @@
 #include "UIConfig.generated.h"
 
 
-class UTDRPGUserWidget;
+class UUIBase;
 
 USTRUCT(BlueprintType)
 struct FUIElementData 
@@ -21,7 +21,7 @@ struct FUIElementData
 	*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSubclassOf<UTDRPGUserWidget> WidgetClass;
+	TSubclassOf<UUIBase> WidgetClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FVector2D Position;

@@ -5,7 +5,7 @@
 #include "CommonConst.h"
 
 #include "Core/UIManager.h"
-#include "UI/TDRPGUWMerchantUI.h"
+#include "UI/UIMerchantUI.h"
 
 #include "TDRPGEnum.h"
 #include "Core/GameDataManager.h"
@@ -22,7 +22,7 @@ ANPCMerchant::ANPCMerchant(){}
 void ANPCMerchant::Interact()
 {
 	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
-	UTDRPGUWMerchantUI* MerchantUI = UI->GetUI<UTDRPGUWMerchantUI>();
+	UUIMerchantUI* MerchantUI = UI->GetUI<UUIMerchantUI>();
 	
 	// 데이터 연결
 	MerchantUI->SetMerchant(GetData());

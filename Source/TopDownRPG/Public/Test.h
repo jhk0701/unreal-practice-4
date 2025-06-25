@@ -21,7 +21,7 @@ protected:
 	TObjectPtr<UStaticMeshComponent> MainMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Testing)
-	TSoftObjectPtr<class UTDRPGUWTitle> UI;
+	TSoftObjectPtr<class UUITitle> UI;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Testing)
 	FSoftObjectPath UIPath;
