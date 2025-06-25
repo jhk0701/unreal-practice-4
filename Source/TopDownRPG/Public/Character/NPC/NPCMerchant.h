@@ -16,18 +16,14 @@ class TOPDOWNRPG_API ANPCMerchant : public ATDRPGNPCBase
 {
 	GENERATED_BODY()
 
-public:
+protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPCData")
 	FString MerchantID;
 
-
 public:
 	ANPCMerchant();
-	virtual void BeginPlay() override;
+
 	virtual void Interact() override;
 
-	void InitMerchant();
-
 	FMerchantDataRow* GetData();
-
 };

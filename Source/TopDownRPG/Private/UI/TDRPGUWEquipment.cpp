@@ -2,7 +2,7 @@
 
 
 #include "UI/TDRPGUWEquipment.h"
-#include "UI/Element/TDRPGUWSlotBase.h"
+#include "UI/Element/TDRPGUWInventorySlot.h"
 #include "UI/TDRPGUWEquipmentMenu.h"
 
 #include "TDRPGEnum.h"
@@ -36,7 +36,7 @@ void UTDRPGUWEquipment::NativeOnInitialized()
 		int32 Cnt = SlotContainer->GetChildrenCount();
 		for (int32 i = 0; i < Cnt; ++i) 
 		{
-			if (UTDRPGUWSlotBase* SlotInst = Cast<UTDRPGUWSlotBase>(SlotContainer->GetChildAt(i)))
+			if (UTDRPGUWInventorySlot* SlotInst = Cast<UTDRPGUWInventorySlot>(SlotContainer->GetChildAt(i)))
 			{
 				EEquipType Type = (EEquipType)i;
 
@@ -107,7 +107,8 @@ void UTDRPGUWEquipment::ShowMenu(UTDRPGUWSlotBase* InSlot)
 	}
 
 	MenuWindow->Open();
-	MenuWindow->Update(InSlot->GetBindedItem());
+	if(UTDRPGUWInventorySlot* ItemSlot = Cast<UTDRPGUWInventorySlot>(InSlot))
+		MenuWindow->Update(ItemSlot->GetBindedItem());
 }
 
 void UTDRPGUWEquipment::HideMenu()

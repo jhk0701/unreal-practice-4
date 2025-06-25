@@ -2,7 +2,7 @@
 
 
 #include "UI/TDRPGUWInventory.h"
-#include "UI/Element/TDRPGUWSlotBase.h"
+#include "UI/Element/TDRPGUWInventorySlot.h"
 #include "UI/TDRPGUWItemDetail.h"
 #include "UI/TDRPGUWInventoryMenu.h"
 #include "UI/TDRPGUWCanvas.h"
@@ -48,7 +48,7 @@ void UTDRPGUWInventory::NativeOnInitialized()
 	
 	for (int32 i = 0; i < SlotCnt; ++i)
 	{
-		UTDRPGUWSlotBase* SlotInst = Cast<UTDRPGUWSlotBase>(SlotContainer->GetChildAt(i));
+		UTDRPGUWInventorySlot* SlotInst = Cast<UTDRPGUWInventorySlot>(SlotContainer->GetChildAt(i));
 		
 		// 슬롯 마우스 호버링 이벤트들 등록
 		SlotInst->OnCursorEnter.AddUObject(this, &UTDRPGUWInventory::ShowItemDetail);
@@ -150,7 +150,9 @@ void UTDRPGUWInventory::ShowItemDetail(UTDRPGUWSlotBase* InSlot)
 	}
 
 	DetailWindow->Open();
-	DetailWindow->Update(InSlot->GetBindedItem());
+
+	if(UTDRPGUWInventorySlot* ItemSlot = Cast<UTDRPGUWInventorySlot>(InSlot))
+		DetailWindow->Update(ItemSlot->GetBindedItem());
 }
 
 void UTDRPGUWInventory::HideItemDetail()
@@ -171,7 +173,9 @@ void UTDRPGUWInventory::ShowItemMenu(UTDRPGUWSlotBase* InSlot)
 	}
 
 	MenuWindow->Open();
-	MenuWindow->Update(InSlot->GetBindedItem());
+
+	if (UTDRPGUWInventorySlot* ItemSlot = Cast<UTDRPGUWInventorySlot>(InSlot))
+		MenuWindow->Update(ItemSlot->GetBindedItem());
 }
 
 void UTDRPGUWInventory::HideItemMenu()

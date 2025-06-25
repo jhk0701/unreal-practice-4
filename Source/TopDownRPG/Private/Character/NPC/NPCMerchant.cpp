@@ -19,32 +19,16 @@
 
 ANPCMerchant::ANPCMerchant(){}
 
-void ANPCMerchant::BeginPlay()
-{
-	Super::BeginPlay();		
-		
-	InitMerchant();
-}
-
 void ANPCMerchant::Interact()
 {
-	PRINT_LOG(TEXT("NPC Merchant Interact"));
-
 	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
-
 	UTDRPGUWMerchantUI* MerchantUI = UI->GetUI<UTDRPGUWMerchantUI>();
 	
-	MerchantUI->BindData();
 	// 데이터 연결
+	MerchantUI->SetMerchant(GetData());
 	MerchantUI->Open();
 }
 
-void ANPCMerchant::InitMerchant()
-{
-	// TODO : 취급 데이터 받아오기
-	// Data->IngredientID
-
-}
 
 FMerchantDataRow* ANPCMerchant::GetData()
 {

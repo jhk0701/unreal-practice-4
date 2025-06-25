@@ -6,7 +6,10 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWMerchantUI.generated.h"
 
+struct FMerchantDataRow;
 class UButton;
+class UTDRPGUWSlotBase;
+class UUniformGridPanel;
 
 /**
  * 
@@ -20,8 +23,17 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<UUniformGridPanel> MerchantSideContainer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<UUniformGridPanel> PlayerSideContainer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")
+	TSubclassOf<UTDRPGUWSlotBase> SlotFactory;
+
 public:
 	virtual void NativeOnInitialized() override;
 
-	void BindData();
+	void SetMerchant(FMerchantDataRow* InMerchantData);
 };

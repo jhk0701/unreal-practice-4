@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/Element/TDRPGUWSlotBase.h"
+#include "UI/Element/TDRPGUWInventorySlot.h"
 #include "TDRPGUWMenuSlot.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UTDRPGUWMenuSlot : public UTDRPGUWSlotBase
+class TOPDOWNRPG_API UTDRPGUWMenuSlot : public UTDRPGUWInventorySlot
 {
 	GENERATED_BODY()
 

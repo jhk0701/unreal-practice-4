@@ -11,7 +11,9 @@ class UInventory;
 class UTextBlock;
 class UButton;
 class UUniformGridPanel;
+
 class UTDRPGUWSlotBase;
+class UTDRPGUWInventorySlot;
 class UTDRPGUWItemDetail;
 class UTDRPGUWInventoryMenu;
 
@@ -34,7 +36,7 @@ public:
 
 	// Body
 	UPROPERTY()
-	TArray<UTDRPGUWSlotBase*> Slots;
+	TArray<UTDRPGUWInventorySlot*> Slots;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> SlotContainer;

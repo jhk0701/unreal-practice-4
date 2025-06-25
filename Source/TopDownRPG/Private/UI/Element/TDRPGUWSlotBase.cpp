@@ -3,15 +3,9 @@
 
 #include "UI/Element/TDRPGUWSlotBase.h"
 
-#include "Core/ResourceLoadManager.h"
-#include "Item/ItemBase.h"
-#include "Data/ItemDataRow.h"
-
 #include <Components/TextBlock.h>
 #include <Components/Image.h>
 #include <Components/Button.h>
-
-#include "TopDownRPG/TopDownRPG.h"
 
 
 void UTDRPGUWSlotBase::NativeOnInitialized()
@@ -28,26 +22,19 @@ void UTDRPGUWSlotBase::NativeOnMouseEnter(const FGeometry& InGeometry, const FPo
 {
 	Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
 
-	if (Item)
-		OnCursorEnter.Broadcast(this);
+	OnCursorEnter.Broadcast(this);
+		
 }
 
 void UTDRPGUWSlotBase::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
 {
 	Super::NativeOnMouseLeave(InMouseEvent);
 
-	if (Item)
-		OnCursorLeave.Broadcast();
+	OnCursorLeave.Broadcast();
 }
 
 void UTDRPGUWSlotBase::Clear()
 {
-	if (Item)
-	{
-		Item->OnItemUpdated.RemoveAll(this);
-		Item = nullptr;
-	}
-
 	// Optional이라 방어코드 추가 // TODO : 이 부분 구조적으로 해결 필요
 	if (QuantityLabel)
 		QuantityLabel->SetVisibility(ESlateVisibility::Hidden);
@@ -56,54 +43,6 @@ void UTDRPGUWSlotBase::Clear()
 	IconImage->SetBrushResourceObject(nullptr);
 }
 
-void UTDRPGUWSlotBase::Bind(UItemBase* InItem)
-{
-	if (!InItem)
-		return;
-
-	if (Item)
-		Item->OnItemUpdated.RemoveAll(this);
-		
-	Item = InItem;
-	Item->OnItemUpdated.AddUObject(this, &UTDRPGUWSlotBase::Refresh);
-
-	Refresh(Item);
-}
-
-void UTDRPGUWSlotBase::Refresh(UItemBase* InItem)
-{
-	if (!InItem)
-		return;
-
-	PRINT_LOG(TEXT("Refresh"));
-
-	FItemDataRow* Data = InItem->GetData();
-
-	if (QuantityLabel) 
-	{
-		QuantityLabel->SetVisibility(ESlateVisibility::Visible);
-		QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), InItem->Quantity)));
-	}
-
-	UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
-	Resource->Load(Data->Thumbnail, FOnResourceLoaded::CreateUObject(this, &UTDRPGUWSlotBase::OnIconLoaded));
-}
-
-void UTDRPGUWSlotBase::OnIconLoaded(UObject* Loaded)
-{
-	if (!Loaded) 
-		return;
-
-	if (UTexture2D* Tex = Cast<UTexture2D>(Loaded))
-	{
-		IconImage->SetBrushFromTexture(Tex, true);
-		IconImage->SetOpacity(1.0f);
-		IconImage->SetVisibility(ESlateVisibility::Visible);
-	}
-}
-
 void UTDRPGUWSlotBase::InvokeButtonClick()
 {
-	if (Item)
-		OnButtonClicked.Broadcast(this);
 }

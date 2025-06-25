@@ -8,7 +8,7 @@
 
 class UQuickSlot;
 class UHorizontalBox;
-class UTDRPGUWSlotBase;
+class UTDRPGUWMenuSlot;
 
 /**
  * 
@@ -26,7 +26,7 @@ public:
 	TObjectPtr<UHorizontalBox> SlotContainer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement)
-	TArray<UTDRPGUWSlotBase*> SlotList;
+	TArray<UTDRPGUWMenuSlot*> SlotList;
 
 public:
 	virtual void NativeOnInitialized() override;

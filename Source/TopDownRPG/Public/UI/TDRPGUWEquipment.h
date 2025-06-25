@@ -11,6 +11,7 @@ enum class EEquipType : uint8;
 
 class UTDRPGUWEquipmentMenu;
 class UTDRPGUWSlotBase;
+class UTDRPGUWInventorySlot;
 class UButton;
 class UVerticalBox;
 
@@ -33,7 +34,7 @@ public:
 	TObjectPtr<UVerticalBox> SlotContainer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement")
-	TMap<EEquipType, UTDRPGUWSlotBase*> Slots;
+	TMap<EEquipType, UTDRPGUWInventorySlot*> Slots;
 
 	// SubUI
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|Factory")

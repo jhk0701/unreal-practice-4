@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "UI/TDRPGUserWidget.h"
-#include "Item/ItemBase.h"
 #include "TDRPGUWSlotBase.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnSlotInteractStarted, UTDRPGUWSlotBase*);
@@ -39,25 +38,14 @@ public:
 	// 슬롯에 대한 클릭 이벤트
 	FOnSlotInteractStarted OnButtonClicked;
 
-protected:
-	UItemBase* Item = nullptr;
-
 public:
-	virtual void Bind(UItemBase* InItem);
-	virtual void Clear();
-
 	virtual void NativeOnInitialized() override;
 	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
-
-	inline UItemBase* GetBindedItem() const { return Item; }
+	virtual void Clear();
 
 protected:
-	virtual void Refresh(UItemBase* InItem);
-
-	void OnIconLoaded(UObject* Loaded);
-
 	UFUNCTION()
-	void InvokeButtonClick();
+	virtual void InvokeButtonClick();
 };
 
