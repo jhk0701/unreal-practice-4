@@ -7,7 +7,7 @@
 #include "TDRPGHUD.generated.h"
 
 class UUIConfig;
-class UUICanvas;
+class UTDRPGUWCanvas;
 
 /**
  * 
@@ -19,7 +19,7 @@ class TOPDOWNRPG_API ATDRPGHUD : public AHUD
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI");
-	TSubclassOf<UUICanvas> CanvasFactory;
+	TSubclassOf<UTDRPGUWCanvas> CanvasFactory;
 
 	// 특정 HUD가 관리할 UI 모음집
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")

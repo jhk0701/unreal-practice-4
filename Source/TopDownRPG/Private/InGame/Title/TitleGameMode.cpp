@@ -6,8 +6,8 @@
 #include "CommonConst.h"
 #include "Core/TDRPGHUD.h"
 #include "Core/UIManager.h"
-#include "UI/UINewGameUI.h"
-#include "UI/UILoadGameUI.h"
+#include "UI/TDRPGUWNewGameUI.h"
+#include "UI/TDRPGUWLoadGameUI.h"
 
 #include "Core/PlayerDataManager.h"
 
@@ -51,7 +51,7 @@ void ATitleGameMode::StartNewGame()
 {
 	// 새 게임 시작 UI
 	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
-	UI->GetUI<UUINewGameUI>()->Open();
+	UI->GetUI<UTDRPGUWNewGameUI>()->Open();
 }
 
 void ATitleGameMode::CreateNewGameData(const FString& InClassID, const FString& InName)
@@ -69,7 +69,7 @@ void ATitleGameMode::ContinueGame()
 	// 1. 이전 게임 데이터 로드 PlayerDataManager에서 처리
 	// 2. 게임 데이터 UI
 	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
-	UUILoadGameUI* LoadUI = UI->GetUI<UUILoadGameUI>();
+	UTDRPGUWLoadGameUI* LoadUI = UI->GetUI<UTDRPGUWLoadGameUI>();
 
 	LoadUI->LoadCompleteCallback.BindUObject(this, &ATitleGameMode::StartGame);
 

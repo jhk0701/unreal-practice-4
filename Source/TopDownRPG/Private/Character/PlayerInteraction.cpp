@@ -10,10 +10,10 @@
 #include "Player/QuickSlot.h"
 
 #include "Core/UIManager.h"
-#include "UI/UIPlayerHUD.h"
-#include "UI/UIInventory.h"
-#include "UI/UIEquipment.h"
-#include "UI/UIStatusWindow.h"
+#include "UI/TDRPGUWPlayerUI.h"
+#include "UI/TDRPGUWInventory.h"
+#include "UI/TDRPGUWEquipment.h"
+#include "UI/TDRPGUWStatusWindow.h"
 
 #include <EnhancedInputComponent.h>
 #include <Components/SphereComponent.h>
@@ -68,7 +68,7 @@ void UPlayerInteraction::InputInventory(const FInputActionValue& Value)
 	if (!UIManager)
 		return;
 
-	if(UUIInventory* InvenUI = UIManager->GetUI<UUIPlayerHUD>()->Inventory)
+	if(UTDRPGUWInventory* InvenUI = UIManager->GetUI<UTDRPGUWPlayerUI>()->Inventory)
 		InvenUI->Toggle();
 }
 
@@ -79,7 +79,7 @@ void UPlayerInteraction::InputEquipment(const FInputActionValue& Value)
 	if (!UIManager)
 		return;
 
-	if (UUIEquipment* EquipUI = UIManager->GetUI<UUIPlayerHUD>()->Equipment)
+	if (UTDRPGUWEquipment* EquipUI = UIManager->GetUI<UTDRPGUWPlayerUI>()->Equipment)
 		EquipUI->Toggle();
 }
 
@@ -89,7 +89,7 @@ void UPlayerInteraction::InputStatusWind(const FInputActionValue& Value)
 	if (!UIManager)
 		return;
 
-	if (UUIStatusWindow* StatUI = UIManager->GetUI<UUIPlayerHUD>()->StatusWindow)
+	if (UTDRPGUWStatusWindow* StatUI = UIManager->GetUI<UTDRPGUWPlayerUI>()->StatusWindow)
 		StatUI->Toggle();
 }
 

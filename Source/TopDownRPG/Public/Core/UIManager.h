@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
-#include "UI/UIBase.h"
+#include "UI/TDRPGUserWidget.h"
 #include "CommonConst.h"
 #include <Templates/EnableIf.h>
 #include <Engine/AssetManager.h>
@@ -14,7 +14,7 @@
 class UUIConfig;
 class ATDRPGHUD;
 
-DECLARE_DELEGATE_OneParam(FOnLoadCompleted, UUIBase*);
+DECLARE_DELEGATE_OneParam(FOnLoadCompleted, UTDRPGUserWidget*);
 
 /**
  * 
@@ -26,7 +26,7 @@ class TOPDOWNRPG_API UUIManager : public UGameInstanceSubsystem
 
 protected:
 	UPROPERTY()
-	TMap<FString, UUIBase*> UIMap;
+	TMap<FString, UTDRPGUserWidget*> UIMap;
 
 	UPROPERTY()
 	TObjectPtr<ATDRPGHUD> CurrentHUD;
@@ -40,7 +40,7 @@ public:
 	void InitUIConfig(UUIConfig* InConfig);
 
 	template<typename T>
-	inline TEnableIf<TIsDerivedFrom<T, UUIBase>::Value, T*>::type
+	inline TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, T*>::type
 	GetUI() 
 	{
 		FString Name = FString::Printf(TEXT("WBP_%s_C"), *GetNameFromType<T>().ToString());
@@ -52,7 +52,7 @@ public:
 	}
 
 	template<typename T>
-	inline TEnableIf<TIsDerivedFrom<T, UUIBase>::Value, FName>::type
+	inline TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, FName>::type
 	GetNameFromType()
 	{
 		UClass* Type = T::StaticClass();
@@ -72,7 +72,7 @@ public:
 			* baseType이 parentType의 자식클래스라면 true
 	*/
 	template<typename T>
-	inline typename TEnableIf<TIsDerivedFrom<T, UUIBase>::Value, void>::type
+	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, void>::type
 	CreateUI(FOnLoadCompleted& OnCompleted)
 	{
 		FString Name = GetNameFromType<T>().ToString();
@@ -88,7 +88,7 @@ public:
 					UClass* WidgetClass = Cast<UClass>(Path.ResolveObject());
 					if (WidgetClass)
 					{
-						UUIBase* Widget = CreateWidget<UUIBase>(this->GetWorld(), WidgetClass);
+						UTDRPGUserWidget* Widget = CreateWidget<UTDRPGUserWidget>(this->GetWorld(), WidgetClass);
 
 						this->UIMap.Add(Name, Widget);
 						OnCompleted.ExecuteIfBound(Widget);
@@ -97,7 +97,7 @@ public:
 	}
 
 	template<typename T>
-	inline typename TEnableIf<TIsDerivedFrom<T, UUIBase>::Value, void>::type
+	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, void>::type
 	GetUI(FOnLoadCompleted&& OnCompleted)
 	{
 		FString Name = GetNameFromType<T>().ToString();
