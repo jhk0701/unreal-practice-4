@@ -19,17 +19,22 @@ class TOPDOWNRPG_API UTDRPGUWItemDetail : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FVector2D Size;
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UTextBlock> NameLabel;
 	
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UTextBlock> QuantityLabel;
 	
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UTextBlock> RarityLabel;
 
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UImage> IconImage;
 
+public:
 	void Update(UItemBase* InItem);
 };

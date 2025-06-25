@@ -113,7 +113,7 @@ void UTDRPGUWInventory::InitSubWidget()
 			WindowSlot->SetAnchors(FAnchors(0.5f, 0.5f));
 			WindowSlot->SetAlignment(FVector2D::ZeroVector);
 
-			WindowSlot->SetSize(MenuWindowSize);
+			WindowSlot->SetSize(MenuWindow->Size);
 			WindowSlot->SetPosition(FVector2D::ZeroVector);	
 		}
 
@@ -130,7 +130,7 @@ void UTDRPGUWInventory::InitSubWidget()
 			WindowSlot->SetAnchors(FAnchors(0.5f, 0.5f));
 			WindowSlot->SetAlignment(FVector2D::ZeroVector);
 
-			WindowSlot->SetSize(DetailWindowSize);
+			WindowSlot->SetSize(DetailWindow->Size);
 			WindowSlot->SetPosition(FVector2D::ZeroVector);
 		}
 
@@ -145,7 +145,7 @@ void UTDRPGUWInventory::ShowItemDetail(UTDRPGUWSlotBase* InSlot)
 	if (InvenCanvasSlot && DetailSlot)
 	{
 		FVector2D Pos = InvenCanvasSlot->GetPosition();
-		Pos.X -= DetailWindowSize.X;
+		Pos.X -= DetailWindow->Size.X;
 		DetailSlot->SetPosition(Pos);
 	}
 
@@ -167,8 +167,8 @@ void UTDRPGUWInventory::ShowItemMenu(UTDRPGUWSlotBase* InSlot)
 	if (InvenCanvasSlot && MenuSlot)
 	{
 		FVector2D Pos = InvenCanvasSlot->GetPosition();
-		Pos.X -= MenuWindowSize.X;
-		Pos.Y += DetailWindowSize.Y;
+		Pos.X -= MenuWindow->Size.X;
+		Pos.Y += DetailWindow->Size.Y;
 		MenuSlot->SetPosition(Pos);
 	}
 

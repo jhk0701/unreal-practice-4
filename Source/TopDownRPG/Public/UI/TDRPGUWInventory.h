@@ -49,20 +49,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWItemDetail> DetailWindowFactory;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SubWidget")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")
 	TObjectPtr<UTDRPGUWItemDetail> DetailWindow;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SubWidget")
-	FVector2D DetailWindowSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWInventoryMenu> MenuWindowFactory;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SubWidget")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")
 	TObjectPtr<UTDRPGUWInventoryMenu> MenuWindow;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SubWidget")
-	FVector2D MenuWindowSize;
 
 public:
 	UTDRPGUWInventory();

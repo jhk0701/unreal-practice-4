@@ -60,7 +60,7 @@ void UTDRPGUWEquipment::NativeOnInitialized()
 			WindowSlot->SetAnchors(FAnchors(0.5f, 0.5f));
 			WindowSlot->SetAlignment(FVector2D::ZeroVector);
 
-			WindowSlot->SetSize(MenuWindowSize);
+			WindowSlot->SetSize(MenuWindow->Size);
 			WindowSlot->SetPosition(FVector2D::ZeroVector);
 		}
 

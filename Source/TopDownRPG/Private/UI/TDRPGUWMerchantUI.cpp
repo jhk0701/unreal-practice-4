@@ -47,14 +47,7 @@ void UTDRPGUWMerchantUI::SetMerchant(FMerchantDataRow* InMerchantData)
 
 void UTDRPGUWMerchantUI::InitProductSlot(FString& InProductID, ETableType InType, int32 InIndex)
 {
-	UTDRPGUWProductSlot* SlotInst;
-
-	if (ProductSlotStorage.IsEmpty())
-		SlotInst = CreateProductSlot();
-	else
-		ProductSlotStorage.Dequeue(SlotInst);
-
-	ActiveProductSlot.Enqueue(SlotInst);
+	UTDRPGUWProductSlot* SlotInst = CreateProductSlot();
 
 	if (UUniformGridSlot* GridSlot = Cast<UUniformGridSlot>(SlotInst->Slot)) 
 	{

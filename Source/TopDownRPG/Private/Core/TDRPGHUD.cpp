@@ -16,6 +16,7 @@ void ATDRPGHUD::PostInitializeComponents()
 void ATDRPGHUD::InitHUD()
 {
 	UGameInstance* GameInstance = GetGameInstance();
+
 	if (!GameInstance) 
 		return;
 

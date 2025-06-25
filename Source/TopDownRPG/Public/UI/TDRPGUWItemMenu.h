@@ -19,17 +19,21 @@ class TOPDOWNRPG_API UTDRPGUWItemMenu : public UTDRPGUserWidget
 	GENERATED_BODY()
 	
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FVector2D Size;
+
+protected:
 	// 사용하기, 장착하기
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UButton> FuncButton;
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UTextBlock> FuncLabel;
 
 	// 닫기
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
 
-protected:
 	UItemBase* SelectedItem;
 
 public:

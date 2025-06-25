@@ -28,6 +28,8 @@ public:
 	inline UItemBase* GetBindedItem() const { return Item; }
 
 protected:
+	virtual void InvokeCursorEnter() override;
+	virtual void InvokeCursorLeave() override;
 	virtual void InvokeButtonClick() override;
 
 	virtual void Refresh(UItemBase* InItem);

@@ -13,6 +13,7 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
+
 void UTDRPGUWInventorySlot::Bind(UItemBase* InItem)
 {
 	if (!InItem)
@@ -67,6 +68,18 @@ void UTDRPGUWInventorySlot::OnIconLoaded(UObject* Loaded)
 		IconImage->SetOpacity(1.0f);
 		IconImage->SetVisibility(ESlateVisibility::Visible);
 	}
+}
+
+void UTDRPGUWInventorySlot::InvokeCursorEnter()
+{
+	if (Item)
+		Super::InvokeCursorEnter();
+}
+
+void UTDRPGUWInventorySlot::InvokeCursorLeave()
+{
+	if (Item)
+		Super::InvokeCursorLeave();
 }
 
 void UTDRPGUWInventorySlot::InvokeButtonClick()

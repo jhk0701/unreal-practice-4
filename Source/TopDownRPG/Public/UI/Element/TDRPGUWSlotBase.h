@@ -45,7 +45,11 @@ public:
 	virtual void Clear();
 
 protected:
+	virtual void InvokeCursorEnter();
+	virtual void InvokeCursorLeave();
+	
 	UFUNCTION()
 	virtual void InvokeButtonClick();
+	
 };
 

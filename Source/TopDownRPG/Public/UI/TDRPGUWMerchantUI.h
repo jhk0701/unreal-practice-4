@@ -9,10 +9,15 @@
 struct FMerchantDataRow;
 enum class ETableType : uint8;
 
-class UButton;
 class UTDRPGUWProductSlot;
 class UTDRPGUWInventorySlot;
+class UTDRPGUWItemDetail;
+class UTDRPGUWItemMenu;
+
+class UButton;
+class UTextBlock;
 class UUniformGridPanel;
+class UVerticalBox;
 
 /**
  * 
@@ -22,9 +27,15 @@ class TOPDOWNRPG_API UTDRPGUWMerchantUI : public UTDRPGUserWidget
 {
 	GENERATED_BODY()
 	
-public:
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<UTextBlock> MerchantNameLabel;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<UTextBlock> PlayerNameLabel;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> MerchantSideContainer;
@@ -32,19 +43,30 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> PlayerSideContainer;
 
-protected:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<UVerticalBox> Info;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWProductSlot> ProductSlotFactory;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWInventorySlot> InventorySlotFactory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
+	TSubclassOf<UTDRPGUWItemDetail> DetailFactory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
+	TSubclassOf<UTDRPGUWItemMenu> MenuFactory;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")
+	TObjectPtr<UTDRPGUWItemDetail> Detail;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")
+	TObjectPtr<UTDRPGUWItemMenu> Menu;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")
 	int32 RowSize = 8;
-
-	TQueue<UTDRPGUWProductSlot*> ActiveProductSlot;
-	TQueue<UTDRPGUWProductSlot*> ProductSlotStorage;
-
 
 public:
 	virtual void NativeOnInitialized() override;
@@ -55,4 +77,6 @@ protected:
 	void InitProductSlot(FString& InProductID, ETableType InType, int32 InIndex);
 
 	UTDRPGUWProductSlot* CreateProductSlot();
+
+
 };

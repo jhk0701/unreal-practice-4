@@ -22,16 +22,16 @@ void UTDRPGUWSlotBase::NativeOnMouseEnter(const FGeometry& InGeometry, const FPo
 {
 	Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
 
-	OnCursorEnter.Broadcast(this);
-		
+	InvokeCursorEnter();
 }
 
 void UTDRPGUWSlotBase::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
 {
 	Super::NativeOnMouseLeave(InMouseEvent);
 
-	OnCursorLeave.Broadcast();
+	InvokeCursorLeave();
 }
+
 
 void UTDRPGUWSlotBase::Clear()
 {
@@ -43,6 +43,14 @@ void UTDRPGUWSlotBase::Clear()
 	IconImage->SetBrushResourceObject(nullptr);
 }
 
-void UTDRPGUWSlotBase::InvokeButtonClick()
+void UTDRPGUWSlotBase::InvokeCursorEnter()
 {
+	OnCursorEnter.Broadcast(this);
 }
+
+void UTDRPGUWSlotBase::InvokeCursorLeave()
+{
+	OnCursorLeave.Broadcast();
+}
+
+void UTDRPGUWSlotBase::InvokeButtonClick(){}
