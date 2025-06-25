@@ -7,8 +7,11 @@
 #include "TDRPGUWMerchantUI.generated.h"
 
 struct FMerchantDataRow;
+enum class ETableType : uint8;
+
 class UButton;
-class UTDRPGUWSlotBase;
+class UTDRPGUWProductSlot;
+class UTDRPGUWInventorySlot;
 class UUniformGridPanel;
 
 /**
@@ -29,11 +32,27 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> PlayerSideContainer;
 
+protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")
-	TSubclassOf<UTDRPGUWSlotBase> SlotFactory;
+	TSubclassOf<UTDRPGUWProductSlot> ProductSlotFactory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")
+	TSubclassOf<UTDRPGUWInventorySlot> InventorySlotFactory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")
+	int32 RowSize = 8;
+
+	TQueue<UTDRPGUWProductSlot*> ActiveProductSlot;
+	TQueue<UTDRPGUWProductSlot*> ProductSlotStorage;
+
 
 public:
 	virtual void NativeOnInitialized() override;
-
+	
 	void SetMerchant(FMerchantDataRow* InMerchantData);
+
+protected:
+	void InitProductSlot(FString& InProductID, ETableType InType, int32 InIndex);
+
+	UTDRPGUWProductSlot* CreateProductSlot();
 };

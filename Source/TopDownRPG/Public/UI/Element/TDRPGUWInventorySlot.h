@@ -16,18 +16,20 @@ class TOPDOWNRPG_API UTDRPGUWInventorySlot : public UTDRPGUWSlotBase
 {
 	GENERATED_BODY()
 
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UItemBase* Item = nullptr;
+
 public:
 	virtual void Clear() override;
-	
-	virtual void Bind(UItemBase* InItem);
 
+	virtual void Bind(UItemBase* InItem);
 	inline UItemBase* GetBindedItem() const { return Item; }
 
 protected:
-	UItemBase* Item = nullptr;
-
-protected:
 	virtual void InvokeButtonClick() override;
+
 	virtual void Refresh(UItemBase* InItem);
 	void OnIconLoaded(UObject* Loaded);
 };
