@@ -53,10 +53,11 @@ void UPlayerAttack::InvokeAttack()
 
 	// 애니메이션 재생
 	// TODO : 최적화 필요한지 체크
-	if (GetWorld()->GetTimerManager().IsTimerActive(AttackResetTimer))
-		GetWorld()->GetTimerManager().ClearTimer(AttackResetTimer);
+	auto& Timer = GetWorld()->GetTimerManager();
+	if (Timer.IsTimerActive(AttackResetTimer))
+		Timer.ClearTimer(AttackResetTimer);
 
-	GetWorld()->GetTimerManager().SetTimer(
+	Timer.SetTimer(
 		AttackResetTimer,
 		[this]() { this->AttackCount = 0; }, 
 		ResetInterval, 

@@ -18,7 +18,7 @@ protected:
 	FTimerHandle AttackResetTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
-	float ResetInterval = 2.0f;
+	float ResetInterval = 1.0f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack|Combo")
 	int32 AttackCount = 0;
