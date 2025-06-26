@@ -19,7 +19,7 @@ void UTDRPGUWProductSlot::Clear()
 	Super::Clear();
 }
 
-void UTDRPGUWProductSlot::Bind(FString& InProductID, ETableType InItemType)
+void UTDRPGUWProductSlot::Bind(const FString& InProductID, const ETableType InItemType)
 {
 	ProductID = InProductID;
 	ItemType = InItemType;

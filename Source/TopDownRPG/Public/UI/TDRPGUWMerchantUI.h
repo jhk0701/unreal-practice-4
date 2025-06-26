@@ -6,9 +6,10 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWMerchantUI.generated.h"
 
-struct FMerchantDataRow;
+class ANPCMerchant;
 enum class ETableType : uint8;
 
+class UTDRPGUWSlotBase;
 class UTDRPGUWProductSlot;
 class UTDRPGUWInventorySlot;
 class UTDRPGUWItemDetail;
@@ -64,19 +65,33 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")
 	TObjectPtr<UTDRPGUWItemMenu> Menu;
 
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")
 	int32 RowSize = 8;
 
+	TQueue<UTDRPGUWProductSlot*> ProductSlotPool;
+	TQueue<UTDRPGUWProductSlot*> ActiveProductSlot;
+
+	UPROPERTY()
+	TObjectPtr<ANPCMerchant> Merchant;
+
 public:
 	virtual void NativeOnInitialized() override;
-	
-	void SetMerchant(FMerchantDataRow* InMerchantData);
+	virtual void Close() override;
+
+	// void Init();
+	void SetMerchant(ANPCMerchant* InMerchant);
+
 
 protected:
-	void InitProductSlot(FString& InProductID, ETableType InType, int32 InIndex);
+	void InitProductSlot(const FString& InProductID, const ETableType InType, const int32 InIndex);
 
 	UTDRPGUWProductSlot* CreateProductSlot();
 
+	void Clear();
+
+	void OnSlotClicked(UTDRPGUWSlotBase* InSlot);
+
+	void OnClickBuy(const FString& InProductID, const ETableType InType);
+	void OnClickSell();
 
 };

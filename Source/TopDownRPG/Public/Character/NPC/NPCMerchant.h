@@ -7,6 +7,7 @@
 #include "NPCMerchant.generated.h"
 
 struct FMerchantDataRow;
+enum class ETableType : uint8;
 
 /**
  * 
@@ -26,4 +27,8 @@ public:
 	virtual void Interact() override;
 
 	FMerchantDataRow* GetData();
+
+	// 상인에게서 아이템 구매
+	void BuyItem(const FString& InProductID, const ETableType& InType, const uint8& InQuantity = 1);
+	
 };

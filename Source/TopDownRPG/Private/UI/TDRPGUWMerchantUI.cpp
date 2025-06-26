@@ -3,7 +3,9 @@
 
 #include "UI/TDRPGUWMerchantUI.h"
 
+#include "CommonConst.h"
 #include "TDRPGEnum.h"
+#include "Character/NPC/NPCMerchant.h"
 #include "Data/MerchantDataRow.h"
 #include "Data/InnerStringArray.h"
 
@@ -18,17 +20,25 @@ void UTDRPGUWMerchantUI::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
-	CloseButton->OnClicked.AddUniqueDynamic(this, &UTDRPGUserWidget::Close);
+	CloseButton->OnClicked.AddUniqueDynamic(this, &UTDRPGUWMerchantUI::Close);
 }
 
-void UTDRPGUWMerchantUI::SetMerchant(FMerchantDataRow* InMerchantData)
+void UTDRPGUWMerchantUI::Close()
 {
-	if (!InMerchantData)
+	Clear();
+
+	Super::Close();
+}
+
+void UTDRPGUWMerchantUI::SetMerchant(ANPCMerchant* InMerchant)
+{
+	if (!InMerchant)
 		return;
 
-	// InMerchantData->ProductID
+	Merchant = InMerchant;
+
 	// 받은 데이터로 UI 생성
-	auto& ProductMap = InMerchantData->ProductID;
+	auto& ProductMap = Merchant->GetData()->ProductID;
 
 	TArray<ETableType> Keys;
 	ProductMap.GetKeys(Keys);
@@ -45,9 +55,17 @@ void UTDRPGUWMerchantUI::SetMerchant(FMerchantDataRow* InMerchantData)
 	}
 }
 
-void UTDRPGUWMerchantUI::InitProductSlot(FString& InProductID, ETableType InType, int32 InIndex)
+void UTDRPGUWMerchantUI::InitProductSlot(const FString& InProductID, const ETableType InType, const int32 InIndex)
 {
-	UTDRPGUWProductSlot* SlotInst = CreateProductSlot();
+	UTDRPGUWProductSlot* SlotInst;
+
+	if (ProductSlotPool.IsEmpty())
+		SlotInst = CreateProductSlot();
+	else
+		ProductSlotPool.Dequeue(SlotInst);
+
+	ActiveProductSlot.Enqueue(SlotInst);
+	SlotInst->SetVisibility(ESlateVisibility::Visible);
 
 	if (UUniformGridSlot* GridSlot = Cast<UUniformGridSlot>(SlotInst->Slot)) 
 	{
@@ -59,6 +77,7 @@ void UTDRPGUWMerchantUI::InitProductSlot(FString& InProductID, ETableType InType
 	}
 
 	SlotInst->Bind(InProductID, InType);
+	SlotInst->OnButtonClicked.AddUObject(this, &UTDRPGUWMerchantUI::OnSlotClicked);
 }
 
 UTDRPGUWProductSlot* UTDRPGUWMerchantUI::CreateProductSlot()
@@ -76,4 +95,43 @@ UTDRPGUWProductSlot* UTDRPGUWMerchantUI::CreateProductSlot()
 	}
 
 	return SlotInst;
+}
+
+void UTDRPGUWMerchantUI::Clear()
+{
+	while (!ActiveProductSlot.IsEmpty()) 
+	{
+		UTDRPGUWProductSlot* SlotInst;
+		ActiveProductSlot.Dequeue(SlotInst);
+		ProductSlotPool.Enqueue(SlotInst);
+
+		SlotInst->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+
+void UTDRPGUWMerchantUI::OnSlotClicked(UTDRPGUWSlotBase* InSlot)
+{
+	// TODO : 세부 메뉴 팝업으로 바꾸기
+	UTDRPGUWProductSlot* ClickedSlot = Cast<UTDRPGUWProductSlot>(InSlot);
+	check(ClickedSlot);
+
+	FString ID;
+	ETableType Type;
+	ClickedSlot->GetProduct(ID, Type);
+
+	check(ID != CommonConst::EMPTY_ITEM_ID);
+
+	// Buy
+	OnClickBuy(ID, Type);
+}
+
+void UTDRPGUWMerchantUI::OnClickBuy(const FString& InProductID, const ETableType InType)
+{
+	// 유저가 구매 버튼을 누름 -> 상인의 아이템 판매
+	Merchant->BuyItem(InProductID, InType);
+}
+
+void UTDRPGUWMerchantUI::OnClickSell()
+{
 }

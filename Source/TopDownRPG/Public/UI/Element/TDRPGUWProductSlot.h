@@ -23,7 +23,7 @@ protected:
 public:
 	virtual void Clear() override;
 
-	virtual void Bind(FString& InProductID, ETableType InItemType);
+	virtual void Bind(const FString& InProductID, const ETableType InItemType);
 	void GetProduct(FString& OutProductID, ETableType& OutItemType) const;
 
 protected:
