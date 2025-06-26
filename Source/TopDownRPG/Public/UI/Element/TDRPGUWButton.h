@@ -10,6 +10,8 @@ class UButton;
 class UImage;
 class UTextBlock;
 
+DECLARE_MULTICAST_DELEGATE(FOnButtonAction);
+
 /**
  * 
  */
@@ -18,7 +20,8 @@ class TOPDOWNRPG_API UTDRPGUWButton : public UTDRPGUserWidget
 {
 	GENERATED_BODY()
 
-public:
+protected:
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UButton> Button;
 
@@ -27,4 +30,16 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidgetOptional))
 	TObjectPtr<UImage> Icon;
+
+public:
+	void Clear();
+	void SetLabel(const FText& InLabel);
+	FOnButtonAction ButtonAction;
+
+protected:
+	virtual void NativeOnInitialized() override;
+
+	UFUNCTION()
+	void InvokeButton();
+
 };

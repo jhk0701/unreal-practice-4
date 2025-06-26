@@ -34,7 +34,7 @@ protected:
 	TQueue<UTDRPGUWButton*> ButtonPool;
 
 public:
-	void SetMenu(TArray<FString>& InLabel, TArray<TFunction<void>>& InFunction);
+	// void SetMenu(TArray<FString>& InLabel, TArray<FOnButtonAction>& InFunction);
 
 protected:
 	virtual void NativeOnInitialized() override;

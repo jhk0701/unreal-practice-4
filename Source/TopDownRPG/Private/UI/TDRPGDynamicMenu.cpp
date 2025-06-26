@@ -12,7 +12,7 @@ void UTDRPGDynamicMenu::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
-	CloseButton->Button->OnClicked.AddUniqueDynamic(this, &UTDRPGUserWidget::Close);
+	CloseButton->ButtonAction.AddUObject(this, &UTDRPGUserWidget::Close);
 
 	for (int32 i = 0; i < DefaultButtonCount; ++i) 
 	{
@@ -24,21 +24,20 @@ void UTDRPGDynamicMenu::NativeOnInitialized()
 	}
 }
 
-void UTDRPGDynamicMenu::SetMenu(TArray<FString>& InLabel, TArray<TFunction<void>>& InFunction)
-{
-	check(InLabel.Num() == InFunction.Num());
-
-	int32 Cnt = InLabel.Num();
-
-	for (int32 i = 0; i < Cnt; ++i) 
-	{
-		UTDRPGUWButton* ButtonInst = GetButton();
-
-		ButtonInst->Label->SetText(FText::FromString(InLabel[i]));
-		
-		// ButtonInst->Button->OnClicked.AddUnique()
-	}
-}
+//void UTDRPGDynamicMenu::SetMenu(TArray<FString>& InLabel, TArray<FOnButtonAction>& InFunction)
+//{
+//	check(InLabel.Num() == InFunction.Num());
+//
+//	int32 Cnt = InLabel.Num();
+//
+//	for (int32 i = 0; i < Cnt; ++i) 
+//	{
+//		UTDRPGUWButton* ButtonInst = GetButton();
+//
+//		ButtonInst->SetLabel(FText::FromString(InLabel[i]));
+//		ButtonInst->ButtonAction.AddLambda(this, InFunction[i]);
+//	}
+//}
 
 void UTDRPGDynamicMenu::Clear()
 {
@@ -47,7 +46,7 @@ void UTDRPGDynamicMenu::Clear()
 		UTDRPGUWButton* ButtonInst;
 		ActiveButtons.Dequeue(ButtonInst);
 
-		ButtonInst->Button->OnClicked.Clear();
+		ButtonInst->Clear();
 		ButtonInst->SetVisibility(ESlateVisibility::Hidden);
 
 		ButtonPool.Enqueue(ButtonInst);
