@@ -62,6 +62,7 @@ void UTDRPGUWInventory::NativeOnInitialized()
 	}
 }
 
+
 void UTDRPGUWInventory::Close()
 {
 	HideItemDetail();

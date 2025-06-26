@@ -36,22 +36,10 @@ protected:
 	TObjectPtr<UTextBlock> MerchantNameLabel;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<UTextBlock> PlayerNameLabel;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> MerchantSideContainer;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<UUniformGridPanel> PlayerSideContainer;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<UVerticalBox> Info;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWProductSlot> ProductSlotFactory;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
-	TSubclassOf<UTDRPGUWInventorySlot> InventorySlotFactory;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWItemDetail> DetailFactory;
@@ -76,6 +64,7 @@ protected:
 
 public:
 	virtual void NativeOnInitialized() override;
+	virtual void Open() override;
 	virtual void Close() override;
 
 	// void Init();
@@ -92,6 +81,6 @@ protected:
 	void OnSlotClicked(UTDRPGUWSlotBase* InSlot);
 
 	void OnClickBuy(const FString& InProductID, const ETableType InType);
-	void OnClickSell();
+	// void OnClickSell();
 
 };

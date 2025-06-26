@@ -22,6 +22,8 @@ void UInventory::InitInventory(uint8 InIdx, UItemBase* InItem)
 
 bool UInventory::AddItem(UItemBase* InItem)
 {
+	PRINT_LOG(TEXT("Add Item"));
+
 	// 인벤토리에 동일한 아이템이 있는지 체크
 	uint8 Index = 0;
 	bool bIsFound = FindItem(InItem, 

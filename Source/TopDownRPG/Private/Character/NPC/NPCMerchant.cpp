@@ -49,6 +49,7 @@ void ANPCMerchant::BuyItem(const FString& InProductID, const ETableType& InType,
 	uint32 Price = ItemToSell->GetData()->Price;
 
 	UPlayerManager* Player = GetGameInstance()->GetSubsystem<UPlayerManager>();
+
 	// 가격 지불
 	if (Player->CurrencyGold->SafeSub(Price)) 
 	{
@@ -59,5 +60,6 @@ void ANPCMerchant::BuyItem(const FString& InProductID, const ETableType& InType,
 	{
 		// 금액 부족
 		// TODO : 메시지 띄울것
+		PRINT_LOG(TEXT("Not Enough Gold"));
 	}
 }

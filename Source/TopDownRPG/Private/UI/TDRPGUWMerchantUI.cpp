@@ -9,6 +9,9 @@
 #include "Data/MerchantDataRow.h"
 #include "Data/InnerStringArray.h"
 
+#include "Core/UIManager.h"
+#include "UI/TDRPGUWPlayerUI.h"
+#include "UI/TDRPGUWInventory.h"
 #include "UI/Element/TDRPGUWProductSlot.h"
 
 #include <Components/Button.h>
@@ -21,6 +24,14 @@ void UTDRPGUWMerchantUI::NativeOnInitialized()
 	Super::NativeOnInitialized();
 
 	CloseButton->OnClicked.AddUniqueDynamic(this, &UTDRPGUWMerchantUI::Close);
+}
+
+void UTDRPGUWMerchantUI::Open()
+{
+	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
+	UI->GetUI<UTDRPGUWPlayerUI>()->Inventory->Open();
+
+	Super::Open();
 }
 
 void UTDRPGUWMerchantUI::Close()
@@ -106,6 +117,7 @@ void UTDRPGUWMerchantUI::Clear()
 		ProductSlotPool.Enqueue(SlotInst);
 
 		SlotInst->SetVisibility(ESlateVisibility::Hidden);
+		SlotInst->OnButtonClicked.Clear();
 	}
 }
 
@@ -130,8 +142,4 @@ void UTDRPGUWMerchantUI::OnClickBuy(const FString& InProductID, const ETableType
 {
 	// 유저가 구매 버튼을 누름 -> 상인의 아이템 판매
 	Merchant->BuyItem(InProductID, InType);
-}
-
-void UTDRPGUWMerchantUI::OnClickSell()
-{
 }
