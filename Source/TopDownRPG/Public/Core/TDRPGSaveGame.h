@@ -3,32 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CommonConst.h"
 #include "GameFramework/SaveGame.h"
+#include "Save/InventorySaveData.h"
+#include "Save/EquipmentSaveData.h"
 #include "TDRPGSaveGame.generated.h"
-
-USTRUCT(BlueprintType)
-struct FInventorySaveData
-{
-	GENERATED_BODY()
-
-	FString ItemID;
-	int32 ItemType;
-	int32 Quantity;
-
-	FInventorySaveData() : ItemID(CommonConst::EMPTY_ITEM_ID), ItemType(-1), Quantity(0) {};
-};
-
-USTRUCT(BlueprintType)
-struct FEquipmentSaveData
-{
-	GENERATED_BODY()
-
-	FString EquipmentID;
-	int32 EquipType;
-
-	FEquipmentSaveData() : EquipmentID(CommonConst::EMPTY_ITEM_ID), EquipType(-1) {};
-};
 
 
 UCLASS()
@@ -73,8 +51,3 @@ public:
 	UPROPERTY()
 	TArray<int32> QuickSlot;
 };
-
-// 0. 새 게임 기능
-// 1. 기존에 더미 데이터 대체
-// 2. 데이터 세이브
-// 3. 로드 기능 활성화

@@ -56,9 +56,9 @@ void UPlayerDataManager::GetPlayerDatas(TArray<FString>& OutDirectories)
 
 void UPlayerDataManager::CreateData(const FString& InPlayerName, const FString& InClassID)
 {
-	// 초기 데이터 생성
 	Data = Cast<UTDRPGSaveGame>(UGameplayStatics::CreateSaveGameObject(UTDRPGSaveGame::StaticClass()));
 
+	// 초기 데이터 생성
 	Data->PlayerName = FName(InPlayerName);
 	Data->ClassID = InClassID;
 	Data->UserIndex = 0;
@@ -80,9 +80,20 @@ void UPlayerDataManager::CreateData(const FString& InPlayerName, const FString& 
 
 void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 {
+	Data = Cast<UTDRPGSaveGame>(UGameplayStatics::CreateSaveGameObject(UTDRPGSaveGame::StaticClass()));
+
+	Data->PlayerName = InPlayer->PlayerData->PlayerName;
+	Data->ClassID = InPlayer->PlayerData->ClassID;
+	Data->UserIndex = 0;
+	Data->PlayerID = InPlayer->PlayerData->PlayerID;
+
 	Data->CharLv = InPlayer->Lv;
 	Data->CharExp = InPlayer->Exp->GetCurrentValue();
 	Data->Gold = InPlayer->CurrencyGold->GetCurrency();
+
+	Data->Inventory.Init(FInventorySaveData(), UInventory::MAX_SIZE);
+	Data->Equipment.Init(FEquipmentSaveData(), (int32)EEquipType::COUNT);
+	Data->QuickSlot.Init(-1, UQuickSlot::MAX_SIZE);
 
 	// Inventory
 	int32 Cnt = InPlayer->Inventory->Items.Num();

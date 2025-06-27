@@ -9,6 +9,9 @@ UQuickSlot::UQuickSlot()
 
 void UQuickSlot::InitSlot(uint8 InIndex, IQuickSlotHandler* InSlot)
 {
+	if (!InSlot)
+		return;
+
 	Slots[InIndex].SetInterface(InSlot);
 	Slots[InIndex].SetObject(InSlot->_getUObject());
 

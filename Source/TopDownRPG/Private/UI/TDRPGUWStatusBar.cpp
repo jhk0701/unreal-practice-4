@@ -7,6 +7,7 @@
 #include "Character/CharacterData.h"
 
 #include "Core/PlayerManager.h"
+#include "Core/TDRPGSaveGame.h"
 
 #include <Components/TextBlock.h>
 #include <Components/ProgressBar.h>

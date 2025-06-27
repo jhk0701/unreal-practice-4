@@ -6,6 +6,7 @@
 #include "TDRPGEnum.h"
 #include "Core/PlayerManager.h"
 #include "Core/TDRPGGameState.h"
+#include "Core/TDRPGSaveGame.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/CharacterData.h"
 

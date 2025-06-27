@@ -146,9 +146,13 @@ void UPlayerManager::InitQuickSlot()
 	int32 Cnt = PlayerData->QuickSlot.Num();
 	for (int32 i = 0; i < Cnt; ++i) 
 	{
-		int32 Index = PlayerData->QuickSlot[i];
-		if (Index >= 0)
-			QuickSlot->InitSlot(Index, Cast<IQuickSlotHandler>(Inventory->Items[Index]));
+		int32 RegisteredIndex = PlayerData->QuickSlot[i];
+		if (RegisteredIndex >= 0)
+		{
+			IQuickSlotHandler* QuickSlotHandler = Cast<IQuickSlotHandler>(Inventory->Items[RegisteredIndex]);
+			check(QuickSlotHandler);
+			QuickSlot->InitSlot(i, QuickSlotHandler);
+		}
 	}
 }
 

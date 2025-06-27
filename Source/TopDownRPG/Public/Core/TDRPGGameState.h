@@ -18,4 +18,9 @@ public:
 	// 플레이어 접근용
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Player)
 	TObjectPtr<class ATDRPGPlayer> Player;
+
+public:
+	UFUNCTION(CallInEditor)
+	void Save();
+
 };
