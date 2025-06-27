@@ -60,6 +60,7 @@ public:
 	void Die();
 
 	bool GetMouseToWorld(FHitResult& OutResult);
+	bool CheckPlayerIsDead() const;
 
 private:
 	void Initialize();

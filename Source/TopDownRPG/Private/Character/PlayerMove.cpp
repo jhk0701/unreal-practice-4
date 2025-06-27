@@ -39,6 +39,9 @@ void UPlayerMove::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponen
 
 void UPlayerMove::InputClick(const FInputActionValue& InputValue)
 {
+	if (Player->CheckPlayerIsDead())
+		return;
+
 	FHitResult hitResult;
 	if (Player->GetMouseToWorld(hitResult))
 	{
@@ -57,7 +60,7 @@ void UPlayerMove::StopMove()
 
 void UPlayerMove::Move(float DeltaTime)
 {
-	if (!bIsWalking) 
+	if (!bIsWalking)
 		return;
 
 	FVector PlayerLoc = Player->GetActorLocation();
@@ -77,6 +80,9 @@ void UPlayerMove::Move(float DeltaTime)
 
 void UPlayerMove::InputDodge(const FInputActionValue& InputValue)
 {
+	if (Player->CheckPlayerIsDead())
+		return;
+
 	Dodge();
 }
 

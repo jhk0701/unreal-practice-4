@@ -34,6 +34,9 @@ void UPlayerAttack::SetupInputBinding(UEnhancedInputComponent* PlayerInputCompon
 
 void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)
 {
+	if (Player->CheckPlayerIsDead())
+		return;
+
 	InvokeAttack();
 }
 

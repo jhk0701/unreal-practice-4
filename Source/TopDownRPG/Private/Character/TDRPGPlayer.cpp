@@ -186,3 +186,8 @@ bool ATDRPGPlayer::GetMouseToWorld(FHitResult& OutResult)
 		ECC_GameTraceChannel1,
 		Params);
 }
+
+bool ATDRPGPlayer::CheckPlayerIsDead() const
+{
+	return DataComp->bIsDead;
+}
