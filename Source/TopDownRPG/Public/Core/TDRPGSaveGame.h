@@ -39,12 +39,12 @@ public:
 	uint32 Gold;
 
 	// 인벤토리 정보
-	UPROPERTY(SaveGame)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "SaveGame")
 	TArray<FInventorySaveData> Inventory;
 
 	// 장비창 정보
 	// EquipType => Index
-	UPROPERTY(SaveGame)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "SaveGame")
 	TArray<FEquipmentSaveData> Equipment;
 
 	// 큇슬롯 정보

@@ -13,8 +13,11 @@ struct TOPDOWNRPG_API FInventorySaveData
 {
 	GENERATED_BODY()
 public:
+	UPROPERTY()
 	FString ItemID;
+	UPROPERTY()
 	int32 ItemType;
+	UPROPERTY()
 	int32 Quantity;
 
 	FInventorySaveData();

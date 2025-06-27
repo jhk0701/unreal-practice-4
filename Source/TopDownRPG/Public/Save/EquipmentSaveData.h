@@ -14,7 +14,9 @@ struct TOPDOWNRPG_API FEquipmentSaveData
 	GENERATED_BODY()
 
 public:
+	UPROPERTY()
 	FString EquipmentID;
+	UPROPERTY()
 	int32 EquipType;
 
 	FEquipmentSaveData();
