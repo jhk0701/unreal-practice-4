@@ -24,7 +24,6 @@ public:
 	UPROPERTY()
 	int32 UserIndex;
 
-
 	UPROPERTY()
 	FString ClassID;
 

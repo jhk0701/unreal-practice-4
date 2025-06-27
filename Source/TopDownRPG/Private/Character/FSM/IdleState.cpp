@@ -4,20 +4,21 @@
 #include "Character/EnemyFSM.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/TDRPGEnemy.h"
-#include "Kismet/GameplayStatics.h"
+#include <Kismet/GameplayStatics.h>
 
 #include "InGame/Dungeon/DungeonGameMode.h"
+#include "InGame/Dungeon/DungeonGameState.h"
+
 #include "TopDownRPG/TopDownRPG.h"
 
 void UIdleState::Enter()
 {
 	Super::Enter();
 
-	if(Machine->GetOwnerEnemy())
+	if (Machine->GetOwnerEnemy())
 	{
-		// TODO : 하드코딩 제거
-		auto Actor = UGameplayStatics::GetActorOfClass(Machine->GetWorld(), ATDRPGPlayer::StaticClass());
-		Machine->GetOwnerEnemy()->Target = Cast<ATDRPGPlayer>(Actor);
+		ADungeonGameState* State = Cast<ADungeonGameState>(Machine->GetWorld()->GetGameState());
+		Machine->GetOwnerEnemy()->Target = State->Player;
 		
 		Machine->Transition(EEnemyState::Move);
 	}

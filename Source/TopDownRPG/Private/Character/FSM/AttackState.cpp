@@ -6,6 +6,7 @@
 #include "Character/TDRPGEnemy.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/EnemyAttack.h"
+#include "Character/CharacterData.h"
 
 void UAttackState::Enter()
 {
@@ -22,6 +23,9 @@ void UAttackState::Update(float DeltaTime)
 	
 	// TODO : 사망했는지 확인
 	ATDRPGPlayer* Target = Owner->Target;
+
+	if (Target->GetData()->bIsDead)
+		return;
 
 	// 공격 가능한지 확인 : 거리 확인
 	FVector TargetLoc = Target->GetActorLocation();
