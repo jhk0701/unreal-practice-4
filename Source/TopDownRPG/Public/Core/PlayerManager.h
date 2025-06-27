@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
-#include "Core/TDRPGSaveGame.h"
 #include "Character/Status.h"
 #include "Property/Currency.h"
 #include "PlayerManager.generated.h"
+
+class UTDRPGSaveGame;
 
 /**
  * 
@@ -21,12 +22,12 @@ public:
 	UPROPERTY()
 	TObjectPtr<UTDRPGSaveGame> PlayerData;
 
+	UPROPERTY()
+	FName ClassName;
+
 	// 레벨
 	UPROPERTY()
 	uint32 Lv;
-
-	UPROPERTY()
-	FName ClassName;
 
 	// 경험치
 	TUniquePtr<FStatus> Exp;
@@ -52,7 +53,7 @@ public:
 	void InitManager();
 	void SetPlayerData(UTDRPGSaveGame* InPlayerData);
 
-	inline FString GetClassID() const { return PlayerData->ClassID; }
+	FString& GetClassID() const;
 
 	// 레벨 관리
 	void AddExp(uint32 Value);

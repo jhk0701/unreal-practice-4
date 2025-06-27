@@ -58,6 +58,11 @@ void UPlayerManager::SetPlayerData(UTDRPGSaveGame* InPlayerData)
 	InitQuickSlot();
 }
 
+FString& UPlayerManager::GetClassID() const
+{
+	return PlayerData->ClassID;
+}
+
 void UPlayerManager::InitLvAndExp(uint32 InLv, uint32 InExp)
 {
 	Lv = InLv;

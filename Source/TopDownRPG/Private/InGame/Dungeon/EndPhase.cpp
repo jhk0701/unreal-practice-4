@@ -6,6 +6,7 @@
 
 #include "TDRPGEnum.h"
 #include "Core/GameDataManager.h"
+#include "Core/PlayerDataManager.h"
 #include "Core/PlayerManager.h"
 #include "Core/UIManager.h"
 #include "Data/StageDataRow.h"
@@ -18,19 +19,18 @@
 
 void UEndPhase::Enter()
 {
-	UGameInstance* GameInstance = State->GetGameInstance();
+	UGameInstance* GameInst = State->GetGameInstance();
 	ADungeonGameState* GameState = Cast<ADungeonGameState>(State);
 	// GameState->EnemyCount
 	bool bIsCleared = GameState->StageResult == EStageResult::Cleared;
 
+	UPlayerManager* Player = GameInst->GetSubsystem<UPlayerManager>();
 	// 클리어 시, 스테이지 보상
 	if (bIsCleared)
 	{
 		// 현재 스테이지 정보 불러오기
-		UGameDataManager* GameData = GameInstance->GetSubsystem<UGameDataManager>();
+		UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
 		FStageDataRow* StageData = GameData->GetRow<FStageDataRow>(ETableType::Stage, *GameState->CurStageId);
-
-		UPlayerManager* Player = GameInstance->GetSubsystem<UPlayerManager>();
 
 		// 골드 보상 수령
 		Player->AddGold(StageData->GoldReward);
@@ -38,11 +38,14 @@ void UEndPhase::Enter()
 	}
 
 	// 스테이지 종료 UI
-	UUIManager* UI = GameInstance->GetSubsystem<UUIManager>();
+	UUIManager* UI = GameInst->GetSubsystem<UUIManager>();
 
 	if (UTDRPGUWStageResult* ResultUI = UI->GetUI<UTDRPGUWStageResult>())
 	{
 		ResultUI->SetResult(bIsCleared);
 		ResultUI->Open();
 	}
+
+	// 스테이지 종료 시 저장
+	GameInst->GetSubsystem<UPlayerDataManager>()->SaveData(Player);
 }

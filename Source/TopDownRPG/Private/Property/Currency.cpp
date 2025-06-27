@@ -24,7 +24,7 @@ void FCurrency::Add(uint32 InValue)
 
 bool FCurrency::SafeSub(uint32 InValue)
 {
-	if(Value - InValue < 0)
+	if (Value < InValue)
 		return false;
 
 	Value -= InValue;

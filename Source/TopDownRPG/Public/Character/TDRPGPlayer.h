@@ -33,6 +33,7 @@ public:
 	FOnUniqueInputDelegate OnAttackCalled;
 	
 	// 임시 히트박스
+	// TODO : 스킬 기능 작업 시 제거할 것
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class USphereComponent> HitCollider;
 

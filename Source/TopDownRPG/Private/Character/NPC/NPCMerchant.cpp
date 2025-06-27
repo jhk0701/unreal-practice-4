@@ -15,8 +15,8 @@
 #include "Player/Inventory.h"
 
 #include "Core/ItemFactory.h"
-#include "Item/ItemBase.h"
 #include "Data/ItemDataRow.h"
+#include "Item/ItemBase.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
