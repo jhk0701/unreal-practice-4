@@ -47,6 +47,7 @@ void ANPCMerchant::BuyItem(const FString& InProductID, const ETableType& InType,
 	UItemBase* ItemToSell = ItemFactory->GetItem(InType, InProductID);
 
 	uint32 Price = ItemToSell->GetData()->Price;
+	Price = GetDiscountedPrice(Price);
 
 	UPlayerManager* Player = GetGameInstance()->GetSubsystem<UPlayerManager>();
 
@@ -62,4 +63,10 @@ void ANPCMerchant::BuyItem(const FString& InProductID, const ETableType& InType,
 		// TODO : 메시지 띄울것
 		PRINT_LOG(TEXT("Not Enough Gold"));
 	}
+}
+
+uint32 ANPCMerchant::GetDiscountedPrice(uint32& InPrice)
+{
+	float Discount = GetData()->Discount;
+	return InPrice * (1.0f - Discount * 0.01f);
 }

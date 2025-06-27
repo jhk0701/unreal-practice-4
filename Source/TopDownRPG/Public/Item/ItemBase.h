@@ -11,7 +11,6 @@ struct FItemDataRow;
 enum class ETableType :uint8;
 enum class ERarity :uint8;
 
-DECLARE_ENUM_TO_STRING(ERarity);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnItemUpdated, UItemBase*);
 
 
@@ -45,5 +44,4 @@ public:
 
 	inline const FString& GetItemID() const { return ItemID; }
 
-	FString EnumToString(const ERarity InValue) const;
 };

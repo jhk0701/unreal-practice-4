@@ -12,7 +12,6 @@
 
 enum class ETableType : uint8;
 
-DECLARE_ENUM_TO_STRING(ETableType);
 
 /**
  * 
@@ -41,8 +40,6 @@ public:
 	{
 		return GameDatabase[Table]->FindRow<T>(FName(ID), CommonConst::DATA_TABLE_CONTEXT);
 	}
-
-	const FString EnumToString(ETableType EnumValue) const;
 
 	void GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling) const;
 

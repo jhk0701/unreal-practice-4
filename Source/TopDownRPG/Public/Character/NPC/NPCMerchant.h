@@ -30,5 +30,7 @@ public:
 
 	// 상인에게서 아이템 구매
 	void BuyItem(const FString& InProductID, const ETableType& InType, const uint8& InQuantity = 1);
+
+	uint32 GetDiscountedPrice(uint32& InPrice);
 	
 };

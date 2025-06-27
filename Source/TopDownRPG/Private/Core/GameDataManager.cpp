@@ -27,7 +27,7 @@ void UGameDataManager::LoadGameDatas()
 		ETableType Table = (ETableType)i;
 
 		// 1. 경로에서 에셋 로드
-		FSoftObjectPath Path(FString::Format(*CommonConst::PATH_FORMAT_DATA_TABLE, { EnumToString(Table) }));
+		FSoftObjectPath Path(FString::Format(*CommonConst::PATH_FORMAT_DATA_TABLE, { FTDRPGEnum::EnumToString(Table) }));
 		auto Handle = Stream.RequestSyncLoad(Path);
 
 		// 2. 로드한 에셋 캐싱
@@ -108,19 +108,6 @@ const int32 UGameDataManager::GetLevelingIndex(const FString& CharID, const int3
 
 	return -1;
 }
-
-const FString UGameDataManager::EnumToString(ETableType EnumValue) const
-{
-	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ETableType"), true);
-	
-	if (!EnumPtr)
-	{
-		return FString("Invalid Enum");
-	}
-
-	return EnumPtr->GetDisplayNameTextByIndex((int32)EnumValue).ToString();
-}
-
 
 UPrimaryDataAsset* UGameDataManager::LoadPrimaryAssetData(const FPrimaryAssetId& ID)
 {

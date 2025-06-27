@@ -2,3 +2,23 @@
 
 
 #include "TDRPGEnum.h"
+
+FString FTDRPGEnum::EnumToString(const ERarity InValue)
+{
+    const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ERarity"), true);
+
+    if (!EnumPtr)
+        return FString("Invalid Enum");
+
+    return EnumPtr->GetDisplayNameTextByIndex((int32)InValue).ToString();
+}
+
+FString FTDRPGEnum::EnumToString(const ETableType EnumValue)
+{
+	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ETableType"), true);
+	if (!EnumPtr)
+
+        return FString("Invalid Enum");
+
+	return EnumPtr->GetDisplayNameTextByIndex((int32)EnumValue).ToString();
+}

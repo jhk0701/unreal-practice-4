@@ -62,13 +62,3 @@ ETableType UItemBase::GetItemType()
     return ETableType::Ingredient;
 }
 
-
-FString UItemBase::EnumToString(const ERarity InValue) const
-{
-    const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ERarity"), true);
-    if(!EnumPtr)
-        return FString("Invalid Enum");
-
-    return EnumPtr->GetDisplayNameTextByIndex((int32)InValue).ToString();
-}
-

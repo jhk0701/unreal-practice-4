@@ -55,6 +55,7 @@ enum class ERarity : uint8
 	Mythic,
 };
 
+
 UENUM(BlueprintType)
 enum class EEquipType : uint8
 {
@@ -74,4 +75,14 @@ enum class EOperateType : uint8
 	Addictive,
 	Multiply,
 	Override,
+};
+
+DECLARE_ENUM_TO_STRING(ERarity);
+DECLARE_ENUM_TO_STRING(ETableType);
+
+class FTDRPGEnum 
+{
+public:
+	static FString EnumToString(const ERarity InValue);
+	static FString EnumToString(const ETableType EnumValue);
 };

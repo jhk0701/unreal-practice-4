@@ -2,6 +2,8 @@
 
 
 #include "UI/TDRPGUWItemDetail.h"
+
+#include "TDRPGEnum.h"
 #include "Item/ItemBase.h"
 #include "Data/ItemDataRow.h"
 #include "Core/ResourceLoadManager.h"
@@ -10,16 +12,34 @@
 #include <Components/Image.h>
 
 
+void UTDRPGUWItemDetail::NativeOnInitialized()
+{
+	Super::NativeOnInitialized();
+
+	QuantityTitle->SetVisibility(bShowQuantity ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	QuantityLabel->SetVisibility(bShowQuantity ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+
+	RarityTitle->SetVisibility(bShowRarity ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	RarityLabel->SetVisibility(bShowRarity ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+}
+
 void UTDRPGUWItemDetail::Update(UItemBase* InItem)
 {
 	if (!InItem)
 		return;
 
-	FItemDataRow* Data = InItem->GetData();
-	
-	NameLabel->SetText(FText::FromName(Data->ItemName));
+	Update(InItem->GetData());
+
 	QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), InItem->Quantity)));
-	RarityLabel->SetText(FText::FromString(InItem->EnumToString(Data->Rarity)));
+}
+
+void UTDRPGUWItemDetail::Update(FItemDataRow* InData)
+{
+	FItemDataRow* Data = InData;
+
+	NameLabel->SetText(FText::FromName(Data->ItemName));
+	RarityLabel->SetText(FText::FromString(FTDRPGEnum::EnumToString(Data->Rarity)));
+	PriceLabel->SetText(FText::FromString(FString::Printf(TEXT("%u G"), Data->Price)));
 
 	if (Data->Thumbnail.IsValid())
 	{
@@ -29,7 +49,7 @@ void UTDRPGUWItemDetail::Update(UItemBase* InItem)
 	else
 	{
 		UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
-		Resource->Load(Data->Thumbnail, 
+		Resource->Load(Data->Thumbnail,
 			FOnResourceLoaded::CreateLambda(
 				[this](UObject* Loaded)
 				{
@@ -40,4 +60,9 @@ void UTDRPGUWItemDetail::Update(UItemBase* InItem)
 				})
 		);
 	}
+}
+
+void UTDRPGUWItemDetail::UpdatePrice(uint32 InPrice)
+{
+	PriceLabel->SetText(FText::FromString(FString::Printf(TEXT("%u G"), InPrice)));
 }
