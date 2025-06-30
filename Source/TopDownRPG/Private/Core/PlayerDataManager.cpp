@@ -31,18 +31,16 @@ void UPlayerDataManager::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 
-	GetPlayerDatas(PlayerDataDir);
+	ReadPlayerData(PlayerDataDir);
 }
 
-void UPlayerDataManager::GetPlayerDatas(TArray<FString>& OutDirectories)
+void UPlayerDataManager::ReadPlayerData(TArray<FString>& OutDirectories)
 {
 	OutDirectories.Empty();
 
-	// 메모하기 : 프로젝트 SaveGames 경로 찾기
+	// 프로젝트 SaveGames 경로 찾기
 	FString SaveDir = FPaths::ProjectSavedDir() / TEXT("SaveGames");
 
-	// PRINT_LOG(TEXT("[SaveDir] %s"), *SaveDir);
-	
 	if (!FPaths::DirectoryExists(SaveDir))
 	{
 		PRINT_LOG(TEXT("There is no save directory"));

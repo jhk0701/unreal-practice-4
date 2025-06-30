@@ -28,7 +28,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UIElement, meta = (BindWidget))
 	TObjectPtr<UButton> ExitButton;
 
-public:
+protected:
 	virtual void NativeOnInitialized() override;
-	void BindButton();
+	void InitButton();
 };

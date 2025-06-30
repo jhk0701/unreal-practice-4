@@ -3,27 +3,34 @@
 
 #include "UI/TDRPGUWTitle.h"
 #include "InGame/Title/TitleGameMode.h"
+#include "Core/PlayerDataManager.h"
+
 #include <Components/Button.h>
 
 #include "TopDownRPG/TopDownRPG.h"
+
 
 void UTDRPGUWTitle::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
-	BindButton();
+	InitButton();
 }
 
 
-void UTDRPGUWTitle::BindButton()
+void UTDRPGUWTitle::InitButton()
 {
-	// Exit
-	ATitleGameMode* gameMode = Cast<ATitleGameMode>(GetWorld()->GetAuthGameMode());
+	UPlayerDataManager* PlayerData = GetGameInstance()->GetSubsystem<UPlayerDataManager>();
+	bool bExistSaveData = PlayerData->GetPlayerData().Num() > 0;
+	
+	ATitleGameMode* GameMode = Cast<ATitleGameMode>(GetWorld()->GetAuthGameMode());
 
-	if (!gameMode)
-		return;
+	NewGameButton->OnClicked.AddUniqueDynamic(GameMode, &ATitleGameMode::StartNewGame);
+	
+	ContinueButton->SetVisibility(bExistSaveData ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 
-	NewGameButton->OnClicked.AddUniqueDynamic(gameMode, &ATitleGameMode::StartNewGame);
-	ContinueButton->OnClicked.AddUniqueDynamic(gameMode, &ATitleGameMode::ContinueGame);
-	ExitButton->OnClicked.AddUniqueDynamic(gameMode, &ATitleGameMode::ExitGame);
+	if (bExistSaveData)
+		ContinueButton->OnClicked.AddUniqueDynamic(GameMode, &ATitleGameMode::ContinueGame);
+	
+	ExitButton->OnClicked.AddUniqueDynamic(GameMode, &ATitleGameMode::ExitGame);
 }

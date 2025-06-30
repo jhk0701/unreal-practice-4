@@ -38,6 +38,6 @@ public:
 	void LoadData(const FString& InSlotName, FOnDataLoadCompleted&& Callback);
 
 private:
-	void GetPlayerDatas(TArray<FString>& OutDirectories);
+	void ReadPlayerData(TArray<FString>& OutDirectories);
 
 };
