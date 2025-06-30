@@ -54,7 +54,7 @@ public:
 	void SetPlayerData(UTDRPGSaveGame* InPlayerData);
 
 	FName& GetPlayerName() const;
-	FString& GetClassID() const;
+	FString& GetCharID() const;
 
 	// 레벨 관리
 	void AddExp(uint32 Value);

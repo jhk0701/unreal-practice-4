@@ -15,7 +15,10 @@ struct TOPDOWNRPG_API FCharacterDataRow : public FTableRowBase
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FName CharName;
+	FName ClassName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FString Desc;
 
 	// Ability 기초값
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

@@ -8,13 +8,13 @@
 #include "CommonConst.h"
 #include "TDRPGEnum.h"
 #include "Data/LevelingDataRow.h"
+#include "Data/CharacterDataRow.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
 
 void UGameDataManager::LoadGameDatas()
 {
-
 	// 게임 데이터 준비
 	// 데이터 테이블 로드
 	FStreamableManager& Stream = UAssetManager::Get().GetStreamableManager();
@@ -56,6 +56,7 @@ void UGameDataManager::ProcessLevelData()
 		LevelRange[CharID].Array.Add(FCString::Atoi(*Lv));
 	}
 }
+
 
 void UGameDataManager::GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling) const
 {
@@ -119,4 +120,18 @@ UPrimaryDataAsset* UGameDataManager::LoadPrimaryAssetData(const FPrimaryAssetId&
 		AssetPtr.LoadSynchronous();
 
 	return Cast<UPrimaryDataAsset>(AssetPtr.Get());
+}
+
+void UGameDataManager::GetPlayableCharIDs(TArray<FString>& OutCharIDs) const
+{
+	OutCharIDs.Empty();
+
+	TArray<FName> RowNames = GameDatabase[ETableType::Character]->GetRowNames();
+	
+	for (auto& Name : RowNames)
+	{
+		FString Str = Name.ToString();
+		if (Str[0] == '1')
+			OutCharIDs.Add(Str);
+	}
 }

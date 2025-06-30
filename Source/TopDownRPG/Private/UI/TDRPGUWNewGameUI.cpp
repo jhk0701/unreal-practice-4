@@ -45,6 +45,6 @@ void UTDRPGUWNewGameUI::Complete()
 	ATitleGameMode* Mode = Cast<ATitleGameMode>(GetWorld()->GetAuthGameMode());
 
 	if (State && Mode)
-		Mode->CreateNewGameData(State->NewClassID, State->NewPlayerName);
+		Mode->CreateNewGameData(State->NewCharID, State->NewPlayerName);
 	
 }

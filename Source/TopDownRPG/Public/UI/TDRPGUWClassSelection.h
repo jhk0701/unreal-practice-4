@@ -6,6 +6,8 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWClassSelection.generated.h"
 
+class UTDRPGUWButton;
+
 class UButton;
 class UTextBlock;
 class UVerticalBox;
@@ -28,18 +30,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UTextBlock> ClassDescLabel;
 
-	// TODO : 클래스 버튼 동적 생성
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
 	TObjectPtr<UVerticalBox> ClassList;
 
-	// TODO : 임시 클래스 버튼 제거
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Sub", meta = (BindWidget))
-	TObjectPtr<UButton> TempClassButton;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
+	TSubclassOf<UTDRPGUWButton> ButtonFactory;
 
 
 public:
 	void InitClassList();
 
 	UFUNCTION()
-	void SelectClass(int32 Index);
+	void SelectClass(const FString& InCharID);
+
+protected:
+	void ShowCharData(const FString& InCharID);
 };

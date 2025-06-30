@@ -25,7 +25,7 @@ public:
 	int32 UserIndex;
 
 	UPROPERTY()
-	FString ClassID;
+	FString CharID;
 
 	UPROPERTY()
 	uint32 CharLv;

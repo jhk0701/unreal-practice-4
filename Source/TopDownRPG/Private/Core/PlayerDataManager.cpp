@@ -54,13 +54,13 @@ void UPlayerDataManager::GetPlayerDatas(TArray<FString>& OutDirectories)
 	FileManager.FindFiles(OutDirectories, *SaveFilePath, true, false);
 }
 
-void UPlayerDataManager::CreateData(const FString& InPlayerName, const FString& InClassID)
+void UPlayerDataManager::CreateData(const FString& InPlayerName, const FString& InCharID)
 {
 	Data = Cast<UTDRPGSaveGame>(UGameplayStatics::CreateSaveGameObject(UTDRPGSaveGame::StaticClass()));
 
 	// 초기 데이터 생성
 	Data->PlayerName = FName(InPlayerName);
-	Data->ClassID = InClassID;
+	Data->CharID = InCharID;
 	Data->UserIndex = 0;
 	Data->PlayerID = InPlayerName + "_" + FDateTime::Now().ToString();
 
@@ -83,7 +83,7 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 	Data = Cast<UTDRPGSaveGame>(UGameplayStatics::CreateSaveGameObject(UTDRPGSaveGame::StaticClass()));
 
 	Data->PlayerName = InPlayer->PlayerData->PlayerName;
-	Data->ClassID = InPlayer->PlayerData->ClassID;
+	Data->CharID = InPlayer->PlayerData->CharID;
 	Data->UserIndex = 0;
 	Data->PlayerID = InPlayer->PlayerData->PlayerID;
 

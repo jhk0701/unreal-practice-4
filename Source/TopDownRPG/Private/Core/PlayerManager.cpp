@@ -44,8 +44,8 @@ void UPlayerManager::SetPlayerData(UTDRPGSaveGame* InPlayerData)
 	PlayerData = InPlayerData;
 	
 	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
-	FCharacterDataRow* CharData = GameData->GetRow<FCharacterDataRow>(ETableType::Character, PlayerData->ClassID);
-	ClassName = CharData->CharName;
+	FCharacterDataRow* CharData = GameData->GetRow<FCharacterDataRow>(ETableType::Character, PlayerData->CharID);
+	ClassName = CharData->ClassName;
 
 	// 레벨링 데이터 불러오기
 	InitLvAndExp(PlayerData->CharLv, PlayerData->CharExp);
@@ -63,9 +63,9 @@ FName& UPlayerManager::GetPlayerName() const
 	return PlayerData->PlayerName;
 }
 
-FString& UPlayerManager::GetClassID() const
+FString& UPlayerManager::GetCharID() const
 {
-	return PlayerData->ClassID;
+	return PlayerData->CharID;
 }
 
 void UPlayerManager::InitLvAndExp(uint32 InLv, uint32 InExp)
@@ -75,14 +75,14 @@ void UPlayerManager::InitLvAndExp(uint32 InLv, uint32 InExp)
 	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
 	
 	TArray<int32> Leveling;
-	GameData->GetLeveling(PlayerData->ClassID, Lv, Leveling);
+	GameData->GetLeveling(PlayerData->CharID, Lv, Leveling);
 
 	// Exp 파트 더하기
 	uint32 MaxExp = 0;
 	int32 Cnt = Leveling.Num();
 	for (int32 i = 0; i < Cnt; i++)
 	{
-		FString Key = GameData->GetLevelingKey(PlayerData->ClassID, i);
+		FString Key = GameData->GetLevelingKey(PlayerData->CharID, i);
 		FLevelingDataRow* LevelData = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, *Key);
 
 		MaxExp += LevelData->ExpDemand;
@@ -180,8 +180,8 @@ void UPlayerManager::LevelUp()
 	// 레벨링 데이터에서 새로운 레벨의 경험치 요구량 받아오기
 	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
 
-	int32 Index = GameData->GetLevelingIndex(PlayerData->ClassID, Lv);
-	FString Key = GameData->GetLevelingKey(PlayerData->ClassID, Index);
+	int32 Index = GameData->GetLevelingIndex(PlayerData->CharID, Lv);
+	FString Key = GameData->GetLevelingKey(PlayerData->CharID, Index);
 	FLevelingDataRow* LevelData = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, *Key);
 
 	uint32 MaxExp = Exp->GetMaxValue() + LevelData->ExpDemand;

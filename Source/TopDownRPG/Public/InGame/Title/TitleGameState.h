@@ -17,7 +17,7 @@ class TOPDOWNRPG_API ATitleGameState : public ATDRPGGameState
 public:
 	// 필요 시 분리
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "NewGame")
-	FString NewClassID;
+	FString NewCharID;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "NewGame")
 	FString NewPlayerName;
