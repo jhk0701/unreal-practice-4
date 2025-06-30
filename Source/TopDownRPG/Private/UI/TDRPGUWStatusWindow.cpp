@@ -6,7 +6,6 @@
 #include "TDRPGEnum.h"
 #include "Core/PlayerManager.h"
 #include "Core/TDRPGGameState.h"
-#include "Core/TDRPGSaveGame.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/CharacterData.h"
 
@@ -37,7 +36,7 @@ void UTDRPGUWStatusWindow::Refresh()
 	if (!BindedPlayer)
 		return;
 
-	NameLabel->SetText(FText::FromName(BindedPlayer->PlayerData->PlayerName));
+	NameLabel->SetText(FText::FromName(BindedPlayer->GetPlayerName()));
 	ClassLabel->SetText(FText::FromName(BindedPlayer->ClassName));
 
 	LvLabel->SetText(FText::FromString(FString::Printf(TEXT("Lv. %u"), BindedPlayer->Lv)));

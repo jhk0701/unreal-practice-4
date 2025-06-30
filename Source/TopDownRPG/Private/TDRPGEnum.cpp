@@ -13,12 +13,12 @@ FString FTDRPGEnum::EnumToString(const ERarity InValue)
     return EnumPtr->GetDisplayNameTextByIndex((int32)InValue).ToString();
 }
 
-FString FTDRPGEnum::EnumToString(const ETableType EnumValue)
+FString FTDRPGEnum::EnumToString(const ETableType InValue)
 {
 	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ETableType"), true);
 	if (!EnumPtr)
 
         return FString("Invalid Enum");
 
-	return EnumPtr->GetDisplayNameTextByIndex((int32)EnumValue).ToString();
+	return EnumPtr->GetDisplayNameTextByIndex((int32)InValue).ToString();
 }

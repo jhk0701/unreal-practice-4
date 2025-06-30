@@ -7,7 +7,6 @@
 #include "Character/CharacterData.h"
 
 #include "Core/PlayerManager.h"
-#include "Core/TDRPGSaveGame.h"
 
 #include <Components/TextBlock.h>
 #include <Components/ProgressBar.h>
@@ -17,7 +16,7 @@ void UTDRPGUWStatusBar::Bind(ATDRPGPlayer* InPlayer)
 {
 	Player = InPlayer;
 
-	PlayerNameLabel->SetText(FText::FromName(GetGameInstance()->GetSubsystem<UPlayerManager>()->PlayerData->PlayerName));
+	PlayerNameLabel->SetText(FText::FromName(GetGameInstance()->GetSubsystem<UPlayerManager>()->GetPlayerName()));
 
 	UCharacterData* Data = Player->DataComp;
 

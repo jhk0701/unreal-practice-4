@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include <Engine/DataTable.h>
+#include "TDRPGEnum.h"
 #include "LevelingDataRow.generated.h"
 
 
@@ -13,17 +14,14 @@ struct TOPDOWNRPG_API FLevelingDataRow : public FTableRowBase
 	GENERATED_BODY();
 
 public:
+
+	// Ability 기초값
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Str;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Dex;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Int;
+	TMap<EAbility, int32> Ability;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Hp;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Mp;
+	TMap<EStatus, int32> Status;
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 ExpDemand;

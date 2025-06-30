@@ -35,8 +35,8 @@ void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow& InData, UEquipme
 void UCharacterData::ApplyData(uint32 InLv, FCharacterDataRow& InData)
 {
 	// 초기 데이터
-	uint32	Hp = InData.Hp, Mp = InData.Mp;
-	int32	Str = InData.Str, Dex = InData.Dex, Int = InData.Int;
+	TMap<EStatus, int32> DataStatus = InData.Status;
+	TMap<EAbility, int32> DataAbility = InData.Ability;
 
 	// 레벨링 반영
 	TArray<int32> Leveling;
@@ -45,29 +45,50 @@ void UCharacterData::ApplyData(uint32 InLv, FCharacterDataRow& InData)
 
 	for (int32 i = 0; i < Leveling.Num(); ++i)
 	{
-		FString key = GameData->GetLevelingKey(ClassID, i);
-		FLevelingDataRow* row = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, key);
+		FString Key = GameData->GetLevelingKey(ClassID, i);
+		FLevelingDataRow* Row = GameData->GetRow<FLevelingDataRow>(ETableType::Leveling, Key);
 
-		Hp += row->Hp * Leveling[i];
-		Mp += row->Mp * Leveling[i];
+		for (const auto& Pair : DataStatus) 
+		{
+			if (Row->Status.Contains(Pair.Key))
+				DataStatus[Pair.Key] += Row->Status[Pair.Key] * Leveling[i];
+		}
 
-		Str += row->Str * Leveling[i];
-		Dex += row->Dex * Leveling[i];
-		Int += row->Int * Leveling[i];
+		for (const auto& Pair : DataAbility) 
+		{
+			if (Row->Ability.Contains(Pair.Key))
+				DataAbility[Pair.Key] += Row->Ability[Pair.Key] * Leveling[i];
+		}
 	}
 
-	BaseStatus.Add(EStatus::Hp, Hp);
-	BaseStatus.Add(EStatus::Mp, Mp);
-	BaseStatus.Add(EStatus::Shield, 0);
-
-	BaseAbility.Add(EAbility::Str, Str);
-	BaseAbility.Add(EAbility::Dex, Dex);
-	BaseAbility.Add(EAbility::Int, Int);
+	for (const auto& Pair : DataStatus)
+	{
+		if (Pair.Key == EStatus::Shield)
+		{
+			BaseStatus.Add(Pair.Key, 0);
+			continue;
+		}
+		
+		BaseStatus.Add(Pair.Key, Pair.Value);
+	}
+	
+	for (const auto& Pair : DataAbility)
+		BaseAbility.Add(Pair.Key, Pair.Value);
 
 	// Stat 초기화
-	Stat.Add(EStatus::Hp, MakeUnique<FStatus>(Hp));
-	Stat.Add(EStatus::Mp, MakeUnique<FStatus>(Mp));
-	Stat.Add(EStatus::Shield, MakeUnique<FStatus>(0));
+	uint8 Cnt = (uint8)EStatus::COUNT;
+	for (uint8 i = 0; i < Cnt; ++i) 
+	{
+		EStatus Type = (EStatus)i;
+		if (Type == EStatus::Shield)
+		{
+			Stat.Add(Type, MakeUnique<FStatus>(0));
+			continue;
+		}
+
+		Stat.Add(Type, MakeUnique<FStatus>(BaseStatus[Type]));
+	}
+	
 }
 
 void UCharacterData::ApplyEquipment(UEquipment* InEquipment)

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Core/PlayerManager.h"
-#include "Core/TDRPGSaveGame.h"
+#include "Save/TDRPGSaveGame.h"
 
 #include <Kismet/GameplayStatics.h>
 #include "TDRPGEnum.h"
@@ -56,6 +56,11 @@ void UPlayerManager::SetPlayerData(UTDRPGSaveGame* InPlayerData)
 	InitInventory();
 	InitEquipment();
 	InitQuickSlot();
+}
+
+FName& UPlayerManager::GetPlayerName() const
+{
+	return PlayerData->PlayerName;
 }
 
 FString& UPlayerManager::GetClassID() const

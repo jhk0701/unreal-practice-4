@@ -30,7 +30,7 @@ enum class EStatus : uint8
 	Hp		UMETA(DisplayName = "Health Point"),
 	Mp		UMETA(DisplayName = "Mana Point"),
 
-	Shield,
+	Shield	UMETA(DisplayName = "Shield Point"),
 
 	COUNT
 };
@@ -41,6 +41,8 @@ enum class EAbility : uint8
 	Str		UMETA(DisplayName = "Strength"),
 	Dex		UMETA(DisplayName = "Dexterity"),
 	Int		UMETA(DisplayName = "Intelligence"),
+	Vit		UMETA(DisplayName = "Vitality"),
+	Foc		UMETA(DisplayName = "Focus"),
 
 	COUNT
 };
@@ -84,5 +86,5 @@ class FTDRPGEnum
 {
 public:
 	static FString EnumToString(const ERarity InValue);
-	static FString EnumToString(const ETableType EnumValue);
+	static FString EnumToString(const ETableType InValue);
 };

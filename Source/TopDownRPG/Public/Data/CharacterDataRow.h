@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include <Engine/DataTable.h>
+#include "TDRPGEnum.h"
 #include "CharacterDataRow.generated.h"
 
 
@@ -18,17 +19,11 @@ public:
 
 	// Ability 기초값
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Str;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Dex;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Int;
+	TMap<EAbility, int32> Ability;
 
 	// Status 기초값
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Hp;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Mp;
+	TMap<EStatus, int32> Status;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<int32> SkillID;
