@@ -38,11 +38,11 @@ enum class EStatus : uint8
 UENUM(BlueprintType)
 enum class EAbility : uint8
 {
-	Str		UMETA(DisplayName = "Strength"),
-	Dex		UMETA(DisplayName = "Dexterity"),
-	Int		UMETA(DisplayName = "Intelligence"),
-	Vit		UMETA(DisplayName = "Vitality"),
-	Foc		UMETA(DisplayName = "Focus"),
+	Str		UMETA(DisplayName = "STR"),
+	Dex		UMETA(DisplayName = "DEX"),
+	Int		UMETA(DisplayName = "INT"),
+	Vit		UMETA(DisplayName = "VIT"),
+	Foc		UMETA(DisplayName = "FOC"),
 
 	COUNT
 };
