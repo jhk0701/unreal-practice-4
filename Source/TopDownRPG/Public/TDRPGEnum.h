@@ -30,8 +30,6 @@ enum class EStatus : uint8
 	Hp		UMETA(DisplayName = "Health Point"),
 	Mp		UMETA(DisplayName = "Mana Point"),
 
-	Shield	UMETA(DisplayName = "Shield Point"),
-
 	COUNT
 };
 

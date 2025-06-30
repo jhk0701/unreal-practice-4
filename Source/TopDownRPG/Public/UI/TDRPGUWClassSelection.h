@@ -60,6 +60,4 @@ public:
 
 protected:
 	void ShowCharData(const FString& InCharID);
-	void MakeStatusText(EStatus InType, int32 InValue, FText& OutText);
-	void MakeAbilityText(EAbility InType, int32 InValue, FText& OutText);
 };

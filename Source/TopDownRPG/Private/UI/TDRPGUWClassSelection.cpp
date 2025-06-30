@@ -22,10 +22,6 @@ void UTDRPGUWClassSelection::NativeOnInitialized()
 	for (uint8 i = 0; i < Cnt; ++i) 
 	{
 		EStatus Type = (EStatus)i;
-
-		if (Type == EStatus::Shield)
-			continue;
-
 		UTDRPGUWLabel* LabelInst = CreateWidget<UTDRPGUWLabel>(this, LabelFactory);
 		StatusContainer->AddChild(LabelInst);
 	}

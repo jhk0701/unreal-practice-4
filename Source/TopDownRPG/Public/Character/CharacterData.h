@@ -27,6 +27,7 @@ public:
 	FString ClassID;
 
 	TMap<EStatus, TUniquePtr<FStatus>> Stat;	// 체력, 마나
+	TUniquePtr<FStatus> Shield; // 캐릭터 쉴드
 
 	TMap<EStatus, uint32> BaseStatus;
 	TMap<EAbility, uint32> BaseAbility;

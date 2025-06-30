@@ -25,10 +25,13 @@ UCharacterData::UCharacterData()
 void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow& InData, UEquipment* InEquipment)
 {
 	bIsDead = false;
+
 	ApplyData(InLv, InData);	// 데이터 반영
 	ApplyEquipment(InEquipment);	// 장비 의존성 주입
 
 	Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UCharacterData::CheckIsDead);
+	Shield = MakeUnique<FStatus>(0);
+
 	// TODO : 스킬 반영
 }
 
@@ -62,15 +65,7 @@ void UCharacterData::ApplyData(uint32 InLv, FCharacterDataRow& InData)
 	}
 
 	for (const auto& Pair : DataStatus)
-	{
-		if (Pair.Key == EStatus::Shield)
-		{
-			BaseStatus.Add(Pair.Key, 0);
-			continue;
-		}
-		
 		BaseStatus.Add(Pair.Key, Pair.Value);
-	}
 	
 	for (const auto& Pair : DataAbility)
 		BaseAbility.Add(Pair.Key, Pair.Value);
@@ -80,12 +75,6 @@ void UCharacterData::ApplyData(uint32 InLv, FCharacterDataRow& InData)
 	for (uint8 i = 0; i < Cnt; ++i) 
 	{
 		EStatus Type = (EStatus)i;
-		if (Type == EStatus::Shield)
-		{
-			Stat.Add(Type, MakeUnique<FStatus>(0));
-			continue;
-		}
-
 		Stat.Add(Type, MakeUnique<FStatus>(BaseStatus[Type]));
 	}
 	
