@@ -81,10 +81,14 @@ enum class EOperateType : uint8
 
 DECLARE_ENUM_TO_STRING(ERarity);
 DECLARE_ENUM_TO_STRING(ETableType);
+DECLARE_ENUM_TO_STRING(EStatus);
+DECLARE_ENUM_TO_STRING(EAbility);
 
 class FTDRPGEnum 
 {
 public:
 	static FString EnumToString(const ERarity InValue);
 	static FString EnumToString(const ETableType InValue);
+	static FString EnumToString(const EStatus InValue);
+	static FString EnumToString(const EAbility InValue);
 };

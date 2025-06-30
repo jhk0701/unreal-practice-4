@@ -4,6 +4,7 @@
 #include "UI/TDRPGUWClassSelection.h"
 #include "InGame/Title/TitleGameState.h"
 #include "UI/Element/TDRPGUWButton.h"
+#include "UI/Element/TDRPGUWLabel.h"
 
 #include "TDRPGEnum.h"
 #include "Core/GameDataManager.h"
@@ -12,6 +13,30 @@
 #include <Components/VerticalBox.h>
 #include <Components/TextBlock.h>
 
+
+void UTDRPGUWClassSelection::NativeOnInitialized()
+{
+	Super::NativeOnInitialized();
+
+	uint8 Cnt = (uint8)EStatus::COUNT;
+	for (uint8 i = 0; i < Cnt; ++i) 
+	{
+		EStatus Type = (EStatus)i;
+
+		if (Type == EStatus::Shield)
+			continue;
+
+		UTDRPGUWLabel* LabelInst = CreateWidget<UTDRPGUWLabel>(this, LabelFactory);
+		StatusContainer->AddChild(LabelInst);
+	}
+	
+	Cnt = (uint8)EAbility::COUNT;
+	for (uint8 i = 0; i < Cnt; ++i) 
+	{
+		UTDRPGUWLabel* LabelInst = CreateWidget<UTDRPGUWLabel>(this, LabelFactory);
+		AbilityContainer->AddChild(LabelInst);
+	}
+}
 
 void UTDRPGUWClassSelection::InitClassList()
 {
@@ -49,4 +74,21 @@ void UTDRPGUWClassSelection::ShowCharData(const FString& InCharID)
 
 	ClassLabel->SetText(FText::FromName(CharData->ClassName));
 	ClassDescLabel->SetText(FText::FromString(CharData->Desc));
+
+	int32 Cnt = StatusContainer->GetChildrenCount();
+	for (int32 i = 0; i < Cnt; ++i) 
+	{
+		EStatus Type = (EStatus)i;
+		UTDRPGUWLabel* LabelInst =  Cast<UTDRPGUWLabel>(StatusContainer->GetChildAt(i));
+		LabelInst->Label->SetText(FText::FromString(FString::Printf(TEXT("%s : %d"), *FTDRPGEnum::EnumToString(Type), CharData->Status[Type])));
+	}
+
+	Cnt = AbilityContainer->GetChildrenCount();
+	for (int32 i = 0; i < Cnt; ++i)
+	{
+		// CharData->Ability
+		EAbility Type = (EAbility)i;
+		UTDRPGUWLabel* LabelInst = Cast<UTDRPGUWLabel>(AbilityContainer->GetChildAt(i));
+		LabelInst->Label->SetText(FText::FromString(FString::Printf(TEXT("%s : %d"), *FTDRPGEnum::EnumToString(Type), CharData->Ability[Type])));
+	}
 }

@@ -6,7 +6,11 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWClassSelection.generated.h"
 
+enum class EStatus : uint8;
+enum class EAbility : uint8;
+
 class UTDRPGUWButton;
+class UTDRPGUWLabel;
 
 class UButton;
 class UTextBlock;
@@ -36,8 +40,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWButton> ButtonFactory;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<UVerticalBox> StatusContainer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<UVerticalBox> AbilityContainer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
+	TSubclassOf<UTDRPGUWLabel> LabelFactory;
+	
 
 public:
+	virtual void NativeOnInitialized() override;
+
 	void InitClassList();
 
 	UFUNCTION()
@@ -45,4 +60,6 @@ public:
 
 protected:
 	void ShowCharData(const FString& InCharID);
+	void MakeStatusText(EStatus InType, int32 InValue, FText& OutText);
+	void MakeAbilityText(EAbility InType, int32 InValue, FText& OutText);
 };
