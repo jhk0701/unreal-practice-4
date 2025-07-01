@@ -67,8 +67,7 @@ void UPlayerAttack::InvokeAttack()
 		false);
 
 	// 애니메이션 재생
-	++AttackCount;
-	Player->AnimInst->PlayAttack(AttackCount);
+	Player->AnimInst->PlayAttack(AttackCount++);
 }
 
 void UPlayerAttack::ActivateHitCollider(bool bIsEnable)
