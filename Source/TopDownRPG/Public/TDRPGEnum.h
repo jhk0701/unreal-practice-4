@@ -39,8 +39,8 @@ enum class EAbility : uint8
 	Str		UMETA(DisplayName = "STR"),
 	Dex		UMETA(DisplayName = "DEX"),
 	Int		UMETA(DisplayName = "INT"),
-	Vit		UMETA(DisplayName = "VIT"),
 	Foc		UMETA(DisplayName = "FOC"),
+	// Vit		UMETA(DisplayName = "VIT"),
 
 	COUNT
 };
