@@ -77,6 +77,16 @@ enum class EOperateType : uint8
 	Override,
 };
 
+UENUM(BlueprintType)
+enum class ESkillInput : uint8 
+{
+	Normal,
+	Combo,
+	Charging,
+	Casting,
+	AreaSelect
+};
+
 DECLARE_ENUM_TO_STRING(ERarity);
 DECLARE_ENUM_TO_STRING(ETableType);
 DECLARE_ENUM_TO_STRING(EStatus);

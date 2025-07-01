@@ -2,7 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Inherit/Interactable.h"
 #include "TDRPGPlayer.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnUniqueInputDelegate);
