@@ -6,6 +6,7 @@
 #include "Character/PlayerInputComponent.h"
 #include "PlayerAttack.generated.h"
 
+class USkill;
 
 // TODO : EnemyAttack과 리팩토링할것
 // 방향 : PlayerInputConponent 기능을 인터페이스화
@@ -29,12 +30,17 @@ protected:
 	int32 AttackCount = 0;
 
 	// 스킬 데이터
-	
+	// 2. 정보 기반 반영, 스킬 객체 생성, 스킬 입력 객체 생성
+	// 3. 입력에 따라 스킬 발동
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack|Skill")
+	TMap<FString, USkill*> SkillMap;
 
 public:
 	UPlayerAttack();
 	virtual void InitializeComponent() override;
 	virtual void SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
+
+	void Initialize(TArray<FString>& InSkillIDs);
 
 	void InputAttack(const FInputActionValue& InputValue);
 	void InvokeAttack();

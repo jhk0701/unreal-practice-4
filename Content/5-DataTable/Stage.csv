@@ -1,0 +1,4 @@
+---,StageName,ExpReward,GoldReward,ItemReward,EnemyListPerWave,EnemySpawnPerWave
+1001,"None","100","100","","((Array=(2001)))","((Array=(3)))"
+1002,"None","200","200","","((Array=(2001)),(Array=(2001)))","((Array=(3)),(Array=(3)))"
+1003,"None","300","300","","",""

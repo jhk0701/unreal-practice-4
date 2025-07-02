@@ -1,0 +1,6 @@
+---,EquipType,AttackPower,DefensePower,Ability,Status,ItemName,Rarity,NumOfDuplicate,Price,Thumbnail
+1001,"Head","0","10","((Str, 10))","()","Shabby Helmet","Normal","1","100","/Game/99-Assets/UI/Icon/Item/Armor/03_plate_helm.03_plate_helm"
+1002,"Top","0","50","((Str, 5))","((Hp, 80))","Shabby Chest Plate","Normal","1","100","/Game/99-Assets/UI/Icon/Item/Armor/01_plate_chest.01_plate_chest"
+1003,"Bottom","0","40","((Str, 5))","((Hp, 100))","Shabby Pants","Normal","1","100","/Game/99-Assets/UI/Icon/Item/Armor/06_plate_pants.06_plate_pants"
+1004,"Glove","0","10","((Str, 20))","()","Shabby Glove","Normal","1","100","/Game/99-Assets/UI/Icon/Item/Armor/04_plate_gloves.04_plate_gloves"
+1005,"Shoes","0","30","((Str, 5))","()","Shabby Boots","Normal","1","100","/Game/99-Assets/UI/Icon/Item/Armor/05_plate_boots.05_plate_boots"

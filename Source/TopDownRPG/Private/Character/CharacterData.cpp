@@ -17,10 +17,43 @@
 
 #include "TopDownRPG/TopDownRPG.h"
 
+
 UCharacterData::UCharacterData()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 }
+
+void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// 기한 만료된 버프 해제
+	while (!BuffReleaseQueue.IsEmpty())
+	{
+		FString Key;
+		BuffReleaseQueue.Dequeue(Key);
+		BuffFunc.Remove(Key);
+	}
+
+	for (auto& Pair : BuffFunc)
+	{
+		// 버프 기한 체크
+		Pair.Value.Duration -= DeltaTime;
+
+		if (Pair.Value.Duration < 0)
+			BuffReleaseQueue.Enqueue(Pair.Key); // 다음 틱에 버프 해제
+	}
+}
+
+void UCharacterData::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	// 종료 시, 구독 해제
+	if (Equipment)
+		Equipment->OnEquipmentUpdated.RemoveAll(this);
+}
+
 
 void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow& InData, UEquipment* InEquipment)
 {
@@ -31,8 +64,6 @@ void UCharacterData::Initialize(uint32 InLv, FCharacterDataRow& InData, UEquipme
 
 	Stat[EStatus::Hp]->OnValueChanged.AddUObject(this, &UCharacterData::CheckIsDead);
 	Shield = MakeUnique<FStatus>(0);
-
-	// TODO : 스킬 반영
 }
 
 void UCharacterData::ApplyData(uint32 InLv, FCharacterDataRow& InData)
@@ -120,38 +151,6 @@ void UCharacterData::UpdateEquipment(EEquipType InType)
 
 		EquipmentAbility[Type] = Equipment->GetAddictiveAbility(Type);
 	}
-}
-
-
-void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// 기한 만료된 버프 해제
-	while (!BuffReleaseQueue.IsEmpty())
-	{
-		FString Key;
-		BuffReleaseQueue.Dequeue(Key);
-		BuffFunc.Remove(Key);
-	}
-
-	for (auto& Pair : BuffFunc)
-	{
-		// 버프 기한 체크
-		Pair.Value.Duration -= DeltaTime;
-
-		if (Pair.Value.Duration < 0)
-			BuffReleaseQueue.Enqueue(Pair.Key); // 다음 틱에 버프 해제
-	}
-}
-
-void UCharacterData::EndPlay(const EEndPlayReason::Type EndPlayReason)
-{
-	Super::EndPlay(EndPlayReason);
-
-	// 종료 시, 구독 해제
-	if (Equipment) 
-		Equipment->OnEquipmentUpdated.RemoveAll(this);
 }
 
 

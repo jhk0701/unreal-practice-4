@@ -1,0 +1,2 @@
+---,Duration,Value,Cooldown,Function,ItemName,Rarity,NumOfDuplicate,Price,Thumbnail
+0001,"0","100","10","/Script/TopDownRPG.RecoveryFunc'/Game/6-DataAsset/ItemFunc/RecoverHP.RecoverHP'","HP Potion","Normal","255","10","/Game/99-Assets/UI/Icon/Item/Consume/15_Heal_potion.15_Heal_potion"

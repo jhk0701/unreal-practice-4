@@ -1,0 +1,2 @@
+---,MerchantName,Discount,ResellCost,ProductID
+0001,"Test Merchant","0","10","((Weapon, (Array=(""1001""))),(Equipment, (Array=(""1001"",""1002"",""1003"",""1004"",""1005""))),(Consume, (Array=(""0001""))))"

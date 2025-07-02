@@ -3,10 +3,16 @@
 
 #include "Character/PlayerAttack.h"
 #include "Core/TDRPGPlayerController.h"
+
 #include "Character/TDRPGPlayer.h"
 #include "Character/TDRPGEnemy.h"
 #include "Character/CharacterData.h"
 #include "Character/PlayerAnim.h"
+
+#include "TDRPGEnum.h"
+#include "Core/GameDataManager.h"
+#include "Data/SkillDataRow.h"
+#include "Character/Skill/Skill.h"
 
 #include <EnhancedInputComponent.h>
 #include <Components/SphereComponent.h>
@@ -29,6 +35,23 @@ void UPlayerAttack::SetupInputBinding(UEnhancedInputComponent* PlayerInputCompon
 	Super::SetupInputBinding(PlayerInputComponent, InController);
 
 	PlayerInputComponent->BindAction(InController->AttackNormalAction, ETriggerEvent::Triggered, this, &UPlayerAttack::InputAttack);
+}
+
+void UPlayerAttack::Initialize(TArray<FString>& InSkillIDs)
+{
+	SkillMap.Empty();
+
+	UGameDataManager* GameData = GetWorld()->GetGameInstance()->GetSubsystem<UGameDataManager>();
+	for(FString& ID : InSkillIDs)
+	{
+		FSkillDataRow* SkillData = GameData->GetRow<FSkillDataRow>(ETableType::Skill, ID);
+		check(SkillData);
+
+		USkill* Skill = NewObject<UActiveSkill>();
+		Skill->Initialize(*SkillData, *GetOwner());
+
+		SkillMap.Add(ID, Skill);
+	}
 }
 
 void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)

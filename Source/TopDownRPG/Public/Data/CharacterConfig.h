@@ -31,7 +31,6 @@ public:
 	//TSoftObjectPtr<USkeletalMesh> SkeletalMesh;
 	//UPROPERTY(EditAnywhere, meta = (AssetBundles = "CharacterBundles"))
 	//TSoftClassPtr<UAnimInstance> Animation;
-	
 
 	inline virtual FPrimaryAssetId GetPrimaryAssetId() const override
 	{

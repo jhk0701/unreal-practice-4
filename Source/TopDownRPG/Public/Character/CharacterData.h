@@ -55,11 +55,10 @@ private:
 
 public:	
 	UCharacterData();
-
-	void Initialize(uint32 InLv, FCharacterDataRow& InData, UEquipment* InEquipment);
-
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	void Initialize(uint32 InLv, FCharacterDataRow& InData, UEquipment* InEquipment);
 
 	inline bool TrySubtractStat(EStatus Type, uint32 Value) { return Stat[Type]->TrySubtract(Value); }
 	inline void SubtractStat(EStatus Type, uint32 Value) { Stat[Type]->Subtract(Value); }

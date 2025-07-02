@@ -83,9 +83,9 @@ enum class ESkillInput : uint8
 {
 	Normal,
 	Combo,
-	Charging,
 	Casting,
-	AreaSelect
+	Charging,
+	Area,
 };
 
 DECLARE_ENUM_TO_STRING(ERarity);
