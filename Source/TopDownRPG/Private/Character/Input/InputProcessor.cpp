@@ -2,6 +2,7 @@
 
 
 #include "Character/Input/InputProcessor.h"
+#include "TDRPGEnum.h"
 
 void UInputNormal::Process()
 {
@@ -33,4 +34,33 @@ void UInputCombo::Process()
 		FTimerDelegate::CreateUObject(this, &UInputCombo::Clear),
 		ComboResetSec,
 		false);
+}
+
+void UInputCasting::Process()
+{
+}
+
+void UInputCasting::Release()
+{
+}
+
+
+
+UInputProcessor* FInputProcessorFactory::GetInstance(ESkillInput InType, UObject* InOwner)
+{
+	switch (InType)
+	{
+	case ESkillInput::Normal:
+		return NewObject<UInputNormal>(InOwner, UInputNormal::StaticClass());
+	case ESkillInput::Combo:
+		return NewObject<UInputCombo>(InOwner, UInputCombo::StaticClass());
+	case ESkillInput::Casting:
+		return NewObject<UInputCasting>(InOwner, UInputCasting::StaticClass());
+	case ESkillInput::Charging:
+		return NewObject<UInputCharging>(InOwner, UInputCharging::StaticClass());
+	case ESkillInput::Area:
+		return NewObject<UInputArea>(InOwner, UInputArea::StaticClass());
+	default:
+		return NewObject<UInputNormal>(InOwner, UInputNormal::StaticClass());
+	}
 }

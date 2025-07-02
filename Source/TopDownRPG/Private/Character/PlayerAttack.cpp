@@ -90,6 +90,9 @@ void UPlayerAttack::InvokeAttack()
 
 	// 애니메이션 재생
 	Player->AnimInst->PlayAttack(AttackCount++);
+
+	// 공격 호출, 테스트용 호출
+	SkillMap.begin()->Value->InvokeSkill();
 }
 
 void UPlayerAttack::ActivateHitCollider(bool bIsEnable)

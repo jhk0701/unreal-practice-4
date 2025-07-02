@@ -74,6 +74,9 @@ class TOPDOWNRPG_API UInputCasting : public UInputProcessor
 {
 	GENERATED_BODY()
 
+public:
+	void Process() override;
+	void Release();
 };
 
 /// <summary>
@@ -96,4 +99,10 @@ class TOPDOWNRPG_API UInputArea : public UInputProcessor
 
 	// 클릭 연계 필요
 
+};
+
+class TOPDOWNRPG_API FInputProcessorFactory
+{
+public:	
+	static UInputProcessor* GetInstance(ESkillInput InType, UObject* InOwner);
 };
