@@ -6,6 +6,8 @@
 #include <Engine/DataTable.h>
 #include "SkillDataRow.generated.h"
 
+enum class ESkillInput : uint8;
+enum class EStatus : uint8;
 /**
  * 
  */
@@ -16,19 +18,23 @@ struct TOPDOWNRPG_API FSkillDataRow : public FTableRowBase
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FName SkillName;
+	FName Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<int32> SkillValue;
+	FString Desc;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 MpConsume;
+	int32 MinDamage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Range;
+	int32 MaxDamage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TMap<EStatus, int32> Requirement;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 Cooldown;
 
-	// TODO : 공격 타입
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	ESkillInput InputType;
 };

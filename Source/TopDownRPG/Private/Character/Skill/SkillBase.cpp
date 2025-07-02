@@ -2,10 +2,12 @@
 
 
 #include "Character/Skill/SkillBase.h"
+#include "Character/Skill/SkillEffectBase.h"
 
-#include <Components/SphereComponent.h>
-
-void USkillBase::Initialize(const FString& InSkillID)
+void USkillBase::Initialize(const FString& InSkillID, const AActor& InOwner)
 {
 	// 스킬 구성
+	
+	// 태그 설정
+	// Effect->Tags.Add(InOwner.Tags[0]);
 }

@@ -12,16 +12,17 @@ ASkillEffectBase::ASkillEffectBase()
 
 }
 
-void ASkillEffectBase::Activate()
-{
-}
-
 void ASkillEffectBase::BeginPlay()
 {
 	Super::BeginPlay();
 
 	Collider->OnComponentBeginOverlap.AddUniqueDynamic(this, &ASkillEffectBase::OnBeginOverlapped);
 
+}
+
+void ASkillEffectBase::Activate()
+{
+	OnSkillStarted.Broadcast(this);
 }
 
 void ASkillEffectBase::OnBeginOverlapped(
@@ -32,5 +33,6 @@ void ASkillEffectBase::OnBeginOverlapped(
 	bool bFromSweep, 
 	const FHitResult& SweepResult)
 {
+
 }
 

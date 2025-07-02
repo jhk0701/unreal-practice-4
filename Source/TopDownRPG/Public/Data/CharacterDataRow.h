@@ -29,6 +29,6 @@ public:
 	TMap<EStatus, int32> Status;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<int32> SkillID;
+	TArray<FString> SkillID;
 
 };

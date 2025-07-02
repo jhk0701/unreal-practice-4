@@ -21,6 +21,6 @@ protected:
 	TObjectPtr<ASkillEffectBase> Effect; // 효과 객체
 
 public:
-	virtual void Initialize(const FString& InSkillID);
+	virtual void Initialize(const FString& InSkillID, const AActor& InOwner);
 	virtual void Activate() {};
 };

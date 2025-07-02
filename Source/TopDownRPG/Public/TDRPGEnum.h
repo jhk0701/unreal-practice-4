@@ -19,6 +19,7 @@ enum class ETableType : uint8
 
 	// 
 	Merchant,
+	Skill,
 
 	COUNT
 };
