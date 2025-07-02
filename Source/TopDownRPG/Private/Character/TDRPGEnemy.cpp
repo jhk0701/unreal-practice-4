@@ -8,7 +8,7 @@
 #include <Components/CapsuleComponent.h>
 #include <Components/SphereComponent.h>
 
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 #include "TDRPGEnum.h"
 #include "InGame/Dungeon/DungeonGameState.h"
 #include "Core/GameDataManager.h"
@@ -56,7 +56,7 @@ void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Tags.Add(CommonConst::ENEMY_TAG);
+	Tags.Add(FTDRPGConst::ENEMY_TAG);
 
 	if (UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>())
 	{

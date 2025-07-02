@@ -6,6 +6,11 @@
 #include "Character/PlayerInputComponent.h"
 #include "PlayerAttack.generated.h"
 
+
+// TODO : EnemyAttack과 리팩토링할것
+// 방향 : PlayerInputConponent 기능을 인터페이스화
+// EnemyAttack과 일치하는 부분은 CharacterAttack 으로 리팩토링해서 파생형을 사용
+// PlayerAttack은 IInputHandler 상속해서 사용하도록 구현
 /**
  * 
  */
@@ -22,6 +27,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack|Combo")
 	int32 AttackCount = 0;
+
+	// 스킬 데이터
+	
 
 public:
 	UPlayerAttack();

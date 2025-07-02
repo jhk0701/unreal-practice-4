@@ -2,7 +2,7 @@
 
 
 #include "UI/Element/TDRPGUWProductSlot.h"
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 
 #include "Core/ResourceLoadManager.h"
 #include "Core/GameDataManager.h"
@@ -14,7 +14,7 @@
 
 void UTDRPGUWProductSlot::Clear()
 {
-	ProductID = CommonConst::EMPTY_ITEM_ID;
+	ProductID = FTDRPGConst::EMPTY_ITEM_ID;
 
 	Super::Clear();
 }
@@ -35,7 +35,7 @@ void UTDRPGUWProductSlot::GetProduct(FString& OutProductID, ETableType& OutItemT
 
 void UTDRPGUWProductSlot::InvokeButtonClick()
 {
-	if (ProductID == CommonConst::EMPTY_ITEM_ID)
+	if (ProductID == FTDRPGConst::EMPTY_ITEM_ID)
 		return;
 
 	OnButtonClicked.Broadcast(this);
@@ -43,7 +43,7 @@ void UTDRPGUWProductSlot::InvokeButtonClick()
 
 void UTDRPGUWProductSlot::Refresh()
 {
-	if (ProductID == CommonConst::EMPTY_ITEM_ID)
+	if (ProductID == FTDRPGConst::EMPTY_ITEM_ID)
 		return;
 
 	UGameDataManager* GameDate = GetGameInstance()->GetSubsystem<UGameDataManager>();

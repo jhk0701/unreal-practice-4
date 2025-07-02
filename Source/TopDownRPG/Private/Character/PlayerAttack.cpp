@@ -14,9 +14,7 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-UPlayerAttack::UPlayerAttack()
-{
-}
+UPlayerAttack::UPlayerAttack(){}
 
 void UPlayerAttack::InitializeComponent()
 {

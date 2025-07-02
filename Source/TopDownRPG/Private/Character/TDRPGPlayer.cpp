@@ -5,7 +5,7 @@
 #include "Character/PlayerInteraction.h"
 #include "Character/PlayerAnim.h"
 
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 #include "TDRPGEnum.h"
 #include "Core/TDRPGPlayerController.h"
 #include "Core/TDRPGGameState.h"
@@ -69,23 +69,23 @@ ATDRPGPlayer::ATDRPGPlayer()
 	Camera->SetRelativeRotation(FRotator(-60, 0, 0));
 	Camera->bUsePawnControlRotation = false;
 
+	InteractCollider = CreateDefaultSubobject<USphereComponent>(TEXT("InteractionCollider"));
+	InteractCollider->SetSphereRadius(300);
+	InteractCollider->SetCollisionProfileName(FTDRPGConst::INTERACT_PROFILE);
+	InteractCollider->SetupAttachment(RootComponent);
+
 	// 임시 히트박스
 	HitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
 	HitCollider->SetRelativeLocation(FVector(70.f, 0.0f, 0.0f));
 	HitCollider->SetSphereRadius(50.f);
 	HitCollider->SetupAttachment(RootComponent);
-
-	InteractCollider = CreateDefaultSubobject<USphereComponent>(TEXT("InteractionCollider"));
-	InteractCollider->SetSphereRadius(300);
-	InteractCollider->SetCollisionProfileName(CommonConst::INTERACT_PROFILE);
-	InteractCollider->SetupAttachment(RootComponent);
 }
 
 void ATDRPGPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Tags.Add(CommonConst::PLAYER_TAG);
+	Tags.Add(FTDRPGConst::PLAYER_TAG);
 
 	ATDRPGGameState* State = Cast<ATDRPGGameState>(GetWorld()->GetGameState());
 	State->Player = this;
@@ -107,9 +107,9 @@ void ATDRPGPlayer::Initialize()
 
 	// 데이터 반영
 	UPlayerManager* Player = GameInst->GetSubsystem<UPlayerManager>();
-	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
 	DataComp->ClassID = Player->GetCharID();
 
+	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
 	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, DataComp->ClassID);
 	DataComp->Initialize(Player->Lv, *Data, Player->Equipment);
 
@@ -135,7 +135,7 @@ void ATDRPGPlayer::LoadConfig()
 	UGameInstance* GameInst = GetGameInstance();
 	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
 
-	FPrimaryAssetId ConfigID(CommonConst::CONFIG_CHARACTER, *DataComp->ClassID);
+	FPrimaryAssetId ConfigID(FTDRPGConst::CONFIG_CHARACTER, *DataComp->ClassID);
 	UPrimaryDataAsset* LoadedDataAsset = Database->LoadPrimaryAssetData(ConfigID);
 	UCharacterConfig* Config = Cast<UCharacterConfig>(LoadedDataAsset);
 

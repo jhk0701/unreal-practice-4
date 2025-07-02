@@ -3,7 +3,7 @@
 
 #include "UI/TDRPGUWMerchantUI.h"
 
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 #include "TDRPGEnum.h"
 #include "Character/NPC/NPCMerchant.h"
 #include "Data/MerchantDataRow.h"
@@ -140,7 +140,7 @@ void UTDRPGUWMerchantUI::OnSlotClicked(UTDRPGUWSlotBase* InSlot)
 	ETableType Type;
 	ClickedSlot->GetProduct(ID, Type);
 
-	check(ID != CommonConst::EMPTY_ITEM_ID);
+	check(ID != FTDRPGConst::EMPTY_ITEM_ID);
 
 	// Buy
 	OnClickBuy(ID, Type);

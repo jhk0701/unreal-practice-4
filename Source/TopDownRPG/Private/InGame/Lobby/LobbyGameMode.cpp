@@ -2,7 +2,7 @@
 
 
 #include "InGame/Lobby/LobbyGameMode.h"
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 #include <Kismet/GameplayStatics.h>
 
 void ALobbyGameMode::OpenLevel(FName LevelToGo)
@@ -12,5 +12,5 @@ void ALobbyGameMode::OpenLevel(FName LevelToGo)
 
 void ALobbyGameMode::GoToDungeon()
 {
-	OpenLevel(CommonConst::SCENE_GAME);
+	OpenLevel(FTDRPGConst::SCENE_GAME);
 }

@@ -3,7 +3,7 @@
 
 #include "InGame/Title/TitleGameMode.h"
 
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 #include "Core/TDRPGHUD.h"
 #include "Core/UIManager.h"
 #include "UI/TDRPGUWNewGameUI.h"
@@ -44,7 +44,7 @@ void ATitleGameMode::StartGame()
 {
 	// TODO : 레벨 매니저 추가
 	// TODO : 비동기 로딩 기능
-	UGameplayStatics::OpenLevel(this, CommonConst::SCENE_LOBBY);
+	UGameplayStatics::OpenLevel(this, FTDRPGConst::SCENE_LOBBY);
 }
 
 void ATitleGameMode::StartNewGame()

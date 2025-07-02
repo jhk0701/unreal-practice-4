@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 #include "CharacterConfig.generated.h"
 
 /**
@@ -35,6 +35,6 @@ public:
 
 	inline virtual FPrimaryAssetId GetPrimaryAssetId() const override
 	{
-		return FPrimaryAssetId(CommonConst::CONFIG_CHARACTER, GetFName());
+		return FPrimaryAssetId(FTDRPGConst::CONFIG_CHARACTER, GetFName());
 	};
 };

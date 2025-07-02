@@ -2,10 +2,10 @@
 
 
 #include "Save/EquipmentSaveData.h"
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 
 FEquipmentSaveData::FEquipmentSaveData() 
-	: EquipmentID(CommonConst::EMPTY_ITEM_ID),
+	: EquipmentID(FTDRPGConst::EMPTY_ITEM_ID),
 	EquipType(-1)
 {
 }

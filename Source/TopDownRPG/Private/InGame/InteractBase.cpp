@@ -2,7 +2,7 @@
 
 
 #include "InGame/InteractBase.h"
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 #include <Components/BoxComponent.h>
 
 #include "TopDownRPG/TopDownRPG.h"
@@ -15,7 +15,7 @@ AInteractBase::AInteractBase()
 	InteractCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("Interact Collider"));
 	InteractCollider->InitBoxExtent(FVector(300));
 	InteractCollider->SetGenerateOverlapEvents(true);
-	InteractCollider->SetCollisionProfileName(CommonConst::INTERACT_PROFILE);
+	InteractCollider->SetCollisionProfileName(FTDRPGConst::INTERACT_PROFILE);
 }
 
 void AInteractBase::BeginPlay()

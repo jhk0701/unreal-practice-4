@@ -5,7 +5,9 @@
 #include "InGame/Dungeon/DungeonGameState.h"
 #include "Core/TDRPGPlayerController.h"
 #include "Character/TDRPGPlayer.h"
-#include "CommonConst.h"
+
+#include "TDRPGConst.h"
+
 #include <Kismet/GameplayStatics.h>
 
 
@@ -23,10 +25,10 @@ void ADungeonGameMode::OpenLevel(FName LevelToGo)
 
 void ADungeonGameMode::GoToLobby()
 {
-	OpenLevel(CommonConst::SCENE_LOBBY);
+	OpenLevel(FTDRPGConst::SCENE_LOBBY);
 }
 
 void ADungeonGameMode::GoToNextStage()
 {
-	OpenLevel(CommonConst::SCENE_GAME);
+	OpenLevel(FTDRPGConst::SCENE_GAME);
 }

@@ -22,6 +22,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
 	float CurCooldown = 0.0f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack|Setting")
 	float AttackCooldown = 1.f;
 

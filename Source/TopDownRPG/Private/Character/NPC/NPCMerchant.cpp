@@ -2,7 +2,6 @@
 
 
 #include "Character/NPC/NPCMerchant.h"
-#include "CommonConst.h"
 
 #include "Core/UIManager.h"
 #include "UI/TDRPGUWMerchantUI.h"

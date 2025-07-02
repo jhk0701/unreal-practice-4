@@ -2,10 +2,10 @@
 
 
 #include "Save/InventorySaveData.h"
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 
 FInventorySaveData::FInventorySaveData() 
-	: ItemID(CommonConst::EMPTY_ITEM_ID), 
+	: ItemID(FTDRPGConst::EMPTY_ITEM_ID),
 	ItemType(-1), 
 	Quantity(0) 
 {

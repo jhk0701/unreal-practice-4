@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 #include "Data/InnerIntArray.h"
 #include <Templates/EnableIf.h>
 #include <Engine/AssetManager.h>
@@ -37,7 +37,7 @@ public:
 	inline TEnableIf<TIsDerivedFrom<T, FTableRowBase>::Value, T*>::type
 		GetRow(ETableType Table, const FString& ID)
 	{
-		return GameDatabase[Table]->FindRow<T>(FName(ID), CommonConst::DATA_TABLE_CONTEXT);
+		return GameDatabase[Table]->FindRow<T>(FName(ID), FTDRPGConst::DATA_TABLE_CONTEXT);
 	}
 
 	void GetLeveling(const FString& CharID, const int32 Lv, TArray<int32>& OutLeveling) const;

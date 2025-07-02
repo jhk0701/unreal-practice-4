@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 #include "Templates/EnableIf.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "ItemFactory.generated.h"
@@ -23,7 +23,7 @@ public:
 	inline TEnableIf<TIsDerivedFrom<T, UItemBase>::Value, T*>::Type
 	GetItem(const FString& InItemID, uint32 InQuantity = 1)
 	{
-		if (InItemID == CommonConst::EMPTY_ITEM_ID)
+		if (InItemID == FTDRPGConst::EMPTY_ITEM_ID)
 			return nullptr;
 
 		T* Item = NewObject<T>();

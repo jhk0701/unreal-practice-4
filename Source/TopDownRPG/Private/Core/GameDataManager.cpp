@@ -5,7 +5,7 @@
 
 #include <Engine/DataTable.h>
 
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 #include "TDRPGEnum.h"
 #include "Data/LevelingDataRow.h"
 #include "Data/CharacterDataRow.h"
@@ -27,7 +27,7 @@ void UGameDataManager::LoadGameDatas()
 		ETableType Table = (ETableType)i;
 
 		// 1. 경로에서 에셋 로드
-		FSoftObjectPath Path(FString::Format(*CommonConst::PATH_FORMAT_DATA_TABLE, { FTDRPGEnum::EnumToString(Table) }));
+		FSoftObjectPath Path(FString::Format(*FTDRPGConst::PATH_FORMAT_DATA_TABLE, { FTDRPGEnum::EnumToString(Table) }));
 		auto Handle = Stream.RequestSyncLoad(Path);
 
 		// 2. 로드한 에셋 캐싱

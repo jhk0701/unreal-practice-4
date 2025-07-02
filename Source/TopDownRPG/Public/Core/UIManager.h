@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "UI/TDRPGUserWidget.h"
-#include "CommonConst.h"
+#include "TDRPGConst.h"
 #include <Templates/EnableIf.h>
 #include <Engine/AssetManager.h>
 #include <Engine/StreamableManager.h>
@@ -78,7 +78,7 @@ public:
 		FString Name = GetNameFromType<T>().ToString();
 
 		FStreamableManager& Stream = UAssetManager::GetStreamableManager();
-		FSoftClassPath Path(FString::Format(*CommonConst::PATH_FORMAT_UI, { Name }));
+		FSoftClassPath Path(FString::Format(*FTDRPGConst::PATH_FORMAT_UI, { Name }));
 
 		Stream.RequestAsyncLoad(
 			Path,

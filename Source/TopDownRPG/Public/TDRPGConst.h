@@ -7,9 +7,8 @@
 /**
  * 
  */
-class TOPDOWNRPG_API CommonConst
+class TOPDOWNRPG_API FTDRPGConst
 {
-
 public:
  	static const FName INTERACT_PROFILE;
     static const FName PLAYER_TAG;
