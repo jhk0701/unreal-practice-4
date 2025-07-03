@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
+#include <Engine/AssetManager.h>
+#include <Engine/StreamableManager.h>
 #include "ResourceLoadManager.generated.h"
 
 DECLARE_DELEGATE_OneParam(FOnResourceLoaded, UObject*);
@@ -18,6 +20,13 @@ class TOPDOWNRPG_API UResourceLoadManager : public UGameInstanceSubsystem
 	
 public:
 	void Load(FSoftObjectPath& InPath, FOnResourceLoaded&& OnCompleteDelegate);
+	
+	template<typename T>
+	void Load(TSoftObjectPtr<T>& InSoft)
+	{
+		FStreamableManager& Stream = UAssetManager::GetStreamableManager();
+		Stream.RequestAsyncLoad(InSoft.ToSoftObjectPath());
+	};
 
 	template<typename T>
 	void LoadTask(TSoftObjectPtr<T>& InSoft, FOnResourceLoaded&& OnCompleteDelegate)
@@ -28,14 +37,15 @@ public:
 			return;
 		}
 
-		UE::Tasks::FTask Task = UE::Tasks::Launch(
-			UE_SOURCE_LOCATION, 
+		AsyncTask(ENamedThreads::GameThread, 
 			[InSoft, OnCompleteDelegate]()
 			{
 				T* Loaded = InSoft.LoadSynchronous();
+
 				if (Loaded)
 					OnCompleteDelegate.ExecuteIfBound(Loaded);
-			});
+			}
+		);
 
 	};
 };

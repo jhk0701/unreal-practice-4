@@ -19,7 +19,7 @@ protected:
 	int32 CurAttackIdx;
 
 public:
-	virtual void PlayAttack(int32 Idx) override;
+	virtual void PlayAttack(int32 Idx = 0) override;
 	virtual void PlayHit() override;
 
 	UFUNCTION(BlueprintCallable)

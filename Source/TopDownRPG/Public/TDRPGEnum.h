@@ -88,6 +88,13 @@ enum class ESkillInput : uint8
 	Area,
 };
 
+UENUM(BlueprintType)
+enum class ESkillType : uint8
+{
+	Active,
+	Passive
+};
+
 DECLARE_ENUM_TO_STRING(ERarity);
 DECLARE_ENUM_TO_STRING(ETableType);
 DECLARE_ENUM_TO_STRING(EStatus);

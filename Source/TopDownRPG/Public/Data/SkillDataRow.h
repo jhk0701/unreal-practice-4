@@ -6,8 +6,10 @@
 #include <Engine/DataTable.h>
 #include "SkillDataRow.generated.h"
 
+enum class ESkillType : uint8;
 enum class ESkillInput : uint8;
 enum class EStatus : uint8;
+
 /**
  * 
  */
@@ -22,6 +24,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FString Desc;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	ESkillType Type;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool bIsDefaultAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 MinDamage;
@@ -37,4 +45,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	ESkillInput InputType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FSoftObjectPath MotionPath;
 };

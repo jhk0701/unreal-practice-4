@@ -2,15 +2,12 @@
 
 
 #include "Core/ResourceLoadManager.h"
-#include <Engine/AssetManager.h>
-#include <Engine/StreamableManager.h>
-
-#include "TopDownRPG/TopDownRPG.h"
 
 
 void UResourceLoadManager::Load(FSoftObjectPath& InPath, FOnResourceLoaded&& OnCompleteDelegate)
 {
 	FStreamableManager& Stream = UAssetManager::GetStreamableManager();
+
 	Stream.RequestAsyncLoad(InPath,
 		FStreamableDelegate::CreateLambda(
 			[InPath, OnCompleteDelegate]()
@@ -24,4 +21,5 @@ void UResourceLoadManager::Load(FSoftObjectPath& InPath, FOnResourceLoaded&& OnC
 			}
 		)
 	);
+	
 }

@@ -46,11 +46,19 @@ void UPlayerAttack::Initialize(TArray<FString>& InSkillIDs)
 	{
 		FSkillDataRow* SkillData = GameData->GetRow<FSkillDataRow>(ETableType::Skill, ID);
 		check(SkillData);
+		
+		USkill* Skill;
+		
+		SkillData->Type == ESkillType::Active ? 
+			Skill = NewObject<UActiveSkill>() : 
+			Skill = NewObject<UPassiveSkill>();
 
-		USkill* Skill = NewObject<UActiveSkill>();
-		Skill->Initialize(*SkillData, *GetOwner());
+		Skill->Initialize(*SkillData, GetOwner());
 
 		SkillMap.Add(ID, Skill);
+
+		if (SkillData->bIsDefaultAction)
+			DefaultAttack = Cast<UActiveSkill>(Skill);
 	}
 }
 
@@ -77,22 +85,10 @@ void UPlayerAttack::InvokeAttack()
 	Player->SetActorRotation(Dir.ToOrientationQuat());
 
 	// 애니메이션 재생
-	// TODO : 최적화 필요한지 체크
-	auto& Timer = GetWorld()->GetTimerManager();
-	if (Timer.IsTimerActive(AttackResetTimer))
-		Timer.ClearTimer(AttackResetTimer);
+	// Player->AnimInst->PlayAttack(AttackCount++);
 
-	Timer.SetTimer(
-		AttackResetTimer,
-		[this]() { this->AttackCount = 0; }, 
-		ResetInterval, 
-		false);
-
-	// 애니메이션 재생
-	Player->AnimInst->PlayAttack(AttackCount++);
-
-	// 공격 호출, 테스트용 호출
-	SkillMap.begin()->Value->InvokeSkill();
+	// 일반 공격 호출
+	DefaultAttack->InvokeSkill();
 }
 
 void UPlayerAttack::ActivateHitCollider(bool bIsEnable)

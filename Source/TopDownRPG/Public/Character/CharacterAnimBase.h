@@ -31,7 +31,7 @@ public:
 	TObjectPtr<UAnimMontage> HitMontage;
 
 public:
-	virtual void PlayAttack(const int32 Idx);
+	virtual void PlayAttack(int32 Idx = 0);
 	virtual bool IsAttackPlaying() const { return Montage_IsPlaying(AttackMontage); };
 
 	virtual void PlayHit();
