@@ -8,6 +8,7 @@
 
 #include "Core/PlayerManager.h"
 #include "Player/QuickSlot.h"
+#include "Inherit/Interactable.h"
 
 #include "Core/UIManager.h"
 #include "UI/TDRPGUWPlayerUI.h"

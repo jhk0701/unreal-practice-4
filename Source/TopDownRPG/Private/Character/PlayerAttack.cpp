@@ -34,7 +34,8 @@ void UPlayerAttack::SetupInputBinding(UEnhancedInputComponent* PlayerInputCompon
 {
 	Super::SetupInputBinding(PlayerInputComponent, InController);
 
-	PlayerInputComponent->BindAction(InController->AttackNormalAction, ETriggerEvent::Triggered, this, &UPlayerAttack::InputAttack);
+	PlayerInputComponent->BindAction(InController->AttackDefaultAction, ETriggerEvent::Triggered, this, &UPlayerAttack::InputAttack);
+	PlayerInputComponent->BindAction(InController->SkillAction, ETriggerEvent::Triggered, this, &UPlayerAttack::InputSkill);
 }
 
 void UPlayerAttack::Initialize(TArray<FString>& InSkillIDs)
@@ -84,9 +85,6 @@ void UPlayerAttack::InvokeAttack()
 	FVector Dir = HitResult.ImpactPoint - Player->GetActorLocation();
 	Player->SetActorRotation(Dir.ToOrientationQuat());
 
-	// 애니메이션 재생
-	// Player->AnimInst->PlayAttack(AttackCount++);
-
 	// 일반 공격 호출
 	DefaultAttack->InvokeSkill();
 }
@@ -95,6 +93,21 @@ void UPlayerAttack::ActivateHitCollider(bool bIsEnable)
 {
 	Player->HitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics: ECollisionEnabled::NoCollision);
 }
+
+void UPlayerAttack::InputSkill(const FInputActionValue& InputValue)
+{
+	if (Player->CheckPlayerIsDead())
+		return;
+
+	int32 Value = (int32)InputValue.Get<float>();
+	InvokeSkill(Value);
+}
+
+void UPlayerAttack::InvokeSkill(int32 InValue)
+{
+	PRINT_LOG(TEXT("Test Skill Input : %d"), InValue);
+}
+
 
 void UPlayerAttack::OnActorOverlaped(
 	UPrimitiveComponent* OverlappedComponent, 

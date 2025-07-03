@@ -39,7 +39,11 @@ public:
 
 	void InputAttack(const FInputActionValue& InputValue);
 	void InvokeAttack();
+
 	void ActivateHitCollider(bool bIsEnable);
+
+	void InputSkill(const FInputActionValue& InputValue);
+	void InvokeSkill(int32 InValue);
 
 	UFUNCTION()
 	void OnActorOverlaped(

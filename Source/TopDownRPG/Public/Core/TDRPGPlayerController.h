@@ -25,7 +25,10 @@ public:
 	TObjectPtr<UInputAction> ClickAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
-	TObjectPtr<UInputAction> AttackNormalAction;
+	TObjectPtr<UInputAction> AttackDefaultAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
+	TObjectPtr<UInputAction> SkillAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
 	TObjectPtr<UInputAction> DodgeAction;
