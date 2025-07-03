@@ -16,6 +16,7 @@ struct TOPDOWNRPG_API FSkillInputContext
 
 public:
 	int32 Count;
+	float Percent;
 	FVector Position;
 	
 	bool bProcessIsCompleted;
@@ -70,39 +71,55 @@ private:
 	inline void Clear() { ComboCount = 0; };
 };
 
-/// <summary>
-/// 스킬 시전 동안 계속 누르기
-/// </summary>
-UCLASS()
-class TOPDOWNRPG_API UInputCasting : public UInputProcessor
+
+UCLASS(Abstract)
+class TOPDOWNRPG_API UInputHolding : public UInputProcessor
 {
 	GENERATED_BODY()
 
 public:
-	UInputCasting();
-	void Process() override;
-	void Release();
+	UInputHolding();
+	virtual void Process() override;
+	virtual void Release();
 
-	inline void SetCastingTime(float InTime) { CastingTime = InTime; }
+	inline void SetTargetTime(float InTime) { TargetTime = InTime; }
 
-private:
-	float CastingTime;
+protected:
+	float TargetTime;
 	float ElapsedTime;
 	EInputProcedure CurrentProcess;
-	FTimerHandle CastingTimer;
+	FTimerHandle ProcessTimer;
 
-	void Start();
-	void Pressing();
+	virtual void Start();
+	virtual void Pressing() {};
 };
 
 /// <summary>
 /// 계속 누르고 있다가 특정 지점에서 떼면 스킬 발동
 /// </summary>
 UCLASS()
-class TOPDOWNRPG_API UInputCharging : public UInputProcessor
+class TOPDOWNRPG_API UInputCharging : public UInputHolding
 {
 	GENERATED_BODY()
 
+public:
+	virtual void Release() override;
+
+protected:
+	virtual void Pressing() override;
+};
+
+
+/// <summary>
+/// 스킬 시전 동안 계속 누르기
+/// </summary>
+UCLASS()
+class TOPDOWNRPG_API UInputCasting : public UInputHolding
+{
+	GENERATED_BODY()
+
+protected:
+	virtual void Pressing() override;
 };
 
 /// <summary>

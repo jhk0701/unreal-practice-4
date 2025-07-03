@@ -54,15 +54,15 @@ void UInputCombo::Process()
 #pragma endregion
 
 
-#pragma region Casting
+#pragma region Holding
 
-UInputCasting::UInputCasting()
+UInputHolding::UInputHolding()
 	: CurrentProcess(EInputProcedure::Ready),
-	CastingTime(2.0f),
+	TargetTime(2.0f),
 	ElapsedTime(0.0f)
 {}
 
-void UInputCasting::Process()
+void UInputHolding::Process()
 {
 	if (CurrentProcess == EInputProcedure::InProgress)
 		return;
@@ -71,31 +71,72 @@ void UInputCasting::Process()
 		Start();
 }
 
-void UInputCasting::Start()
+void UInputHolding::Start()
 {
 	CurrentProcess = EInputProcedure::InProgress;
 	ElapsedTime = 0.0f;
 
 	auto& Timer = GetWorld()->GetTimerManager();
-	
-	if (Timer.IsTimerActive(CastingTimer))
-		Timer.ClearTimer(CastingTimer);
+
+	if (Timer.IsTimerActive(ProcessTimer))
+		Timer.ClearTimer(ProcessTimer);
 
 	Timer.SetTimer(
-		CastingTimer, 
-		FTimerDelegate::CreateUObject(this, &UInputCasting::Pressing), 
-		0.1f, 
+		ProcessTimer,
+		FTimerDelegate::CreateUObject(this, &UInputHolding::Pressing),
+		0.1f,
 		true);
 }
+
+void UInputHolding::Release()
+{
+	CurrentProcess = EInputProcedure::Ready;
+
+	auto& Timer = GetWorld()->GetTimerManager();
+
+	if (Timer.IsTimerActive(ProcessTimer))
+		Timer.ClearTimer(ProcessTimer);
+}
+
+#pragma endregion
+
+#pragma region Charging
+
+void UInputCharging::Release()
+{
+	// 입력 완료 처리
+	FSkillInputContext Context;
+	Context.Percent = ElapsedTime / TargetTime * 100.f;
+	Context.bProcessIsCompleted = true;
+
+	// 입력 이벤트 발행
+	OnInputProcessed.ExecuteIfBound(Context);
+
+	Super::Release();
+}
+
+void UInputCharging::Pressing()
+{
+	ElapsedTime += 0.1f;
+
+	if (ElapsedTime >= TargetTime)
+		Release();
+}
+
+#pragma endregion
+
+
+#pragma region Casting
 
 void UInputCasting::Pressing()
 {
 	ElapsedTime += 0.1f;
 
-	if (ElapsedTime >= CastingTime)
+	if (ElapsedTime >= TargetTime)
 	{
 		// 입력 완료 처리
 		FSkillInputContext Context;
+		Context.Percent = ElapsedTime / TargetTime * 100.f;
 		Context.bProcessIsCompleted = true;
 
 		// 입력 이벤트 발행
@@ -103,16 +144,6 @@ void UInputCasting::Pressing()
 
 		Release();
 	}
-}
-
-void UInputCasting::Release()
-{
-	CurrentProcess = EInputProcedure::Ready;
-
-	auto& Timer = GetWorld()->GetTimerManager();
-
-	if (Timer.IsTimerActive(CastingTimer))
-		Timer.ClearTimer(CastingTimer);
 }
 
 #pragma endregion
