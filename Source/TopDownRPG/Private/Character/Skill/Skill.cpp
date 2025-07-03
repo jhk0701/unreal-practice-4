@@ -10,6 +10,9 @@
 
 #include "Core/ResourceLoadManager.h"
 
+#include "Character/TDRPGPlayer.h"
+#include "Character/PlayerAnim.h"
+
 #include "TopDownRPG/TopDownRPG.h"
 
 
@@ -18,6 +21,7 @@ void USkill::Initialize(FSkillDataRow& InData, AActor* InOwner)
 	Owner = InOwner;
 
 	UResourceLoadManager* Loader = Owner->GetWorld()->GetGameInstance()->GetSubsystem<UResourceLoadManager>();
+
 	// 스킬 구성
 	// 1. 스킬 모션 추가
 	Motion = TSoftObjectPtr<UAnimMontage>(InData.MotionPath);
@@ -47,6 +51,12 @@ void UActiveSkill::InvokeSkill()
 	Input->Process();
 }
 
+void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
+{
+	PRINT_LOG(TEXT("Skill Activate"));
+	Activate();
+}
+
 /// <summary>
 /// 액티브 스킬 발동
 /// </summary>
@@ -54,17 +64,9 @@ void UActiveSkill::Activate()
 {
 	Super::Activate();
 	
-	
-	/*if (Motion.IsValid())
-		Motion.Get();*/
+	if(ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
+		Player->AnimInst->PlayAttack(Motion.Get(), 0);
 }
-
-void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
-{
-	PRINT_LOG(TEXT("Skill Activate"));
-	Activate();
-}
-
 
 /// <summary>
 /// 패시브 발동

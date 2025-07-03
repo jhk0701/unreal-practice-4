@@ -15,7 +15,7 @@ void UPlayerAnim::SetIsDead(const APawn* Pawn)
 	}
 }
 
-void UPlayerAnim::PlayAttack(int32 Idx)
+void UPlayerAnim::PlayAttack(UAnimMontage* InMontage, int32 Idx)
 {
 	if (Montage_IsPlaying(AttackMontage))
 		return;
