@@ -30,7 +30,7 @@ void USkill::Initialize(FSkillDataRow& InData, AActor* InOwner)
 	// 2. TODO : 효과 구성
 }
 
-void USkill::Activate()
+void USkill::Activate(const FSkillInputContext& InContext)
 {
 	PRINT_LOG(TEXT("Skill Activate"));
 }
@@ -54,23 +54,24 @@ void UActiveSkill::InvokeSkill()
 void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
 {
 	PRINT_LOG(TEXT("Skill Activate"));
-	Activate();
+	Activate(InContext);
 }
 
 /// <summary>
 /// 액티브 스킬 발동
 /// </summary>
-void UActiveSkill::Activate()
+void UActiveSkill::Activate(const FSkillInputContext& InContext)
 {
-	Super::Activate();
+	Super::Activate(InContext);
 	
 	if(ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
-		Player->AnimInst->PlayAttack(Motion.Get(), 0);
+		Player->AnimInst->PlayAttack(Motion.Get(), InContext.InputCount);
 }
 
 /// <summary>
 /// 패시브 발동
 /// </summary>
-void UPassiveSkill::Activate()
+void UPassiveSkill::Activate(const FSkillInputContext& InContext)
 {
+	Super::Activate(InContext);
 }

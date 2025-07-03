@@ -39,7 +39,7 @@ public:
 
 protected:
 	/// 실질적인 스킬 호출 함수
-	virtual void Activate();
+	virtual void Activate(const FSkillInputContext& InContext);
 };
 
 UCLASS()
@@ -59,7 +59,7 @@ public:
 	virtual void InvokeSkill();
 
 protected:
-	virtual void Activate() override;
+	virtual void Activate(const FSkillInputContext& InContext) override;
 
 	/// 키 입력에 처리 시 호출 콜백
 	virtual void OnInputProcessed(const FSkillInputContext& InContext);
@@ -72,5 +72,5 @@ class TOPDOWNRPG_API UPassiveSkill : public USkill
 	GENERATED_BODY()
 
 public:
-	virtual void Activate() override;
+	virtual void Activate(const FSkillInputContext& InContext) override;
 };
