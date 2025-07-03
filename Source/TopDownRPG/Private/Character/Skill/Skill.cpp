@@ -16,6 +16,8 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
+#pragma region Skill Base
+
 void USkill::Initialize(FSkillDataRow& InData, AActor* InOwner)
 {
 	Owner = InOwner;
@@ -35,6 +37,10 @@ void USkill::Activate(const FSkillInputContext& InContext)
 	PRINT_LOG(TEXT("Skill Activate"));
 }
 
+#pragma endregion
+
+
+#pragma region Active Skill
 
 void UActiveSkill::Initialize(FSkillDataRow& InData, AActor* InOwner)
 {
@@ -43,7 +49,6 @@ void UActiveSkill::Initialize(FSkillDataRow& InData, AActor* InOwner)
 	// 입력 처리 설정
 	Input = FInputProcessorFactory::GetInstance(InData.InputType, InOwner->GetWorld());
 	Input->OnInputProcessed.BindUObject(this, &UActiveSkill::OnInputProcessed);
-
 }
 
 void UActiveSkill::InvokeSkill()
@@ -53,25 +58,31 @@ void UActiveSkill::InvokeSkill()
 
 void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
 {
-	PRINT_LOG(TEXT("Skill Activate"));
-	Activate(InContext);
+	if (InContext.bProcessIsCompleted)
+		Activate(InContext);
 }
 
-/// <summary>
 /// 액티브 스킬 발동
-/// </summary>
 void UActiveSkill::Activate(const FSkillInputContext& InContext)
 {
+	PRINT_LOG(TEXT("Skill Activate"));
+
 	Super::Activate(InContext);
-	
-	if(ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
-		Player->AnimInst->PlayAttack(Motion.Get(), InContext.InputCount);
+
+	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
+		Player->AnimInst->PlayAttack(Motion.Get(), InContext.Count);
 }
 
-/// <summary>
+#pragma endregion
+
+
+#pragma region Passive Skill
+
 /// 패시브 발동
-/// </summary>
+// 이벤트 기반으로 발동할 것
 void UPassiveSkill::Activate(const FSkillInputContext& InContext)
 {
 	Super::Activate(InContext);
 }
+
+#pragma endregion

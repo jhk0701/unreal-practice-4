@@ -4,21 +4,36 @@
 #include "Character/Input/InputProcessor.h"
 #include "TDRPGEnum.h"
 
+#include "TopDownRPG/TopDownRPG.h"
+
+
+#pragma region Normal
+
 void UInputNormal::Process()
 {
 	FSkillInputContext Context;
+	Context.bProcessIsCompleted = true;
+
 	OnInputProcessed.ExecuteIfBound(Context);
+}
+
+#pragma endregion
+
+
+#pragma region Combo
+
+UInputCombo::UInputCombo()
+	: ComboCount(0)
+{
 }
 
 void UInputCombo::Process()
 {
 	// 입력 처리
 	FSkillInputContext Context;
-	
-	ComboCount++; // 콤보 입력 횟수 증가
+	Context.Count = ++ComboCount; // 콤보 입력 횟수 증가
+	Context.bProcessIsCompleted = true;
 
-	Context.InputCount = ComboCount;
-	
 	// 입력 이벤트 발행
 	OnInputProcessed.ExecuteIfBound(Context);
 
@@ -36,14 +51,71 @@ void UInputCombo::Process()
 		false);
 }
 
+#pragma endregion
+
+
+#pragma region Casting
+
+UInputCasting::UInputCasting()
+	: CurrentProcess(EInputProcedure::Ready),
+	CastingTime(2.0f),
+	ElapsedTime(0.0f)
+{}
+
 void UInputCasting::Process()
 {
+	if (CurrentProcess == EInputProcedure::InProgress)
+		return;
+
+	if (CurrentProcess == EInputProcedure::Ready)
+		Start();
+}
+
+void UInputCasting::Start()
+{
+	CurrentProcess = EInputProcedure::InProgress;
+	ElapsedTime = 0.0f;
+
+	auto& Timer = GetWorld()->GetTimerManager();
+	
+	if (Timer.IsTimerActive(CastingTimer))
+		Timer.ClearTimer(CastingTimer);
+
+	Timer.SetTimer(
+		CastingTimer, 
+		FTimerDelegate::CreateUObject(this, &UInputCasting::Pressing), 
+		0.1f, 
+		true);
+}
+
+void UInputCasting::Pressing()
+{
+	ElapsedTime += 0.1f;
+
+	if (ElapsedTime >= CastingTime)
+	{
+		// 입력 완료 처리
+		FSkillInputContext Context;
+		Context.bProcessIsCompleted = true;
+
+		// 입력 이벤트 발행
+		OnInputProcessed.ExecuteIfBound(Context);
+
+		Release();
+	}
 }
 
 void UInputCasting::Release()
 {
+	CurrentProcess = EInputProcedure::Ready;
+
+	auto& Timer = GetWorld()->GetTimerManager();
+
+	if (Timer.IsTimerActive(CastingTimer))
+		Timer.ClearTimer(CastingTimer);
 }
 
+#pragma endregion
 
 
 UInputProcessor* FInputProcessorFactory::GetInstance(ESkillInput InType, UObject* InOwner)

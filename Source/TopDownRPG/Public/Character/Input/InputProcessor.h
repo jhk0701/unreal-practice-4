@@ -6,7 +6,8 @@
 #include "UObject/NoExportTypes.h"
 #include "InputProcessor.generated.h"
 
-enum class ESkillInput :uint8;
+enum class ESkillInput : uint8;
+enum class EInputProcedure : uint8;
 
 USTRUCT(BlueprintType)
 struct TOPDOWNRPG_API FSkillInputContext
@@ -14,8 +15,10 @@ struct TOPDOWNRPG_API FSkillInputContext
 	GENERATED_BODY()
 
 public:
-	int32 InputCount;
-	FVector InputPosition;
+	int32 Count;
+	FVector Position;
+	
+	bool bProcessIsCompleted;
 };
 
 DECLARE_DELEGATE_OneParam(FSkillInputEvent, const FSkillInputContext&);
@@ -56,11 +59,12 @@ class TOPDOWNRPG_API UInputCombo : public UInputProcessor
 	GENERATED_BODY()
 
 public:
+	UInputCombo();
 	void Process() override;
 
 private:
 	int32 ComboCount = 0;
-	float ComboResetSec = 1.0f;
+	const float ComboResetSec = 1.0f;
 	FTimerHandle ComboTimer;
 
 	inline void Clear() { ComboCount = 0; };
@@ -75,8 +79,20 @@ class TOPDOWNRPG_API UInputCasting : public UInputProcessor
 	GENERATED_BODY()
 
 public:
+	UInputCasting();
 	void Process() override;
 	void Release();
+
+	inline void SetCastingTime(float InTime) { CastingTime = InTime; }
+
+private:
+	float CastingTime;
+	float ElapsedTime;
+	EInputProcedure CurrentProcess;
+	FTimerHandle CastingTimer;
+
+	void Start();
+	void Pressing();
 };
 
 /// <summary>

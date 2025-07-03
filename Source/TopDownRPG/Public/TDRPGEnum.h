@@ -89,11 +89,20 @@ enum class ESkillInput : uint8
 };
 
 UENUM(BlueprintType)
+enum class EInputProcedure : uint8
+{
+	Ready,
+	InProgress,
+	Complete
+};
+
+UENUM(BlueprintType)
 enum class ESkillType : uint8
 {
 	Active,
 	Passive
 };
+
 
 DECLARE_ENUM_TO_STRING(ERarity);
 DECLARE_ENUM_TO_STRING(ETableType);
