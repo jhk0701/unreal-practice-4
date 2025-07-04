@@ -3,7 +3,7 @@
 
 #include "Character/EnemyAnim.h"
 #include "Character/TDRPGEnemy.h"
-#include "Character/EnemyAttack.h"
+#include "Character/EnemyAction.h"
 #include "Character/EnemyMove.h"
 #include "Character/CharacterData.h"
 
@@ -27,11 +27,11 @@ void UEnemyAnim::SetIsDead(const APawn* Pawn)
 void UEnemyAnim::OnAttackStarted()
 {
 	if (ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(TryGetPawnOwner()))
-		Enemy->AttackComp->ActivateHitCollider(true);
+		Enemy->ActionComp->ActivateHitCollider(true);
 }
 
 void UEnemyAnim::OnAttackEnded()
 {
 	if (ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(TryGetPawnOwner()))
-		Enemy->AttackComp->ActivateHitCollider(false);
+		Enemy->ActionComp->ActivateHitCollider(false);
 }

@@ -5,7 +5,7 @@
 #include "Character/EnemyFSM.h"
 #include "Character/TDRPGEnemy.h"
 #include "Character/TDRPGPlayer.h"
-#include "Character/EnemyAttack.h"
+#include "Character/EnemyAction.h"
 #include "Character/CharacterData.h"
 
 void UAttackState::Enter()
@@ -19,7 +19,7 @@ void UAttackState::Update(float DeltaTime)
 
 	// 공격 행동
 	ATDRPGEnemy* Owner = Machine->GetOwnerEnemy();
-	UEnemyAttack* Attack = Owner->AttackComp;
+	UEnemyAction* Action = Owner->ActionComp;
 	
 	// TODO : 사망했는지 확인
 	ATDRPGPlayer* Target = Owner->Target;
@@ -30,12 +30,12 @@ void UAttackState::Update(float DeltaTime)
 	// 공격 가능한지 확인 : 거리 확인
 	FVector TargetLoc = Target->GetActorLocation();
 	FVector Dir = TargetLoc - Owner->GetActorLocation();
-	float Range = Attack->GetAttackRange();
+	float Range = Action->GetAttackRange();
 	
-	if (Dir.SquaredLength() > Range * Range && !Attack->IsAttacking())
+	if (Dir.SquaredLength() > Range * Range && !Action->IsAttacking())
 	{
 		Machine->Transition(EEnemyState::Move); // 거리가 멀면 쫓기
 	}
 	else
-		Attack->Attack(); // 거리 내라면 공격
+		Action->InvokeAttack(); // 거리 내라면 공격
 }

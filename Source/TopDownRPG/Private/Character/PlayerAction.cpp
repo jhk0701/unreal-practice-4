@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Character/PlayerAttack.h"
+#include "Character/PlayerAction.h"
 #include "Core/TDRPGPlayerController.h"
 
 #include "Character/TDRPGPlayer.h"
@@ -20,25 +20,25 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-UPlayerAttack::UPlayerAttack(){}
+UPlayerAction::UPlayerAction(){}
 
-void UPlayerAttack::InitializeComponent()
+void UPlayerAction::InitializeComponent()
 {
 	Super::InitializeComponent();
 
-	Player->HitCollider->OnComponentBeginOverlap.AddDynamic(this, &UPlayerAttack::OnActorOverlaped);
+	Player->HitCollider->OnComponentBeginOverlap.AddDynamic(this, &UPlayerAction::OnActorOverlaped);
 	ActivateHitCollider(false);
 }
 
-void UPlayerAttack::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)
+void UPlayerAction::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)
 {
 	Super::SetupInputBinding(PlayerInputComponent, InController);
 
-	PlayerInputComponent->BindAction(InController->AttackDefaultAction, ETriggerEvent::Triggered, this, &UPlayerAttack::InputAttack);
-	PlayerInputComponent->BindAction(InController->SkillAction, ETriggerEvent::Triggered, this, &UPlayerAttack::InputSkill);
+	PlayerInputComponent->BindAction(InController->AttackDefaultAction, ETriggerEvent::Triggered, this, &UPlayerAction::InputAttack);
+	PlayerInputComponent->BindAction(InController->SkillAction, ETriggerEvent::Triggered, this, &UPlayerAction::InputSkill);
 }
 
-void UPlayerAttack::Initialize(TArray<FString>& InSkillIDs)
+void UPlayerAction::Initialize(TArray<FString>& InSkillIDs)
 {
 	SkillMap.Empty();
 
@@ -63,7 +63,7 @@ void UPlayerAttack::Initialize(TArray<FString>& InSkillIDs)
 	}
 }
 
-void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)
+void UPlayerAction::InputAttack(const FInputActionValue& InputValue)
 {
 	if (Player->CheckPlayerIsDead())
 		return;
@@ -71,7 +71,7 @@ void UPlayerAttack::InputAttack(const FInputActionValue& InputValue)
 	InvokeAttack();
 }
 
-void UPlayerAttack::InvokeAttack()
+void UPlayerAction::InvokeAttack()
 {
 	if (!Player->AnimInst || Player->AnimInst->IsAttackPlaying())
 		return;
@@ -89,12 +89,12 @@ void UPlayerAttack::InvokeAttack()
 	DefaultAttack->InvokeSkill();
 }
 
-void UPlayerAttack::ActivateHitCollider(bool bIsEnable)
+void UPlayerAction::ActivateHitCollider(bool bIsEnable)
 {
 	Player->HitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics: ECollisionEnabled::NoCollision);
 }
 
-void UPlayerAttack::InputSkill(const FInputActionValue& InputValue)
+void UPlayerAction::InputSkill(const FInputActionValue& InputValue)
 {
 	if (Player->CheckPlayerIsDead())
 		return;
@@ -103,13 +103,13 @@ void UPlayerAttack::InputSkill(const FInputActionValue& InputValue)
 	InvokeSkill(Value);
 }
 
-void UPlayerAttack::InvokeSkill(int32 InValue)
+void UPlayerAction::InvokeSkill(int32 InValue)
 {
 	PRINT_LOG(TEXT("Test Skill Input : %d"), InValue);
 }
 
 
-void UPlayerAttack::OnActorOverlaped(
+void UPlayerAction::OnActorOverlaped(
 	UPrimitiveComponent* OverlappedComponent, 
 	AActor* OtherActor, 
 	UPrimitiveComponent* OtherComp, 

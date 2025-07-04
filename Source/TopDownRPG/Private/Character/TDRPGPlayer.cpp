@@ -1,7 +1,7 @@
 #include "Character/TDRPGPlayer.h"
 #include "Character/CharacterData.h"
 #include "Character/PlayerMove.h"
-#include "Character/PlayerAttack.h"
+#include "Character/PlayerAction.h"
 #include "Character/PlayerInteraction.h"
 #include "Character/PlayerAnim.h"
 
@@ -43,7 +43,7 @@ ATDRPGPlayer::ATDRPGPlayer()
 	// 서브 컴포넌트 설정
 	DataComp = CreateDefaultSubobject<UCharacterData>(TEXT("DataComp"));
 	MoveComp = CreateDefaultSubobject<UPlayerMove>(TEXT("MoveComp"));
-	AttackComp = CreateDefaultSubobject<UPlayerAttack>(TEXT("AttackComp"));
+	ActionComp = CreateDefaultSubobject<UPlayerAction>(TEXT("ActionComp"));
 	InteractComp = CreateDefaultSubobject<UPlayerInteraction>(TEXT("InteractComp"));
 
 	// 충돌체 설정
@@ -112,7 +112,7 @@ void ATDRPGPlayer::Initialize()
 	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
 	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, DataComp->ClassID);
 	DataComp->Initialize(Player->Lv, *Data, Player->Equipment);
-	AttackComp->Initialize(Data->SkillID);
+	ActionComp->Initialize(Data->SkillID);
 
 	// 캐릭터 동적 구성
 	LoadConfig();

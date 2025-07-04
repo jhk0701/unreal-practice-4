@@ -3,7 +3,7 @@
 
 #include "Character/PlayerAnim.h"
 #include "Character/TDRPGPlayer.h"
-#include "Character/PlayerAttack.h"
+#include "Character/PlayerAction.h"
 #include "Character/CharacterData.h"
 
 
@@ -17,6 +17,9 @@ void UPlayerAnim::SetIsDead(const APawn* Pawn)
 
 void UPlayerAnim::PlayAttack(UAnimMontage* InMontage, int32 Idx)
 {
+	if (AttackMontage != InMontage)
+		AttackMontage = InMontage;
+
 	if (Montage_IsPlaying(AttackMontage))
 		return;
 
@@ -45,11 +48,11 @@ void UPlayerAnim::PlayHit()
 void UPlayerAnim::OnAttackStarted()
 {
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
-		Player->AttackComp->ActivateHitCollider(true);
+		Player->ActionComp->ActivateHitCollider(true);
 }
 
 void UPlayerAnim::OnAttackEnded()
 {
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
-		Player->AttackComp->ActivateHitCollider(false);
+		Player->ActionComp->ActivateHitCollider(false);
 }

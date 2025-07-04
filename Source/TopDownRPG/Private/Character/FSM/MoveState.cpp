@@ -6,7 +6,7 @@
 #include "Character/TDRPGEnemy.h"
 #include "Character/TDRPGPlayer.h"
 #include "Character/EnemyMove.h"
-#include "Character/EnemyAttack.h"
+#include "Character/EnemyAction.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -25,7 +25,7 @@ void UMoveState::Update(float DeltaTime)
 	FVector OwnerLoc = Owner->GetActorLocation();
 
 	FVector Dir = TargetLoc - OwnerLoc;
-	float Range = Owner->AttackComp->GetAttackRange();
+	float Range = Owner->ActionComp->GetAttackRange();
 
 	if (Dir.SquaredLength() > Range * Range)
 	{

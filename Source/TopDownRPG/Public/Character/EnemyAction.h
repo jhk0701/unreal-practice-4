@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "EnemyAttack.generated.h"
+#include "EnemyAction.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class TOPDOWNRPG_API UEnemyAttack : public UActorComponent
+class TOPDOWNRPG_API UEnemyAction : public UActorComponent
 {
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Owner)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Owner")
 	TObjectPtr<class ATDRPGEnemy> Enemy;
 
 	// TODO : 공격 - 스킬들 관리
@@ -30,11 +30,11 @@ protected:
 	float AttackRange = 100.0f;
 
 public:	
-	UEnemyAttack();
+	UEnemyAction();
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void Attack();
+	void InvokeAttack();
 	inline bool IsAttacking() const { return bIsAttacking; }
 	inline const float GetAttackRange() { return AttackRange; }
 

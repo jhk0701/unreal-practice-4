@@ -1,7 +1,7 @@
 #include "Character/TDRPGEnemy.h"
 #include "Character/CharacterData.h"
 #include "Character/EnemyFSM.h"
-#include "Character/EnemyAttack.h"
+#include "Character/EnemyAction.h"
 #include "Character/EnemyMove.h"
 #include "Character/EnemyAnim.h"
 
@@ -23,7 +23,7 @@ ATDRPGEnemy::ATDRPGEnemy()
 
 	// 서브 컴포넌트 설정
 	DataComp = CreateDefaultSubobject<UCharacterData>(TEXT("DataComp"));
-	AttackComp = CreateDefaultSubobject<UEnemyAttack>(TEXT("AttackComp"));
+	ActionComp = CreateDefaultSubobject<UEnemyAction>(TEXT("ActionComp"));
 	MoveComp = CreateDefaultSubobject<UEnemyMove>(TEXT("MoveComp"));
 
 	// 적 컴포넌트 구성

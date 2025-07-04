@@ -20,7 +20,7 @@ public:
 	TObjectPtr<class UEnemyMove> MoveComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UEnemyAttack> AttackComp;
+	TObjectPtr<class UEnemyAction> ActionComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UEnemyAnim> AnimInst;

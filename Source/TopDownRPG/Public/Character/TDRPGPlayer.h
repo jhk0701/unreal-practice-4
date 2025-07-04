@@ -20,7 +20,7 @@ public:
 	TObjectPtr<class UPlayerMove> MoveComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UPlayerAttack> AttackComp;
+	TObjectPtr<class UPlayerAction> ActionComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UPlayerInteraction> InteractComp;

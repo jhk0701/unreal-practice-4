@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Character/PlayerInputComponent.h"
-#include "PlayerAttack.generated.h"
+#include "PlayerAction.generated.h"
 
 class USkill;
 class UActiveSkill;
@@ -18,7 +18,7 @@ class UActiveSkill;
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UPlayerAttack : public UPlayerInputComponent
+class TOPDOWNRPG_API UPlayerAction : public UPlayerInputComponent
 {
 	GENERATED_BODY()
 
@@ -31,20 +31,18 @@ protected:
 	TObjectPtr<UActiveSkill> DefaultAttack;
 
 public:
-	UPlayerAttack();
+	UPlayerAction();
 	virtual void InitializeComponent() override;
 	virtual void SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
 
-	void Initialize(TArray<FString>& InSkillIDs);
-
 	void InputAttack(const FInputActionValue& InputValue);
-	void InvokeAttack();
-
-	void ActivateHitCollider(bool bIsEnable);
-
 	void InputSkill(const FInputActionValue& InputValue);
+
+	void Initialize(TArray<FString>& InSkillIDs);
+	void InvokeAttack();
 	void InvokeSkill(int32 InValue);
 
+	void ActivateHitCollider(bool bIsEnable);
 	UFUNCTION()
 	void OnActorOverlaped(
 		UPrimitiveComponent* OverlappedComponent, 
