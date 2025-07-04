@@ -3,13 +3,21 @@
 
 #include "Character/Skill/SkillEffectBase.h"
 
-#include <Components/SphereComponent.h>
+#include <Components/BoxComponent.h>
 
 
 ASkillEffectBase::ASkillEffectBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
+	
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Effect Mesh"));
+	SetRootComponent(Mesh);
 
+	if (!Collider)
+	{
+		Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Default Collider"));
+		Collider->SetupAttachment(Mesh);
+	}
 }
 
 void ASkillEffectBase::BeginPlay()
@@ -17,7 +25,6 @@ void ASkillEffectBase::BeginPlay()
 	Super::BeginPlay();
 
 	Collider->OnComponentBeginOverlap.AddUniqueDynamic(this, &ASkillEffectBase::OnBeginOverlapped);
-
 }
 
 void ASkillEffectBase::Activate()
@@ -33,6 +40,6 @@ void ASkillEffectBase::OnBeginOverlapped(
 	bool bFromSweep, 
 	const FHitResult& SweepResult)
 {
-
+	OnSkillHitted.Broadcast(this);
 }
 

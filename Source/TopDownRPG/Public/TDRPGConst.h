@@ -22,6 +22,7 @@ public:
     static const FName SCENE_GAME;
 
     static const FName CONFIG_CHARACTER;
+    static const FName CONFIG_SKILL;
 
     static const FString GAME_DATA_SLOT;
 

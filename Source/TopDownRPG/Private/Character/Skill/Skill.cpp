@@ -6,6 +6,7 @@
 
 #include "TDRPGEnum.h"
 #include "Data/SkillDataRow.h"
+#include "Data/SkillConfig.h"
 #include "Character/Input/InputProcessor.h"
 
 #include "Core/ResourceLoadManager.h"
@@ -18,17 +19,17 @@
 
 #pragma region Skill Base
 
-void USkill::Initialize(FSkillDataRow& InData, AActor* InOwner)
+void USkill::Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner)
 {
-	
-	
 	Owner = InOwner;
+
 
 	UResourceLoadManager* Loader = Owner->GetWorld()->GetGameInstance()->GetSubsystem<UResourceLoadManager>();
 
 	// 스킬 구성
+	
 	// 1. 스킬 모션 추가
-	Motion = TSoftObjectPtr<UAnimMontage>(InData.MotionPath);
+	Motion = TSoftObjectPtr<UAnimMontage>();
 	Loader->Load(Motion);
 
 	// 2. TODO : 효과 구성
@@ -44,9 +45,9 @@ void USkill::Activate(const FSkillInputContext& InContext)
 
 #pragma region Active Skill
 
-void UActiveSkill::Initialize(FSkillDataRow& InData, AActor* InOwner)
+void UActiveSkill::Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner)
 {
-	Super::Initialize(InData, InOwner);
+	Super::Initialize(InData, InConfig, InOwner);
 
 	// 입력 처리 설정
 	Input = FInputProcessorFactory::GetInstance(InData.InputType, InOwner->GetWorld());

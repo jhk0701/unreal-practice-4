@@ -18,6 +18,7 @@ const FName FTDRPGConst::SCENE_GAME = FName(TEXT("2-Game"));
 
 // 프라이머리 에셋 타입
 const FName FTDRPGConst::CONFIG_CHARACTER = FName(TEXT("CharacterConfig"));
+const FName FTDRPGConst::CONFIG_SKILL = FName(TEXT("SkillConfig"));
 
 const FString FTDRPGConst::GAME_DATA_SLOT = FString(TEXT("GameDataSlot"));
 

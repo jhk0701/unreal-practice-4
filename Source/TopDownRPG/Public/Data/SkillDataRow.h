@@ -45,7 +45,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	ESkillInput InputType;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FSoftObjectPath MotionPath;
 };

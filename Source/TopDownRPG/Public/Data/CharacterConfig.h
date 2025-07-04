@@ -17,14 +17,12 @@ class TOPDOWNRPG_API UCharacterConfig : public UPrimaryDataAsset
 public:
 	UPROPERTY(EditAnywhere)
 	FName CharName;
-
 	
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USkeletalMesh> SkeletalMesh;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UAnimInstance> Animation;
-	
 
 	//// 소프트 레퍼런스의 경우 메모리에 올리는 과정이 필요
 	//UPROPERTY(EditAnywhere, meta = (AssetBundles = "CharacterBundles"))

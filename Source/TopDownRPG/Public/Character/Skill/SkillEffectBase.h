@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "SkillEffectBase.generated.h"
 
-class USphereComponent;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FSkillEvent, AActor*)
 
@@ -27,7 +26,10 @@ protected:
 	TObjectPtr<UStaticMeshComponent> Mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<USphereComponent> Collider;
+	TObjectPtr<UPrimitiveComponent> Collider;
+
+	// TODO : 스킬 시각 효과
+	// TODO : 스킬 효과음
 
 public:	
 	ASkillEffectBase();
@@ -35,7 +37,6 @@ public:
 	virtual void Activate();
 
 protected:
-
 	UFUNCTION()
 	virtual void OnBeginOverlapped(
 		UPrimitiveComponent* OverlappedComponent, 

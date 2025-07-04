@@ -6,8 +6,9 @@
 #include "UObject/NoExportTypes.h"
 #include "Skill.generated.h"
 
-class ASkillEffectBase;
 struct FSkillDataRow;
+class USkillConfig;
+class ASkillEffectBase;
 
 class UInputProcessor;
 struct FSkillInputContext;
@@ -25,7 +26,7 @@ class TOPDOWNRPG_API USkill : public UObject
 protected:
 	// 효과 객체
 	UPROPERTY()
-	TObjectPtr<ASkillEffectBase> Effect;
+	TSoftObjectPtr<ASkillEffectBase> Effect;
 
 	UPROPERTY()
 	TSoftObjectPtr<UAnimMontage> Motion;
@@ -35,7 +36,7 @@ protected:
 
 public:
 	/// 스킬 객체 초기화
-	virtual void Initialize(FSkillDataRow& InData, AActor* InOwner);
+	virtual void Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner);
 
 protected:
 	/// 실질적인 스킬 호출 함수
@@ -56,7 +57,7 @@ protected:
 
 public:
 	/// 스킬 객체 초기화
-	virtual void Initialize(FSkillDataRow& InData, AActor* InOwner) override;
+	virtual void Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner) override;
 	
 	/// 키 입력 시, 스킬 실행 함수
 	virtual void InvokeSkill();
