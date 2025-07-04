@@ -26,7 +26,7 @@ class TOPDOWNRPG_API USkill : public UObject
 protected:
 	// 효과 객체
 	UPROPERTY()
-	TSoftObjectPtr<ASkillEffectBase> Effect;
+	TSoftClassPtr<ASkillEffectBase> Effect;
 
 	UPROPERTY()
 	TSoftObjectPtr<UAnimMontage> Motion;

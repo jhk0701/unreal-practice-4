@@ -18,7 +18,10 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-UPlayerAction::UPlayerAction(){}
+UPlayerAction::UPlayerAction()
+{
+	bWantsInitializeComponent = true;
+}
 
 void UPlayerAction::InitializeComponent()
 {

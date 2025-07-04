@@ -24,8 +24,7 @@ protected:
 
 public:	
 	UCharacterAction();
-
-	virtual void Initialize(TArray<FString>& InSkillIDs);
+	virtual void SetSkill(TArray<FString>& InSkillIDs);
 
 	virtual void InvokeAttack() {};
 	virtual void InvokeSkill(int32 InIndex) {};

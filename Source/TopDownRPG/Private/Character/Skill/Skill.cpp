@@ -3,13 +3,12 @@
 
 #include "Character/Skill/Skill.h"
 #include "Character/Skill/SkillEffectBase.h"
-
-#include "TDRPGEnum.h"
-#include "Data/SkillDataRow.h"
-#include "Data/SkillConfig.h"
 #include "Character/Input/InputProcessor.h"
 
+#include "TDRPGEnum.h"
 #include "Core/ResourceLoadManager.h"
+#include "Data/SkillDataRow.h"
+#include "Data/SkillConfig.h"
 
 #include "Character/TDRPGPlayer.h"
 #include "Character/PlayerAnim.h"
@@ -23,16 +22,17 @@ void USkill::Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* I
 {
 	Owner = InOwner;
 
-
 	UResourceLoadManager* Loader = Owner->GetWorld()->GetGameInstance()->GetSubsystem<UResourceLoadManager>();
 
 	// 스킬 구성
-	
 	// 1. 스킬 모션 추가
-	Motion = TSoftObjectPtr<UAnimMontage>();
-	Loader->Load(Motion);
+	Motion = InConfig->Motion;
+	Loader->Load(Motion, FOnResourceLoaded());
 
-	// 2. TODO : 효과 구성
+	// 2. 효과 구성
+	Effect = InConfig->Effect;
+	Loader->Load(Effect, FOnResourceLoaded());
+
 }
 
 void USkill::Activate(const FSkillInputContext& InContext)
@@ -61,6 +61,7 @@ void UActiveSkill::InvokeSkill()
 
 void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
 {
+	PRINT_LOG(TEXT("Input Processed"));
 	if (InContext.bProcessIsCompleted)
 		Activate(InContext);
 }

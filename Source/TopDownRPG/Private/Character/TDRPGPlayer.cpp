@@ -107,7 +107,7 @@ void ATDRPGPlayer::Initialize()
 	UGameDataManager* Database = GameInst->GetSubsystem<UGameDataManager>();
 	FCharacterDataRow* Data = Database->GetRow<FCharacterDataRow>(ETableType::Character, DataComp->ClassID);
 	DataComp->Initialize(Player->Lv, *Data, Player->Equipment);
-	ActionComp->Initialize(Data->SkillID);
+	ActionComp->SetSkill(Data->SkillID);
 
 	// 캐릭터 동적 구성
 	LoadConfig();

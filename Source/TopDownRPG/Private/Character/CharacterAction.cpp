@@ -17,7 +17,7 @@ UCharacterAction::UCharacterAction()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UCharacterAction::Initialize(TArray<FString>& InSkillIDs)
+void UCharacterAction::SetSkill(TArray<FString>& InSkillIDs)
 {
 	SkillMap.Empty();
 

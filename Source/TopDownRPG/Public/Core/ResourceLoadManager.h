@@ -22,10 +22,55 @@ public:
 	void Load(FSoftObjectPath& InPath, FOnResourceLoaded&& OnCompleteDelegate);
 	
 	template<typename T>
-	void Load(TSoftObjectPtr<T>& InSoft)
+	void Load(const TSoftObjectPtr<T>& InSoft, FOnResourceLoaded&& OnCompleteDelegate)
 	{
 		FStreamableManager& Stream = UAssetManager::GetStreamableManager();
-		Stream.RequestAsyncLoad(InSoft.ToSoftObjectPath());
+		auto& Path = InSoft.ToSoftObjectPath();
+
+		if (Path.IsValid())
+		{
+			OnCompleteDelegate.ExecuteIfBound(Path.ResolveObject());
+			return;
+		}
+
+		Stream.RequestAsyncLoad(
+			Path, 
+			FStreamableDelegate::CreateLambda(
+				[Path, &OnCompleteDelegate]()
+				{
+					UObject* Loaded = Path.ResolveObject();
+					check(Loaded);
+
+					OnCompleteDelegate.ExecuteIfBound(Loaded);
+				}
+			)
+		);
+	};
+
+	template<typename T>
+	void Load(const TSoftClassPtr<T>& InSoft, FOnResourceLoaded&& OnCompleteDelegate)
+	{
+		FStreamableManager& Stream = UAssetManager::GetStreamableManager();
+		auto& Path = InSoft.ToSoftObjectPath();
+
+		if (Path.IsValid())
+		{
+			OnCompleteDelegate.ExecuteIfBound(Path.ResolveObject());
+			return;
+		}
+
+		Stream.RequestAsyncLoad(
+			Path,
+			FStreamableDelegate::CreateLambda(
+				[Path, &OnCompleteDelegate]()
+				{
+					UObject* Loaded = Path.ResolveObject();
+					check(Loaded);
+
+					OnCompleteDelegate.ExecuteIfBound(Loaded);
+				}
+			)
+		);
 	};
 
 	template<typename T>
