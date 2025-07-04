@@ -4,27 +4,26 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Character/Input/InputHandler.h"
 #include "PlayerInputComponent.generated.h"
+
+class UEnhancedInputComponent;
 
 class ATDRPGPlayer;
 class ATDRPGPlayerController;
 struct FInputActionValue;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class TOPDOWNRPG_API UPlayerInputComponent : public UActorComponent
+class TOPDOWNRPG_API UPlayerInputComponent : public UActorComponent, public IInputHandler
 {
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = OwnerComp)
-	TObjectPtr<ATDRPGPlayerController> Controller;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = OwnerComp)
 	TObjectPtr<ATDRPGPlayer> Player;
 
 public:	
 	UPlayerInputComponent();
 	virtual void InitializeComponent() override;
-	virtual void SetupInputBinding(class UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) {};
-		
+	virtual void SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override {};
 };

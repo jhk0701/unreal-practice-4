@@ -3,18 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Character/CharacterAction.h"
 #include "EnemyAction.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class TOPDOWNRPG_API UEnemyAction : public UActorComponent
+class TOPDOWNRPG_API UEnemyAction : public UCharacterAction
 {
 	GENERATED_BODY()
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Owner")
 	TObjectPtr<class ATDRPGEnemy> Enemy;
+
 
 	// TODO : 공격 - 스킬들 관리
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
@@ -34,7 +35,9 @@ public:
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void InvokeAttack();
+	virtual void InvokeAttack() override;
+	virtual void InvokeSkill(int32 InIndex) override;
+
 	inline bool IsAttacking() const { return bIsAttacking; }
 	inline const float GetAttackRange() { return AttackRange; }
 

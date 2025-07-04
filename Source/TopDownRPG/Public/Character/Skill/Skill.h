@@ -51,6 +51,9 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UInputProcessor> Input;		// 입력 처리 객체
 
+	float Cooldown;
+	FTimerHandle CooldownTimer;
+
 public:
 	/// 스킬 객체 초기화
 	virtual void Initialize(FSkillDataRow& InData, AActor* InOwner) override;

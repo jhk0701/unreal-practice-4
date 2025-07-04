@@ -3,32 +3,27 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/PlayerInputComponent.h"
+#include "Character/CharacterAction.h"
+#include "Character/Input/InputHandler.h"
 #include "PlayerAction.generated.h"
 
 class USkill;
 class UActiveSkill;
 
-// TODO : EnemyAttack과 리팩토링할것
-// 방향 : PlayerInputConponent 기능을 인터페이스화
-// EnemyAttack과 일치하는 부분은 CharacterAttack 으로 리팩토링해서 파생형을 사용
-// PlayerAttack은 IInputHandler 상속해서 사용하도록 구현
+class ATDRPGPlayer;
+struct FInputActionValue;
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UPlayerAction : public UPlayerInputComponent
+class TOPDOWNRPG_API UPlayerAction : public UCharacterAction, public IInputHandler
 {
 	GENERATED_BODY()
 
 protected:
-	// 스킬 데이터
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack|Skill")
-	TMap<FString, USkill*> SkillMap;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack|Skill")
-	TObjectPtr<UActiveSkill> DefaultAttack;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owner")
+	TObjectPtr<ATDRPGPlayer> Player;
 
 public:
 	UPlayerAction();
@@ -36,11 +31,11 @@ public:
 	virtual void SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
 
 	void InputAttack(const FInputActionValue& InputValue);
-	void InputSkill(const FInputActionValue& InputValue);
+	virtual void InvokeAttack() override;
 
-	void Initialize(TArray<FString>& InSkillIDs);
-	void InvokeAttack();
-	void InvokeSkill(int32 InValue);
+	void InputSkill(const FInputActionValue& InputValue);
+	virtual void InvokeSkill(int32 InValue) override;
+
 
 	void ActivateHitCollider(bool bIsEnable);
 	UFUNCTION()

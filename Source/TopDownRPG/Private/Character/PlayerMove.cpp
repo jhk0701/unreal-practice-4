@@ -1,11 +1,11 @@
 #include "Character/PlayerMove.h"
 #include "Character/TDRPGPlayer.h"
 #include "Core/TDRPGPlayerController.h"
+
 #include <EnhancedInputComponent.h>
 #include <GameFramework/CharacterMovementComponent.h>
 #include <Components/CapsuleComponent.h>
 
-#include "TopDownRPG/TopDownRPG.h"
 
 UPlayerMove::UPlayerMove()
 {
@@ -15,9 +15,7 @@ UPlayerMove::UPlayerMove()
 void UPlayerMove::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Controller = Cast<ATDRPGPlayerController>(Player->GetController());
-	MoveComp = Player->GetCharacterMovement();
+	CharMove = Player->GetCharacterMovement();
 
 	Player->OnAttackCalled.AddUObject(this, &UPlayerMove::StopMove);
 }
@@ -55,7 +53,7 @@ void UPlayerMove::StopMove()
 {
 	bIsWalking = false;
 	Destination = Player->GetActorLocation();
-	MoveComp->StopMovementImmediately();
+	CharMove->StopMovementImmediately();
 }
 
 void UPlayerMove::Move(float DeltaTime)
@@ -75,7 +73,7 @@ void UPlayerMove::Move(float DeltaTime)
 	}
 
 	FVector Input = DeltaTime * Speed * Dir.GetSafeNormal();
-	MoveComp->AddInputVector(Input);
+	CharMove->AddInputVector(Input);
 }
 
 void UPlayerMove::InputDodge(const FInputActionValue& InputValue)
@@ -89,6 +87,6 @@ void UPlayerMove::InputDodge(const FInputActionValue& InputValue)
 void UPlayerMove::Dodge()
 {
 	StopMove();
-	MoveComp->Launch(Player->GetActorForwardVector() * DodgePower);
+	CharMove->Launch(Player->GetActorForwardVector() * DodgePower);
 }
 

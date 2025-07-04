@@ -20,6 +20,8 @@
 
 void USkill::Initialize(FSkillDataRow& InData, AActor* InOwner)
 {
+	
+	
 	Owner = InOwner;
 
 	UResourceLoadManager* Loader = Owner->GetWorld()->GetGameInstance()->GetSubsystem<UResourceLoadManager>();

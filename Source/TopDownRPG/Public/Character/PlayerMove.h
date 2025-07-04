@@ -4,6 +4,8 @@
 #include "Character/PlayerInputComponent.h"
 #include "PlayerMove.generated.h"
 
+class UCharacterMovementComponent;
+
 
 UCLASS()
 class TOPDOWNRPG_API UPlayerMove : public UPlayerInputComponent
@@ -12,7 +14,7 @@ class TOPDOWNRPG_API UPlayerMove : public UPlayerInputComponent
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = OwnerComp)
-	TObjectPtr<class UCharacterMovementComponent> MoveComp;
+	TObjectPtr<UCharacterMovementComponent> CharMove;
 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement)

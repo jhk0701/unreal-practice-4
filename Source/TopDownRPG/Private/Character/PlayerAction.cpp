@@ -10,8 +10,6 @@
 #include "Character/PlayerAnim.h"
 
 #include "TDRPGEnum.h"
-#include "Core/GameDataManager.h"
-#include "Data/SkillDataRow.h"
 #include "Character/Skill/Skill.h"
 
 #include <EnhancedInputComponent.h>
@@ -26,41 +24,17 @@ void UPlayerAction::InitializeComponent()
 {
 	Super::InitializeComponent();
 
+	Player = Cast<ATDRPGPlayer>(GetOwner());
+	Player->OnInputBindDelegate.AddUObject(this, &UPlayerAction::SetupInputBinding);
+
 	Player->HitCollider->OnComponentBeginOverlap.AddDynamic(this, &UPlayerAction::OnActorOverlaped);
 	ActivateHitCollider(false);
 }
 
 void UPlayerAction::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)
 {
-	Super::SetupInputBinding(PlayerInputComponent, InController);
-
 	PlayerInputComponent->BindAction(InController->AttackDefaultAction, ETriggerEvent::Triggered, this, &UPlayerAction::InputAttack);
 	PlayerInputComponent->BindAction(InController->SkillAction, ETriggerEvent::Triggered, this, &UPlayerAction::InputSkill);
-}
-
-void UPlayerAction::Initialize(TArray<FString>& InSkillIDs)
-{
-	SkillMap.Empty();
-
-	UGameDataManager* GameData = GetWorld()->GetGameInstance()->GetSubsystem<UGameDataManager>();
-	for(FString& ID : InSkillIDs)
-	{
-		FSkillDataRow* SkillData = GameData->GetRow<FSkillDataRow>(ETableType::Skill, ID);
-		check(SkillData);
-		
-		USkill* Skill;
-		
-		SkillData->Type == ESkillType::Active ? 
-			Skill = NewObject<UActiveSkill>() : 
-			Skill = NewObject<UPassiveSkill>();
-
-		Skill->Initialize(*SkillData, GetOwner());
-
-		SkillMap.Add(ID, Skill);
-
-		if (SkillData->bIsDefaultAction)
-			DefaultAttack = Cast<UActiveSkill>(Skill);
-	}
 }
 
 void UPlayerAction::InputAttack(const FInputActionValue& InputValue)
@@ -89,11 +63,6 @@ void UPlayerAction::InvokeAttack()
 	DefaultAttack->InvokeSkill();
 }
 
-void UPlayerAction::ActivateHitCollider(bool bIsEnable)
-{
-	Player->HitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics: ECollisionEnabled::NoCollision);
-}
-
 void UPlayerAction::InputSkill(const FInputActionValue& InputValue)
 {
 	if (Player->CheckPlayerIsDead())
@@ -108,6 +77,11 @@ void UPlayerAction::InvokeSkill(int32 InValue)
 	PRINT_LOG(TEXT("Test Skill Input : %d"), InValue);
 }
 
+
+void UPlayerAction::ActivateHitCollider(bool bIsEnable)
+{
+	Player->HitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics: ECollisionEnabled::NoCollision);
+}
 
 void UPlayerAction::OnActorOverlaped(
 	UPrimitiveComponent* OverlappedComponent, 

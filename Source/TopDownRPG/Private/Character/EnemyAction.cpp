@@ -25,6 +25,7 @@ void UEnemyAction::BeginPlay()
 	CurCooldown = .0f;
 
 	Enemy = Cast<ATDRPGEnemy>(GetOwner());
+
 	Enemy->HitCollider->OnComponentBeginOverlap.AddDynamic(this, &UEnemyAction::OnActorOverlaped);
 	ActivateHitCollider(false);
 }
@@ -53,6 +54,11 @@ void UEnemyAction::InvokeAttack()
 	PRINT_LOG(TEXT("Enemy Attack!"));
 	Enemy->AnimInst->PlayAttack(0);
 }
+
+void UEnemyAction::InvokeSkill(int32 InIndex)
+{
+}
+
 
 void UEnemyAction::ActivateHitCollider(bool bIsEnable)
 {
