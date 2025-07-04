@@ -5,6 +5,7 @@
 
 #include <Components/BoxComponent.h>
 
+#include "TopDownRPG/TopDownRPG.h"
 
 ASkillEffectBase::ASkillEffectBase()
 {
@@ -27,9 +28,30 @@ void ASkillEffectBase::BeginPlay()
 	Collider->OnComponentBeginOverlap.AddUniqueDynamic(this, &ASkillEffectBase::OnBeginOverlapped);
 }
 
+void ASkillEffectBase::Initialize(AActor* InActivator)
+{
+	Activator = InActivator;
+}
+
+
 void ASkillEffectBase::Activate()
 {
+	SetActive(true);
+
+	auto& TimerManager = GetWorld()->GetTimerManager();
+	TimerManager.SetTimer(
+		Timer,
+		FTimerDelegate::CreateUObject(this, &ASkillEffectBase::Deactivate), 
+		LifeTime, 
+		false);
+
 	OnSkillStarted.Broadcast(this);
+}
+
+void ASkillEffectBase::Deactivate()
+{
+	OnSkillEnded.Broadcast(this);
+	SetActive(false);
 }
 
 void ASkillEffectBase::OnBeginOverlapped(
@@ -40,6 +62,16 @@ void ASkillEffectBase::OnBeginOverlapped(
 	bool bFromSweep, 
 	const FHitResult& SweepResult)
 {
+	if (OtherActor == Owner)
+		return;
+
 	OnSkillHitted.Broadcast(this);
+}
+
+
+void ASkillEffectBase::SetActive(bool bIsOn)
+{
+	SetActorHiddenInGame(bIsOn);
+	SetActorEnableCollision(bIsOn);
 }
 

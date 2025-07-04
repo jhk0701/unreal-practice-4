@@ -32,12 +32,38 @@ void USkill::Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* I
 	// 2. 효과 구성
 	Effect = InConfig->Effect;
 	Loader->Load(Effect, FOnResourceLoaded());
-
 }
 
-void USkill::Activate(const FSkillInputContext& InContext)
+ASkillEffectBase* USkill::GetEffect()
 {
-	PRINT_LOG(TEXT("Skill Activate"));
+	if (EffectPool.IsEmpty())
+		return CreateEffect();
+	
+	ASkillEffectBase* Instance;
+	EffectPool.Dequeue(Instance);
+
+	return Instance;
+}
+
+ASkillEffectBase* USkill::CreateEffect()
+{
+	if (Effect.IsValid())
+	{
+		ASkillEffectBase* Instance = Owner->GetWorld()->SpawnActor<ASkillEffectBase>(Effect.Get());
+		Instance->Initialize(Owner);
+		Instance->OnSkillEnded.AddUObject(this, &USkill::ReleaseEffect);
+
+		return Instance;
+	}
+	
+	PRINT_LOG(TEXT("Effect is not loaded."));
+	return nullptr;
+}
+
+void USkill::ReleaseEffect(AActor* InInstance)
+{
+	if (ASkillEffectBase* EffectInst = Cast<ASkillEffectBase>(InInstance))
+		EffectPool.Enqueue(EffectInst);
 }
 
 #pragma endregion
@@ -61,7 +87,6 @@ void UActiveSkill::InvokeSkill()
 
 void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
 {
-	PRINT_LOG(TEXT("Input Processed"));
 	if (InContext.bProcessIsCompleted)
 		Activate(InContext);
 }
@@ -69,12 +94,19 @@ void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
 /// 액티브 스킬 발동
 void UActiveSkill::Activate(const FSkillInputContext& InContext)
 {
-	PRINT_LOG(TEXT("Skill Activate"));
-
 	Super::Activate(InContext);
 
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
+	{
+		// 애니메이션 실행
 		Player->AnimInst->PlayAttack(Motion.Get(), InContext.Count);
+	}
+
+	if (ASkillEffectBase* SkillInst = GetEffect())
+	{
+		// 이펙트 호출
+		SkillInst->Activate();
+	}
 }
 
 #pragma endregion

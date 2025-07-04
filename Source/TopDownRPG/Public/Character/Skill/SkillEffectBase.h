@@ -20,8 +20,17 @@ class TOPDOWNRPG_API ASkillEffectBase : public AActor
 public:
 	FSkillEvent OnSkillStarted;
 	FSkillEvent OnSkillHitted;
+	FSkillEvent OnSkillEnded;
 	
 protected:
+	UPROPERTY()
+	TObjectPtr<AActor> Activator;
+	
+	FTimerHandle Timer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float LifeTime = 3.0f;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UStaticMeshComponent> Mesh;
 
@@ -34,7 +43,9 @@ protected:
 public:	
 	ASkillEffectBase();
 	virtual void BeginPlay() override;
+	virtual void Initialize(AActor* InActivator);
 	virtual void Activate();
+	virtual void Deactivate();
 
 protected:
 	UFUNCTION()
@@ -46,4 +57,5 @@ protected:
 		bool bFromSweep, 
 		const FHitResult& SweepResult);
 
+	void SetActive(bool bIsOn);
 };

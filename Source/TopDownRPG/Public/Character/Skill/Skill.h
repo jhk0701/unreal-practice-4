@@ -28,6 +28,9 @@ protected:
 	UPROPERTY()
 	TSoftClassPtr<ASkillEffectBase> Effect;
 
+	// 오브젝트 풀링으로 관리
+	TQueue<ASkillEffectBase*> EffectPool;
+
 	UPROPERTY()
 	TSoftObjectPtr<UAnimMontage> Motion;
 
@@ -40,7 +43,11 @@ public:
 
 protected:
 	/// 실질적인 스킬 호출 함수
-	virtual void Activate(const FSkillInputContext& InContext);
+	virtual void Activate(const FSkillInputContext& InContext) {};
+
+	ASkillEffectBase* GetEffect();
+	ASkillEffectBase* CreateEffect();
+	void ReleaseEffect(AActor* InInstance);
 };
 
 UCLASS()

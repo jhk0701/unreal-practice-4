@@ -53,9 +53,9 @@ public:
 		FStreamableManager& Stream = UAssetManager::GetStreamableManager();
 		auto& Path = InSoft.ToSoftObjectPath();
 
-		if (Path.IsValid())
+		if (UObject* Loaded = Path.ResolveObject())
 		{
-			OnCompleteDelegate.ExecuteIfBound(Path.ResolveObject());
+			OnCompleteDelegate.ExecuteIfBound(Loaded);
 			return;
 		}
 
