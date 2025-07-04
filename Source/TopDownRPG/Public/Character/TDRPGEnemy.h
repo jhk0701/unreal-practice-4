@@ -25,10 +25,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UEnemyAnim> AnimInst;
 
-	// 임시 히트박스
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class USphereComponent> HitCollider;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<class UCapsuleComponent> Collider;
 

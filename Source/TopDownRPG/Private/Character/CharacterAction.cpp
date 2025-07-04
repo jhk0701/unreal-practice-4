@@ -38,3 +38,28 @@ void UCharacterAction::Initialize(TArray<FString>& InSkillIDs)
 			DefaultAttack = Cast<UActiveSkill>(Skill);
 	}
 }
+
+/*
+void UPlayerAction::ActivateHitCollider(bool bIsEnable)
+{
+	Player->HitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics : ECollisionEnabled::NoCollision);
+}
+
+void UPlayerAction::OnActorOverlaped(
+	UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex,
+	bool bFromSweep,
+	const FHitResult& SweepResult
+)
+{
+	if (OtherActor && OtherActor->IsA<ATDRPGEnemy>())
+	{
+		ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(OtherActor);
+		int32 Damage = Player->DataComp->GetAttackPower();
+
+		Enemy->TakeDamage(Damage);
+	}
+}
+*/

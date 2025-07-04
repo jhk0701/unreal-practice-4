@@ -6,7 +6,6 @@
 #include "Character/EnemyAnim.h"
 
 #include <Components/CapsuleComponent.h>
-#include <Components/SphereComponent.h>
 
 #include "TDRPGConst.h"
 #include "TDRPGEnum.h"
@@ -43,12 +42,6 @@ ATDRPGEnemy::ATDRPGEnemy()
 	}
 
 	StateMachine = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSMComp"));
-
-	// 임시 히트박스
-	HitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
-	HitCollider->SetupAttachment(RootComponent);
-	HitCollider->SetRelativeLocation(FVector(70.f, 0, 0));
-	HitCollider->SetSphereRadius(50.f);
 }
 
 // Called when the game starts or when spawned

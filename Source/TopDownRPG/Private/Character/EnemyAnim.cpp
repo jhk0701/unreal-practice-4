@@ -23,15 +23,3 @@ void UEnemyAnim::SetIsDead(const APawn* Pawn)
 		bIsDead = Enemy->GetData()->bIsDead;
 	}
 }
-
-void UEnemyAnim::OnAttackStarted()
-{
-	if (ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(TryGetPawnOwner()))
-		Enemy->ActionComp->ActivateHitCollider(true);
-}
-
-void UEnemyAnim::OnAttackEnded()
-{
-	if (ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(TryGetPawnOwner()))
-		Enemy->ActionComp->ActivateHitCollider(false);
-}

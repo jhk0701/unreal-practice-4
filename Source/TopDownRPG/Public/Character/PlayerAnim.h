@@ -22,11 +22,6 @@ public:
 	virtual void PlayAttack(UAnimMontage* InMontage, int32 Idx = 0) override;
 	virtual void PlayHit() override;
 
-	UFUNCTION(BlueprintCallable)
-	void OnAttackStarted();
-	UFUNCTION(BlueprintCallable)
-	void OnAttackEnded();
-
 protected:
 	virtual void SetIsDead(const APawn* Pawn) override;
 };

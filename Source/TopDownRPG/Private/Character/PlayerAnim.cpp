@@ -45,14 +45,3 @@ void UPlayerAnim::PlayHit()
 	}
 }
 
-void UPlayerAnim::OnAttackStarted()
-{
-	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
-		Player->ActionComp->ActivateHitCollider(true);
-}
-
-void UPlayerAnim::OnAttackEnded()
-{
-	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
-		Player->ActionComp->ActivateHitCollider(false);
-}

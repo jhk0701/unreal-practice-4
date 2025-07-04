@@ -14,12 +14,6 @@ class TOPDOWNRPG_API UEnemyAnim : public UCharacterAnimBase
 {
 	GENERATED_BODY()
 	
-public:
-	UFUNCTION(BlueprintCallable)
-	void OnAttackStarted();
-	UFUNCTION(BlueprintCallable)
-	void OnAttackEnded();
-
 protected:
 	virtual void SetAccel(const APawn* Pawn) override;
 	virtual void SetIsDead(const APawn* Pawn) override;

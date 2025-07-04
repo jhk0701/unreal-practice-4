@@ -74,11 +74,6 @@ ATDRPGPlayer::ATDRPGPlayer()
 	InteractCollider->SetCollisionProfileName(FTDRPGConst::INTERACT_PROFILE);
 	InteractCollider->SetupAttachment(RootComponent);
 
-	// 임시 히트박스
-	HitCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TempHit"));
-	HitCollider->SetRelativeLocation(FVector(70.f, 0.0f, 0.0f));
-	HitCollider->SetSphereRadius(50.f);
-	HitCollider->SetupAttachment(RootComponent);
 }
 
 void ATDRPGPlayer::BeginPlay()

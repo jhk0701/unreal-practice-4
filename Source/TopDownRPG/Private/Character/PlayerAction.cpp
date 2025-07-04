@@ -26,9 +26,6 @@ void UPlayerAction::InitializeComponent()
 
 	Player = Cast<ATDRPGPlayer>(GetOwner());
 	Player->OnInputBindDelegate.AddUObject(this, &UPlayerAction::SetupInputBinding);
-
-	Player->HitCollider->OnComponentBeginOverlap.AddDynamic(this, &UPlayerAction::OnActorOverlaped);
-	ActivateHitCollider(false);
 }
 
 void UPlayerAction::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)
@@ -75,28 +72,4 @@ void UPlayerAction::InputSkill(const FInputActionValue& InputValue)
 void UPlayerAction::InvokeSkill(int32 InValue)
 {
 	PRINT_LOG(TEXT("Test Skill Input : %d"), InValue);
-}
-
-
-void UPlayerAction::ActivateHitCollider(bool bIsEnable)
-{
-	Player->HitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics: ECollisionEnabled::NoCollision);
-}
-
-void UPlayerAction::OnActorOverlaped(
-	UPrimitiveComponent* OverlappedComponent, 
-	AActor* OtherActor, 
-	UPrimitiveComponent* OtherComp, 
-	int32 OtherBodyIndex, 
-	bool bFromSweep, 
-	const FHitResult& SweepResult
-)
-{
-	if(OtherActor && OtherActor->IsA<ATDRPGEnemy>())
-	{
-		ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(OtherActor);
-		int32 Damage = Player->DataComp->GetAttackPower();
-
-		Enemy->TakeDamage(Damage);
-	}
 }

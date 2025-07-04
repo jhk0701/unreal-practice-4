@@ -26,8 +26,6 @@ void UEnemyAction::BeginPlay()
 
 	Enemy = Cast<ATDRPGEnemy>(GetOwner());
 
-	Enemy->HitCollider->OnComponentBeginOverlap.AddDynamic(this, &UEnemyAction::OnActorOverlaped);
-	ActivateHitCollider(false);
 }
 
 void UEnemyAction::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -57,31 +55,5 @@ void UEnemyAction::InvokeAttack()
 
 void UEnemyAction::InvokeSkill(int32 InIndex)
 {
-}
-
-
-void UEnemyAction::ActivateHitCollider(bool bIsEnable)
-{
-	Enemy->HitCollider->SetCollisionEnabled(bIsEnable ? ECollisionEnabled::QueryAndPhysics : ECollisionEnabled::NoCollision);
-}
-
-void UEnemyAction::OnActorOverlaped(
-	UPrimitiveComponent* OverlappedComponent, 
-	AActor* OtherActor, 
-	UPrimitiveComponent* OtherComp, 
-	int32 OtherBodyIndex, 
-	bool bFromSweep, 
-	const FHitResult& SweepResult
-)
-{
-	if(OtherActor && OtherActor->IsA<ATDRPGPlayer>())
-	{
-		ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(OtherActor);
-		int32 Damage = Enemy->DataComp->GetAttackPower();
-
-		PRINT_LOG(TEXT("player take damage : %d"), Damage);
-
-		Player->TakeDamage(Damage);
-	}
 }
 
