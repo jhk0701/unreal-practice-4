@@ -72,25 +72,4 @@ public:
 			)
 		);
 	};
-
-	template<typename T>
-	void LoadTask(TSoftObjectPtr<T>& InSoft, FOnResourceLoaded&& OnCompleteDelegate)
-	{
-		if (InSoft.IsValid())
-		{
-			OnCompleteDelegate.ExecuteIfBound(InSoft.Get());
-			return;
-		}
-
-		AsyncTask(ENamedThreads::GameThread, 
-			[InSoft, OnCompleteDelegate]()
-			{
-				T* Loaded = InSoft.LoadSynchronous();
-
-				if (Loaded)
-					OnCompleteDelegate.ExecuteIfBound(Loaded);
-			}
-		);
-
-	};
 };

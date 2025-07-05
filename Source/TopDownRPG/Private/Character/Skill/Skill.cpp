@@ -31,39 +31,16 @@ void USkill::Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* I
 
 	// 2. 효과 구성
 	Effect = InConfig->Effect;
-	Loader->Load(Effect, FOnResourceLoaded());
-}
-
-ASkillEffectBase* USkill::GetEffect()
-{
-	if (EffectPool.IsEmpty())
-		return CreateEffect();
-	
-	ASkillEffectBase* Instance;
-	EffectPool.Dequeue(Instance);
-
-	return Instance;
-}
-
-ASkillEffectBase* USkill::CreateEffect()
-{
-	if (Effect.IsValid())
-	{
-		ASkillEffectBase* Instance = Owner->GetWorld()->SpawnActor<ASkillEffectBase>(Effect.Get());
-		Instance->Initialize(Owner);
-		Instance->OnSkillEnded.AddUObject(this, &USkill::ReleaseEffect);
-
-		return Instance;
-	}
-	
-	PRINT_LOG(TEXT("Effect is not loaded."));
-	return nullptr;
-}
-
-void USkill::ReleaseEffect(AActor* InInstance)
-{
-	if (ASkillEffectBase* EffectInst = Cast<ASkillEffectBase>(InInstance))
-		EffectPool.Enqueue(EffectInst);
+	Loader->Load(
+		Effect, 
+		FOnResourceLoaded::CreateLambda(
+			[this](UObject* Loaded)
+			{
+				if (ASkillEffectBase* LoadedEffect = Cast<ASkillEffectBase>(Loaded))
+					EffectInstance = Owner->GetWorld()->SpawnActor<ASkillEffectBase>(LoadedEffect->StaticClass());
+			}
+		)
+	);
 }
 
 #pragma endregion
@@ -102,10 +79,10 @@ void UActiveSkill::Activate(const FSkillInputContext& InContext)
 		Player->AnimInst->PlayAttack(Motion.Get(), InContext.Count);
 	}
 
-	if (ASkillEffectBase* SkillInst = GetEffect())
+	if (EffectInstance)
 	{
 		// 이펙트 호출
-		SkillInst->Activate();
+		EffectInstance->Activate(Owner->GetActorLocation(), Owner->GetActorForwardVector());
 	}
 }
 

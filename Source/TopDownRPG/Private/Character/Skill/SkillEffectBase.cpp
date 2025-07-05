@@ -25,6 +25,8 @@ void ASkillEffectBase::BeginPlay()
 {
 	Super::BeginPlay();
 
+	PRINT_LOG(TEXT("Effect Is Created"));
+
 	Collider->OnComponentBeginOverlap.AddUniqueDynamic(this, &ASkillEffectBase::OnBeginOverlapped);
 }
 
@@ -34,8 +36,11 @@ void ASkillEffectBase::Initialize(AActor* InActivator)
 }
 
 
-void ASkillEffectBase::Activate()
+void ASkillEffectBase::Activate(const FVector& InPos, const FVector& InDir)
 {
+	SetActorLocation(InPos);
+	SetActorRotation(InDir.ToOrientationQuat());
+
 	SetActive(true);
 
 	auto& TimerManager = GetWorld()->GetTimerManager();
@@ -68,10 +73,9 @@ void ASkillEffectBase::OnBeginOverlapped(
 	OnSkillHitted.Broadcast(this);
 }
 
-
 void ASkillEffectBase::SetActive(bool bIsOn)
 {
 	SetActorHiddenInGame(bIsOn);
-	SetActorEnableCollision(bIsOn);
+	// SetActorEnableCollision(bIsOn);
 }
 

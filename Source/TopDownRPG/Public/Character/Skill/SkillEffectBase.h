@@ -29,7 +29,7 @@ protected:
 	FTimerHandle Timer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float LifeTime = 3.0f;
+	float LifeTime = 1.0f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UStaticMeshComponent> Mesh;
@@ -44,7 +44,8 @@ public:
 	ASkillEffectBase();
 	virtual void BeginPlay() override;
 	virtual void Initialize(AActor* InActivator);
-	virtual void Activate();
+	
+	virtual void Activate(const FVector& InPos, const FVector& InDir);
 	virtual void Deactivate();
 
 protected:
