@@ -19,10 +19,11 @@ class TOPDOWNRPG_API UResourceLoadManager : public UGameInstanceSubsystem
 	GENERATED_BODY()
 	
 public:
-	void Load(FSoftObjectPath& InPath, FOnResourceLoaded&& OnCompleteDelegate);
+	void Load(const FSoftObjectPath& InPath, FOnResourceLoaded&& OnCompleteDelegate);
 	
+	/*
 	template<typename T>
-	void Load(const TSoftObjectPtr<T>& InSoft, FOnResourceLoaded&& OnCompleteDelegate)
+	void Load(TSoftObjectPtr<T>& InSoft, FOnResourceLoaded&& OnCompleteDelegate)
 	{
 		FStreamableManager& Stream = UAssetManager::GetStreamableManager();
 		auto& Path = InSoft.ToSoftObjectPath();
@@ -48,23 +49,22 @@ public:
 	};
 
 	template<typename T>
-	void Load(const TSoftClassPtr<T>& InSoft, FOnResourceLoaded&& OnCompleteDelegate)
+	void Load(TSoftClassPtr<T>& InSoft, FOnResourceLoaded&& OnCompleteDelegate)
 	{
 		FStreamableManager& Stream = UAssetManager::GetStreamableManager();
-		auto& Path = InSoft.ToSoftObjectPath();
-
-		if (UObject* Loaded = Path.ResolveObject())
+		
+		if (UObject* Loaded = InSoft.Get())
 		{
 			OnCompleteDelegate.ExecuteIfBound(Loaded);
 			return;
 		}
 
 		Stream.RequestAsyncLoad(
-			Path,
+			InSoft.ToSoftObjectPath(),
 			FStreamableDelegate::CreateLambda(
-				[Path, &OnCompleteDelegate]()
+				[InSoft, &OnCompleteDelegate]()
 				{
-					UObject* Loaded = Path.ResolveObject();
+					UObject* Loaded = InSoft.Get();
 					check(Loaded);
 
 					OnCompleteDelegate.ExecuteIfBound(Loaded);
@@ -72,4 +72,5 @@ public:
 			)
 		);
 	};
+	*/
 };

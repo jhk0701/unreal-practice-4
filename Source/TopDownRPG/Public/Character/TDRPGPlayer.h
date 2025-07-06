@@ -4,8 +4,22 @@
 #include "GameFramework/Character.h"
 #include "TDRPGPlayer.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnUniqueInputDelegate);
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnInputBindDelegate, class UEnhancedInputComponent* , class ATDRPGPlayerController* );
+class UCharacterData;
+class UPlayerMove;
+class UPlayerAction;
+class UPlayerInteraction;
+class UPlayerAnim;
+
+class USpringArmComponent;
+class UCameraComponent; 
+class UInputComponent;
+class USphereComponent;
+
+class ATDRPGPlayerController;
+class UEnhancedInputComponent;
+
+DECLARE_MULTICAST_DELEGATE(FOnInputInvoked);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnInputBinded, UEnhancedInputComponent* , ATDRPGPlayerController* );
 
 UCLASS()
 class TOPDOWNRPG_API ATDRPGPlayer : public ACharacter
@@ -13,38 +27,38 @@ class TOPDOWNRPG_API ATDRPGPlayer : public ACharacter
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UCharacterData> DataComp;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Comp")
+	TObjectPtr<UCharacterData> DataComp;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UPlayerMove> MoveComp;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Comp")
+	TObjectPtr<UPlayerMove> MoveComp;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UPlayerAction> ActionComp;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Comp")
+	TObjectPtr<UPlayerAction> ActionComp;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UPlayerInteraction> InteractComp;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Comp")
+	TObjectPtr<UPlayerInteraction> InteractComp;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Animation)
-	TObjectPtr<class UPlayerAnim> AnimInst;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Animation")
+	TObjectPtr<UPlayerAnim> AnimInst;
 
-	FOnInputBindDelegate OnInputBindDelegate;
-	FOnUniqueInputDelegate OnAttackCalled;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interaction")
+	TObjectPtr<USphereComponent> InteractCollider;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Interaction)
-	TObjectPtr<class USphereComponent> InteractCollider;
+	FOnInputBinded OnInputBinded;
+	FOnInputInvoked OnAttackInvoked;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	TObjectPtr<class USpringArmComponent> SpringArm;
+	TObjectPtr<USpringArmComponent> SpringArm;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-	TObjectPtr<class UCameraComponent> Camera;
+	TObjectPtr<UCameraComponent> Camera;
 
 public:
 	ATDRPGPlayer();
 	virtual void BeginPlay() override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
 	inline const TObjectPtr<UCharacterData> GetData() const { return DataComp; }
 

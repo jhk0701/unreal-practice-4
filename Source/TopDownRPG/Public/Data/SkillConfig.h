@@ -7,8 +7,6 @@
 #include "TDRPGConst.h"
 #include "SkillConfig.generated.h"
 
-class ASkillEffectBase;
-
 /**
  * 
  */
@@ -22,7 +20,7 @@ public:
 	TSoftObjectPtr<UAnimMontage> Motion;
 	
 	UPROPERTY(EditAnywhere, meta = (AssetBundles = "SkillBundles"))
-	TSoftClassPtr<ASkillEffectBase> Effect;
+	TSoftObjectPtr<UParticleSystem> Effect;
 
 	inline virtual FPrimaryAssetId GetPrimaryAssetId() const override
 	{

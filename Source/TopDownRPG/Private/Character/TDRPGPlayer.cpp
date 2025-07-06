@@ -93,7 +93,7 @@ void ATDRPGPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	OnInputBindDelegate.Broadcast(Cast<UEnhancedInputComponent>(PlayerInputComponent), Cast<ATDRPGPlayerController>(GetController()));
+	OnInputBinded.Broadcast(Cast<UEnhancedInputComponent>(PlayerInputComponent), Cast<ATDRPGPlayerController>(GetController()));
 }
 
 void ATDRPGPlayer::Initialize()
@@ -145,7 +145,7 @@ void ATDRPGPlayer::LoadConfig()
 
 void ATDRPGPlayer::InvokeAttackDelegate()
 {
-	OnAttackCalled.Broadcast();
+	OnAttackInvoked.Broadcast();
 }
 
 void ATDRPGPlayer::TakeDamage(int32 Damage)

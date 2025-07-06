@@ -2,7 +2,6 @@
 
 
 #include "Character/Skill/Skill.h"
-#include "Character/Skill/SkillEffectBase.h"
 #include "Character/Input/InputProcessor.h"
 
 #include "TDRPGEnum.h"
@@ -27,20 +26,11 @@ void USkill::Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* I
 	// 스킬 구성
 	// 1. 스킬 모션 추가
 	Motion = InConfig->Motion;
-	Loader->Load(Motion, FOnResourceLoaded());
+	Loader->Load(Motion.ToSoftObjectPath(), FOnResourceLoaded());
 
 	// 2. 효과 구성
 	Effect = InConfig->Effect;
-	Loader->Load(
-		Effect, 
-		FOnResourceLoaded::CreateLambda(
-			[this](UObject* Loaded)
-			{
-				if (ASkillEffectBase* LoadedEffect = Cast<ASkillEffectBase>(Loaded))
-					EffectInstance = Owner->GetWorld()->SpawnActor<ASkillEffectBase>(LoadedEffect->StaticClass());
-			}
-		)
-	);
+	Loader->Load(Effect.ToSoftObjectPath(), FOnResourceLoaded());
 }
 
 #pragma endregion
@@ -79,11 +69,8 @@ void UActiveSkill::Activate(const FSkillInputContext& InContext)
 		Player->AnimInst->PlayAttack(Motion.Get(), InContext.Count);
 	}
 
-	if (EffectInstance)
-	{
-		// 이펙트 호출
-		EffectInstance->Activate(Owner->GetActorLocation(), Owner->GetActorForwardVector());
-	}
+	// TODO : 이펙트 호출
+	// 스킬 이벤트
 }
 
 #pragma endregion

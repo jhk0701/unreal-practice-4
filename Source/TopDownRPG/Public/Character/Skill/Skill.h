@@ -7,13 +7,12 @@
 #include "Skill.generated.h"
 
 struct FSkillDataRow;
-class USkillConfig;
-class ASkillEffectBase;
-
-class UInputProcessor;
 struct FSkillInputContext;
-
+class USkillConfig;
+class UInputProcessor;
 class UAnimMontage;
+
+DECLARE_MULTICAST_DELEGATE(FSkillEvent);
 
 /**
  * 
@@ -26,10 +25,7 @@ class TOPDOWNRPG_API USkill : public UObject
 protected:
 	// 효과 객체
 	UPROPERTY()
-	TSoftClassPtr<ASkillEffectBase> Effect;
-
-	UPROPERTY()
-	TObjectPtr<ASkillEffectBase> EffectInstance;
+	TSoftObjectPtr<UParticleSystem> Effect;
 
 	UPROPERTY()
 	TSoftObjectPtr<UAnimMontage> Motion;
@@ -38,6 +34,10 @@ protected:
 	TObjectPtr<AActor> Owner;
 
 public:
+	FSkillEvent OnSkillStarted;
+	FSkillEvent OnSkillHitted;
+	FSkillEvent OnSkillEnded;
+
 	/// 스킬 객체 초기화
 	virtual void Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner);
 

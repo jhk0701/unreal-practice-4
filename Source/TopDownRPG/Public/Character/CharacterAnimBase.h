@@ -15,19 +15,20 @@ class TOPDOWNRPG_API UCharacterAnimBase : public UAnimInstance
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	float Accel;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	float AccelScaler = 500.f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	bool bIsDead = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
+	// 동적으로 주입해서 쓸 것
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Montage")
 	TObjectPtr<UAnimMontage> AttackMontage;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Montage)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Montage")
 	TObjectPtr<UAnimMontage> HitMontage;
 
 public:

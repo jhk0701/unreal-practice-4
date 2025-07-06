@@ -103,6 +103,13 @@ enum class ESkillType : uint8
 	Passive
 };
 
+UENUM(BlueprintType)
+enum class ESkillDirection: uint8
+{
+	Forward,
+
+	AllDirection,
+};
 
 DECLARE_ENUM_TO_STRING(ERarity);
 DECLARE_ENUM_TO_STRING(ETableType);

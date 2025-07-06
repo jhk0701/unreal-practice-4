@@ -4,20 +4,22 @@
 #include "Core/ResourceLoadManager.h"
 
 
-void UResourceLoadManager::Load(FSoftObjectPath& InPath, FOnResourceLoaded&& OnCompleteDelegate)
+void UResourceLoadManager::Load(const FSoftObjectPath& InPath, FOnResourceLoaded&& OnCompleteDelegate)
 {
 	FStreamableManager& Stream = UAssetManager::GetStreamableManager();
+
+	if (UObject* Loaded = InPath.ResolveObject())
+	{
+		OnCompleteDelegate.ExecuteIfBound(Loaded);
+		return;
+	}
 
 	Stream.RequestAsyncLoad(InPath,
 		FStreamableDelegate::CreateLambda(
 			[InPath, OnCompleteDelegate]()
 			{
-				UObject* Loaded = InPath.ResolveObject();
-
-				if (Loaded)
-				{
+				if (UObject* Loaded = InPath.ResolveObject())
 					OnCompleteDelegate.ExecuteIfBound(Loaded);
-				}
 			}
 		)
 	);

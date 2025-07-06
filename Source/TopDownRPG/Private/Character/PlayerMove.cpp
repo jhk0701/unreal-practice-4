@@ -17,7 +17,7 @@ void UPlayerMove::BeginPlay()
 	Super::BeginPlay();
 	CharMove = Player->GetCharacterMovement();
 
-	Player->OnAttackCalled.AddUObject(this, &UPlayerMove::StopMove);
+	Player->OnAttackInvoked.AddUObject(this, &UPlayerMove::StopMove);
 }
 
 void UPlayerMove::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
