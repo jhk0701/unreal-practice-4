@@ -174,6 +174,7 @@ bool ATDRPGPlayer::GetMouseToWorld(FHitResult& OutResult)
 		return false;
 
 	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
 
 	return GetWorld()->LineTraceSingleByChannel(
 		OutResult,

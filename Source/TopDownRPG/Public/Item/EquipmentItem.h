@@ -21,7 +21,7 @@ class TOPDOWNRPG_API UEquipmentItem : public UItemBase
 	// 장착 시, 추가 효과 제공
 
 public:
-	virtual void Initialize(FString InID, UGameInstance* InGameInst, uint32 InAmount) override;
+	virtual void Initialize(FString& InID, UGameInstance* InGameInst, uint32 InAmount) override;
 	virtual ETableType GetItemType() override;
 
 	// 아이템 활용

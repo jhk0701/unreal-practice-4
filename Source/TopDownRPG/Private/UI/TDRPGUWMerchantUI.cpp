@@ -146,7 +146,7 @@ void UTDRPGUWMerchantUI::OnSlotClicked(UTDRPGUWSlotBase* InSlot)
 	OnClickBuy(ID, Type);
 }
 
-void UTDRPGUWMerchantUI::OnClickBuy(const FString& InProductID, const ETableType InType)
+void UTDRPGUWMerchantUI::OnClickBuy(FString& InProductID, const ETableType InType)
 {
 	// 유저가 구매 버튼을 누름 -> 상인의 아이템 판매
 	Merchant->BuyItem(InProductID, InType);

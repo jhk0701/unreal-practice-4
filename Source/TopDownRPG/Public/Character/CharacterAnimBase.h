@@ -8,6 +8,7 @@
 
 class UAnimMontage;
 
+DECLARE_MULTICAST_DELEGATE(FHitNofity);
 
 UCLASS()
 class TOPDOWNRPG_API UCharacterAnimBase : public UAnimInstance
@@ -24,12 +25,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	bool bIsDead = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Montage")
+	TObjectPtr<UAnimMontage> HitMontage;
+
 	// 동적으로 주입해서 쓸 것
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Montage")
 	TObjectPtr<UAnimMontage> AttackMontage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Montage")
-	TObjectPtr<UAnimMontage> HitMontage;
 
 public:
 	virtual void PlayAttack(UAnimMontage* InMontage, int32 Idx = 0);
@@ -37,10 +38,19 @@ public:
 
 	virtual void PlayHit();
 
+	FHitNofity OnHitStarted;
+	FHitNofity OnHitEnded;
+
 protected:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 	virtual void SetAccel(const APawn* Pawn);
 	virtual void SetIsDead(const APawn* Pawn);
+
+	UFUNCTION(BlueprintCallable)
+	virtual void NotifyHitStart();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void NotifyHitEnd();
 };

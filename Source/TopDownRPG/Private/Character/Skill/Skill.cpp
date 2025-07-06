@@ -21,6 +21,13 @@ void USkill::Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* I
 {
 	Owner = InOwner;
 
+	Range = InData.Range;
+	Direction = InData.Direction;
+	MinDamage = InData.MinDamage;
+	MaxDamage = InData.MaxDamage;
+	Requirement = InData.Requirement;
+	Cooldown = InData.Cooldown;
+
 	UResourceLoadManager* Loader = Owner->GetWorld()->GetGameInstance()->GetSubsystem<UResourceLoadManager>();
 
 	// 스킬 구성
@@ -31,6 +38,12 @@ void USkill::Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* I
 	// 2. 효과 구성
 	Effect = InConfig->Effect;
 	Loader->Load(Effect.ToSoftObjectPath(), FOnResourceLoaded());
+}
+
+void USkill::Activate(const FSkillInputContext& InContext)
+{
+	// 스킬 이벤트
+	OnSkillStarted.Broadcast();
 }
 
 #pragma endregion
@@ -47,6 +60,26 @@ void UActiveSkill::Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AAc
 	Input->OnInputProcessed.BindUObject(this, &UActiveSkill::OnInputProcessed);
 }
 
+/// 액티브 스킬 발동
+void UActiveSkill::Activate(const FSkillInputContext& InContext)
+{
+	Super::Activate(InContext);
+
+	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
+	{
+		UPlayerAnim* AnimInst = Player->AnimInst;
+		AnimInst->OnHitStarted.Clear();
+		// AnimInst->OnHitEnded.Clear();
+
+		// 이펙트 호출 -> 애니메이션 이벤트 노티파이에서 사용
+		AnimInst->OnHitStarted.AddUObject(this, &UActiveSkill::ShowEffect);
+		AnimInst->OnHitStarted.AddUObject(this, &UActiveSkill::InvokeSweep);
+
+		// 애니메이션 실행
+		AnimInst->PlayAttack(Motion.Get(), InContext.Count);
+	}
+}
+
 void UActiveSkill::InvokeSkill()
 {
 	Input->Process();
@@ -58,20 +91,51 @@ void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
 		Activate(InContext);
 }
 
-/// 액티브 스킬 발동
-void UActiveSkill::Activate(const FSkillInputContext& InContext)
-{
-	Super::Activate(InContext);
 
-	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
+void UActiveSkill::ShowEffect()
+{
+	// TODO : 이펙트 호출
+}
+
+void UActiveSkill::InvokeSweep()
+{
+	if (!Owner)
+		return;
+
+	// 충돌 검사
+	TArray<FHitResult> Hits;
+	FVector Start;
+	FVector End;
+
+	FCollisionQueryParams Param;
+	Param.AddIgnoredActor(Owner);
+
+	FCollisionShape Shape;
+
+	switch (Direction)
 	{
-		// 애니메이션 실행
-		Player->AnimInst->PlayAttack(Motion.Get(), InContext.Count);
+	case ESkillDirection::Forward:
+		Start = Owner->GetActorLocation();
+		End = Start + Owner->GetActorForwardVector() * Range;
+		Shape = FCollisionShape::MakeSphere(Size);
+		break;
+	case ESkillDirection::AllDirection:
+		Start = Owner->GetActorLocation();
+		End = Start;
+		Shape = FCollisionShape::MakeSphere(Range);
+		break;
 	}
 
-	// TODO : 이펙트 호출
-	// 스킬 이벤트
+	if (Owner->GetWorld()->
+		SweepMultiByChannel(
+			Hits, Start, End, FQuat::Identity, 
+			ECollisionChannel::ECC_GameTraceChannel2,  // ECC_GameTraceChannel2
+			Shape, Param)) 
+	{
+		PRINT_LOG(TEXT("Skill Hitted : %d"), Hits.Num());
+	}
 }
+
 
 #pragma endregion
 

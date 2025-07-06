@@ -34,6 +34,7 @@ void UCharacterAnimBase::SetIsDead(const APawn* Pawn)
 	bIsDead = false;
 }
 
+
 void UCharacterAnimBase::PlayAttack(UAnimMontage* InMontage, int32 Idx)
 {
 	if (AttackMontage != InMontage)
@@ -45,4 +46,14 @@ void UCharacterAnimBase::PlayAttack(UAnimMontage* InMontage, int32 Idx)
 void UCharacterAnimBase::PlayHit()
 {
 	Montage_Play(HitMontage);
+}
+
+void UCharacterAnimBase::NotifyHitStart()
+{
+	OnHitStarted.Broadcast();
+}
+
+void UCharacterAnimBase::NotifyHitEnd()
+{
+	OnHitEnded.Broadcast();
 }

@@ -21,7 +21,7 @@ class TOPDOWNRPG_API UItemFactory : public UGameInstanceSubsystem
 public:
 	template<typename T>
 	inline TEnableIf<TIsDerivedFrom<T, UItemBase>::Value, T*>::Type
-	GetItem(const FString& InItemID, uint32 InQuantity = 1)
+	GetItem(FString& InItemID, uint32 InQuantity = 1)
 	{
 		if (InItemID == FTDRPGConst::EMPTY_ITEM_ID)
 			return nullptr;
@@ -32,5 +32,5 @@ public:
 		return Item;
 	};
 
-	UItemBase* GetItem(ETableType ItemType, const FString& InItemID, uint32 InQuantity = 1);
+	UItemBase* GetItem(ETableType ItemType, FString& InItemID, uint32 InQuantity = 1);
 };

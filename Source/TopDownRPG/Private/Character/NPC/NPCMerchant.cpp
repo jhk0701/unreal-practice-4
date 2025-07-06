@@ -40,7 +40,7 @@ FMerchantDataRow* ANPCMerchant::GetData()
 	return Data;
 }
 
-void ANPCMerchant::BuyItem(const FString& InProductID, const ETableType& InType, const uint8& InQuantity)
+void ANPCMerchant::BuyItem(FString& InProductID, const ETableType& InType, const uint8& InQuantity)
 {
 	UItemFactory* ItemFactory = GetGameInstance()->GetSubsystem<UItemFactory>();
 	UItemBase* ItemToSell = ItemFactory->GetItem(InType, InProductID);

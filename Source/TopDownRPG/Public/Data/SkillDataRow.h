@@ -37,6 +37,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 Range;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int32 Size;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	ESkillDirection Direction;

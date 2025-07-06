@@ -6,11 +6,16 @@
 #include "UObject/NoExportTypes.h"
 #include "Skill.generated.h"
 
-struct FSkillDataRow;
-struct FSkillInputContext;
+
 class USkillConfig;
 class UInputProcessor;
 class UAnimMontage;
+
+enum class ESkillDirection : uint8;
+enum class EStatus : uint8;
+
+struct FSkillDataRow;
+struct FSkillInputContext;
 
 DECLARE_MULTICAST_DELEGATE(FSkillEvent);
 
@@ -23,6 +28,9 @@ class TOPDOWNRPG_API USkill : public UObject
 	GENERATED_BODY()
 
 protected:
+	UPROPERTY()
+	TObjectPtr<AActor> Owner;
+
 	// 효과 객체
 	UPROPERTY()
 	TSoftObjectPtr<UParticleSystem> Effect;
@@ -30,20 +38,24 @@ protected:
 	UPROPERTY()
 	TSoftObjectPtr<UAnimMontage> Motion;
 
-	UPROPERTY()
-	TObjectPtr<AActor> Owner;
+	int32 Range;
+	int32 Size;
+	ESkillDirection Direction;
+	int32 MinDamage;
+	int32 MaxDamage;
+	TMap<EStatus, int32> Requirement;
+	int32 Cooldown;
 
 public:
 	FSkillEvent OnSkillStarted;
 	FSkillEvent OnSkillHitted;
-	FSkillEvent OnSkillEnded;
 
 	/// 스킬 객체 초기화
 	virtual void Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner);
 
 protected:
 	/// 실질적인 스킬 호출 함수
-	virtual void Activate(const FSkillInputContext& InContext) {};
+	virtual void Activate(const FSkillInputContext& InContext);
 };
 
 UCLASS()
@@ -70,6 +82,9 @@ protected:
 
 	/// 키 입력에 처리 시 호출 콜백
 	virtual void OnInputProcessed(const FSkillInputContext& InContext);
+
+	virtual void ShowEffect();
+	virtual void InvokeSweep();
 };
 
 

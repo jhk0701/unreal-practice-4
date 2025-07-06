@@ -74,7 +74,7 @@ protected:
 
 	void OnSlotClicked(UTDRPGUWSlotBase* InSlot);
 
-	void OnClickBuy(const FString& InProductID, const ETableType InType);
+	void OnClickBuy(FString& InProductID, const ETableType InType);
 	// void OnClickSell();
 
 	void ShowDetail(UTDRPGUWSlotBase* InSlot);
