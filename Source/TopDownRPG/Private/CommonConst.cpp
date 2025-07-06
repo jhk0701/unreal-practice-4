@@ -4,8 +4,8 @@
 #include "TDRPGConst.h"
 
 const FName FTDRPGConst::INTERACT_PROFILE = FName(TEXT("Interaction"));
-const FName FTDRPGConst::PLAYER_TAG = FName(TEXT("Player"));
-const FName FTDRPGConst::ENEMY_TAG = FName(TEXT("Enemy"));
+const FName FTDRPGConst::TAG_PLAYER = FName(TEXT("Player"));
+const FName FTDRPGConst::TAG_ENEMY = FName(TEXT("Enemy"));
 
 // 포맷 형태
 const FString FTDRPGConst::PATH_FORMAT_UI = FString(TEXT("/Game/4-UI/WBP_{0}.WBP_{0}_C"));

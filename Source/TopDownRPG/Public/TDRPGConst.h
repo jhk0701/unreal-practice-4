@@ -11,8 +11,8 @@ class TOPDOWNRPG_API FTDRPGConst
 {
 public:
  	static const FName INTERACT_PROFILE;
-    static const FName PLAYER_TAG;
-    static const FName ENEMY_TAG;
+    static const FName TAG_PLAYER;
+    static const FName TAG_ENEMY;
 
     static const FString PATH_FORMAT_UI;
     static const FString PATH_FORMAT_DATA_TABLE;

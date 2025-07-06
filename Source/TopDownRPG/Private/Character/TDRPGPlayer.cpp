@@ -80,7 +80,7 @@ void ATDRPGPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Tags.Add(FTDRPGConst::PLAYER_TAG);
+	Tags.Add(FTDRPGConst::TAG_PLAYER);
 
 	ATDRPGGameState* State = Cast<ATDRPGGameState>(GetWorld()->GetGameState());
 	State->Player = this;
@@ -152,6 +152,8 @@ void ATDRPGPlayer::TakeDamage(int32 Damage)
 {
 	uint32 Def = DataComp->GetDefensePower();
 	Damage = FMath::Max<int32>(Damage - Def, 0);
+
+	PRINT_LOG(TEXT("Player Take Damage : %d"), Damage);
 
 	DataComp->SubtractStat(EStatus::Hp, (uint32)Damage);
 	AnimInst->PlayHit();

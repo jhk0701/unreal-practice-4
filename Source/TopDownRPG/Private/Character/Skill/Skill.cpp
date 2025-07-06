@@ -4,13 +4,17 @@
 #include "Character/Skill/Skill.h"
 #include "Character/Input/InputProcessor.h"
 
+#include "TDRPGConst.h"
 #include "TDRPGEnum.h"
 #include "Core/ResourceLoadManager.h"
 #include "Data/SkillDataRow.h"
 #include "Data/SkillConfig.h"
 
 #include "Character/TDRPGPlayer.h"
+#include "Character/TDRPGEnemy.h"
+#include "Character/CharacterAnimBase.h"
 #include "Character/PlayerAnim.h"
+#include "Character/CharacterData.h"
 
 #include "TopDownRPG/TopDownRPG.h"
 
@@ -91,7 +95,6 @@ void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
 		Activate(InContext);
 }
 
-
 void UActiveSkill::ShowEffect()
 {
 	// TODO : 이펙트 호출
@@ -126,13 +129,43 @@ void UActiveSkill::InvokeSweep()
 		break;
 	}
 
+	DrawDebugLine(Owner->GetWorld(), Start, End, FColor::Red, false, 1.0f);
+	DrawDebugSphere(Owner->GetWorld(), Start, Size, 32, FColor::Red, false , 1.0f);
+
 	if (Owner->GetWorld()->
 		SweepMultiByChannel(
 			Hits, Start, End, FQuat::Identity, 
-			ECollisionChannel::ECC_GameTraceChannel2,  // ECC_GameTraceChannel2
+			ECollisionChannel::ECC_GameTraceChannel2,
 			Shape, Param)) 
 	{
-		PRINT_LOG(TEXT("Skill Hitted : %d"), Hits.Num());
+		for(auto& Hit: Hits)
+		{
+			AActor* HittedActor = Hit.GetActor();
+			int32 BaseDamage = FMath::RandRange(MinDamage, MaxDamage);
+
+			if (Owner->Tags.Contains(FTDRPGConst::TAG_PLAYER))
+			{
+				if(ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(HittedActor))
+				{
+					// 데미지 적용
+					ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner);
+					uint32 Damage = Player->DataComp->GetAttackPower(BaseDamage);
+
+					Enemy->TakeDamage(Damage);
+				}
+			}
+			else if (Owner->Tags.Contains(FTDRPGConst::TAG_ENEMY))
+			{
+				if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(HittedActor))
+				{
+					ATDRPGEnemy* Enemy  = Cast<ATDRPGEnemy>(Owner);
+					uint32 Damage = Enemy->DataComp->GetAttackPower(BaseDamage);
+
+					Player->TakeDamage(Damage);
+				}
+			}
+
+		}
 	}
 }
 

@@ -21,6 +21,12 @@ void UMoveState::Update(float DeltaTime)
 
 	ATDRPGEnemy* Owner = Machine->GetOwnerEnemy();
 
+	if (!Owner->Target)
+	{
+		Machine->Transition(EEnemyState::Idle);
+		return;
+	}
+
 	FVector TargetLoc = Owner->Target->GetActorLocation();
 	FVector OwnerLoc = Owner->GetActorLocation();
 

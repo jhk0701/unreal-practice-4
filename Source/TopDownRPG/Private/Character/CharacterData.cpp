@@ -166,11 +166,11 @@ void UCharacterData::CheckIsDead(uint32 Max, uint32 Current)
 	}
 }
 
-uint32 UCharacterData::GetAttackPower()
+uint32 UCharacterData::GetAttackPower(uint32 InBaseDamage)
 {
 	// 최종 공격력 계산
 	uint32 AdjustVal = 3; // TODO : 보정치 매직 넘버 제거 필요
-	uint32 Result = 0;
+	uint32 Result = InBaseDamage;
 
 	if (Equipment)
 	{

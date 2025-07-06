@@ -65,7 +65,7 @@ public:
 	
 	void CheckIsDead(uint32 Max, uint32 Current);
 
-	uint32 GetAttackPower();
+	uint32 GetAttackPower(uint32 InBaseDamage);
 	uint32 GetDefensePower();
 
 	void AddBuff(FString& InItemID, FFunctionContext InContext);

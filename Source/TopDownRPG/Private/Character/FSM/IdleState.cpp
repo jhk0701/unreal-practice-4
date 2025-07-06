@@ -15,10 +15,10 @@ void UIdleState::Enter()
 {
 	Super::Enter();
 
-	if (Machine->GetOwnerEnemy())
+	if (ATDRPGEnemy* Enemy = Machine->GetOwnerEnemy())
 	{
 		ADungeonGameState* State = Cast<ADungeonGameState>(Machine->GetWorld()->GetGameState());
-		Machine->GetOwnerEnemy()->Target = State->Player;
+		Enemy->Target = State->Player;
 		
 		Machine->Transition(EEnemyState::Move);
 	}

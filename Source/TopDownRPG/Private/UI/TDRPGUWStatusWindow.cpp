@@ -63,7 +63,7 @@ void UTDRPGUWStatusWindow::Refresh()
 	GetAbilityText(CharData, EAbility::Int, ContentText);
 	IntLabel->SetText(ContentText);
 	
-	AtkLabel->SetText(FText::FromString(FString::FromInt(CharData->GetAttackPower())));
+	AtkLabel->SetText(FText::FromString(FString::FromInt(CharData->GetAttackPower(1))));
 	DefLabel->SetText(FText::FromString(FString::FromInt(CharData->GetDefensePower())));
 }
 

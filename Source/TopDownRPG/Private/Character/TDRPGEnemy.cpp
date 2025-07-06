@@ -49,7 +49,7 @@ void ATDRPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Tags.Add(FTDRPGConst::ENEMY_TAG);
+	Tags.Add(FTDRPGConst::TAG_ENEMY);
 
 	if (UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>())
 	{
@@ -64,6 +64,8 @@ void ATDRPGEnemy::BeginPlay()
 
 void ATDRPGEnemy::TakeDamage(int32 Damage)
 {
+	PRINT_LOG(TEXT("Enemy Take Damage : %d"), Damage);
+
 	// TODO : 언리얼 데미지 시스템으로 변경
 	DataComp->SubtractStat(EStatus::Hp, (uint32)Damage);
 	AnimInst->PlayHit();
