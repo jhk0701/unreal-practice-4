@@ -21,5 +21,4 @@ public:
 	int32 Quantity;
 
 	FInventorySaveData();
-
 };

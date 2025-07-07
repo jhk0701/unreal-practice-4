@@ -10,7 +10,7 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-void UItemBase::Initialize(FString& InID, UGameInstance* InGameInst)
+void UItemBase::Initialize(const FString& InID, UGameInstance* InGameInst)
 {
     ItemID = InID;
     GameInst = InGameInst;
@@ -18,7 +18,7 @@ void UItemBase::Initialize(FString& InID, UGameInstance* InGameInst)
     OnItemUpdated.Broadcast(this);
 }
 
-void UItemBase::Initialize(FString& InID, UGameInstance* InGameInst, uint32 InAmount)
+void UItemBase::Initialize(const FString& InID, UGameInstance* InGameInst, uint32 InAmount)
 {
     Quantity = InAmount;
     Initialize(InID, InGameInst);

@@ -22,6 +22,7 @@ class TOPDOWNRPG_API UEquipment : public UObject
 	GENERATED_BODY()
 
 public:
+	UPROPERTY()
 	TMap<EEquipType, UEquipmentItem*> Equipment;
 
 	FOnEquipmentUpdated OnEquipmentUpdated;

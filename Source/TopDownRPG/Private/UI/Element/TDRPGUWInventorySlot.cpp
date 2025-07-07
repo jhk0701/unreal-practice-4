@@ -44,6 +44,8 @@ void UTDRPGUWInventorySlot::Refresh(UItemBase* InItem)
 	if (!InItem)
 		return;
 
+	PRINT_LOG(TEXT("Item ID : %s"), *InItem->GetItemID());
+
 	FItemDataRow* Data = InItem->GetData();
 
 	if (QuantityLabel)

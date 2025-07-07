@@ -35,8 +35,8 @@ protected:
 
 public:
 	// 아이템 데이터 주입
-	virtual void Initialize(FString& InID, UGameInstance* InGameInst);
-	virtual void Initialize(FString& InID, UGameInstance* InGameInst, uint32 InAmount);
+	virtual void Initialize(const FString& InID, UGameInstance* InGameInst);
+	virtual void Initialize(const FString& InID, UGameInstance* InGameInst, uint32 InAmount);
 	virtual bool TryAddItem(uint32 InAmount, uint32& OutRest);
 	
 	virtual FItemDataRow* GetData();

@@ -130,7 +130,7 @@ void UActiveSkill::InvokeSweep()
 	}
 
 	DrawDebugLine(Owner->GetWorld(), Start, End, FColor::Red, false, 1.0f);
-	DrawDebugSphere(Owner->GetWorld(), Start, Size, 32, FColor::Red, false , 1.0f);
+	DrawDebugSphere(Owner->GetWorld(), End, Size, 128, FColor::Red, false , 1.0f, 1);
 
 	if (Owner->GetWorld()->
 		SweepMultiByChannel(
