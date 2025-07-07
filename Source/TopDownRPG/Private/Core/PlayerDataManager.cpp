@@ -94,10 +94,10 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 	Data->QuickSlot.Init(-1, UQuickSlot::MAX_SIZE);
 
 	// Inventory
-	int32 Cnt = InPlayer->Inventory->Items.Num();
+	int32 Cnt = InPlayer->Inventory->MAX_SIZE;
 	for (int32 i = 0; i < Cnt; ++i) 
 	{
-		UItemBase* Item = InPlayer->Inventory->Items[i];
+		UItemBase* Item = InPlayer->Inventory->GetItem(i);
 		if (Item)
 		{
 			Data->Inventory[i].ItemID = Item->GetItemID();
@@ -125,11 +125,11 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 	}
 
 	// QuickSlot
-	Cnt = InPlayer->QuickSlot->Slots.Num();
+	Cnt = InPlayer->QuickSlot->MAX_SIZE;
 	for (int32 i = 0; i < Cnt; ++i) 
 	{
-		if (InPlayer->QuickSlot->Slots[i])
-			Data->QuickSlot[i] = InPlayer->QuickSlot->Slots[i]->GetIndex();
+		if (InPlayer->QuickSlot->GetSlot(i))
+			Data->QuickSlot[i] = InPlayer->QuickSlot->GetSlot(i)->GetIndex();
 		else
 			Data->QuickSlot[i] = -1;
 	}

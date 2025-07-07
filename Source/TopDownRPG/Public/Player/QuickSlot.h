@@ -19,9 +19,11 @@ class TOPDOWNRPG_API UQuickSlot : public UObject
 	
 public:
 	const static uint8 MAX_SIZE = 4;
+	FOnQuickSlotUpdated OnSlotUpdated;
 
+private:
 	/*
-		우선 1~4번에 소비 아이템 할당 
+		우선 1~4번에 소비 아이템 할당
 		인터페이스를 상속한 객체 담기
 		인터페이스를 담기 위해 TScriptInterface 사용
 		이 기능은 나중에 생각해볼것 만약 소비 아이템 외의 바인딩이 필요하다면?
@@ -30,11 +32,11 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "QuickSlot")
 	TArray<TScriptInterface<IQuickSlotHandler>> Slots;
 
-	FOnQuickSlotUpdated OnSlotUpdated;
-
 public:
 	UQuickSlot();
 	void InitSlot(uint8 InIndex, IQuickSlotHandler* InSlot);
+
+	inline TScriptInterface<IQuickSlotHandler> GetSlot(int32 InIndex) const { return Slots[InIndex]; };
 	bool Register(IQuickSlotHandler* InSlot);
 	void Unregister(uint8 InIdx);
 

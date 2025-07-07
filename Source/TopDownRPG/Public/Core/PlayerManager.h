@@ -9,6 +9,10 @@
 #include "PlayerManager.generated.h"
 
 class UTDRPGSaveGame;
+class UInventory;
+class UQuickSlot;
+class UEquipment;
+class USkillSlot;
 
 /**
  * 
@@ -37,15 +41,19 @@ public:
 	
 	// 인벤토리
 	UPROPERTY()
-	TObjectPtr<class UInventory> Inventory;
+	TObjectPtr<UInventory> Inventory;
 	
 	// 퀵슬롯
 	UPROPERTY()
-	TObjectPtr<class UQuickSlot> QuickSlot;
+	TObjectPtr<UQuickSlot> QuickSlot;
 
 	// 장비창
 	UPROPERTY()
-	TObjectPtr<class UEquipment> Equipment;
+	TObjectPtr<UEquipment> Equipment;
+
+	// 스킬 슬롯
+	UPROPERTY()
+	TObjectPtr<USkillSlot> SkillSlot;
 
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
@@ -61,12 +69,11 @@ public:
 	void CheckExp(uint32 Max, uint32 Current);
 	void LevelUp();
 
-	void AddGold(uint32 Value);
-
 private:
 	void InitLvAndExp(uint32 InLv, uint32 InExp);
 	void InitGold(uint32 InGold);
 	void InitInventory();
 	void InitEquipment();
 	void InitQuickSlot();
+	
 };

@@ -53,7 +53,7 @@ void UEnemyAction::InvokeAttack()
 	Enemy->AnimInst->PlayAttack(0);
 }
 
-void UEnemyAction::InvokeSkill(int32 InIndex)
+void UEnemyAction::InvokeSkill(uint32 InIndex)
 {
 }
 

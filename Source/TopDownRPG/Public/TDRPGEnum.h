@@ -89,6 +89,22 @@ enum class ESkillInput : uint8
 };
 
 UENUM(BlueprintType)
+enum class ESkillInputKey : uint8
+{
+	// 스킬
+	KeyQ	UMETA(DisplayName = "Q"),
+	KeyW	UMETA(DisplayName = "W"),
+	KeyE	UMETA(DisplayName = "E"),
+	KeyR	UMETA(DisplayName = "R"),
+	KeyA	UMETA(DisplayName = "A"),
+	KeyS	UMETA(DisplayName = "S"),
+	KeyD	UMETA(DisplayName = "D"),
+	KeyF	UMETA(DisplayName = "F"),
+
+	COUNT
+};
+
+UENUM(BlueprintType)
 enum class EInputProcedure : uint8
 {
 	Ready,
@@ -115,6 +131,7 @@ DECLARE_ENUM_TO_STRING(ERarity);
 DECLARE_ENUM_TO_STRING(ETableType);
 DECLARE_ENUM_TO_STRING(EStatus);
 DECLARE_ENUM_TO_STRING(EAbility);
+DECLARE_ENUM_TO_STRING(ESkillInputKey);
 
 class FTDRPGEnum 
 {
@@ -123,4 +140,5 @@ public:
 	static FString EnumToString(const ETableType InValue);
 	static FString EnumToString(const EStatus InValue);
 	static FString EnumToString(const EAbility InValue);
+	static FString EnumToString(const ESkillInputKey InValue);
 };

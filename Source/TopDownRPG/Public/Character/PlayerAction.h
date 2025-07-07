@@ -29,12 +29,11 @@ public:
 	UPlayerAction();
 	virtual void InitializeComponent() override;
 	virtual void SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
-
-	void InputAttack(const FInputActionValue& InputValue);
+	
 	virtual void InvokeAttack() override;
-
-	void InputSkill(const FInputActionValue& InputValue);
-	virtual void InvokeSkill(int32 InValue) override;
-
+	virtual void InvokeSkill(uint32 InIndex) override;
 	virtual bool TryUseResource(const TMap<EStatus, int32>& InRequirement) override;
+	
+	void InputAttack(const FInputActionValue& InputValue);
+	void InputSkill(const FInputActionValue& InputValue);
 };

@@ -154,7 +154,7 @@ void UPlayerManager::InitQuickSlot()
 		int32 RegisteredIndex = PlayerData->QuickSlot[i];
 		if (RegisteredIndex >= 0)
 		{
-			IQuickSlotHandler* QuickSlotHandler = Cast<IQuickSlotHandler>(Inventory->Items[RegisteredIndex]);
+			IQuickSlotHandler* QuickSlotHandler = Cast<IQuickSlotHandler>(Inventory->GetItem(RegisteredIndex));
 			check(QuickSlotHandler);
 			QuickSlot->InitSlot(i, QuickSlotHandler);
 		}
@@ -186,9 +186,4 @@ void UPlayerManager::LevelUp()
 
 	uint32 MaxExp = Exp->GetMaxValue() + LevelData->ExpDemand;
 	Exp->ChangeMaxValue(MaxExp, 0);
-}
-
-void UPlayerManager::AddGold(uint32 Value)
-{
-	CurrencyGold->Add(Value);
 }

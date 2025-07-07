@@ -36,7 +36,7 @@ public:
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	virtual void InvokeAttack() override;
-	virtual void InvokeSkill(int32 InIndex) override;
+	virtual void InvokeSkill(uint32 InIndex) override;
 
 	inline bool IsAttacking() const { return bIsAttacking; }
 	inline const float GetAttackRange() { return AttackRange; }

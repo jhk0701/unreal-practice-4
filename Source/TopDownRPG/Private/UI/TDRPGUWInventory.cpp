@@ -83,7 +83,7 @@ void UTDRPGUWInventory::Bind(UPlayerManager* InManager)
 	// 2. 인벤토리 정보 연동
 	int32 SlotCnt = SlotContainer->GetChildrenCount();
 	for (int32 i = 0; i < SlotCnt; ++i)
-		Slots[i]->Bind(BindedInventory->Items[i]);
+		Slots[i]->Bind(BindedInventory->GetItem(i));
 
 	BindedInventory->OnInventoryUpdated.AddUObject(this, &UTDRPGUWInventory::UpdateInventory);
 }
@@ -91,7 +91,7 @@ void UTDRPGUWInventory::Bind(UPlayerManager* InManager)
 void UTDRPGUWInventory::UpdateInventory(uint8 Index)
 {
 	Slots[Index]->Clear();
-	Slots[Index]->Bind(BindedInventory->Items[Index]);
+	Slots[Index]->Bind(BindedInventory->GetItem(Index));
 }
 
 void UTDRPGUWInventory::UpdateGold(uint32 Gold)

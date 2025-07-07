@@ -68,13 +68,14 @@ void UPlayerAction::InputSkill(const FInputActionValue& InputValue)
 	if (Player->CheckPlayerIsDead())
 		return;
 
-	int32 Value = (int32)InputValue.Get<float>();
+	uint32 Value = (uint32)InputValue.Get<float>();
 	InvokeSkill(Value);
 }
 
-void UPlayerAction::InvokeSkill(int32 InValue)
+void UPlayerAction::InvokeSkill(uint32 InIndex)
 {
-	PRINT_LOG(TEXT("Test Skill Input : %d"), InValue);
+	ESkillInputKey Key = (ESkillInputKey)InIndex;
+
 }
 
 bool UPlayerAction::TryUseResource(const TMap<EStatus, int32>& InRequirement)

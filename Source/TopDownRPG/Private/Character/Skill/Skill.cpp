@@ -138,6 +138,7 @@ void UActiveSkill::InvokeSweep()
 		End = Start + Owner->GetActorForwardVector() * Range;
 		Shape = FCollisionShape::MakeSphere(Size);
 		break;
+
 	case ESkillDirection::AllDirection:
 		Start = Owner->GetActorLocation();
 		End = Start;
@@ -146,17 +147,23 @@ void UActiveSkill::InvokeSweep()
 	}
 
 	DrawDebugLine(Owner->GetWorld(), Start, End, FColor::Red, false, 1.0f);
-	DrawDebugSphere(Owner->GetWorld(), End, Size, 12, FColor::Red, true , 1.0f);
+	DrawDebugSphere(Owner->GetWorld(), End, Size, 12, FColor::Red, true , 1.0f, 0, 1.0f);
 
 	if (!Owner->GetWorld()->
 		SweepMultiByChannel(Hits, Start, End, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, Shape, Param)) 
 		return;
 
-	for (auto& Hit : Hits)
+	AdjustDamage(Hits);
+}
+
+void UActiveSkill::AdjustDamage(const TArray<FHitResult>& InHits)
+{
+	for (auto& Hit : InHits)
 	{
 		AActor* HittedActor = Hit.GetActor();
 		int32 BaseDamage = FMath::RandRange(MinDamage, MaxDamage);
 
+		// TODO : 리팩토링 필요
 		if (Owner->Tags.Contains(FTDRPGConst::TAG_PLAYER))
 		{
 			if (ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(HittedActor))

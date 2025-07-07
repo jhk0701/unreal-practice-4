@@ -86,6 +86,7 @@ protected:
 
 	virtual void ShowEffect();
 	virtual void InvokeSweep();
+	virtual void AdjustDamage(const TArray<FHitResult>& InHits);
 };
 
 

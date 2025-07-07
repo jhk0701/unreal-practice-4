@@ -22,17 +22,19 @@ class TOPDOWNRPG_API UInventory : public UObject
 public:
 	const static uint8 MAX_SIZE = 80;
 
+	FOnInventoryUpdated OnInventoryUpdated;
+
+private:
 	// 소비, 재료 아이템 : ID, 갯수
 	// 장비 아이템 : ID, 특수 옵션들
 	UPROPERTY()
 	TArray<UItemBase*> Items;
 
-	FOnInventoryUpdated OnInventoryUpdated;
-
 public:
 	UInventory();
 	void InitInventory(uint8 InIdx, UItemBase* InItem);
 
+	inline UItemBase* GetItem(int32 InIndex) const { return Items[InIndex];	}
 	bool AddItem(UItemBase* InItem);
 	void RemoveItem(uint8 InIdx);
 

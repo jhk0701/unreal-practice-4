@@ -52,13 +52,13 @@ void UTDRPGUWQuickSlot::Clear(uint8 Index)
 
 void UTDRPGUWQuickSlot::UpdateSlot(uint8 Index)
 {
-	if (BindedQuickSlot->Slots[Index].GetInterface() == nullptr)
+	if (BindedQuickSlot->GetSlot(Index).GetInterface() == nullptr)
 	{
 		Clear(Index);
 		return;
 	}
 
-	UObject* Handle = BindedQuickSlot->Slots[Index].GetObject();
+	UObject* Handle = BindedQuickSlot->GetSlot(Index).GetObject();
 
 	if (UItemBase* Item = Cast<UItemBase>(Handle))
 	{

@@ -33,7 +33,7 @@ void UEndPhase::Enter()
 		FStageDataRow* StageData = GameData->GetRow<FStageDataRow>(ETableType::Stage, *GameState->CurStageId);
 
 		// 골드 보상 수령
-		Player->AddGold(StageData->GoldReward);
+		Player->CurrencyGold->Add(StageData->GoldReward);
 		Player->AddExp(StageData->ExpReward);
 	}
 
