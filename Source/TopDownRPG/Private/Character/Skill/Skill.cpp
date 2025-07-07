@@ -13,10 +13,11 @@
 #include "Character/TDRPGPlayer.h"
 #include "Character/TDRPGEnemy.h"
 #include "Character/CharacterAnimBase.h"
-#include "Character/PlayerAnim.h"
 #include "Character/CharacterData.h"
+#include "Character/PlayerAction.h"
 
 #include "TopDownRPG/TopDownRPG.h"
+#include <DrawDebugHelpers.h>
 
 
 #pragma region Skill Base
@@ -69,23 +70,38 @@ void UActiveSkill::Activate(const FSkillInputContext& InContext)
 {
 	Super::Activate(InContext);
 
+	UCharacterAnimBase* AnimInst;
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
-	{
-		UPlayerAnim* AnimInst = Player->AnimInst;
-		AnimInst->OnHitStarted.Clear();
-		// AnimInst->OnHitEnded.Clear();
+		AnimInst = Player->GetAnim();
+	else if (ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(Owner))
+		AnimInst = Enemy->GetAnim();
+	else
+		return;
 
-		// 이펙트 호출 -> 애니메이션 이벤트 노티파이에서 사용
-		AnimInst->OnHitStarted.AddUObject(this, &UActiveSkill::ShowEffect);
-		AnimInst->OnHitStarted.AddUObject(this, &UActiveSkill::InvokeSweep);
+	AnimInst->OnHitStarted.Clear();
+	// AnimInst->OnHitEnded.Clear();
 
-		// 애니메이션 실행
-		AnimInst->PlayAttack(Motion.Get(), InContext.Count);
-	}
+	// 이펙트 호출 -> 애니메이션 이벤트 노티파이에서 사용
+	AnimInst->OnHitStarted.AddUObject(this, &UActiveSkill::ShowEffect);
+	AnimInst->OnHitStarted.AddUObject(this, &UActiveSkill::InvokeSweep);
+
+	// 애니메이션 실행
+	AnimInst->PlayAttack(Motion.Get(), InContext.Count);
 }
 
 void UActiveSkill::InvokeSkill()
 {
+	// 스킬 자원 소모
+	if(ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
+	{
+		if (!Player->ActionComp->TryUseResource(Requirement))
+			return;
+		else
+		{
+			PRINT_LOG(TEXT("Resource is not enough."));
+		}
+	}
+
 	Input->Process();
 }
 
@@ -130,42 +146,39 @@ void UActiveSkill::InvokeSweep()
 	}
 
 	DrawDebugLine(Owner->GetWorld(), Start, End, FColor::Red, false, 1.0f);
-	DrawDebugSphere(Owner->GetWorld(), End, Size, 128, FColor::Red, false , 1.0f, 1);
+	DrawDebugSphere(Owner->GetWorld(), End, Size, 12, FColor::Red, true , 1.0f);
 
-	if (Owner->GetWorld()->
-		SweepMultiByChannel(
-			Hits, Start, End, FQuat::Identity, 
-			ECollisionChannel::ECC_GameTraceChannel2,
-			Shape, Param)) 
+	if (!Owner->GetWorld()->
+		SweepMultiByChannel(Hits, Start, End, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, Shape, Param)) 
+		return;
+
+	for (auto& Hit : Hits)
 	{
-		for(auto& Hit: Hits)
+		AActor* HittedActor = Hit.GetActor();
+		int32 BaseDamage = FMath::RandRange(MinDamage, MaxDamage);
+
+		if (Owner->Tags.Contains(FTDRPGConst::TAG_PLAYER))
 		{
-			AActor* HittedActor = Hit.GetActor();
-			int32 BaseDamage = FMath::RandRange(MinDamage, MaxDamage);
-
-			if (Owner->Tags.Contains(FTDRPGConst::TAG_PLAYER))
+			if (ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(HittedActor))
 			{
-				if(ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(HittedActor))
-				{
-					// 데미지 적용
-					ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner);
-					uint32 Damage = Player->DataComp->GetAttackPower(BaseDamage);
+				// 데미지 적용
+				ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner);
+				uint32 Damage = Player->DataComp->GetAttackPower(BaseDamage);
 
-					Enemy->TakeDamage(Damage);
-				}
+				Enemy->TakeDamage(Damage);
 			}
-			else if (Owner->Tags.Contains(FTDRPGConst::TAG_ENEMY))
-			{
-				if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(HittedActor))
-				{
-					ATDRPGEnemy* Enemy  = Cast<ATDRPGEnemy>(Owner);
-					uint32 Damage = Enemy->DataComp->GetAttackPower(BaseDamage);
-
-					Player->TakeDamage(Damage);
-				}
-			}
-
 		}
+		else if (Owner->Tags.Contains(FTDRPGConst::TAG_ENEMY))
+		{
+			if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(HittedActor))
+			{
+				ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(Owner);
+				uint32 Damage = Enemy->DataComp->GetAttackPower(BaseDamage);
+
+				Player->TakeDamage(Damage);
+			}
+		}
+
 	}
 }
 

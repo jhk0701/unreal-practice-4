@@ -8,6 +8,7 @@ class UCharacterData;
 class UPlayerMove;
 class UPlayerAction;
 class UPlayerInteraction;
+class UCharacterAnimBase;
 class UPlayerAnim;
 
 class USpringArmComponent;
@@ -60,7 +61,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
-	inline const TObjectPtr<UCharacterData> GetData() const { return DataComp; }
+	inline TObjectPtr<UCharacterData> GetData() const { return DataComp; }
+	TObjectPtr<UCharacterAnimBase> GetAnim() const;
 
 	void InvokeAttackDelegate();
 

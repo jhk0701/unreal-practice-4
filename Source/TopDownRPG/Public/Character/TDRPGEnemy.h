@@ -4,6 +4,17 @@
 #include "GameFramework/Pawn.h"
 #include "TDRPGEnemy.generated.h"
 
+class ATDRPGPlayer;
+class UCharacterData;
+class UEnemyMove;
+class UEnemyAction;
+
+class UCharacterAnimBase;
+class UEnemyAnim;
+
+class UCapsuleComponent;
+class UEnemyFSM;
+
 UCLASS()
 class TOPDOWNRPG_API ATDRPGEnemy : public APawn
 {
@@ -11,26 +22,26 @@ class TOPDOWNRPG_API ATDRPGEnemy : public APawn
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Target)
-	TObjectPtr<class ATDRPGPlayer> Target;
+	TObjectPtr<ATDRPGPlayer> Target;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UCharacterData> DataComp;
+	TObjectPtr<UCharacterData> DataComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UEnemyMove> MoveComp;
+	TObjectPtr<UEnemyMove> MoveComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UEnemyAction> ActionComp;
+	TObjectPtr<UEnemyAction> ActionComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UEnemyAnim> AnimInst;
+	TObjectPtr<UEnemyAnim> AnimInst;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
-	TObjectPtr<class UCapsuleComponent> Collider;
+	TObjectPtr<UCapsuleComponent> Collider;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = StateMachine)
-	TObjectPtr<class UEnemyFSM> StateMachine;
+	TObjectPtr<UEnemyFSM> StateMachine;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Comp)
 	TObjectPtr<USkeletalMeshComponent> SkinMesh;
@@ -40,6 +51,8 @@ public:
 	virtual void BeginPlay() override;
 
 	inline TObjectPtr<UCharacterData> GetData() const { return DataComp; }
+	TObjectPtr<UCharacterAnimBase> GetAnim() const;
+
 	void TakeDamage(int32 Damage);
 	void Die();
 

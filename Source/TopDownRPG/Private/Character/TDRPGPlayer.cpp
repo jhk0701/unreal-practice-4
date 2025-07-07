@@ -3,6 +3,7 @@
 #include "Character/PlayerMove.h"
 #include "Character/PlayerAction.h"
 #include "Character/PlayerInteraction.h"
+#include "Character/CharacterAnimBase.h"
 #include "Character/PlayerAnim.h"
 
 #include "TDRPGConst.h"
@@ -141,6 +142,11 @@ void ATDRPGPlayer::LoadConfig()
 
 	MeshComp->SetAnimInstanceClass(Config->Animation);
 	AnimInst = Cast<UPlayerAnim>(MeshComp->GetAnimInstance());
+}
+
+inline TObjectPtr<UCharacterAnimBase> ATDRPGPlayer::GetAnim() const
+{
+	return Cast<UCharacterAnimBase>(AnimInst);
 }
 
 void ATDRPGPlayer::InvokeAttackDelegate()

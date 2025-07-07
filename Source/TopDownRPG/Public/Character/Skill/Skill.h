@@ -17,6 +17,7 @@ enum class EStatus : uint8;
 struct FSkillDataRow;
 struct FSkillInputContext;
 
+
 DECLARE_MULTICAST_DELEGATE(FSkillEvent);
 
 /**

@@ -9,6 +9,8 @@
 class USkill;
 class UActiveSkill;
 
+enum class EStatus: uint8;
+
 UCLASS(Abstract, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TOPDOWNRPG_API UCharacterAction : public UActorComponent
 {
@@ -28,5 +30,6 @@ public:
 
 	virtual void InvokeAttack() {};
 	virtual void InvokeSkill(int32 InIndex) {};
+	virtual bool TryUseResource(const TMap<EStatus, int32>& InRequirement) { return true; };
 
 };

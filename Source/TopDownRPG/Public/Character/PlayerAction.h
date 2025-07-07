@@ -35,4 +35,6 @@ public:
 
 	void InputSkill(const FInputActionValue& InputValue);
 	virtual void InvokeSkill(int32 InValue) override;
+
+	virtual bool TryUseResource(const TMap<EStatus, int32>& InRequirement) override;
 };

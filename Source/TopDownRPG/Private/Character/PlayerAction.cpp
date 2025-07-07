@@ -76,3 +76,23 @@ void UPlayerAction::InvokeSkill(int32 InValue)
 {
 	PRINT_LOG(TEXT("Test Skill Input : %d"), InValue);
 }
+
+bool UPlayerAction::TryUseResource(const TMap<EStatus, int32>& InRequirement)
+{
+	TArray<EStatus> Keys;
+	InRequirement.GetKeys(Keys);
+
+	// 확인
+	for (auto Key : Keys)
+	{
+		uint32 Value = Player->DataComp->Stat[Key]->GetCurrentValue();
+		if (Value < (uint32)InRequirement[Key])
+			return false;
+	}
+
+	// 확인 완료 및 지불
+	for (auto Key : Keys)
+		Player->DataComp->Stat[Key]->Subtract(InRequirement[Key]);
+
+	return true;
+}

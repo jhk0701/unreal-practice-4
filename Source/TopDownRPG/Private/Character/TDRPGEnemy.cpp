@@ -3,6 +3,7 @@
 #include "Character/EnemyFSM.h"
 #include "Character/EnemyAction.h"
 #include "Character/EnemyMove.h"
+#include "Character/CharacterAnimBase.h"
 #include "Character/EnemyAnim.h"
 
 #include <Components/CapsuleComponent.h>
@@ -60,6 +61,11 @@ void ATDRPGEnemy::BeginPlay()
 	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGEnemy::Die);
 
 	AnimInst = Cast<UEnemyAnim>(SkinMesh->GetAnimInstance());
+}
+
+TObjectPtr<UCharacterAnimBase> ATDRPGEnemy::GetAnim() const
+{
+	return Cast<UCharacterAnimBase>(AnimInst);
 }
 
 void ATDRPGEnemy::TakeDamage(int32 Damage)
