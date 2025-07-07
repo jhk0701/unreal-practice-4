@@ -12,6 +12,9 @@
 #include "TDRPGEnum.h"
 #include "Character/Skill/Skill.h"
 
+#include "Core/PlayerManager.h"
+#include "Player/SkillSlot.h"
+
 #include <EnhancedInputComponent.h>
 #include <Components/SphereComponent.h>
 
@@ -68,7 +71,7 @@ void UPlayerAction::InputSkill(const FInputActionValue& InputValue)
 	if (Player->CheckPlayerIsDead())
 		return;
 
-	uint32 Value = (uint32)InputValue.Get<float>();
+	uint32 Value = (uint32)InputValue.Get<float>() - 1;
 	InvokeSkill(Value);
 }
 
@@ -76,6 +79,11 @@ void UPlayerAction::InvokeSkill(uint32 InIndex)
 {
 	ESkillInputKey Key = (ESkillInputKey)InIndex;
 
+	UPlayerManager* PlayerManager = GetWorld()->GetGameInstance()->GetSubsystem<UPlayerManager>();
+	UActiveSkill* Skill = PlayerManager->SkillSlot->GetSlot(Key);
+	
+	if (Skill)
+		Skill->InvokeSkill();
 }
 
 bool UPlayerAction::TryUseResource(const TMap<EStatus, int32>& InRequirement)
@@ -91,7 +99,7 @@ bool UPlayerAction::TryUseResource(const TMap<EStatus, int32>& InRequirement)
 			return false;
 	}
 
-	// 확인 완료 및 지불
+	// 확인 완료 이후 지불
 	for (auto Key : Keys)
 		Player->DataComp->Stat[Key]->Subtract(InRequirement[Key]);
 

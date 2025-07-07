@@ -6,6 +6,7 @@
 #include "TDRPGEnum.h"
 #include "Character/Skill/Skill.h"
 
+
 USkillSlot::USkillSlot()
 {
 	uint8 Cnt = (uint8)ESkillInputKey::COUNT;

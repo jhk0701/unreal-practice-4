@@ -46,7 +46,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "SaveGame")
 	TArray<FEquipmentSaveData> Equipment;
 
-	// 큇슬롯 정보
+	// 퀵슬롯 정보
 	UPROPERTY()
 	TArray<int32> QuickSlot;
+
+	// 스킬슬롯 정보
+	// UPROPERTY()
+	// TArray<FString> SkillSlot;
 };

@@ -14,6 +14,7 @@
 #include "Player/Inventory.h"
 #include "Player/QuickSlot.h"
 #include "Player/Equipment.h"
+#include "Player/SkillSlot.h"
 
 #include "Item/ItemBase.h"
 #include "Item/EquipmentItem.h"
@@ -34,6 +35,7 @@ void UPlayerManager::InitManager()
 	Inventory = NewObject<UInventory>();	// 인벤토리 초기화
 	QuickSlot = NewObject<UQuickSlot>();	// 퀵슬롯 초기화
 	Equipment = NewObject<UEquipment>();	// 장비창 초기화
+	SkillSlot = NewObject<USkillSlot>();	// 스킬슬롯 초기화
 }
 
 void UPlayerManager::SetPlayerData(UTDRPGSaveGame* InPlayerData)
@@ -159,6 +161,10 @@ void UPlayerManager::InitQuickSlot()
 			QuickSlot->InitSlot(i, QuickSlotHandler);
 		}
 	}
+}
+
+void UPlayerManager::InitSkillSlot()
+{
 }
 
 

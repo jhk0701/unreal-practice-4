@@ -75,5 +75,5 @@ private:
 	void InitInventory();
 	void InitEquipment();
 	void InitQuickSlot();
-	
+	void InitSkillSlot();
 };
