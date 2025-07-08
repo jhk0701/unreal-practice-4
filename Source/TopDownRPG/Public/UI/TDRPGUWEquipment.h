@@ -27,10 +27,10 @@ public:
 	UPROPERTY()
 	TObjectPtr<UEquipment> BindedEquipment;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UVerticalBox> SlotContainer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement")

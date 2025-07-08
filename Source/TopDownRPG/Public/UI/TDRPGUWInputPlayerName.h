@@ -18,13 +18,13 @@ class TOPDOWNRPG_API UTDRPGUWInputPlayerName : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UEditableTextBox> NameInputField;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> CompleteButton;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> BackButton;
 
 };

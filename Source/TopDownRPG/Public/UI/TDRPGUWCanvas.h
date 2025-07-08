@@ -6,6 +6,9 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWCanvas.generated.h"
 
+class UCanvasPanel;
+class UCanvasPanelSlot;
+
 /**
  * 
  */
@@ -15,9 +18,9 @@ class TOPDOWNRPG_API UTDRPGUWCanvas : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = UIElement, meta = (BindWidget))
-	TObjectPtr<class UCanvasPanel> Canvas;
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UCanvasPanel> Canvas;
 
 public:
-	class UCanvasPanelSlot* AddToCanvas(UWidget* InChild);
+	UCanvasPanelSlot* AddToCanvas(UWidget* InChild);
 };

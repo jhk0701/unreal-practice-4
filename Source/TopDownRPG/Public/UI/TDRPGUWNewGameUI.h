@@ -20,16 +20,16 @@ class TOPDOWNRPG_API UTDRPGUWNewGameUI : public UTDRPGUserWidget
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UWidgetSwitcher> BodySwitcher;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTDRPGUWClassSelection> ClassSelectionPage;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTDRPGUWInputPlayerName> InputPlayerNamePage;
 
 public:

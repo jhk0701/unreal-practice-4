@@ -108,7 +108,7 @@ void UTDRPGUWEquipment::ShowMenu(UTDRPGUWSlotBase* InSlot)
 
 	MenuWindow->Open();
 	if(UTDRPGUWInventorySlot* ItemSlot = Cast<UTDRPGUWInventorySlot>(InSlot))
-		MenuWindow->Update(ItemSlot->GetBindedItem());
+		MenuWindow->Update(ItemSlot->GetItem());
 }
 
 void UTDRPGUWEquipment::HideMenu()

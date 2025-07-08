@@ -10,18 +10,17 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-void UItemBase::Initialize(const FString& InID, UGameInstance* InGameInst)
+void UItemBase::Initialize(const FString& InID, UGameDataManager* InDB)
 {
-    ItemID = InID;
-    GameInst = InGameInst;
+    Super::Initialize(InID, InDB);
 
     OnItemUpdated.Broadcast(this);
 }
 
-void UItemBase::Initialize(const FString& InID, UGameInstance* InGameInst, uint32 InAmount)
+void UItemBase::Initialize(const FString& InID, UGameDataManager* InDB, uint32 InAmount)
 {
     Quantity = InAmount;
-    Initialize(InID, InGameInst);
+    Initialize(InID, InDB);
 }
 
 /// <summary>
@@ -53,8 +52,7 @@ bool UItemBase::TryAddItem(uint32 InAmount, uint32& OutRest)
 
 FItemDataRow* UItemBase::GetData()
 {
-    UGameDataManager* GameData = GameInst->GetSubsystem<UGameDataManager>();
-    return GameData->GetRow<FItemDataRow>(GetItemType(), ItemID);
+    return DB->GetRow<FItemDataRow>(GetItemType(), ID);
 }
 
 ETableType UItemBase::GetItemType()

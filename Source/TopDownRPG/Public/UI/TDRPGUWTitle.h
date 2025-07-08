@@ -18,14 +18,16 @@ class TOPDOWNRPG_API UTDRPGUWTitle : public UTDRPGUserWidget
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UIElement, meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> TitleLabel;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UIElement, meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> NewGameButton;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UIElement, meta = (BindWidget))
+
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> ContinueButton;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = UIElement, meta = (BindWidget))
+
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> ExitButton;
 
 protected:

@@ -30,10 +30,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|SlotCount")
 	int32 SlotCount = 15;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UScrollBox> Scroll;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")

@@ -26,7 +26,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement")
 	TMap<ESkillInputKey, UTDRPGUWSkillSlot*> SlotInst;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> Container;
 
 protected:

@@ -6,6 +6,11 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWPlayerUI.generated.h"
 
+class UTDRPGUWStatusBar;
+class UTDRPGUWStatusWindow;
+class UTDRPGUWInventory;
+class UTDRPGUWQuickSlot;
+class UTDRPGUWEquipment;
 
 /**
  * 
@@ -16,16 +21,20 @@ class TOPDOWNRPG_API UTDRPGUWPlayerUI : public UTDRPGUserWidget
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(EditAnywhere, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<class UTDRPGUWStatusBar> StatusBar;
-	UPROPERTY(EditAnywhere, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<class UTDRPGUWStatusWindow> StatusWindow;
-	UPROPERTY(EditAnywhere, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<class UTDRPGUWInventory> Inventory;
-	UPROPERTY(EditAnywhere, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<class UTDRPGUWQuickSlot> QuickSlot;
-	UPROPERTY(EditAnywhere, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<class UTDRPGUWEquipment> Equipment;
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTDRPGUWStatusBar> StatusBar;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTDRPGUWStatusWindow> StatusWindow;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTDRPGUWInventory> Inventory;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTDRPGUWQuickSlot> QuickSlot;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTDRPGUWEquipment> Equipment;
 
 public:
 	virtual void NativeOnInitialized() override;

@@ -16,9 +16,9 @@ class TOPDOWNRPG_API UTDRPGUWInventoryMenu : public UTDRPGUWItemMenu
 
 public:
 	// TODO : 퀵슬롯 등록 및 해제 -> 드래그앤 드롭 가능하게
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> QuickSlotButton;
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> QuickSlotLabel;
 
 public:

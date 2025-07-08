@@ -6,6 +6,8 @@
 #include "UObject/Interface.h"
 #include "Bindable.generated.h"
 
+class UDataModel;
+
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class UBindable : public UInterface
@@ -22,10 +24,10 @@ class TOPDOWNRPG_API IBindable
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 protected:
-	UObject* Model;
+	UDataModel* Model;
 
 public:
-	virtual void Bind(UObject* InModel) = 0;
+	virtual void Bind(UDataModel* InModel) = 0;
 	virtual void Unbind() = 0;
-	virtual void Refresh() = 0;
+	virtual void Refresh(UDataModel* InModel) = 0;
 };

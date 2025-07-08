@@ -3,19 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/Object.h"
+#include "Data/DataModel.h"
 #include "ItemBase.generated.h"
 
 struct FItemDataRow;
 
-enum class ETableType :uint8;
-enum class ERarity :uint8;
+enum class ETableType: uint8;
+enum class ERarity: uint8;
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnItemUpdated, UItemBase*);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnItemUpdated, UDataModel*);
 
 
 UCLASS()
-class TOPDOWNRPG_API UItemBase : public UObject
+class TOPDOWNRPG_API UItemBase : public UDataModel
 {
 	GENERATED_BODY()
 
@@ -25,23 +25,12 @@ public:
 
 	FOnItemUpdated OnItemUpdated;
 
-protected:
-	UPROPERTY()
-	FString ItemID;
-
-	// TODO : 개선 방법 없는지 생각해야함
-	UPROPERTY()
-	TObjectPtr<UGameInstance> GameInst;
-
-public:
 	// 아이템 데이터 주입
-	virtual void Initialize(const FString& InID, UGameInstance* InGameInst);
-	virtual void Initialize(const FString& InID, UGameInstance* InGameInst, uint32 InAmount);
+	virtual void Initialize(const FString& InID, UGameDataManager* InDB) override;
+	virtual void Initialize(const FString& InID, UGameDataManager* InDB, uint32 InAmount);
 	virtual bool TryAddItem(uint32 InAmount, uint32& OutRest);
 	
 	virtual FItemDataRow* GetData();
 	virtual ETableType GetItemType();
-
-	inline const FString& GetItemID() const { return ItemID; }
 
 };

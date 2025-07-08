@@ -3,33 +3,39 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/Element/TDRPGUWNumericSlot.h"
+#include "UI/Element/TDRPGUWSlotBase.h"
+#include "Inherit/Bindable.h"
 #include "TDRPGUWInventorySlot.generated.h"
 
+class UDataModel;
 class UItemBase;
 
 /**
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UTDRPGUWInventorySlot : public UTDRPGUWNumericSlot
+class TOPDOWNRPG_API UTDRPGUWInventorySlot : public UTDRPGUWSlotBase, public IBindable
 {
 	GENERATED_BODY()
 
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UItemBase* Item = nullptr;
-
 public:
 	virtual void Clear() override;
+
+	virtual void Bind(UDataModel* InModel) override;
 	virtual void Bind(UItemBase* InItem);
-	inline UItemBase* GetBindedItem() const { return Item; }
+	virtual void Unbind() override;
+	virtual void Refresh(UDataModel* InModel) override;
+
+	UItemBase* GetItem() const;
 
 protected:
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTextBlock> QuantityLabel;
+
 	virtual void InvokeCursorEnter() override;
 	virtual void InvokeCursorLeave() override;
 	virtual void InvokeButtonClick() override;
 
-	virtual void Refresh(UItemBase* InItem);
 	void OnIconLoaded(UObject* Loaded);
+
 };

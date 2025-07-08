@@ -23,35 +23,39 @@ class TOPDOWNRPG_API UTDRPGUWSlotBase : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<UBorder> Background;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidget))
-	TObjectPtr<UImage> IconImage;
+	virtual void NativeOnInitialized() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidgetOptional))
-	TObjectPtr<UButton> SlotButton;
+	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+
+	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
+
+	virtual void Clear();
 
 	// 마우스 호버링 이벤트
 	// 네이티브 메서드에서 Broadcast 해줄 것
 	FOnSlotInteractStarted OnCursorEnter;
+
 	FOnSlotInteractCompleted OnCursorLeave;
 
 	// 슬롯에 대한 클릭 이벤트
 	FOnSlotInteractStarted OnButtonClicked;
 
-public:
-	virtual void NativeOnInitialized() override;
-	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
-	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
-	virtual void Clear();
-
 protected:
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UBorder> Background;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UImage> IconImage;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UButton> SlotButton;
+
+
 	virtual void InvokeCursorEnter();
+
 	virtual void InvokeCursorLeave();
-	
+
 	UFUNCTION()
 	virtual void InvokeButtonClick();
-	
 };
 

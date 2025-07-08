@@ -31,18 +31,18 @@ public:
 	TObjectPtr<UInventory> BindedInventory;
 
 	// Header
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
 
 	// Body
 	UPROPERTY()
 	TArray<UTDRPGUWInventorySlot*> Slots;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> SlotContainer;
 
 	// Footer
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> GoldLabel;
 
 	// Sub UIs

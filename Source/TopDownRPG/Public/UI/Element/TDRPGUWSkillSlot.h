@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UI/Element/TDRPGUWSlotBase.h"
+#include "Inherit/Bindable.h"
 #include "TDRPGUWSkillSlot.generated.h"
 
 class USkill;
@@ -13,7 +14,7 @@ class UTextBlock;
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UTDRPGUWSkillSlot : public UTDRPGUWSlotBase
+class TOPDOWNRPG_API UTDRPGUWSkillSlot : public UTDRPGUWSlotBase, public IBindable
 {
 	GENERATED_BODY()
 
@@ -21,10 +22,17 @@ protected:
 	UPROPERTY()
 	TObjectPtr<USkill> BindedSkill;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> KeyLabel;
 
 public:
 	void SetKeyText(FText& InText);
 	
+	// Inherited via IBindable
+	void Bind(UDataModel* InModel) override;
+
+	void Unbind() override;
+
+	void Refresh(UDataModel* InModel) override;
+
 };

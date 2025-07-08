@@ -153,7 +153,7 @@ void UTDRPGUWInventory::ShowItemDetail(UTDRPGUWSlotBase* InSlot)
 	DetailWindow->Open();
 
 	if(UTDRPGUWInventorySlot* ItemSlot = Cast<UTDRPGUWInventorySlot>(InSlot))
-		DetailWindow->Update(ItemSlot->GetBindedItem());
+		DetailWindow->Update(ItemSlot->GetItem());
 }
 
 void UTDRPGUWInventory::HideItemDetail()
@@ -176,7 +176,7 @@ void UTDRPGUWInventory::ShowItemMenu(UTDRPGUWSlotBase* InSlot)
 	MenuWindow->Open();
 
 	if (UTDRPGUWInventorySlot* ItemSlot = Cast<UTDRPGUWInventorySlot>(InSlot))
-		MenuWindow->Update(ItemSlot->GetBindedItem());
+		MenuWindow->Update(ItemSlot->GetItem());
 }
 
 void UTDRPGUWInventory::HideItemMenu()

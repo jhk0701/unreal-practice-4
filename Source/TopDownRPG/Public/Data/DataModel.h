@@ -24,5 +24,6 @@ protected:
 	TObjectPtr<UGameDataManager> DB;
 
 public:
-	virtual void Initialize(FString& InID, UGameDataManager* InDB);
+	virtual void Initialize(const FString& InID, UGameDataManager* InDB);
+	inline const FString& GetID() const { return ID; }
 };

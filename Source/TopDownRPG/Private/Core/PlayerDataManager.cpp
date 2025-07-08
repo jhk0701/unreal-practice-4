@@ -100,7 +100,7 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 		UItemBase* Item = InPlayer->Inventory->GetItem(i);
 		if (Item)
 		{
-			Data->Inventory[i].ItemID = Item->GetItemID();
+			Data->Inventory[i].ItemID = Item->GetID();
 			Data->Inventory[i].ItemType = (int32)Item->GetItemType();
 			Data->Inventory[i].Quantity = Item->Quantity;
 		}
@@ -117,7 +117,7 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 		UEquipmentItem* Equipment = InPlayer->Equipment->GetEquipment(Type);
 		if (Equipment)
 		{
-			Data->Equipment[i].EquipmentID = Equipment->GetItemID();
+			Data->Equipment[i].EquipmentID = Equipment->GetID();
 			Data->Equipment[i].EquipType = i;
 		}
 		else

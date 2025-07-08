@@ -18,11 +18,13 @@ class TOPDOWNRPG_API UTDRPGUWStageResult : public UTDRPGUserWidget
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> ResultLabel;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
+
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> ReturnButton;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
+
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> NextButton;
 
 public:

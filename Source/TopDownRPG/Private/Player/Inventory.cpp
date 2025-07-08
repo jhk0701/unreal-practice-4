@@ -86,7 +86,7 @@ bool UInventory::FindItem(UItemBase* InItem, uint8& OutIndex, TFunction<bool(UIt
 			continue;
 
 		if (Items[i]->GetItemType() == InItem->GetItemType() &&
-			Items[i]->GetItemID() == InItem->GetItemID())
+			Items[i]->GetID() == InItem->GetID())
 		{
 			if (!InQuery)
 			{

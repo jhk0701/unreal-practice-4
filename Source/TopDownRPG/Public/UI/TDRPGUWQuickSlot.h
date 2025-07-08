@@ -22,16 +22,17 @@ public:
 	UPROPERTY()
 	TObjectPtr<UQuickSlot> BindedQuickSlot;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidgetOptional))
+	UPROPERTY(meta = (BindWidgetOptional))
 	TObjectPtr<UHorizontalBox> SlotContainer;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement")
 	TArray<UTDRPGUWMenuSlot*> SlotList;
 
 public:
 	virtual void NativeOnInitialized() override;
 
 	void Bind(UQuickSlot* InQuickSlot);
+
 	void Clear(uint8 Index);
 
 	void UpdateSlot(uint8 Index);

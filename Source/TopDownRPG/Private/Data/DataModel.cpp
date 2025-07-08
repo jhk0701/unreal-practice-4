@@ -3,7 +3,7 @@
 
 #include "Data/DataModel.h"
 
-void UDataModel::Initialize(FString& InID, UGameDataManager* InDB)
+void UDataModel::Initialize(const FString& InID, UGameDataManager* InDB)
 {
 	ID = InID;
 	DB = InDB;

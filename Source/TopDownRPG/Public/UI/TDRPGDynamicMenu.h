@@ -18,14 +18,15 @@ class TOPDOWNRPG_API UTDRPGDynamicMenu : public UTDRPGUserWidget
 	GENERATED_BODY()
 	
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
-	TSubclassOf<UTDRPGUWButton> ButtonFactory;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UPanelWidget> Container;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTDRPGUWButton> CloseButton;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
+	TSubclassOf<UTDRPGUWButton> ButtonFactory;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement")
 	int32 DefaultButtonCount = 5;

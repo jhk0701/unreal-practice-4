@@ -9,3 +9,15 @@ void UTDRPGUWSkillSlot::SetKeyText(FText& InText)
 {
 	KeyLabel->SetText(InText);
 }
+
+void UTDRPGUWSkillSlot::Bind(UDataModel* InModel)
+{
+}
+
+void UTDRPGUWSkillSlot::Unbind()
+{
+}
+
+void UTDRPGUWSkillSlot::Refresh(UDataModel* InModel)
+{
+}

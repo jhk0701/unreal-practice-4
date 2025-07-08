@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "TDRPGConst.h"
+#include "Core/GameDataManager.h"
 #include "Templates/EnableIf.h"
-#include "Subsystems/GameInstanceSubsystem.h"
 #include "ItemFactory.generated.h"
 
 class UItemBase;
@@ -27,7 +27,7 @@ public:
 			return nullptr;
 
 		T* Item = NewObject<T>();
-		Item->Initialize(InItemID, GetGameInstance(), InQuantity);
+		Item->Initialize(InItemID, GetGameInstance()->GetSubsystem<UGameDataManager>(), InQuantity);
 
 		return Item;
 	};

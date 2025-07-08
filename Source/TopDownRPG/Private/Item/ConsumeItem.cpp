@@ -62,7 +62,7 @@ void UConsumeItem::Use(AActor* Subject)
 			//	Player->DataComp->AddRecover(ItemID, Context);
 		}
 		else 
-			Player->DataComp->AddBuff(ItemID, Context); // 아이템에서 대상 캐릭터에게 효과 객체 적용
+			Player->DataComp->AddBuff(ID, Context); // 아이템에서 대상 캐릭터에게 효과 객체 적용
 	}
 
 	OnItemUpdated.Broadcast(this);

@@ -21,7 +21,7 @@ enum class ETableType : uint8
 	Merchant,
 	Skill,
 
-	COUNT
+	COUNT	UMETA(Hidden)
 };
 
 
@@ -31,7 +31,7 @@ enum class EStatus : uint8
 	Hp		UMETA(DisplayName = "Health Point"),
 	Mp		UMETA(DisplayName = "Mana Point"),
 
-	COUNT
+	COUNT	UMETA(Hidden)
 };
 
 UENUM(BlueprintType)
@@ -43,7 +43,7 @@ enum class EAbility : uint8
 	Foc		UMETA(DisplayName = "FOC"),
 	// Vit		UMETA(DisplayName = "VIT"),
 
-	COUNT
+	COUNT	UMETA(Hidden)
 };
 
 UENUM(BlueprintType)
@@ -67,7 +67,7 @@ enum class EEquipType : uint8
 	Glove,
 	Shoes,
 
-	COUNT
+	COUNT	UMETA(Hidden)
 };
 
 UENUM(BlueprintType)
@@ -101,7 +101,7 @@ enum class ESkillInputKey : uint8
 	KeyD	UMETA(DisplayName = "D"),
 	KeyF	UMETA(DisplayName = "F"),
 
-	COUNT
+	COUNT	UMETA(Hidden)
 };
 
 UENUM(BlueprintType)
@@ -123,7 +123,6 @@ UENUM(BlueprintType)
 enum class ESkillDirection: uint8
 {
 	Forward,
-
 	AllDirection,
 };
 

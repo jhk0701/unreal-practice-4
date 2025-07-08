@@ -25,25 +25,25 @@ class TOPDOWNRPG_API UTDRPGUWClassSelection : public UTDRPGUserWidget
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> NextButton;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> ClassLabel;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> ClassDescLabel;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UVerticalBox> ClassList;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWButton> ButtonFactory;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UVerticalBox> StatusContainer;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UVerticalBox> AbilityContainer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")

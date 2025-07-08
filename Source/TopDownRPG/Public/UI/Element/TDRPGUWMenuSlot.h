@@ -18,7 +18,7 @@ class TOPDOWNRPG_API UTDRPGUWMenuSlot : public UTDRPGUWInventorySlot
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> IndexLabel;
 	
 };

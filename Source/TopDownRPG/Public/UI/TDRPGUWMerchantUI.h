@@ -29,19 +29,19 @@ class TOPDOWNRPG_API UTDRPGUWMerchantUI : public UTDRPGUserWidget
 	GENERATED_BODY()
 	
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> MerchantNameLabel;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> MerchantSideContainer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWProductSlot> ProductSlotFactory;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTDRPGUWItemDetail> Detail;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")

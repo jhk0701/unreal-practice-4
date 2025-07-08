@@ -21,19 +21,19 @@ class TOPDOWNRPG_API UTDRPGUWButton : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 protected:
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidget))
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> Button;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidgetOptional))
+	UPROPERTY(meta = (BindWidgetOptional))
 	TObjectPtr<UTextBlock> Label;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement", meta = (BindWidgetOptional))
+	UPROPERTY(meta = (BindWidgetOptional))
 	TObjectPtr<UImage> Icon;
 
 public:
 	void Clear();
 	void SetLabel(const FText& InLabel);
+
 	FOnButtonAction ButtonAction;
 
 protected:
