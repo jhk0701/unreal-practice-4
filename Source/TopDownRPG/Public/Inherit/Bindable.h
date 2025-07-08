@@ -21,7 +21,11 @@ class TOPDOWNRPG_API IBindable
 	GENERATED_BODY()
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
+protected:
+	UObject* Model;
+
 public:
-	virtual void Bind() = 0;
+	virtual void Bind(UObject* InModel) = 0;
 	virtual void Unbind() = 0;
+	virtual void Refresh() = 0;
 };

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/Element/TDRPGUWSlotBase.h"
+#include "UI/Element/TDRPGUWNumericSlot.h"
 #include "TDRPGUWInventorySlot.generated.h"
 
 class UItemBase;
@@ -12,10 +12,9 @@ class UItemBase;
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API UTDRPGUWInventorySlot : public UTDRPGUWSlotBase
+class TOPDOWNRPG_API UTDRPGUWInventorySlot : public UTDRPGUWNumericSlot
 {
 	GENERATED_BODY()
-
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -23,7 +22,6 @@ protected:
 
 public:
 	virtual void Clear() override;
-
 	virtual void Bind(UItemBase* InItem);
 	inline UItemBase* GetBindedItem() const { return Item; }
 

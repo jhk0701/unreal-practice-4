@@ -13,7 +13,6 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-
 void UTDRPGUWInventorySlot::Bind(UItemBase* InItem)
 {
 	if (!InItem)
@@ -46,11 +45,8 @@ void UTDRPGUWInventorySlot::Refresh(UItemBase* InItem)
 
 	FItemDataRow* Data = InItem->GetData();
 
-	if (QuantityLabel)
-	{
-		QuantityLabel->SetVisibility(ESlateVisibility::Visible);
-		QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), InItem->Quantity)));
-	}
+	QuantityLabel->SetVisibility(ESlateVisibility::Visible);
+	QuantityLabel->SetText(FText::FromString(FString::Printf(TEXT("%u"), InItem->Quantity)));
 
 	UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
 	Resource->Load(Data->Thumbnail, FOnResourceLoaded::CreateUObject(this, &UTDRPGUWInventorySlot::OnIconLoaded));

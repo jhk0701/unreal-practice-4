@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "SkillSlot.generated.h"
+#include "SkillSet.generated.h"
 
 class UActiveSkill;
 enum class ESkillInputKey :uint8;
@@ -15,7 +15,7 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnSkillSlotUpdated, ESkillInputKey);
  * 
  */
 UCLASS()
-class TOPDOWNRPG_API USkillSlot : public UObject
+class TOPDOWNRPG_API USkillSet : public UObject
 {
 	GENERATED_BODY()
 
@@ -24,11 +24,11 @@ public:
 	
 private:
 	UPROPERTY()
-	TMap<ESkillInputKey, UActiveSkill*> SkillSlot;
+	TMap<ESkillInputKey, UActiveSkill*> Map;
 
 public:
-	USkillSlot();
-	inline UActiveSkill* GetSlot(ESkillInputKey InKey) const { return SkillSlot[InKey]; };
+	USkillSet();
+	inline UActiveSkill* GetSkill(ESkillInputKey InKey) const { return Map[InKey]; };
 	void Register(ESkillInputKey InKey, UActiveSkill* InSkill);
 	void Unregister(ESkillInputKey InKey);
 

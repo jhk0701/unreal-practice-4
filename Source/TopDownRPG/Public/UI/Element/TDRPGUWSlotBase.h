@@ -6,29 +6,31 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWSlotBase.generated.h"
 
+class UBorder;
+class UImage;
+class UTextBlock;
+class UButton;
+
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnSlotInteractStarted, UTDRPGUWSlotBase*);
 DECLARE_MULTICAST_DELEGATE(FOnSlotInteractCompleted);
 
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class TOPDOWNRPG_API UTDRPGUWSlotBase : public UTDRPGUserWidget
 {
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
-	TObjectPtr<class UBorder> Background;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<UBorder> Background;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
-	TObjectPtr<class UImage> IconImage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidget))
+	TObjectPtr<UImage> IconImage;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidgetOptional))
-	TObjectPtr<class UTextBlock> QuantityLabel;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidgetOptional))
-	TObjectPtr<class UButton> SlotButton;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement", meta = (BindWidgetOptional))
+	TObjectPtr<UButton> SlotButton;
 
 	// 마우스 호버링 이벤트
 	// 네이티브 메서드에서 Broadcast 해줄 것

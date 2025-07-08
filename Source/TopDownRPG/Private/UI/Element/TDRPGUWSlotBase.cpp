@@ -35,10 +35,6 @@ void UTDRPGUWSlotBase::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
 
 void UTDRPGUWSlotBase::Clear()
 {
-	// Optional이라 방어코드 추가 // TODO : 이 부분 구조적으로 해결 필요
-	if (QuantityLabel)
-		QuantityLabel->SetVisibility(ESlateVisibility::Hidden);
-
 	IconImage->SetVisibility(ESlateVisibility::Hidden);
 	IconImage->SetBrushResourceObject(nullptr);
 }

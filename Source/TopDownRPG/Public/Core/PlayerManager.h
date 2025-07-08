@@ -12,7 +12,7 @@ class UTDRPGSaveGame;
 class UInventory;
 class UQuickSlot;
 class UEquipment;
-class USkillSlot;
+class USkillSet;
 
 /**
  * 
@@ -51,9 +51,9 @@ public:
 	UPROPERTY()
 	TObjectPtr<UEquipment> Equipment;
 
-	// 스킬 슬롯
+	// 스킬 세트
 	UPROPERTY()
-	TObjectPtr<USkillSlot> SkillSlot;
+	TObjectPtr<USkillSet> SkillSet;
 
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
@@ -75,5 +75,5 @@ private:
 	void InitInventory();
 	void InitEquipment();
 	void InitQuickSlot();
-	void InitSkillSlot();
+	void InitSkillSet();
 };

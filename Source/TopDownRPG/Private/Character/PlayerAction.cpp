@@ -13,7 +13,7 @@
 #include "Character/Skill/Skill.h"
 
 #include "Core/PlayerManager.h"
-#include "Player/SkillSlot.h"
+#include "Player/SkillSet.h"
 
 #include <EnhancedInputComponent.h>
 #include <Components/SphereComponent.h>
@@ -63,7 +63,8 @@ void UPlayerAction::InvokeAttack()
 	Player->SetActorRotation(Dir.ToOrientationQuat());
 
 	// 일반 공격 호출
-	DefaultAttack->InvokeSkill();
+	if (DefaultAttack)
+		DefaultAttack->InvokeSkill();
 }
 
 void UPlayerAction::InputSkill(const FInputActionValue& InputValue)
@@ -80,7 +81,7 @@ void UPlayerAction::InvokeSkill(uint32 InIndex)
 	ESkillInputKey Key = (ESkillInputKey)InIndex;
 
 	UPlayerManager* PlayerManager = GetWorld()->GetGameInstance()->GetSubsystem<UPlayerManager>();
-	UActiveSkill* Skill = PlayerManager->SkillSlot->GetSlot(Key);
+	UActiveSkill* Skill = PlayerManager->SkillSet->GetSkill(Key);
 	
 	if (Skill)
 		Skill->InvokeSkill();

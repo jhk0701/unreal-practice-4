@@ -6,6 +6,9 @@
 #include "UI/Element/TDRPGUWInventorySlot.h"
 #include "TDRPGUWMenuSlot.generated.h"
 
+class UTextBlock;
+
+
 /**
  * 
  */
@@ -16,6 +19,6 @@ class TOPDOWNRPG_API UTDRPGUWMenuSlot : public UTDRPGUWInventorySlot
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UIElement, meta = (BindWidget))
-	TObjectPtr<class UTextBlock> IndexLabel;
+	TObjectPtr<UTextBlock> IndexLabel;
 	
 };
