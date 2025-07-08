@@ -3,18 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "Data/DataModel.h"
+#include "Data/SkillDataRow.h"
 #include "Skill.generated.h"
-
 
 class USkillConfig;
 class UInputProcessor;
 class UAnimMontage;
-
 enum class ESkillDirection : uint8;
 enum class EStatus : uint8;
-
-struct FSkillDataRow;
 struct FSkillInputContext;
 
 
@@ -24,11 +21,20 @@ DECLARE_MULTICAST_DELEGATE(FSkillEvent);
  * 
  */
 UCLASS(Abstract)
-class TOPDOWNRPG_API USkill : public UObject
+class TOPDOWNRPG_API USkill : public UDataModel
 {
 	GENERATED_BODY()
 
+public:
+	FSkillEvent OnSkillStarted;
+	FSkillEvent OnSkillHitted;
+
+	/// 스킬 객체 초기화
+	virtual void Initialize(const FString& InID, UGameDataManager* InDB, AActor* InOwner);
+
 protected:
+	FSkillDataRow Data;
+
 	UPROPERTY()
 	TObjectPtr<AActor> Owner;
 
@@ -39,22 +45,6 @@ protected:
 	UPROPERTY()
 	TSoftObjectPtr<UAnimMontage> Motion;
 
-	int32 Range;
-	int32 Size;
-	ESkillDirection Direction;
-	int32 MinDamage;
-	int32 MaxDamage;
-	TMap<EStatus, int32> Requirement;
-	int32 Cooldown;
-
-public:
-	FSkillEvent OnSkillStarted;
-	FSkillEvent OnSkillHitted;
-
-	/// 스킬 객체 초기화
-	virtual void Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner);
-
-protected:
 	/// 실질적인 스킬 호출 함수
 	virtual void Activate(const FSkillInputContext& InContext);
 };
@@ -64,6 +54,14 @@ class TOPDOWNRPG_API UActiveSkill : public USkill
 {
 	GENERATED_BODY()
 
+public:
+	/// 스킬 객체 초기화
+	// virtual void Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner) override;
+	virtual void Initialize(const FString& InID, UGameDataManager* InDB, AActor* InOwner) override;
+	
+	/// 키 입력 시, 스킬 실행 함수
+	virtual void InvokeSkill();
+
 protected:
 	UPROPERTY()
 	TObjectPtr<UInputProcessor> Input;		// 입력 처리 객체
@@ -71,14 +69,6 @@ protected:
 	float Cooldown;
 	FTimerHandle CooldownTimer;
 
-public:
-	/// 스킬 객체 초기화
-	virtual void Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner) override;
-	
-	/// 키 입력 시, 스킬 실행 함수
-	virtual void InvokeSkill();
-
-protected:
 	virtual void Activate(const FSkillInputContext& InContext) override;
 
 	/// 키 입력에 처리 시 호출 콜백

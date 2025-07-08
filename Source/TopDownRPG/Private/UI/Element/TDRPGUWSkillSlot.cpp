@@ -5,6 +5,7 @@
 
 #include <Components/TextBlock.h>
 
+
 void UTDRPGUWSkillSlot::SetKeyText(FText& InText)
 {
 	KeyLabel->SetText(InText);

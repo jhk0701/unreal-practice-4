@@ -28,7 +28,6 @@ protected:
 public:
 	void SetKeyText(FText& InText);
 	
-	// Inherited via IBindable
 	void Bind(UDataModel* InModel) override;
 
 	void Unbind() override;

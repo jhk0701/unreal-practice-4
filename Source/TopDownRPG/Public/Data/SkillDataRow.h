@@ -27,9 +27,6 @@ public:
 	FString Desc;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	bool bIsDefaultAction;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	ESkillType Type;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

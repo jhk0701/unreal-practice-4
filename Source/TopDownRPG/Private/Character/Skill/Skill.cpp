@@ -6,6 +6,7 @@
 
 #include "TDRPGConst.h"
 #include "TDRPGEnum.h"
+#include "Core/GameDataManager.h"
 #include "Core/ResourceLoadManager.h"
 #include "Data/SkillDataRow.h"
 #include "Data/SkillConfig.h"
@@ -22,28 +23,35 @@
 
 #pragma region Skill Base
 
-void USkill::Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner)
+void USkill::Initialize(const FString& InID, UGameDataManager* InDB, AActor* InOwner)
 {
 	Owner = InOwner;
-
-	Range = InData.Range;
-	Direction = InData.Direction;
-	MinDamage = InData.MinDamage;
-	MaxDamage = InData.MaxDamage;
-	Requirement = InData.Requirement;
-	Cooldown = InData.Cooldown;
+	Super::Initialize(InID, InDB);
 
 	UResourceLoadManager* Loader = Owner->GetWorld()->GetGameInstance()->GetSubsystem<UResourceLoadManager>();
 
+	// Skill 데이터 호출
+	FSkillDataRow* SkillData = DB->GetRow<FSkillDataRow>(ETableType::Skill, ID);
+	check(SkillData);
+	Data = *SkillData;
+
+	// Skill Config 로드
+	FPrimaryAssetId ConfigID(FTDRPGConst::CONFIG_SKILL, *ID);
+	UPrimaryDataAsset* DataAsset = DB->LoadPrimaryAssetData(ConfigID);
+	check(DataAsset);
+
+	USkillConfig* Config = Cast<USkillConfig>(DataAsset);
+
 	// 스킬 구성
 	// 1. 스킬 모션 추가
-	Motion = InConfig->Motion;
+	Motion = Config->Motion;
 	Loader->Load(Motion.ToSoftObjectPath(), FOnResourceLoaded());
 
 	// 2. 효과 구성
-	Effect = InConfig->Effect;
+	Effect = Config->Effect;
 	Loader->Load(Effect.ToSoftObjectPath(), FOnResourceLoaded());
 }
+
 
 void USkill::Activate(const FSkillInputContext& InContext)
 {
@@ -56,14 +64,15 @@ void USkill::Activate(const FSkillInputContext& InContext)
 
 #pragma region Active Skill
 
-void UActiveSkill::Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner)
+void UActiveSkill::Initialize(const FString& InID, UGameDataManager* InDB, AActor* InOwner)
 {
-	Super::Initialize(InData, InConfig, InOwner);
+	Super::Initialize(InID, InDB, InOwner);
 
 	// 입력 처리 설정
-	Input = FInputProcessorFactory::GetInstance(InData.InputType, InOwner->GetWorld());
+	Input = FInputProcessorFactory::GetInstance(Data.InputType, InOwner->GetWorld());
 	Input->OnInputProcessed.BindUObject(this, &UActiveSkill::OnInputProcessed);
 }
+
 
 /// 액티브 스킬 발동
 void UActiveSkill::Activate(const FSkillInputContext& InContext)
@@ -94,7 +103,7 @@ void UActiveSkill::InvokeSkill()
 	// 스킬 자원 소모
 	if(ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
 	{
-		if (!Player->ActionComp->TryUseResource(Requirement))
+		if (!Player->ActionComp->TryUseResource(Data.Requirement))
 			return;
 		else
 		{
@@ -131,23 +140,23 @@ void UActiveSkill::InvokeSweep()
 
 	FCollisionShape Shape;
 
-	switch (Direction)
+	switch (Data.Direction)
 	{
 	case ESkillDirection::Forward:
 		Start = Owner->GetActorLocation();
-		End = Start + Owner->GetActorForwardVector() * Range;
-		Shape = FCollisionShape::MakeSphere(Size);
+		End = Start + Owner->GetActorForwardVector() * Data.Range;
+		Shape = FCollisionShape::MakeSphere(Data.Size);
 		break;
 
 	case ESkillDirection::AllDirection:
 		Start = Owner->GetActorLocation();
 		End = Start;
-		Shape = FCollisionShape::MakeSphere(Range);
+		Shape = FCollisionShape::MakeSphere(Data.Range);
 		break;
 	}
 
 	DrawDebugLine(Owner->GetWorld(), Start, End, FColor::Red, false, 1.0f);
-	DrawDebugSphere(Owner->GetWorld(), End, Size, 12, FColor::Red, true , 1.0f, 0, 1.0f);
+	DrawDebugSphere(Owner->GetWorld(), End, Data.Size, 12, FColor::Red, true , 1.0f, 0, 1.0f);
 
 	if (!Owner->GetWorld()->
 		SweepMultiByChannel(Hits, Start, End, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, Shape, Param)) 
@@ -161,7 +170,7 @@ void UActiveSkill::AdjustDamage(const TArray<FHitResult>& InHits)
 	for (auto& Hit : InHits)
 	{
 		AActor* HittedActor = Hit.GetActor();
-		int32 BaseDamage = FMath::RandRange(MinDamage, MaxDamage);
+		int32 BaseDamage = FMath::RandRange(Data.MinDamage, Data.MaxDamage);
 
 		// TODO : 리팩토링 필요
 		if (Owner->Tags.Contains(FTDRPGConst::TAG_PLAYER))

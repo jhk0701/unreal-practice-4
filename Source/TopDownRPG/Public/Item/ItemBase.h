@@ -28,9 +28,11 @@ public:
 	// 아이템 데이터 주입
 	virtual void Initialize(const FString& InID, UGameDataManager* InDB) override;
 	virtual void Initialize(const FString& InID, UGameDataManager* InDB, uint32 InAmount);
+
 	virtual bool TryAddItem(uint32 InAmount, uint32& OutRest);
-	
+
 	virtual FItemDataRow* GetData();
+
 	virtual ETableType GetItemType();
 
 };
