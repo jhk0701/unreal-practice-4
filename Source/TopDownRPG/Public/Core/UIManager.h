@@ -13,6 +13,9 @@
 
 class UUIConfig;
 class ATDRPGHUD;
+class UTDRPGUWCanvas;
+
+enum class EUILayer :uint8;
 
 DECLARE_DELEGATE_OneParam(FOnLoadCompleted, UTDRPGUserWidget*);
 
@@ -26,17 +29,26 @@ class TOPDOWNRPG_API UUIManager : public UGameInstanceSubsystem
 
 protected:
 	UPROPERTY()
+	TMap<EUILayer, UTDRPGUWCanvas*> Layer;
+
+	UPROPERTY()
 	TMap<FString, UTDRPGUserWidget*> UIMap;
 
 	UPROPERTY()
 	TObjectPtr<ATDRPGHUD> CurrentHUD;
 
+	UPROPERTY();
+	TSubclassOf<UTDRPGUWCanvas> CanvasFactory;
+
+
 public:
+	UUIManager();
 	inline void SetHUD(ATDRPGHUD* InHUD) { CurrentHUD = InHUD; }
 	inline ATDRPGHUD* GetHUD() { return CurrentHUD; };
 
 	inline void ClearUIMap() { UIMap.Empty(); };
 
+	void InitCanvas();
 	void InitUIConfig(UUIConfig* InConfig);
 
 	template<typename T>

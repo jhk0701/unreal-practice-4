@@ -126,6 +126,18 @@ enum class ESkillDirection: uint8
 	AllDirection,
 };
 
+
+UENUM(BlueprintType)
+enum class EUILayer :uint8
+{
+	Basic = 0,	// 기본 UI, HUD 형태 배치
+	PopUp,		// 팝업 UI 배치
+	Top,		// 최상단, 로딩 UI 등등 화면을 가려야하는 UI 배치
+
+	COUNT	UMETA(Hidden)
+};
+
+
 DECLARE_ENUM_TO_STRING(ERarity);
 DECLARE_ENUM_TO_STRING(ETableType);
 DECLARE_ENUM_TO_STRING(EStatus);

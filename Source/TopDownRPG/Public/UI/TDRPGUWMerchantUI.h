@@ -41,9 +41,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWProductSlot> ProductSlotFactory;
 
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UTDRPGUWItemDetail> Detail;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")
 	TObjectPtr<UTDRPGUWItemMenu> Menu;
 
@@ -77,6 +74,7 @@ protected:
 	void OnClickBuy(FString& InProductID, const ETableType InType);
 	// void OnClickSell();
 
+	UTDRPGUWItemDetail* GetDetail();
 	void ShowDetail(UTDRPGUWSlotBase* InSlot);
 	void HideDetail();
 };

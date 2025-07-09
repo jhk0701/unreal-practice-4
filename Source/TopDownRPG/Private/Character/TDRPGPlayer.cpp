@@ -118,11 +118,20 @@ void ATDRPGPlayer::Initialize()
 	if (UTDRPGUWPlayerUI* PlayerUI = UIManager->GetUI<UTDRPGUWPlayerUI>()) 
 	{
 		PlayerUI->StatusBar->Bind(this);
-		PlayerUI->Inventory->Bind(Player);
 		PlayerUI->QuickSlot->Bind(Player->QuickSlot);
-		PlayerUI->Equipment->Bind(Player->Equipment);
-		PlayerUI->StatusWindow->Bind(Player);
+
+
+		// PlayerUI->SkillSet->Bind();
 	}
+
+	if (UTDRPGUWStatusWindow* StatusWind = UIManager->GetUI<UTDRPGUWStatusWindow>())
+		StatusWind->Bind(Player);
+
+	if (UTDRPGUWInventory* Inventory = UIManager->GetUI<UTDRPGUWInventory>())
+		Inventory->Bind(Player);
+
+	if (UTDRPGUWEquipment* Equipment = UIManager->GetUI<UTDRPGUWEquipment>())
+		Equipment->Bind(Player->Equipment);
 
 	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
 }

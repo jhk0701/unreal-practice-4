@@ -69,7 +69,7 @@ void UPlayerInteraction::InputInventory(const FInputActionValue& Value)
 	if (!UIManager)
 		return;
 
-	if(UTDRPGUWInventory* InvenUI = UIManager->GetUI<UTDRPGUWPlayerUI>()->Inventory)
+	if (UTDRPGUWInventory* InvenUI = UIManager->GetUI<UTDRPGUWInventory>())
 		InvenUI->Toggle();
 }
 
@@ -80,7 +80,7 @@ void UPlayerInteraction::InputEquipment(const FInputActionValue& Value)
 	if (!UIManager)
 		return;
 
-	if (UTDRPGUWEquipment* EquipUI = UIManager->GetUI<UTDRPGUWPlayerUI>()->Equipment)
+	if (UTDRPGUWEquipment* EquipUI = UIManager->GetUI<UTDRPGUWEquipment>())
 		EquipUI->Toggle();
 }
 
@@ -90,7 +90,7 @@ void UPlayerInteraction::InputStatusWind(const FInputActionValue& Value)
 	if (!UIManager)
 		return;
 
-	if (UTDRPGUWStatusWindow* StatUI = UIManager->GetUI<UTDRPGUWPlayerUI>()->StatusWindow)
+	if (UTDRPGUWStatusWindow* StatUI = UIManager->GetUI<UTDRPGUWStatusWindow>())
 		StatUI->Toggle();
 }
 

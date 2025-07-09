@@ -46,9 +46,21 @@ void UTDRPGUWEquipment::NativeOnInitialized()
 			}
 		}
 	}
+}
+
+void UTDRPGUWEquipment::Close()
+{
+	Super::Close();
+
+	HideMenu();
+}
+
+void UTDRPGUWEquipment::InitWidget()
+{
+	Super::InitWidget();
 
 	// Sub UI 생성
-	if (!MenuWindow && MenuWindowFactory) 
+	if (!MenuWindow && MenuWindowFactory)
 	{
 		MenuWindow = CreateWidget<UTDRPGUWEquipmentMenu>(this, MenuWindowFactory);
 
@@ -66,13 +78,6 @@ void UTDRPGUWEquipment::NativeOnInitialized()
 
 		HideMenu();
 	}
-}
-
-void UTDRPGUWEquipment::Close()
-{
-	Super::Close();
-
-	HideMenu();
 }
 
 void UTDRPGUWEquipment::Bind(UEquipment* InEquipment)

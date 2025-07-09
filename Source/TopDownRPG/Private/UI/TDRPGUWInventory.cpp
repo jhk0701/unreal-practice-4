@@ -35,9 +35,6 @@ UTDRPGUWInventory::UTDRPGUWInventory()
 void UTDRPGUWInventory::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
-
-	InitSubWidget();
-
 	CloseButton->OnClicked.AddUniqueDynamic(this, &UTDRPGUserWidget::Close);
 
 	int32 SlotCnt = SlotContainer->GetChildrenCount();
@@ -71,6 +68,12 @@ void UTDRPGUWInventory::Close()
 	Super::Close();
 }
 
+void UTDRPGUWInventory::InitWidget()
+{
+	Super::InitWidget();
+	InitSubWidget();
+}
+
 void UTDRPGUWInventory::Bind(UPlayerManager* InManager)
 {
 	// 플레이어 데이터 받아오기
@@ -101,8 +104,8 @@ void UTDRPGUWInventory::UpdateGold(uint32 Gold)
 
 void UTDRPGUWInventory::InitSubWidget()
 {
-	// TODO : 리팩토링 해볼 것
 	UCanvasPanel* ParentCanvas = Cast<UCanvasPanel>(GetParent());
+	check(ParentCanvas);
 
 	if (MenuWindowFactory && !MenuWindow)
 	{

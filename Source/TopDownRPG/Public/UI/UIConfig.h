@@ -6,8 +6,9 @@
 #include "Engine/DataAsset.h"
 #include "UIConfig.generated.h"
 
-
 class UTDRPGUserWidget;
+enum class EUILayer :uint8;
+
 
 USTRUCT(BlueprintType)
 struct FUIElementData 
@@ -19,12 +20,20 @@ struct FUIElementData
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FString ElementID; 
 	*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	EUILayer Order;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<UTDRPGUserWidget> WidgetClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FVector2D Position;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool bFillScreen;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FVector2D Size;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	bool bCanOpenOnInit;

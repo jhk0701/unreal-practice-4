@@ -7,17 +7,15 @@
 #include "TDRPGUWPlayerUI.generated.h"
 
 class UTDRPGUWStatusBar;
-class UTDRPGUWStatusWindow;
-class UTDRPGUWInventory;
 class UTDRPGUWQuickSlot;
-class UTDRPGUWEquipment;
+class UTDRPGUWSkillSet;
 
 /**
  * 
  */
 UCLASS()
 class TOPDOWNRPG_API UTDRPGUWPlayerUI : public UTDRPGUserWidget
-{
+{	
 	GENERATED_BODY()
 	
 public:
@@ -25,18 +23,8 @@ public:
 	TObjectPtr<UTDRPGUWStatusBar> StatusBar;
 
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UTDRPGUWStatusWindow> StatusWindow;
-
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UTDRPGUWInventory> Inventory;
-
-	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTDRPGUWQuickSlot> QuickSlot;
 
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UTDRPGUWEquipment> Equipment;
-
-public:
-	virtual void NativeOnInitialized() override;
-
+	TObjectPtr<UTDRPGUWSkillSet> SkillSet;
 };

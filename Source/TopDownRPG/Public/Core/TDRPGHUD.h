@@ -18,13 +18,6 @@ class TOPDOWNRPG_API ATDRPGHUD : public AHUD
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI");
-	TSubclassOf<UTDRPGUWCanvas> CanvasFactory;
-
-	// 특정 HUD가 관리할 UI 모음집
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
-	TObjectPtr<UUIConfig> CommonUI;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
 	TArray<TObjectPtr<UUIConfig>> Configs;
 

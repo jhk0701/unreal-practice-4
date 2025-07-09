@@ -15,15 +15,9 @@ void ATDRPGHUD::PostInitializeComponents()
 
 void ATDRPGHUD::InitHUD()
 {
-	UGameInstance* GameInstance = GetGameInstance();
-
-	if (!GameInstance) 
-		return;
-
-	UUIManager* UIManager = GameInstance->GetSubsystem<UUIManager>();
+	UUIManager* UIManager = GetGameInstance()->GetSubsystem<UUIManager>();
 	UIManager->SetHUD(this);
-
-	UIManager->InitUIConfig(CommonUI);
+	UIManager->InitCanvas();
 
 	for (auto Config : Configs) 
 		UIManager->InitUIConfig(Config);

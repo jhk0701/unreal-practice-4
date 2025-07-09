@@ -23,4 +23,5 @@ protected:
 
 public:
 	UCanvasPanelSlot* AddToCanvas(UWidget* InChild);
+	void SetSort(uint8 InSort);
 };

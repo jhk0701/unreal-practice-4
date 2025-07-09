@@ -35,7 +35,7 @@ void UTDRPGUWMerchantUI::NativeOnInitialized()
 void UTDRPGUWMerchantUI::Open()
 {
 	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
-	UI->GetUI<UTDRPGUWPlayerUI>()->Inventory->Open();
+	UI->GetUI<UTDRPGUWInventory>()->Open();
 
 	Super::Open();
 }
@@ -152,26 +152,35 @@ void UTDRPGUWMerchantUI::OnClickBuy(FString& InProductID, const ETableType InTyp
 	Merchant->BuyItem(InProductID, InType);
 }
 
+UTDRPGUWItemDetail* UTDRPGUWMerchantUI::GetDetail()
+{
+	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
+	UTDRPGUWItemDetail* Detail = UI->GetUI<UTDRPGUWItemDetail>();
+	return Detail;
+}
+
 void UTDRPGUWMerchantUI::ShowDetail(UTDRPGUWSlotBase* InSlot)
 {
-	if (UTDRPGUWProductSlot* ProductSlot = Cast<UTDRPGUWProductSlot>(InSlot)) 
-	{
-		FString ID;
-		ETableType ItemType;
-		ProductSlot->GetProduct(ID, ItemType);
+	UTDRPGUWProductSlot* ProductSlot = Cast<UTDRPGUWProductSlot>(InSlot);
+	if (!ProductSlot)
+		return;
 
-		UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
-		FItemDataRow* Data = GameData->GetRow<FItemDataRow>(ItemType, ID);
-		Detail->Update(Data);
+	FString ID;
+	ETableType ItemType;
+	ProductSlot->GetProduct(ID, ItemType);
 
-		uint32 Price = Merchant->GetDiscountedPrice(Data->Price);
-		Detail->UpdatePrice(Price);
-	}
+	UGameDataManager* GameData = GetGameInstance()->GetSubsystem<UGameDataManager>();
+	FItemDataRow* Data = GameData->GetRow<FItemDataRow>(ItemType, ID);
+	
+	UTDRPGUWItemDetail* Detail = GetDetail();
+	Detail->Update(Data);
 
+	uint32 Price = Merchant->GetDiscountedPrice(Data->Price);
+	Detail->UpdatePrice(Price);
 	Detail->Open();
 }
 
 void UTDRPGUWMerchantUI::HideDetail()
 {
-	Detail->Close();
+	GetDetail()->Close();
 }

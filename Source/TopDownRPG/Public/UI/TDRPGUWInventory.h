@@ -58,10 +58,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")
 	TObjectPtr<UTDRPGUWInventoryMenu> MenuWindow;
 
-public:
 	UTDRPGUWInventory();
 	virtual void NativeOnInitialized() override;
 	virtual void Close() override;
+	virtual void InitWidget() override;
 
 	void Bind(UPlayerManager* InManager);
 
