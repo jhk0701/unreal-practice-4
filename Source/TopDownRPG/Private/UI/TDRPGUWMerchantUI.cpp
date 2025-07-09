@@ -21,6 +21,7 @@
 #include <Components/Button.h>
 #include <Components/UniformGridPanel.h>
 #include <Components/UniformGridSlot.h>
+#include <Components/CanvasPanelSlot.h>
 
 
 void UTDRPGUWMerchantUI::NativeOnInitialized()
@@ -173,6 +174,17 @@ void UTDRPGUWMerchantUI::ShowDetail(UTDRPGUWSlotBase* InSlot)
 	FItemDataRow* Data = GameData->GetRow<FItemDataRow>(ItemType, ID);
 	
 	UTDRPGUWItemDetail* Detail = GetDetail();
+	
+	UCanvasPanelSlot* MerchantSlot = Cast<UCanvasPanelSlot>(Slot);
+	UCanvasPanelSlot* DetailSlot = Cast<UCanvasPanelSlot>(Detail->Slot);
+	if (Merchant && DetailSlot)
+	{
+		FVector2D Pos = MerchantSlot->GetPosition();
+		Pos.X += MerchantSlot->GetSize().X;
+
+		DetailSlot->SetPosition(Pos);
+	}
+	
 	Detail->Update(Data);
 
 	uint32 Price = Merchant->GetDiscountedPrice(Data->Price);

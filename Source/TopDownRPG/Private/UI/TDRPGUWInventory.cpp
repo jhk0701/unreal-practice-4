@@ -26,10 +26,6 @@ UTDRPGUWInventory::UTDRPGUWInventory()
 	ConstructorHelpers::FClassFinder<UTDRPGUWInventoryMenu> TempMenu(TEXT("WidgetBlueprint'/Game/4-UI/SubWBP_InventoryMenu.SubWBP_InventoryMenu_C'"));
 	if (TempMenu.Succeeded())
 		MenuWindowFactory = TempMenu.Class;
-
-	ConstructorHelpers::FClassFinder<UTDRPGUWItemDetail> TempDetail(TEXT("WidgetBlueprint'/Game/4-UI/SubWBP_ItemDetail.SubWBP_ItemDetail_C'"));
-	if (TempDetail.Succeeded())
-		DetailWindowFactory = TempDetail.Class;
 }
 
 void UTDRPGUWInventory::NativeOnInitialized()
@@ -71,6 +67,7 @@ void UTDRPGUWInventory::Close()
 void UTDRPGUWInventory::InitWidget()
 {
 	Super::InitWidget();
+
 	InitSubWidget();
 }
 
@@ -124,44 +121,39 @@ void UTDRPGUWInventory::InitSubWidget()
 		HideItemMenu();
 	}
 
-	if (DetailWindowFactory && !DetailWindow)
-	{
-		DetailWindow = CreateWidget<UTDRPGUWItemDetail>(this, DetailWindowFactory);
-		ParentCanvas->AddChildToCanvas(DetailWindow);
+}
 
-		if (UCanvasPanelSlot* WindowSlot = Cast<UCanvasPanelSlot>(DetailWindow->Slot))
-		{
-			WindowSlot->SetAnchors(FAnchors(0.5f, 0.5f));
-			WindowSlot->SetAlignment(FVector2D::ZeroVector);
+UTDRPGUWItemDetail* UTDRPGUWInventory::GetDetail()
+{
+	UUIManager* UI = GetGameInstance()->GetSubsystem<UUIManager>();
+	UTDRPGUWItemDetail* Detail = UI->GetUI<UTDRPGUWItemDetail>();
+	check(Detail);
 
-			WindowSlot->SetSize(DetailWindow->Size);
-			WindowSlot->SetPosition(FVector2D::ZeroVector);
-		}
-
-		HideItemDetail();
-	}
+	return Detail;
 }
 
 void UTDRPGUWInventory::ShowItemDetail(UTDRPGUWSlotBase* InSlot)
 {
 	UCanvasPanelSlot* InvenCanvasSlot = Cast<UCanvasPanelSlot>(Slot);
-	UCanvasPanelSlot* DetailSlot = Cast<UCanvasPanelSlot>(DetailWindow->Slot);
+	UTDRPGUWItemDetail* Detail = GetDetail();
+
+	UCanvasPanelSlot* DetailSlot = Cast<UCanvasPanelSlot>(Detail->Slot);
 	if (InvenCanvasSlot && DetailSlot)
 	{
 		FVector2D Pos = InvenCanvasSlot->GetPosition();
-		Pos.X -= DetailWindow->Size.X;
+		Pos.X -= DetailSlot->GetSize().X;
 		DetailSlot->SetPosition(Pos);
 	}
 
-	DetailWindow->Open();
+	Detail->Open();
 
-	if(UTDRPGUWInventorySlot* ItemSlot = Cast<UTDRPGUWInventorySlot>(InSlot))
-		DetailWindow->Update(ItemSlot->GetItem());
+	if (UTDRPGUWInventorySlot* ItemSlot = Cast<UTDRPGUWInventorySlot>(InSlot))
+		Detail->Update(ItemSlot->GetItem());
 }
 
 void UTDRPGUWInventory::HideItemDetail()
 {
-	DetailWindow->Close();
+	GetDetail()->Close();
 }
 
 void UTDRPGUWInventory::ShowItemMenu(UTDRPGUWSlotBase* InSlot)
@@ -172,7 +164,6 @@ void UTDRPGUWInventory::ShowItemMenu(UTDRPGUWSlotBase* InSlot)
 	{
 		FVector2D Pos = InvenCanvasSlot->GetPosition();
 		Pos.X -= MenuWindow->Size.X;
-		Pos.Y += DetailWindow->Size.Y;
 		MenuSlot->SetPosition(Pos);
 	}
 

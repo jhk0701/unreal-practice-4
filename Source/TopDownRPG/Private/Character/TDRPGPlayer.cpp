@@ -19,6 +19,8 @@
 #include "UI/TDRPGUWPlayerUI.h"
 #include "UI/TDRPGUWStatusBar.h"
 #include "UI/TDRPGUWQuickSlot.h"
+#include "UI/TDRPGUWSkillSet.h"
+
 #include "UI/TDRPGUWInventory.h"
 #include "UI/TDRPGUWEquipment.h"
 #include "UI/TDRPGUWStatusWindow.h"
@@ -74,7 +76,6 @@ ATDRPGPlayer::ATDRPGPlayer()
 	InteractCollider->SetSphereRadius(300);
 	InteractCollider->SetCollisionProfileName(FTDRPGConst::INTERACT_PROFILE);
 	InteractCollider->SetupAttachment(RootComponent);
-
 }
 
 void ATDRPGPlayer::BeginPlay()
@@ -120,8 +121,6 @@ void ATDRPGPlayer::Initialize()
 		PlayerUI->StatusBar->Bind(this);
 		PlayerUI->QuickSlot->Bind(Player->QuickSlot);
 
-
-		// PlayerUI->SkillSet->Bind();
 	}
 
 	if (UTDRPGUWStatusWindow* StatusWind = UIManager->GetUI<UTDRPGUWStatusWindow>())

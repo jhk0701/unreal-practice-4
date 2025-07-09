@@ -47,12 +47,6 @@ public:
 
 	// Sub UIs
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|Factory")
-	TSubclassOf<UTDRPGUWItemDetail> DetailWindowFactory;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")
-	TObjectPtr<UTDRPGUWItemDetail> DetailWindow;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWInventoryMenu> MenuWindowFactory;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")
@@ -76,4 +70,5 @@ public:
 
 protected:
 	void InitSubWidget();
+	UTDRPGUWItemDetail* GetDetail();
 };
