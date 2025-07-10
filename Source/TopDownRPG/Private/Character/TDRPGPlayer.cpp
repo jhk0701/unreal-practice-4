@@ -24,6 +24,7 @@
 #include "UI/TDRPGUWInventory.h"
 #include "UI/TDRPGUWEquipment.h"
 #include "UI/TDRPGUWStatusWindow.h"
+#include "UI/TDRPGUWSkillWindow.h"
 
 #include "Data/CharacterDataRow.h"
 #include "Data/CharacterConfig.h"
@@ -120,6 +121,7 @@ void ATDRPGPlayer::Initialize()
 	{
 		PlayerUI->StatusBar->Bind(this);
 		PlayerUI->QuickSlot->Bind(Player->QuickSlot);
+		PlayerUI->SkillSet->Bind(Player->SkillSet);
 	}
 
 	if (UTDRPGUWStatusWindow* StatusWind = UIManager->GetUI<UTDRPGUWStatusWindow>())
@@ -130,6 +132,9 @@ void ATDRPGPlayer::Initialize()
 
 	if (UTDRPGUWEquipment* Equipment = UIManager->GetUI<UTDRPGUWEquipment>())
 		Equipment->Bind(Player->Equipment);
+
+	if (UTDRPGUWSkillWindow* SkillWind = UIManager->GetUI<UTDRPGUWSkillWindow>())
+		SkillWind->Bind(ActionComp);
 
 	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
 }

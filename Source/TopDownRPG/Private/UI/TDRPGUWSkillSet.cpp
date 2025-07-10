@@ -9,6 +9,10 @@
 #include <Components/UniformGridPanel.h>
 #include <Components/UniformGridSlot.h>
 
+void UTDRPGUWSkillSet::Bind(USkillSet* InSkillSet)
+{
+}
+
 void UTDRPGUWSkillSet::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();

@@ -15,6 +15,7 @@
 #include "UI/TDRPGUWInventory.h"
 #include "UI/TDRPGUWEquipment.h"
 #include "UI/TDRPGUWStatusWindow.h"
+#include "UI/TDRPGUWSkillWindow.h"
 
 #include <EnhancedInputComponent.h>
 #include <Components/SphereComponent.h>
@@ -35,6 +36,7 @@ void UPlayerInteraction::SetupInputBinding(UEnhancedInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction(InController->InventoryAction, ETriggerEvent::Started, this, &UPlayerInteraction::InputInventory);
 	PlayerInputComponent->BindAction(InController->EquipmentAction, ETriggerEvent::Started, this, &UPlayerInteraction::InputEquipment);
 	PlayerInputComponent->BindAction(InController->StatusWindAction, ETriggerEvent::Started, this, &UPlayerInteraction::InputStatusWind);
+	PlayerInputComponent->BindAction(InController->SkillWindAction, ETriggerEvent::Started, this, &UPlayerInteraction::InputSkillWind);
 
 	PlayerInputComponent->BindAction(InController->QuickSlotAction, ETriggerEvent::Triggered, this, &UPlayerInteraction::TriggerQuickSlot);
 	PlayerInputComponent->BindAction(InController->QuickSlotAction, ETriggerEvent::Completed, this, &UPlayerInteraction::ReleaseQuickSlot);
@@ -92,6 +94,16 @@ void UPlayerInteraction::InputStatusWind(const FInputActionValue& Value)
 
 	if (UTDRPGUWStatusWindow* StatUI = UIManager->GetUI<UTDRPGUWStatusWindow>())
 		StatUI->Toggle();
+}
+
+void UPlayerInteraction::InputSkillWind(const FInputActionValue& Value)
+{
+	UUIManager* UIManager = GetWorld()->GetGameInstance()->GetSubsystem<UUIManager>();
+	if (!UIManager)
+		return;
+
+	if (UTDRPGUWSkillWindow* SkillUI = UIManager->GetUI<UTDRPGUWSkillWindow>())
+		SkillUI->Toggle();
 }
 
 

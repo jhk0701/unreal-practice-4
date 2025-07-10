@@ -6,9 +6,10 @@
 #include "UI/TDRPGUserWidget.h"
 #include "TDRPGUWSkillWindow.generated.h"
 
-class UTDRPGUWSkillSlot;
+class UPlayerAction;
+class UTDRPGUWSkillListSlot;
 
-class UVerticalBox;
+class UScrollBox;
 class UButton;
 
 /**
@@ -19,14 +20,24 @@ class TOPDOWNRPG_API UTDRPGUWSkillWindow : public UTDRPGUserWidget
 {
 	GENERATED_BODY()
 
-public:
+protected:
+	TObjectPtr<UPlayerAction> BindedAction;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
-	TSubclassOf<UTDRPGUWSkillSlot> SlotFactory;
+	TSubclassOf<UTDRPGUWSkillListSlot> SlotFactory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")
+	TArray<UTDRPGUWSkillListSlot*> ListSlots;
 	
-	UPROPERTY(meta=(BindWidget))
-	TObjectPtr<UVerticalBox> Container;
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UScrollBox> Container;
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> CloseButton;
 	
+public:
+	virtual void NativeOnInitialized() override;
+
+	void Bind(UPlayerAction* InPlayerAction);
+	void Refresh();
 };

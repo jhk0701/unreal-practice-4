@@ -52,4 +52,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 Cooldown;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FSoftObjectPath Thumbnail;
 };

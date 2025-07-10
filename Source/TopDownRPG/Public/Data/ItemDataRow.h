@@ -28,10 +28,6 @@ public:
 	UPROPERTY(EditAnywhere)
 	uint32 Price;
 
-	// 구성요소
 	UPROPERTY(EditAnywhere)
 	FSoftObjectPath Thumbnail;
-
-	// UPROPERTY(EditAnywhere)
-	// FSoftObjectPath Mesh;
 };

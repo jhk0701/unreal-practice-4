@@ -36,18 +36,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
 	TObjectPtr<UInputAction> InteractAction;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action|PopUpUI")
 	TObjectPtr<UInputAction> QuickSlotAction;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action|PopUpUI")
 	TObjectPtr<UInputAction> InventoryAction;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action|PopUpUI")
 	TObjectPtr<UInputAction> EquipmentAction;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action|PopUpUI")
 	TObjectPtr<UInputAction> StatusWindAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input|Action|PopUpUI")
+	TObjectPtr<UInputAction> SkillWindAction;
 
 public:
 	virtual void BeginPlay() override;

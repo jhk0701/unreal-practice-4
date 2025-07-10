@@ -8,6 +8,8 @@
 
 enum class ESkillInputKey : uint8;
 
+class USkillSet;
+
 class UTDRPGUWSkillSlot;
 class UUniformGridPanel;
 
@@ -19,7 +21,12 @@ class TOPDOWNRPG_API UTDRPGUWSkillSet : public UTDRPGUserWidget
 {
 	GENERATED_BODY()
 
+public:
+	void Bind(USkillSet* InSkillSet);
+
 protected:
+	TObjectPtr<USkillSet> BindedSkillSet;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWSkillSlot> SlotFactory;
 
@@ -29,7 +36,5 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> Container;
 
-protected:
 	virtual void NativeOnInitialized() override;
-	
 };

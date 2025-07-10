@@ -27,6 +27,23 @@ class TOPDOWNRPG_API UTDRPGUWInventory : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 public:
+	UTDRPGUWInventory();
+	virtual void NativeOnInitialized() override;
+	virtual void Close() override;
+	virtual void InitWidget() override;
+
+	void Bind(UPlayerManager* InManager);
+
+	void UpdateInventory(uint8 Index);
+	void UpdateGold(uint32 Gold);
+
+	void ShowItemDetail(UTDRPGUWSlotBase* InSlot);
+	void HideItemDetail();
+
+	void ShowItemMenu(UTDRPGUWSlotBase* InSlot);
+	void HideItemMenu();
+
+protected:
 	UPROPERTY()
 	TObjectPtr<UInventory> BindedInventory;
 
@@ -52,23 +69,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement|Sub")
 	TObjectPtr<UTDRPGUWInventoryMenu> MenuWindow;
 
-	UTDRPGUWInventory();
-	virtual void NativeOnInitialized() override;
-	virtual void Close() override;
-	virtual void InitWidget() override;
-
-	void Bind(UPlayerManager* InManager);
-
-	void UpdateInventory(uint8 Index);
-	void UpdateGold(uint32 Gold);
-
-	void ShowItemDetail(UTDRPGUWSlotBase* InSlot);
-	void HideItemDetail();
-
-	void ShowItemMenu(UTDRPGUWSlotBase* InSlot);
-	void HideItemMenu();
-
-protected:
 	void InitSubWidget();
 	UTDRPGUWItemDetail* GetDetail();
 };

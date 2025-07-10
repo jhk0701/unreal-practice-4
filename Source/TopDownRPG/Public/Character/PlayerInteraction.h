@@ -6,6 +6,8 @@
 #include "Character/PlayerInputComponent.h"
 #include "PlayerInteraction.generated.h"
 
+class UEnhancedInputComponent;
+
 /**
  * 
  */
@@ -20,18 +22,19 @@ protected:
 
 public:
 	UPlayerInteraction();
-	virtual void SetupInputBinding(class UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController) override;
+	virtual void SetupInputBinding(
+		UEnhancedInputComponent* PlayerInputComponent, 
+		ATDRPGPlayerController* InController) override;
 	
 	void InputInteract(const FInputActionValue& Value);
 
 	void InputInventory(const FInputActionValue& Value);
 	void InputEquipment(const FInputActionValue& Value);
 	void InputStatusWind(const FInputActionValue& Value);
+	void InputSkillWind(const FInputActionValue& Value);
 
 	// 퀵슬롯 입력
 	void TriggerQuickSlot(const FInputActionValue& Value);
 	void ReleaseQuickSlot(const FInputActionValue& Value);
 	void UseQuickSlot(uint8 Idx);
-
 };
-

@@ -156,7 +156,7 @@ void UActiveSkill::InvokeSweep()
 	}
 
 	DrawDebugLine(Owner->GetWorld(), Start, End, FColor::Red, false, 1.0f);
-	DrawDebugSphere(Owner->GetWorld(), End, Data.Size, 12, FColor::Red, true , 1.0f, 0, 1.0f);
+	DrawDebugSphere(Owner->GetWorld(), End, Data.Size, 12, FColor::Red, false , 1.0f, 0, 1.0f);
 
 	if (!Owner->GetWorld()->
 		SweepMultiByChannel(Hits, Start, End, FQuat::Identity, ECollisionChannel::ECC_GameTraceChannel2, Shape, Param)) 

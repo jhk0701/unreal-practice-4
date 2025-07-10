@@ -126,7 +126,6 @@ enum class ESkillDirection: uint8
 	AllDirection,
 };
 
-
 UENUM(BlueprintType)
 enum class EUILayer :uint8
 {
@@ -142,6 +141,7 @@ DECLARE_ENUM_TO_STRING(ERarity);
 DECLARE_ENUM_TO_STRING(ETableType);
 DECLARE_ENUM_TO_STRING(EStatus);
 DECLARE_ENUM_TO_STRING(EAbility);
+DECLARE_ENUM_TO_STRING(ESkillInput);
 DECLARE_ENUM_TO_STRING(ESkillInputKey);
 
 class FTDRPGEnum 
@@ -151,5 +151,6 @@ public:
 	static FString EnumToString(const ETableType InValue);
 	static FString EnumToString(const EStatus InValue);
 	static FString EnumToString(const EAbility InValue);
+	static FString EnumToString(const ESkillInput InValue);
 	static FString EnumToString(const ESkillInputKey InValue);
 };

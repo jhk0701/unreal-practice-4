@@ -7,7 +7,6 @@
 #include "Inherit/Bindable.h"
 #include "TDRPGUWSkillSlot.generated.h"
 
-class USkill;
 class UTextBlock;
 
 /**
@@ -20,7 +19,7 @@ class TOPDOWNRPG_API UTDRPGUWSkillSlot : public UTDRPGUWSlotBase, public IBindab
 
 protected:
 	UPROPERTY()
-	TObjectPtr<USkill> BindedSkill;
+	TObjectPtr<UDataModel> Model;
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> KeyLabel;
@@ -28,10 +27,8 @@ protected:
 public:
 	void SetKeyText(FText& InText);
 	
-	void Bind(UDataModel* InModel) override;
-
-	void Unbind() override;
-
-	void Refresh(UDataModel* InModel) override;
+	virtual void Bind(UDataModel* InModel) override;
+	virtual void Unbind() override;
+	virtual void Refresh();
 
 };

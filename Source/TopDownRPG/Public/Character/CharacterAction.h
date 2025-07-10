@@ -28,6 +28,8 @@ protected:
 public:	
 	UCharacterAction();
 	virtual void SetSkill(TArray<FString>& InSkillIDs);
+	inline void GetSkillIDs(TArray<FString>& Output) { SkillMap.GetKeys(Output); };
+	inline USkill* GetSkill(const FString& InKey) { return SkillMap[InKey]; };
 
 	virtual void InvokeAttack() {};
 	virtual void InvokeSkill(uint32 InIndex) {};

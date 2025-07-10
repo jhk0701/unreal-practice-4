@@ -31,6 +31,7 @@ public:
 
 	/// 스킬 객체 초기화
 	virtual void Initialize(const FString& InID, UGameDataManager* InDB, AActor* InOwner);
+	inline FSkillDataRow& GetData() { return Data; }
 
 protected:
 	FSkillDataRow Data;

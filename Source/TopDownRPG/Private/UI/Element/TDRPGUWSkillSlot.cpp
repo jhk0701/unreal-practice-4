@@ -3,7 +3,15 @@
 
 #include "UI/Element/TDRPGUWSkillSlot.h"
 
+#include "Core/ResourceLoadManager.h"
+
+#include "Data/SkillDataRow.h"
+#include "Character/Skill/Skill.h"
+
 #include <Components/TextBlock.h>
+#include <Components/Image.h>
+
+#include "TopDownRPG/TopDownRPG.h"
 
 
 void UTDRPGUWSkillSlot::SetKeyText(FText& InText)
@@ -13,12 +21,35 @@ void UTDRPGUWSkillSlot::SetKeyText(FText& InText)
 
 void UTDRPGUWSkillSlot::Bind(UDataModel* InModel)
 {
+	if (!InModel)
+		return;
+
+	Model = InModel;
+	Refresh();
 }
 
 void UTDRPGUWSkillSlot::Unbind()
 {
+	Model = nullptr;
+	Clear();
 }
 
-void UTDRPGUWSkillSlot::Refresh(UDataModel* InModel)
+void UTDRPGUWSkillSlot::Refresh()
 {
+	USkill* Skill = Cast<USkill>(Model);
+	check(Skill);
+
+	FSkillDataRow& Data = Skill->GetData();
+	UResourceLoadManager* Resource = GetGameInstance()->GetSubsystem<UResourceLoadManager>();
+	Resource->Load(Data.Thumbnail, FOnResourceLoaded::CreateLambda(
+		[this](UObject* Loaded) 
+		{
+			if (UTexture2D* LoadedTex = Cast<UTexture2D>(Loaded))
+			{
+				IconImage->SetBrushFromTexture(LoadedTex, true);
+				IconImage->SetOpacity(1.0f);
+				IconImage->SetVisibility(ESlateVisibility::Visible);
+			}
+		}
+	));
 }

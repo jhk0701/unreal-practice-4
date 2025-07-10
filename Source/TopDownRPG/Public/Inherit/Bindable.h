@@ -29,5 +29,4 @@ protected:
 public:
 	virtual void Bind(UDataModel* InModel) = 0;
 	virtual void Unbind() = 0;
-	virtual void Refresh(UDataModel* InModel) = 0;
 };

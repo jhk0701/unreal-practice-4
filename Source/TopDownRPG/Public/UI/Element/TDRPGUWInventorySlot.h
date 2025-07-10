@@ -24,7 +24,7 @@ public:
 	virtual void Bind(UDataModel* InModel) override;
 	virtual void Bind(UItemBase* InItem);
 	virtual void Unbind() override;
-	virtual void Refresh(UDataModel* InModel) override;
+	virtual void Refresh(UDataModel* InModel);
 
 	UItemBase* GetItem() const;
 

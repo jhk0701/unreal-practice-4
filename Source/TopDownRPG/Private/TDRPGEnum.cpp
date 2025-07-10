@@ -40,6 +40,15 @@ FString FTDRPGEnum::EnumToString(const EAbility InValue)
     return EnumPtr->GetDisplayNameTextByIndex((int32)InValue).ToString();
 }
 
+FString FTDRPGEnum::EnumToString(const ESkillInput InValue)
+{
+    const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ESkillInput"), true);
+    if (!EnumPtr)
+        return FString("Invalid Enum");
+
+    return EnumPtr->GetDisplayNameTextByIndex((int32)InValue).ToString();
+}
+
 FString FTDRPGEnum::EnumToString(const ESkillInputKey InValue)
 {
     const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("ESkillInputKey"), true);
