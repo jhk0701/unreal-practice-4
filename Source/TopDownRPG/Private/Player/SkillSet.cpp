@@ -3,28 +3,26 @@
 
 #include "Player/SkillSet.h"
 
+#include "TDRPGConst.h"
 #include "TDRPGEnum.h"
 #include "Character/Skill/Skill.h"
-
 
 USkillSet::USkillSet()
 {
 	uint8 Cnt = (uint8)ESkillInputKey::COUNT;
 
 	for(uint8 i = 0; i < Cnt; ++i)
-		Map.Add((ESkillInputKey)i, nullptr);
+		Map.Add((ESkillInputKey)i, FTDRPGConst::EMPTY_ID);
 }
 
 void USkillSet::Register(ESkillInputKey InKey, UActiveSkill* InSkill)
 {
-	Map[InKey] = InSkill;
-
+	Map[InKey] = InSkill->GetID();
 	OnSlotUpdated.Broadcast(InKey);
 }
 
 void USkillSet::Unregister(ESkillInputKey InKey)
 {
 	Map[InKey] = nullptr;
-
 	OnSlotUpdated.Broadcast(InKey);
 }

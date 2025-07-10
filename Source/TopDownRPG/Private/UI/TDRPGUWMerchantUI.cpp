@@ -44,7 +44,6 @@ void UTDRPGUWMerchantUI::Open()
 void UTDRPGUWMerchantUI::Close()
 {
 	Clear();
-
 	Super::Close();
 }
 
@@ -141,7 +140,7 @@ void UTDRPGUWMerchantUI::OnSlotClicked(UTDRPGUWSlotBase* InSlot)
 	ETableType Type;
 	ClickedSlot->GetProduct(ID, Type);
 
-	check(ID != FTDRPGConst::EMPTY_ITEM_ID);
+	check(ID != FTDRPGConst::EMPTY_ID);
 
 	// Buy
 	OnClickBuy(ID, Type);

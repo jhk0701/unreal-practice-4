@@ -105,7 +105,7 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 			Data->Inventory[i].Quantity = Item->Quantity;
 		}
 		else
-			Data->Inventory[i].ItemID = FTDRPGConst::EMPTY_ITEM_ID;
+			Data->Inventory[i].ItemID = FTDRPGConst::EMPTY_ID;
 	}
 
 	// Equipment
@@ -121,7 +121,7 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 			Data->Equipment[i].EquipType = i;
 		}
 		else
-			Data->Equipment[i].EquipmentID = FTDRPGConst::EMPTY_ITEM_ID;
+			Data->Equipment[i].EquipmentID = FTDRPGConst::EMPTY_ID;
 	}
 
 	// QuickSlot

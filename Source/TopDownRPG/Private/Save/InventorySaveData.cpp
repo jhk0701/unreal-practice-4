@@ -5,7 +5,7 @@
 #include "TDRPGConst.h"
 
 FInventorySaveData::FInventorySaveData() 
-	: ItemID(FTDRPGConst::EMPTY_ITEM_ID),
+	: ItemID(FTDRPGConst::EMPTY_ID),
 	ItemType(-1), 
 	Quantity(0) 
 {

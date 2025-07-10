@@ -23,7 +23,7 @@ public:
 	inline TEnableIf<TIsDerivedFrom<T, UItemBase>::Value, T*>::Type
 	GetItem(FString& InItemID, uint32 InQuantity = 1)
 	{
-		if (InItemID == FTDRPGConst::EMPTY_ITEM_ID)
+		if (InItemID == FTDRPGConst::EMPTY_ID)
 			return nullptr;
 
 		T* Item = NewObject<T>();

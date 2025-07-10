@@ -115,7 +115,7 @@ void UPlayerManager::InitInventory()
 	{
 		auto& ItemData = PlayerData->Inventory[i];
 
-		if (ItemData.ItemID == FTDRPGConst::EMPTY_ITEM_ID)
+		if (ItemData.ItemID == FTDRPGConst::EMPTY_ID)
 			continue;
 
 		UItemBase* Item = ItemFactory->GetItem((ETableType)ItemData.ItemType, ItemData.ItemID, ItemData.Quantity);
@@ -132,7 +132,7 @@ void UPlayerManager::InitEquipment()
 	{
 		auto& EquipData = PlayerData->Equipment[i];
 		
-		if (EquipData.EquipmentID == FTDRPGConst::EMPTY_ITEM_ID)
+		if (EquipData.EquipmentID == FTDRPGConst::EMPTY_ID)
 			continue;
 
 		EEquipType Type = (EEquipType)EquipData.EquipType;

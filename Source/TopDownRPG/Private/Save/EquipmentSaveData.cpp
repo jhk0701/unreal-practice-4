@@ -5,7 +5,7 @@
 #include "TDRPGConst.h"
 
 FEquipmentSaveData::FEquipmentSaveData() 
-	: EquipmentID(FTDRPGConst::EMPTY_ITEM_ID),
+	: EquipmentID(FTDRPGConst::EMPTY_ID),
 	EquipType(-1)
 {
 }

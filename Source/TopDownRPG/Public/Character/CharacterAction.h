@@ -17,12 +17,13 @@ class TOPDOWNRPG_API UCharacterAction : public UActorComponent
 	GENERATED_BODY()
 
 protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack|Skill")
+	TObjectPtr<UActiveSkill> DefaultAttack;
+
 	// 스킬 데이터
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack|Skill")
 	TMap<FString, USkill*> SkillMap;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack|Skill")
-	TObjectPtr<UActiveSkill> DefaultAttack;
 
 public:	
 	UCharacterAction();

@@ -80,11 +80,11 @@ void UPlayerAction::InvokeSkill(uint32 InIndex)
 {
 	ESkillInputKey Key = (ESkillInputKey)InIndex;
 
-	UPlayerManager* PlayerManager = GetWorld()->GetGameInstance()->GetSubsystem<UPlayerManager>();
-	UActiveSkill* Skill = PlayerManager->SkillSet->GetSkill(Key);
+	// UPlayerManager* PlayerManager = GetWorld()->GetGameInstance()->GetSubsystem<UPlayerManager>();
+	// UActiveSkill* Skill = PlayerManager->SkillSet->GetSkill(Key);
 	
-	if (Skill)
-		Skill->InvokeSkill();
+	// if (Skill)
+		// Skill->InvokeSkill();
 }
 
 bool UPlayerAction::TryUseResource(const TMap<EStatus, int32>& InRequirement)

@@ -120,7 +120,6 @@ void ATDRPGPlayer::Initialize()
 	{
 		PlayerUI->StatusBar->Bind(this);
 		PlayerUI->QuickSlot->Bind(Player->QuickSlot);
-
 	}
 
 	if (UTDRPGUWStatusWindow* StatusWind = UIManager->GetUI<UTDRPGUWStatusWindow>())

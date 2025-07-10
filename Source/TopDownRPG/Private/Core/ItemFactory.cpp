@@ -12,7 +12,7 @@
 
 UItemBase* UItemFactory::GetItem(ETableType ItemType, FString& InItemID, uint32 InQuantity)
 {
-	if (InItemID == FTDRPGConst::EMPTY_ITEM_ID)
+	if (InItemID == FTDRPGConst::EMPTY_ID)
 		return nullptr;
 
 	UItemBase* Result = nullptr;

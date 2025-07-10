@@ -27,6 +27,6 @@ public:
     static const FString GAME_DATA_SLOT;
 
     // item
-    static const FString EMPTY_ITEM_ID;
+    static const FString EMPTY_ID;
 };
 
