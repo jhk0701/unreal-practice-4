@@ -104,10 +104,9 @@ void UActiveSkill::InvokeSkill()
 	if(ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
 	{
 		if (!Player->ActionComp->TryUseResource(Data.Requirement))
-			return;
-		else
 		{
 			PRINT_LOG(TEXT("Resource is not enough."));
+			return;
 		}
 	}
 

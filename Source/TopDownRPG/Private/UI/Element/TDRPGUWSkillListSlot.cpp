@@ -8,17 +8,13 @@
 #include "Data/SkillDataRow.h"
 #include "Character/Skill/Skill.h"
 
+#include "UI/DragDropWidget.h"
+
 #include <Components/TextBlock.h>
 #include <Components/Image.h>
+#include <Blueprint/SlateBlueprintLibrary.h>
 
 #include "TopDownRPG/TopDownRPG.h"
-
-
-void UTDRPGUWSkillListSlot::Bind(UDataModel* InModel)
-{
-	Super::Bind(InModel);
-}
-
 
 void UTDRPGUWSkillListSlot::Refresh()
 {
@@ -32,7 +28,6 @@ void UTDRPGUWSkillListSlot::Refresh()
 	FString InputType = FTDRPGEnum::EnumToString(Data.InputType);
 	InputLabel->SetText(FText::FromString(FString::Printf(TEXT("[%s]"), *InputType)));
 
-	// CostLabel->SetText
 	FString CostStr = "";
 	for(auto& Pair : Data.Requirement)
 	{
@@ -55,4 +50,37 @@ void UTDRPGUWSkillListSlot::Refresh()
 			}
 		}
 	));
+}
+
+FReply UTDRPGUWSkillListSlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	FReply Result = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+
+	PRINT_LOG(TEXT("NativeOnMouseButtonDown"));
+
+	if(InMouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
+	{
+		DragOffset = USlateBlueprintLibrary::AbsoluteToLocal(InGeometry, InMouseEvent.GetScreenSpacePosition());
+		Result.DetectDrag(TakeWidget(), EKeys::LeftMouseButton);
+	}
+
+	return Result;
+}
+
+void UTDRPGUWSkillListSlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation)
+{
+	Super::NativeOnDragDetected(InGeometry, InMouseEvent, OutOperation);
+
+	PRINT_LOG(TEXT("NativeOnDragDetected"));
+
+	UDragDropWidget* DragDropOp = NewObject<UDragDropWidget>();
+	DragDropOp->Offset = DragOffset;
+	OutOperation = DragDropOp;
+}
+
+void UTDRPGUWSkillListSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	Super::NativeOnDragCancelled(InDragDropEvent, InOperation);
+
+	PRINT_LOG(TEXT("NativeOnDragCancelled"));
 }

@@ -23,6 +23,6 @@ void USkillSet::Register(ESkillInputKey InKey, UActiveSkill* InSkill)
 
 void USkillSet::Unregister(ESkillInputKey InKey)
 {
-	Map[InKey] = nullptr;
+	Map[InKey] = FTDRPGConst::EMPTY_ID;
 	OnSlotUpdated.Broadcast(InKey);
 }

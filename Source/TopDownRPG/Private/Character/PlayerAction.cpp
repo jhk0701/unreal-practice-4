@@ -10,6 +10,7 @@
 #include "Character/PlayerAnim.h"
 
 #include "TDRPGEnum.h"
+#include "TDRPGConst.h"
 #include "Character/Skill/Skill.h"
 
 #include "Core/PlayerManager.h"
@@ -82,6 +83,8 @@ void UPlayerAction::InvokeSkill(uint32 InIndex)
 
 	UPlayerManager* PlayerManager = GetWorld()->GetGameInstance()->GetSubsystem<UPlayerManager>();
 	FString& ID = PlayerManager->SkillSet->GetSkill(Key);
+	if (ID == FTDRPGConst::EMPTY_ID)
+		return;
 
 	if (UActiveSkill* Skill = Cast<UActiveSkill>(SkillMap[ID]))
 		Skill->InvokeSkill();

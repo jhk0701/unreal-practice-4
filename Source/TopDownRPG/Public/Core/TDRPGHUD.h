@@ -21,7 +21,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
 	TArray<TObjectPtr<UUIConfig>> Configs;
 
-protected:
 	virtual void PostInitializeComponents() override;
 	virtual void InitHUD();
 

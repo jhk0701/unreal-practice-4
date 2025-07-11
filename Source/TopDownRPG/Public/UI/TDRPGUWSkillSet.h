@@ -37,4 +37,5 @@ protected:
 	TObjectPtr<UUniformGridPanel> Container;
 
 	virtual void NativeOnInitialized() override;
+	// virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
 };
