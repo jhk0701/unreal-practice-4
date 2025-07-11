@@ -3,6 +3,7 @@
 
 #include "UI/Element/TDRPGUWSkillSlot.h"
 
+#include "TDRPGEnum.h"
 #include "Core/ResourceLoadManager.h"
 
 #include "Data/SkillDataRow.h"
@@ -14,9 +15,10 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 
-void UTDRPGUWSkillSlot::SetKeyText(FText& InText)
+void UTDRPGUWSkillSlot::SetKey(ESkillInputKey& InKey)
 {
-	KeyLabel->SetText(InText);
+	Key = InKey;
+	KeyLabel->SetText(FText::FromString(FTDRPGEnum::EnumToString(Key)));
 }
 
 void UTDRPGUWSkillSlot::Bind(UDataModel* InModel)

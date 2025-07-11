@@ -7,9 +7,8 @@
 #include "TDRPGUWSkillSet.generated.h"
 
 enum class ESkillInputKey : uint8;
-
+class USkill;
 class USkillSet;
-
 class UTDRPGUWSkillSlotHolder;
 class UUniformGridPanel;
 
@@ -37,5 +36,7 @@ protected:
 	TObjectPtr<UUniformGridPanel> Container;
 
 	virtual void NativeOnInitialized() override;
+	void OnSlotUpdated(ESkillInputKey& InKey);
+	void OnSkillDropped(USkill* InSkill, ESkillInputKey& InKey);
 	
 };

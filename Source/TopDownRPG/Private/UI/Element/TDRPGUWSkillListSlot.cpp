@@ -89,5 +89,5 @@ void UTDRPGUWSkillListSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDr
 {
 	Super::NativeOnDragCancelled(InDragDropEvent, InOperation);
 
-	PRINT_LOG(TEXT("NativeOnDragCancelled"));
+	InOperation = nullptr;
 }

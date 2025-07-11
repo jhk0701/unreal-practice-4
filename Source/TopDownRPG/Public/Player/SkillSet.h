@@ -10,7 +10,7 @@ class USkill;
 class UActiveSkill;
 enum class ESkillInputKey :uint8;
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnSkillSlotUpdated, ESkillInputKey);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnSkillSlotUpdated, ESkillInputKey&);
 
 /**
  * 

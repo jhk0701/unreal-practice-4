@@ -2,9 +2,10 @@
 
 
 #include "UI/TDRPGUWSkillSet.h"
-
-#include "TDRPGEnum.h"
 #include "UI/Element/TDRPGUWSkillSlotHolder.h"
+#include "TDRPGEnum.h"
+#include "Player/SkillSet.h"
+#include "Character/Skill/Skill.h"
 
 #include <Components/UniformGridPanel.h>
 #include <Components/UniformGridSlot.h>
@@ -12,6 +13,8 @@
 
 void UTDRPGUWSkillSet::Bind(USkillSet* InSkillSet)
 {
+	BindedSkillSet = InSkillSet;
+	BindedSkillSet->OnSlotUpdated.AddUObject(this, &UTDRPGUWSkillSet::OnSlotUpdated);
 }
 
 void UTDRPGUWSkillSet::NativeOnInitialized()
@@ -25,15 +28,31 @@ void UTDRPGUWSkillSet::NativeOnInitialized()
 
 		for(uint8 i = 0; i < Cnt; ++i)
 		{
-			UTDRPGUWSkillSlot* Instance = CreateWidget<UTDRPGUWSkillSlot>(this, SlotFactory);
+			UTDRPGUWSkillSlotHolder* Inst = CreateWidget<UTDRPGUWSkillSlotHolder>(this, SlotFactory);
 			
-			UUniformGridSlot* GridSlot = Cast<UUniformGridSlot>(Container->AddChild(Instance));
+			UUniformGridSlot* GridSlot = Cast<UUniformGridSlot>(Container->AddChild(Inst));
 			GridSlot->SetColumn(i % 4);
 			GridSlot->SetRow(i / 4);
 
 			ESkillInputKey Key =(ESkillInputKey)i;
-			FText KeyText = FText::FromString(FTDRPGEnum::EnumToString(Key));
-			Instance->SetKeyText(KeyText);
+			Inst->SetKey(Key);
+			Inst->OnSkillDropped.BindUObject(this, &UTDRPGUWSkillSet::OnSkillDropped);
 		}
 	}
+}
+
+void UTDRPGUWSkillSet::OnSlotUpdated(ESkillInputKey& InKey)
+{
+	// 슬롯 업데이트 이어서하기
+	FString& SkillID = BindedSkillSet->GetSkill(InKey);
+	// SlotInst[InKey]->bind
+}
+
+void UTDRPGUWSkillSet::OnSkillDropped(USkill* InSkill, ESkillInputKey& InKey)
+{
+	if (!InSkill)
+		return;
+
+	if (UActiveSkill* ActiveSkill = Cast<UActiveSkill>(InSkill))
+		BindedSkillSet->Register(InKey, ActiveSkill);
 }

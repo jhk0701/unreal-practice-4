@@ -8,6 +8,7 @@
 #include "TDRPGUWSkillSlot.generated.h"
 
 class UTextBlock;
+enum class ESkillInputKey :uint8;
 
 /**
  * 
@@ -19,13 +20,15 @@ class TOPDOWNRPG_API UTDRPGUWSkillSlot : public UTDRPGUWSlotBase, public IBindab
 
 
 public:
-	void SetKeyText(FText& InText);
+	void SetKey(ESkillInputKey& InKey);
 	
 	virtual void Bind(UDataModel* InModel) override;
 	virtual void Unbind() override;
 	virtual void Refresh();
 
 protected:
+	ESkillInputKey Key;
+
 	UPROPERTY()
 	TObjectPtr<UDataModel> Model;
 
