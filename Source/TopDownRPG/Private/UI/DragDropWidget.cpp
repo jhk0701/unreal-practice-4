@@ -2,9 +2,3 @@
 
 
 #include "UI/DragDropWidget.h"
-
-#include "TopDownRPG/TopDownRPG.h"
-
-UDragDropWidget::UDragDropWidget()
-{
-}

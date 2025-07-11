@@ -10,7 +10,7 @@ enum class ESkillInputKey : uint8;
 
 class USkillSet;
 
-class UTDRPGUWSkillSlot;
+class UTDRPGUWSkillSlotHolder;
 class UUniformGridPanel;
 
 /**
@@ -28,14 +28,14 @@ protected:
 	TObjectPtr<USkillSet> BindedSkillSet;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
-	TSubclassOf<UTDRPGUWSkillSlot> SlotFactory;
+	TSubclassOf<UTDRPGUWSkillSlotHolder> SlotFactory;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UIElement")
-	TMap<ESkillInputKey, UTDRPGUWSkillSlot*> SlotInst;
+	TMap<ESkillInputKey, UTDRPGUWSkillSlotHolder*> SlotInst;
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UUniformGridPanel> Container;
 
 	virtual void NativeOnInitialized() override;
-	// virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
+	
 };

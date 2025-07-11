@@ -9,6 +9,7 @@
 #include "Character/Skill/Skill.h"
 
 #include "UI/DragDropWidget.h"
+#include "UI/Element/TDRPGUWSkillSlot.h"
 
 #include <Components/TextBlock.h>
 #include <Components/Image.h>
@@ -56,11 +57,8 @@ FReply UTDRPGUWSkillListSlot::NativeOnMouseButtonDown(const FGeometry& InGeometr
 {
 	FReply Result = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 
-	PRINT_LOG(TEXT("NativeOnMouseButtonDown"));
-
 	if(InMouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
 	{
-		DragOffset = USlateBlueprintLibrary::AbsoluteToLocal(InGeometry, InMouseEvent.GetScreenSpacePosition());
 		Result.DetectDrag(TakeWidget(), EKeys::LeftMouseButton);
 	}
 
@@ -71,10 +69,19 @@ void UTDRPGUWSkillListSlot::NativeOnDragDetected(const FGeometry& InGeometry, co
 {
 	Super::NativeOnDragDetected(InGeometry, InMouseEvent, OutOperation);
 
-	PRINT_LOG(TEXT("NativeOnDragDetected"));
-
 	UDragDropWidget* DragDropOp = NewObject<UDragDropWidget>();
-	DragDropOp->Offset = DragOffset;
+	// 드래그 중인 위젯
+	DragDropOp->WidgetReference = this;
+	// 넘길 정보
+	DragDropOp->Payload = Model;
+	// 드래그 중 표시중인 위젯
+	UTDRPGUWSlotBase* DragVisualInst = CreateWidget<UTDRPGUWSlotBase>(GetWorld(), DragVisual);
+	UImage* ImageWidget = DragVisualInst->GetIconWidget();
+	ImageWidget->SetBrush(IconImage->GetBrush());
+	ImageWidget->SetOpacity(0.7f);
+	ImageWidget->SetVisibility(ESlateVisibility::Visible);
+	DragDropOp->DefaultDragVisual = DragVisualInst;
+
 	OutOperation = DragDropOp;
 }
 

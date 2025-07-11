@@ -17,24 +17,22 @@ DECLARE_MULTICAST_DELEGATE(FOnSlotInteractCompleted);
 /**
  * 
  */
-UCLASS(Abstract)
+UCLASS()
 class TOPDOWNRPG_API UTDRPGUWSlotBase : public UTDRPGUserWidget
 {
 	GENERATED_BODY()
 
 public:
 	virtual void NativeOnInitialized() override;
-
 	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
-
 	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
 
 	virtual void Clear();
+	inline UImage* GetIconWidget() { return IconImage; }
 
 	// 마우스 호버링 이벤트
 	// 네이티브 메서드에서 Broadcast 해줄 것
 	FOnSlotInteractStarted OnCursorEnter;
-
 	FOnSlotInteractCompleted OnCursorLeave;
 
 	// 슬롯에 대한 클릭 이벤트
@@ -47,12 +45,10 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UImage> IconImage;
 
-	UPROPERTY(meta = (BindWidget))
+	UPROPERTY(meta = (BindWidgetOptional))
 	TObjectPtr<UButton> SlotButton;
 
-
 	virtual void InvokeCursorEnter();
-
 	virtual void InvokeCursorLeave();
 
 	UFUNCTION()

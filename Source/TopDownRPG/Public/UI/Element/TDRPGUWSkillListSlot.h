@@ -6,6 +6,7 @@
 #include "UI/Element/TDRPGUWSkillSlot.h"
 #include "TDRPGUWSkillListSlot.generated.h"
 
+class UTDRPGUWSlotBase;
 class UTextBlock;
 
 /**
@@ -17,12 +18,12 @@ class TOPDOWNRPG_API UTDRPGUWSkillListSlot : public UTDRPGUWSkillSlot
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Drag And Drop")
-	FVector2D DragOffset;
-
 	virtual void Refresh() override;
 
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Drag And Drop")
+	TSubclassOf<UTDRPGUWSlotBase> DragVisual;
+
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> NameLabel;
 
@@ -36,7 +37,6 @@ protected:
 	TObjectPtr<UTextBlock> CooldownLabel;
 
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
-
 	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation) override;
 	virtual void NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
 

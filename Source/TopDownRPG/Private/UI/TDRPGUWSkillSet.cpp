@@ -4,7 +4,7 @@
 #include "UI/TDRPGUWSkillSet.h"
 
 #include "TDRPGEnum.h"
-#include "UI/Element/TDRPGUWSkillSlot.h"
+#include "UI/Element/TDRPGUWSkillSlotHolder.h"
 
 #include <Components/UniformGridPanel.h>
 #include <Components/UniformGridSlot.h>

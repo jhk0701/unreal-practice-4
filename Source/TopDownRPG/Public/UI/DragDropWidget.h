@@ -17,8 +17,8 @@ class TOPDOWNRPG_API UDragDropWidget : public UDragDropOperation
 	GENERATED_BODY()
 
 public:
-	UDragDropWidget();
+	UDragDropWidget() {};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	TObjectPtr<UTDRPGUserWidget> DraggedWidget;
+	TObjectPtr<UTDRPGUserWidget> WidgetReference;
 };

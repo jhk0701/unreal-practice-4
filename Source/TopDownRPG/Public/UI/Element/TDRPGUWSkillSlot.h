@@ -17,12 +17,6 @@ class TOPDOWNRPG_API UTDRPGUWSkillSlot : public UTDRPGUWSlotBase, public IBindab
 {
 	GENERATED_BODY()
 
-protected:
-	UPROPERTY()
-	TObjectPtr<UDataModel> Model;
-
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UTextBlock> KeyLabel;
 
 public:
 	void SetKeyText(FText& InText);
@@ -31,4 +25,10 @@ public:
 	virtual void Unbind() override;
 	virtual void Refresh();
 
+protected:
+	UPROPERTY()
+	TObjectPtr<UDataModel> Model;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTextBlock> KeyLabel;
 };
