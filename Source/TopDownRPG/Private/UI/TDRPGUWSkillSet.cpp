@@ -3,18 +3,24 @@
 
 #include "UI/TDRPGUWSkillSet.h"
 #include "UI/Element/TDRPGUWSkillSlotHolder.h"
+
 #include "TDRPGEnum.h"
+#include "TDRPGConst.h"
+
 #include "Player/SkillSet.h"
 #include "Character/Skill/Skill.h"
+#include "Character/CharacterAction.h"
 
 #include <Components/UniformGridPanel.h>
 #include <Components/UniformGridSlot.h>
 
 
-void UTDRPGUWSkillSet::Bind(USkillSet* InSkillSet)
+void UTDRPGUWSkillSet::Bind(USkillSet* InSkillSet, UCharacterAction* InAction)
 {
 	BindedSkillSet = InSkillSet;
 	BindedSkillSet->OnSlotUpdated.AddUObject(this, &UTDRPGUWSkillSet::OnSlotUpdated);
+
+	BindedAction = InAction;
 }
 
 void UTDRPGUWSkillSet::NativeOnInitialized()
@@ -24,6 +30,7 @@ void UTDRPGUWSkillSet::NativeOnInitialized()
 	// 슬롯 세팅
 	if (SlotFactory)
 	{
+		SlotInst.Empty();
 		uint8 Cnt = (uint8)ESkillInputKey::COUNT;
 
 		for(uint8 i = 0; i < Cnt; ++i)
@@ -37,6 +44,8 @@ void UTDRPGUWSkillSet::NativeOnInitialized()
 			ESkillInputKey Key =(ESkillInputKey)i;
 			Inst->SetKey(Key);
 			Inst->OnSkillDropped.BindUObject(this, &UTDRPGUWSkillSet::OnSkillDropped);
+
+			SlotInst.Add(Key, Inst);
 		}
 	}
 }
@@ -45,7 +54,11 @@ void UTDRPGUWSkillSet::OnSlotUpdated(ESkillInputKey& InKey)
 {
 	// 슬롯 업데이트 이어서하기
 	FString& SkillID = BindedSkillSet->GetSkill(InKey);
-	// SlotInst[InKey]->bind
+
+	if (SkillID == FTDRPGConst::EMPTY_ID)
+		return;
+
+	SlotInst[InKey]->Bind(BindedAction->GetSkill(SkillID));
 }
 
 void UTDRPGUWSkillSet::OnSkillDropped(USkill* InSkill, ESkillInputKey& InKey)

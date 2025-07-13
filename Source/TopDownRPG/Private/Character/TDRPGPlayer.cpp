@@ -121,7 +121,7 @@ void ATDRPGPlayer::Initialize()
 	{
 		PlayerUI->StatusBar->Bind(this);
 		PlayerUI->QuickSlot->Bind(Player->QuickSlot);
-		PlayerUI->SkillSet->Bind(Player->SkillSet);
+		PlayerUI->SkillSet->Bind(Player->SkillSet, ActionComp);
 	}
 
 	if (UTDRPGUWStatusWindow* StatusWind = UIManager->GetUI<UTDRPGUWStatusWindow>())

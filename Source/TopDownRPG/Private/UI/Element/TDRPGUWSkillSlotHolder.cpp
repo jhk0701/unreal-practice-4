@@ -8,6 +8,7 @@
 
 #include "TopDownRPG/TopDownRPG.h"
 
+
 bool UTDRPGUWSkillSlotHolder::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
 	bool bIsDropped = Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);

@@ -25,6 +25,9 @@ public:
 	
 private:
 	// 여기서는 스킬 객체가 아니라 접근할 수 있는 key를 바인딩하는 용도로 하는 것이 적당할 듯
+	// TODO : 스킬 강화 "정보"
+	
+	// 슬롯에 등록한 스킬의 ID
 	UPROPERTY()
 	TMap<ESkillInputKey, FString> Map;
 

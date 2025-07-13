@@ -7,8 +7,11 @@
 #include "TDRPGUWSkillSet.generated.h"
 
 enum class ESkillInputKey : uint8;
+
 class USkill;
 class USkillSet;
+class UCharacterAction;
+
 class UTDRPGUWSkillSlotHolder;
 class UUniformGridPanel;
 
@@ -21,10 +24,11 @@ class TOPDOWNRPG_API UTDRPGUWSkillSet : public UTDRPGUserWidget
 	GENERATED_BODY()
 
 public:
-	void Bind(USkillSet* InSkillSet);
+	void Bind(USkillSet* InSkillSet, UCharacterAction* InAction);
 
 protected:
 	TObjectPtr<USkillSet> BindedSkillSet;
+	TObjectPtr<UCharacterAction> BindedAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UIElement|Factory")
 	TSubclassOf<UTDRPGUWSkillSlotHolder> SlotFactory;
