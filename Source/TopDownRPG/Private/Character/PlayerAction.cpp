@@ -87,7 +87,11 @@ void UPlayerAction::InvokeSkill(uint32 InIndex)
 		return;
 
 	if (UActiveSkill* Skill = Cast<UActiveSkill>(SkillMap[ID]))
-		Skill->InvokeSkill();
+	{
+		// 쿨타임 확인
+		if(!Skill->IsInCooldown())
+			Skill->InvokeSkill();
+	}
 }
 
 bool UPlayerAction::TryUseResource(const TMap<EStatus, int32>& InRequirement)

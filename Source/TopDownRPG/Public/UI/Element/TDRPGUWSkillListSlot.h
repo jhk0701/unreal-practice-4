@@ -28,6 +28,9 @@ protected:
 	TObjectPtr<UTextBlock> NameLabel;
 
 	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTextBlock> TypeLabel;
+
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> InputLabel;
 
 	UPROPERTY(meta = (BindWidget))

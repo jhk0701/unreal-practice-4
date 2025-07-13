@@ -34,10 +34,12 @@ void UTDRPGUWSkillWindow::Refresh()
 	BindedAction->GetSkillIDs(IDs);
 
 	// 슬롯 동적 생성
-	int32 Size = IDs.Num();
-	ListSlots.Init(nullptr, Size);
+	// 첫번째 스킬은 기본 공격으로 쓰기로 결정
 
-	for (int32 i = 0; i < Size; ++i)
+	int32 Size = IDs.Num();
+	ListSlots.Init(nullptr, Size - 1);
+	
+	for (int32 i = 1; i < Size; ++i)
 	{
 		UTDRPGUWSkillListSlot* Instance = CreateWidget<UTDRPGUWSkillListSlot>(this, SlotFactory);
 		

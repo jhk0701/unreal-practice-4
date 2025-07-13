@@ -7,13 +7,12 @@
 #include "Data/SkillDataRow.h"
 #include "Skill.generated.h"
 
+enum class EStatus : uint8;
+enum class ESkillDirection : uint8;
 class USkillConfig;
 class UInputProcessor;
 class UAnimMontage;
-enum class ESkillDirection : uint8;
-enum class EStatus : uint8;
 struct FSkillInputContext;
-
 
 DECLARE_MULTICAST_DELEGATE(FSkillEvent);
 
@@ -57,17 +56,19 @@ class TOPDOWNRPG_API UActiveSkill : public USkill
 
 public:
 	/// 스킬 객체 초기화
-	// virtual void Initialize(FSkillDataRow& InData, USkillConfig* InConfig, AActor* InOwner) override;
 	virtual void Initialize(const FString& InID, UGameDataManager* InDB, AActor* InOwner) override;
 	
 	/// 키 입력 시, 스킬 실행 함수
 	virtual void InvokeSkill();
+	
+	inline bool IsInCooldown() { return Cooldown > 0.0f; }
 
 protected:
 	UPROPERTY()
 	TObjectPtr<UInputProcessor> Input;		// 입력 처리 객체
 
-	float Cooldown;
+	// 쿨타임
+	float Cooldown = 0.0f;
 	FTimerHandle CooldownTimer;
 
 	virtual void Activate(const FSkillInputContext& InContext) override;

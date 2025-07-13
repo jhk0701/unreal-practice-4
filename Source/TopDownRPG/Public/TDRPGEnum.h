@@ -141,6 +141,7 @@ DECLARE_ENUM_TO_STRING(ERarity);
 DECLARE_ENUM_TO_STRING(ETableType);
 DECLARE_ENUM_TO_STRING(EStatus);
 DECLARE_ENUM_TO_STRING(EAbility);
+DECLARE_ENUM_TO_STRING(ESkillType);
 DECLARE_ENUM_TO_STRING(ESkillInput);
 DECLARE_ENUM_TO_STRING(ESkillInputKey);
 
@@ -151,6 +152,7 @@ public:
 	static FString EnumToString(const ETableType InValue);
 	static FString EnumToString(const EStatus InValue);
 	static FString EnumToString(const EAbility InValue);
+	static FString EnumToString(const ESkillType InValue);
 	static FString EnumToString(const ESkillInput InValue);
 	static FString EnumToString(const ESkillInputKey InValue);
 };

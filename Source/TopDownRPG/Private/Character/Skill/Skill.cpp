@@ -110,8 +110,21 @@ void UActiveSkill::InvokeSkill()
 		}
 	}
 
+	// 쿨타임 설정
+	Cooldown = Data.Cooldown;
+	FTimerManager& Handle = Owner->GetWorld()->GetTimerManager();
+	Handle.SetTimer(
+		CooldownTimer, 
+		[this]() 
+		{
+			Cooldown = 0.0f;
+		}, 
+		Cooldown, 
+		false);
+
 	Input->Process();
 }
+
 
 void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
 {

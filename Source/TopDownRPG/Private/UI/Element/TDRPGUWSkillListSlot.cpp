@@ -1,6 +1,4 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "UI/Element/TDRPGUWSkillListSlot.h"
 
 #include "TDRPGEnum.h"
@@ -25,6 +23,10 @@ void UTDRPGUWSkillListSlot::Refresh()
 	FSkillDataRow& Data = Skill->GetData();
 
 	NameLabel->SetText(FText::FromName(Data.Name));
+	TypeLabel->SetText(FText::FromString(FTDRPGEnum::EnumToString(Data.Type)));
+
+	// TODO : 등록되어있는 것에만 표시
+	KeyLabel->SetVisibility(ESlateVisibility::Hidden);
 
 	FString InputType = FTDRPGEnum::EnumToString(Data.InputType);
 	InputLabel->SetText(FText::FromString(FString::Printf(TEXT("[%s]"), *InputType)));
