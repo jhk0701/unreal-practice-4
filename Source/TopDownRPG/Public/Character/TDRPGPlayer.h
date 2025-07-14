@@ -19,6 +19,7 @@ class USphereComponent;
 class ATDRPGPlayerController;
 class UEnhancedInputComponent;
 
+DECLARE_MULTICAST_DELEGATE(FOnInitializeCompleted);
 DECLARE_MULTICAST_DELEGATE(FOnInputInvoked);
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnInputBinded, UEnhancedInputComponent* , ATDRPGPlayerController* );
 
@@ -45,6 +46,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interaction")
 	TObjectPtr<USphereComponent> InteractCollider;
+
+	FOnInitializeCompleted OnInitCompleted;
 
 	FOnInputBinded OnInputBinded;
 	FOnInputInvoked OnAttackInvoked;

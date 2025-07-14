@@ -81,7 +81,6 @@ protected:
 	virtual void AdjustDamage(const TArray<FHitResult>& InHits);
 };
 
-
 UCLASS()
 class TOPDOWNRPG_API UPassiveSkill : public USkill
 {

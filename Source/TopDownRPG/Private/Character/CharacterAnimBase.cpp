@@ -57,3 +57,8 @@ void UCharacterAnimBase::NotifyHitEnd()
 {
 	OnHitEnded.Broadcast();
 }
+
+void UCharacterAnimBase::NotifyLaunchInvoke()
+{
+	OnLaunchInvoked.Broadcast();
+}

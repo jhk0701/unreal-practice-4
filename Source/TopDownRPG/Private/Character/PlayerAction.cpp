@@ -8,6 +8,7 @@
 #include "Character/TDRPGEnemy.h"
 #include "Character/CharacterData.h"
 #include "Character/PlayerAnim.h"
+#include "Character/PlayerMove.h"
 
 #include "TDRPGEnum.h"
 #include "TDRPGConst.h"
@@ -33,6 +34,7 @@ void UPlayerAction::InitializeComponent()
 
 	Player = Cast<ATDRPGPlayer>(GetOwner());
 	Player->OnInputBinded.AddUObject(this, &UPlayerAction::SetupInputBinding);
+	Player->OnInitCompleted.AddUObject(this, &UPlayerAction::OnPlayerInitialized);
 }
 
 void UPlayerAction::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)
@@ -47,6 +49,12 @@ void UPlayerAction::InputAttack(const FInputActionValue& InputValue)
 		return;
 
 	InvokeAttack();
+}
+
+void UPlayerAction::OnPlayerInitialized()
+{
+	// 스킬 모션 중 이동 명령 시 호출을 위해서 구독
+	Player->AnimInst->OnLaunchInvoked.AddUObject(this, &UPlayerAction::InvokeLaunch);
 }
 
 void UPlayerAction::InvokeAttack()
@@ -89,9 +97,14 @@ void UPlayerAction::InvokeSkill(uint32 InIndex)
 	if (UActiveSkill* Skill = Cast<UActiveSkill>(SkillMap[ID]))
 	{
 		// 쿨타임 확인
-		if(!Skill->IsInCooldown())
+		if (!Skill->IsInCooldown())
 			Skill->InvokeSkill();
 	}
+}
+
+void UPlayerAction::InvokeLaunch()
+{
+	Player->MoveComp->LaunchForward(5 * 1000);
 }
 
 bool UPlayerAction::TryUseResource(const TMap<EStatus, int32>& InRequirement)

@@ -45,4 +45,5 @@ public:
 
 	void InputDodge(const FInputActionValue& InputValue);
 	void Dodge();
+	void LaunchForward(uint32 InVelocity);
 };

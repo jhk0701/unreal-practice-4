@@ -8,7 +8,7 @@
 
 class UAnimMontage;
 
-DECLARE_MULTICAST_DELEGATE(FHitNofity);
+DECLARE_MULTICAST_DELEGATE(FAnimNotify);
 
 UCLASS()
 class TOPDOWNRPG_API UCharacterAnimBase : public UAnimInstance
@@ -38,8 +38,9 @@ public:
 
 	virtual void PlayHit();
 
-	FHitNofity OnHitStarted;
-	FHitNofity OnHitEnded;
+	FAnimNotify OnHitStarted;
+	FAnimNotify OnHitEnded;
+	FAnimNotify OnLaunchInvoked;
 
 protected:
 	virtual void NativeInitializeAnimation() override;
@@ -53,4 +54,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void NotifyHitEnd();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void NotifyLaunchInvoke();
 };

@@ -137,6 +137,8 @@ void ATDRPGPlayer::Initialize()
 		SkillWind->Bind(ActionComp);
 
 	DataComp->OnCharacterDead.AddUObject(this, &ATDRPGPlayer::Die);
+
+	OnInitCompleted.Broadcast();
 }
 
 void ATDRPGPlayer::LoadConfig()

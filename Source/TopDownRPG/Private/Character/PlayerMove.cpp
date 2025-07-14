@@ -87,6 +87,13 @@ void UPlayerMove::InputDodge(const FInputActionValue& InputValue)
 void UPlayerMove::Dodge()
 {
 	StopMove();
-	CharMove->Launch(Player->GetActorForwardVector() * DodgePower);
+	LaunchForward(DodgePower);
 }
+
+void UPlayerMove::LaunchForward(uint32 InVelocity)
+{
+	CharMove->Launch(Player->GetActorForwardVector() * InVelocity);
+}
+
+
 

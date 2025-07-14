@@ -33,6 +33,8 @@ public:
 
 	virtual void InvokeAttack() {};
 	virtual void InvokeSkill(uint32 InIndex) {};
+	virtual void InvokeLaunch() {};
+
 	virtual bool TryUseResource(const TMap<EStatus, int32>& InRequirement) { return true; };
 
 };
