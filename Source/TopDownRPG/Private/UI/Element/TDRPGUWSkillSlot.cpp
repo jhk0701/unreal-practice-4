@@ -26,8 +26,24 @@ void UTDRPGUWSkillSlot::Bind(UDataModel* InModel)
 	if (!InModel)
 		return;
 
+	// 정리 절차
+	if (Model && Model->IsA<UActiveSkill>())
+	{
+		UActiveSkill* ActiveSkill = Cast<UActiveSkill>(Model);
+		ActiveSkill->OnCooldownStarted.RemoveAll(this);
+		ActiveSkill->OnCooldownEnded.RemoveAll(this);
+	}
+
 	Model = InModel;
 	Refresh();
+
+	// 구독 추가
+	if (Model && Model->IsA<UActiveSkill>())
+	{
+		UActiveSkill* ActiveSkill = Cast<UActiveSkill>(Model);
+		ActiveSkill->OnCooldownStarted.AddUObject(this, &UTDRPGUWSkillSlot::OnCooldownStart);
+		ActiveSkill->OnCooldownEnded.AddUObject(this, &UTDRPGUWSkillSlot::OnCooldownEnd);
+	}
 }
 
 void UTDRPGUWSkillSlot::Unbind()
@@ -54,4 +70,14 @@ void UTDRPGUWSkillSlot::Refresh()
 			}
 		}
 	));
+}
+
+void UTDRPGUWSkillSlot::OnCooldownStart()
+{
+	IconImage->SetOpacity(0.2f);
+}
+
+void UTDRPGUWSkillSlot::OnCooldownEnd()
+{
+	IconImage->SetOpacity(1.0f);
 }

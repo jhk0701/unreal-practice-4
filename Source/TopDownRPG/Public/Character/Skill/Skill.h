@@ -63,6 +63,9 @@ public:
 	
 	inline bool IsInCooldown() { return Cooldown > 0.0f; }
 
+	FSkillEvent OnCooldownStarted;
+	FSkillEvent OnCooldownEnded;
+
 protected:
 	UPROPERTY()
 	TObjectPtr<UInputProcessor> Input;		// 입력 처리 객체

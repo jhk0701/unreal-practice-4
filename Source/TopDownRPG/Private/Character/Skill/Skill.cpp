@@ -110,6 +110,9 @@ void UActiveSkill::InvokeSkill()
 		}
 	}
 
+	// 스킬 입력 절차
+	Input->Process();
+
 	// 쿨타임 설정
 	Cooldown = Data.Cooldown;
 	FTimerManager& Handle = Owner->GetWorld()->GetTimerManager();
@@ -118,11 +121,12 @@ void UActiveSkill::InvokeSkill()
 		[this]() 
 		{
 			Cooldown = 0.0f;
+			OnCooldownEnded.Broadcast();
 		}, 
 		Cooldown, 
 		false);
 
-	Input->Process();
+	OnCooldownStarted.Broadcast();
 }
 
 

@@ -34,4 +34,7 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> KeyLabel;
+
+	void OnCooldownStart();
+	void OnCooldownEnd();
 };
