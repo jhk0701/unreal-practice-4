@@ -92,6 +92,7 @@ void UPlayerMove::Dodge()
 
 void UPlayerMove::LaunchForward(uint32 InVelocity)
 {
+	StopMove();
 	CharMove->Launch(Player->GetActorForwardVector() * InVelocity);
 }
 
