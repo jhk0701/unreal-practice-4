@@ -101,14 +101,24 @@ void UActiveSkill::Activate(const FSkillInputContext& InContext)
 void UActiveSkill::InvokeSkill()
 {
 	// 스킬 자원 소모
-	if(ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
-	{
-		if (!Player->ActionComp->TryUseResource(Data.Requirement))
+	ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner);
+	auto& Requirement = Data.Requirement;
+	bool bIsInCooldown = Cooldown > 0.0f;
+
+	bool bIsEnable = Input->CheckIsEnable(
+		[Player, Requirement, bIsInCooldown]()
 		{
-			PRINT_LOG(TEXT("Resource is not enough."));
-			return;
+			// 쿨타임 확인
+			if (bIsInCooldown)
+				return false;
+			
+			// 자원 소모 확인
+			return Player->ActionComp->TryUseResource(Requirement);
 		}
-	}
+	);
+	
+	if (!bIsEnable)
+		return;
 
 	// 스킬 입력 절차
 	Input->Process();

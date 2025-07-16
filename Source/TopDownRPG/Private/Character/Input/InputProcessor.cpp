@@ -24,7 +24,14 @@ void UInputNormal::Process()
 
 UInputCombo::UInputCombo()
 	: ComboCount(0)
+{}
+
+bool UInputCombo::CheckIsEnable(TFunction<bool()> InPredicate)
 {
+	if (ComboCount > 0)
+		return true;
+	
+	return InPredicate();
 }
 
 void UInputCombo::Process()

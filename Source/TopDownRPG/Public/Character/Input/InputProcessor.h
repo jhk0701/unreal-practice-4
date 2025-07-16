@@ -36,6 +36,7 @@ class TOPDOWNRPG_API UInputProcessor : public UObject
 public:
 	FSkillInputEvent OnInputProcessed;
 
+	virtual bool CheckIsEnable(TFunction<bool()> InPredicate) { return InPredicate(); };
 	virtual void Process() {};
 };
 
@@ -61,7 +62,8 @@ class TOPDOWNRPG_API UInputCombo : public UInputProcessor
 
 public:
 	UInputCombo();
-	void Process() override;
+	virtual bool CheckIsEnable(TFunction<bool()> InPredicate) override;
+	virtual void Process() override;
 
 private:
 	int32 ComboCount = 0;

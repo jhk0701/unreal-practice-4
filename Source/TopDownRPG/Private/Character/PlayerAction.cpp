@@ -96,9 +96,7 @@ void UPlayerAction::InvokeSkill(uint32 InIndex)
 
 	if (UActiveSkill* Skill = Cast<UActiveSkill>(SkillMap[ID]))
 	{
-		// 쿨타임 확인
-		if (!Skill->IsInCooldown())
-			Skill->InvokeSkill();
+		Skill->InvokeSkill();
 	}
 }
 

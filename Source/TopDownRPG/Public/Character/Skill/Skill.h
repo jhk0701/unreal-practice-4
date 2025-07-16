@@ -60,8 +60,6 @@ public:
 	
 	/// 키 입력 시, 스킬 실행 함수
 	virtual void InvokeSkill();
-	
-	inline bool IsInCooldown() { return Cooldown > 0.0f; }
 
 	FSkillEvent OnCooldownStarted;
 	FSkillEvent OnCooldownEnded;
