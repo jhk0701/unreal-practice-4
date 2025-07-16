@@ -38,6 +38,17 @@ public:
 
 	virtual bool CheckIsEnable(TFunction<bool()> InPredicate) { return InPredicate(); };
 	virtual void Process() {};
+
+protected:
+	bool bIsInInterval = false;
+
+	void SetInterval();
+	inline void ClearInterval() { bIsInInterval = false; };
+
+private:
+	const float InputInterval = 0.5f;
+	FTimerHandle IntervalTimer;
+
 };
 
 /// <summary>
@@ -67,6 +78,7 @@ public:
 
 private:
 	int32 ComboCount = 0;
+	int32 MaxCount = 8; // TODO : 데이터에서 받아오기
 	const float ComboResetSec = 1.0f;
 	FTimerHandle ComboTimer;
 

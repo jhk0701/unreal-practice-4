@@ -6,11 +6,31 @@
 
 #include "TopDownRPG/TopDownRPG.h"
 
+#pragma region InputProcessor
+void UInputProcessor::SetInterval()
+{
+	bIsInInterval = true;
+	FTimerManager& Timer = GetWorld()->GetTimerManager();
+
+	Timer.SetTimer(
+		IntervalTimer,
+		FTimerDelegate::CreateUObject(this, &UInputProcessor::ClearInterval),
+		InputInterval,
+		false);
+
+}
+#pragma endregion
+
 
 #pragma region Normal
 
 void UInputNormal::Process()
 {
+	if (bIsInInterval)
+		return;
+
+	SetInterval();
+
 	FSkillInputContext Context;
 	Context.bProcessIsCompleted = true;
 
@@ -22,20 +42,27 @@ void UInputNormal::Process()
 
 #pragma region Combo
 
-UInputCombo::UInputCombo()
-	: ComboCount(0)
+UInputCombo::UInputCombo() : ComboCount(0)
 {}
 
 bool UInputCombo::CheckIsEnable(TFunction<bool()> InPredicate)
 {
-	if (ComboCount > 0)
-		return true;
-	
-	return InPredicate();
+	// 콤보 입력 시, 최초 입력 -> 스킬 시전
+	if (ComboCount == 0)
+		return InPredicate();
+
+	// 최초 입력이 아닌 경우, 콤보 사용 중.
+	// 최대 사용 횟수 체크
+	return ComboCount <= MaxCount;
 }
 
 void UInputCombo::Process()
 {
+	if (bIsInInterval)
+		return;
+
+	SetInterval();
+
 	// 입력 처리
 	FSkillInputContext Context;
 	Context.Count = ++ComboCount; // 콤보 입력 횟수 증가
