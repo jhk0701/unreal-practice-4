@@ -158,8 +158,7 @@ void UActiveSkill::InvokeSweep()
 
 	// 충돌 검사
 	TArray<FHitResult> Hits;
-	FVector Start;
-	FVector End;
+	FVector Start, End;
 
 	FCollisionQueryParams Param;
 	Param.AddIgnoredActor(Owner);
@@ -181,6 +180,7 @@ void UActiveSkill::InvokeSweep()
 		break;
 	}
 
+	// 표시용 디버그
 	DrawDebugLine(Owner->GetWorld(), Start, End, FColor::Red, false, 1.0f);
 	DrawDebugSphere(Owner->GetWorld(), End, Data.Size, 12, FColor::Red, false , 1.0f, 0, 1.0f);
 

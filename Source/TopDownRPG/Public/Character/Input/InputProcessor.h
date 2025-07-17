@@ -46,7 +46,7 @@ protected:
 	inline void ClearInterval() { bIsInInterval = false; };
 
 private:
-	const float InputInterval = 0.5f;
+	const float InputInterval = 0.7;
 	FTimerHandle IntervalTimer;
 
 };
@@ -79,7 +79,7 @@ public:
 private:
 	int32 ComboCount = 0;
 	int32 MaxCount = 8; // TODO : 데이터에서 받아오기
-	const float ComboResetSec = 1.0f;
+	const float ComboResetSec = 2.0f;
 	FTimerHandle ComboTimer;
 
 	inline void Clear() { ComboCount = 0; };

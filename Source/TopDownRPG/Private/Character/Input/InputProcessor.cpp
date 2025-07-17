@@ -42,8 +42,7 @@ void UInputNormal::Process()
 
 #pragma region Combo
 
-UInputCombo::UInputCombo() : ComboCount(0)
-{}
+UInputCombo::UInputCombo() : ComboCount(0) {}
 
 bool UInputCombo::CheckIsEnable(TFunction<bool()> InPredicate)
 {
@@ -65,7 +64,7 @@ void UInputCombo::Process()
 
 	// 입력 처리
 	FSkillInputContext Context;
-	Context.Count = ++ComboCount; // 콤보 입력 횟수 증가
+	Context.Count = ComboCount++; // 콤보 입력 횟수 증가
 	Context.bProcessIsCompleted = true;
 
 	// 입력 이벤트 발행
