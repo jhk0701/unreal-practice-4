@@ -94,7 +94,8 @@ UInputHolding::UInputHolding()
 	: CurrentProcess(EInputProcedure::Ready),
 	TargetTime(2.0f),
 	ElapsedTime(0.0f)
-{}
+{	
+}
 
 void UInputHolding::Process()
 {
@@ -135,6 +136,11 @@ void UInputHolding::Release()
 #pragma endregion
 
 #pragma region Charging
+
+void UInputCharging::Complete()
+{
+	Release();
+}
 
 void UInputCharging::Release()
 {

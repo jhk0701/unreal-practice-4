@@ -41,14 +41,12 @@ public:
 	virtual void Complete() {};
 
 protected:
-	bool bIsInInterval = false;
+	bool bIsInInterval = false; 
+	float InputInterval = 0.7;
+	FTimerHandle IntervalTimer;
 
 	void SetInterval();
 	inline void ClearInterval() { bIsInInterval = false; };
-
-private:
-	const float InputInterval = 0.7;
-	FTimerHandle IntervalTimer;
 
 };
 
@@ -87,7 +85,7 @@ private:
 };
 
 
-UCLASS(Abstract)
+UCLASS()
 class TOPDOWNRPG_API UInputHolding : public UInputProcessor
 {
 	GENERATED_BODY()
@@ -116,6 +114,7 @@ class TOPDOWNRPG_API UInputCharging : public UInputHolding
 	GENERATED_BODY()
 
 public:
+	virtual void Complete() override;
 	virtual void Release() override;
 
 protected:

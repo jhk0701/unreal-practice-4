@@ -83,8 +83,9 @@ enum class ESkillInput : uint8
 {
 	Normal,
 	Combo,
-	Casting,
+	Holding,
 	Charging,
+	Casting,
 	Area,
 };
 
