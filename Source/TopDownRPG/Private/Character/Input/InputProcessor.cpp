@@ -94,8 +94,7 @@ UInputHolding::UInputHolding()
 	: CurrentProcess(EInputProcedure::Ready),
 	TargetTime(2.0f),
 	ElapsedTime(0.0f)
-{	
-}
+{}
 
 void UInputHolding::Process()
 {
@@ -106,13 +105,23 @@ void UInputHolding::Process()
 		Start();
 }
 
+void UInputHolding::Complete()
+{
+	// 입력 종료 이벤트 호출
+	Release();
+}
+
 void UInputHolding::Start()
 {
 	CurrentProcess = EInputProcedure::InProgress;
 	ElapsedTime = 0.0f;
 
-	auto& Timer = GetWorld()->GetTimerManager();
+	FSkillInputContext Context;
+	Context.bProcessIsCompleted = false;
+	Context.Percent = 0.0f;
+	OnInputStarted.ExecuteIfBound(Context);
 
+	auto& Timer = GetWorld()->GetTimerManager();
 	if (Timer.IsTimerActive(ProcessTimer))
 		Timer.ClearTimer(ProcessTimer);
 
@@ -126,6 +135,11 @@ void UInputHolding::Start()
 void UInputHolding::Release()
 {
 	CurrentProcess = EInputProcedure::Ready;
+
+	FSkillInputContext Context;
+	Context.bProcessIsCompleted = true;
+	Context.Percent = ElapsedTime / TargetTime * 100.0f;
+	OnInputCompleted.ExecuteIfBound(Context);
 
 	auto& Timer = GetWorld()->GetTimerManager();
 

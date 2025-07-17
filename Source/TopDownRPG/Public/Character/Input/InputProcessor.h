@@ -34,7 +34,9 @@ class TOPDOWNRPG_API UInputProcessor : public UObject
 	GENERATED_BODY()
 
 public:
+	FSkillInputEvent OnInputStarted;
 	FSkillInputEvent OnInputProcessed;
+	FSkillInputEvent OnInputCompleted;
 
 	virtual bool CheckIsEnable(TFunction<bool()> InPredicate) { return InPredicate(); };
 	virtual void Process() {};
@@ -93,6 +95,7 @@ class TOPDOWNRPG_API UInputHolding : public UInputProcessor
 public:
 	UInputHolding();
 	virtual void Process() override;
+	virtual void Complete() override;
 	virtual void Release();
 
 	inline void SetTargetTime(float InTime) { TargetTime = InTime; }

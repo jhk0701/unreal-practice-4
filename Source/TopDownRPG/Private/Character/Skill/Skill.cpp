@@ -70,7 +70,10 @@ void UActiveSkill::Initialize(const FString& InID, UGameDataManager* InDB, AActo
 
 	// 입력 처리 설정
 	Input = FInputProcessorFactory::GetInstance(Data.InputType, InOwner->GetWorld());
+	
+	// Input->OnInputStarted.BindUObject(this, );
 	Input->OnInputProcessed.BindUObject(this, &UActiveSkill::OnInputProcessed);
+	// Input->OnInputCompleted.BindUObject(this, );
 }
 
 
@@ -109,7 +112,7 @@ void UActiveSkill::InvokeSkill()
 		[Player, Requirement, bIsInCooldown]()
 		{
 			// 쿨타임 확인
-			if (bIsInCooldown)
+			if (bIsInCooldown) 
 				return false;
 			
 			// 자원 소모 확인
