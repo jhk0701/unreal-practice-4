@@ -7,6 +7,7 @@
 #include "TopDownRPG/TopDownRPG.h"
 
 #pragma region InputProcessor
+
 void UInputProcessor::SetInterval()
 {
 	bIsInInterval = true;

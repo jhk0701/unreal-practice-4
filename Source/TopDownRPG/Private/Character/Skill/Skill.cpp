@@ -139,6 +139,11 @@ void UActiveSkill::InvokeSkill()
 	OnCooldownStarted.Broadcast();
 }
 
+void UActiveSkill::CompleteSkill()
+{
+	Input->Complete();
+}
+
 
 void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
 {

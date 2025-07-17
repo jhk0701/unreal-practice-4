@@ -40,7 +40,8 @@ void UPlayerAction::InitializeComponent()
 void UPlayerAction::SetupInputBinding(UEnhancedInputComponent* PlayerInputComponent, ATDRPGPlayerController* InController)
 {
 	PlayerInputComponent->BindAction(InController->AttackDefaultAction, ETriggerEvent::Triggered, this, &UPlayerAction::InputAttack);
-	PlayerInputComponent->BindAction(InController->SkillAction, ETriggerEvent::Triggered, this, &UPlayerAction::InputSkill);
+	PlayerInputComponent->BindAction(InController->SkillAction, ETriggerEvent::Triggered, this, &UPlayerAction::InputSkillButtonDown);
+	PlayerInputComponent->BindAction(InController->SkillAction, ETriggerEvent::Completed, this, &UPlayerAction::InputSkillButtonUp);
 }
 
 void UPlayerAction::InputAttack(const FInputActionValue& InputValue)
@@ -76,7 +77,7 @@ void UPlayerAction::InvokeAttack()
 		DefaultAttack->InvokeSkill();
 }
 
-void UPlayerAction::InputSkill(const FInputActionValue& InputValue)
+void UPlayerAction::InputSkillButtonDown(const FInputActionValue& InputValue)
 {
 	if (Player->CheckPlayerIsDead())
 		return;
@@ -84,6 +85,16 @@ void UPlayerAction::InputSkill(const FInputActionValue& InputValue)
 	uint32 Value = (uint32)InputValue.Get<float>() - 1;
 	InvokeSkill(Value);
 }
+
+void UPlayerAction::InputSkillButtonUp(const FInputActionValue& InputValue)
+{
+	if (Player->CheckPlayerIsDead())
+		return;
+
+	uint32 Value = (uint32)InputValue.Get<float>() - 1;
+	CompleteSkill(Value);
+}
+
 
 void UPlayerAction::InvokeSkill(uint32 InIndex)
 {
@@ -98,6 +109,19 @@ void UPlayerAction::InvokeSkill(uint32 InIndex)
 	{
 		Skill->InvokeSkill();
 	}
+}
+
+void UPlayerAction::CompleteSkill(uint32 InIndex)
+{
+	ESkillInputKey Key = (ESkillInputKey)InIndex;
+
+	UPlayerManager* PlayerManager = GetWorld()->GetGameInstance()->GetSubsystem<UPlayerManager>();
+	FString& ID = PlayerManager->SkillSet->GetSkill(Key);
+	if (ID == FTDRPGConst::EMPTY_ID)
+		return;
+
+	if (UActiveSkill* Skill = Cast<UActiveSkill>(SkillMap[ID]))
+		Skill->CompleteSkill();
 }
 
 void UPlayerAction::InvokeLaunch()

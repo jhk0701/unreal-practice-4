@@ -56,10 +56,11 @@ class TOPDOWNRPG_API UActiveSkill : public USkill
 
 public:
 	/// 스킬 객체 초기화
-	virtual void Initialize(const FString& InID, UGameDataManager* InDB, AActor* InOwner) override;
+	void Initialize(const FString& InID, UGameDataManager* InDB, AActor* InOwner) override;
 	
 	/// 키 입력 시, 스킬 실행 함수
-	virtual void InvokeSkill();
+	void InvokeSkill();
+	void CompleteSkill();
 
 	FSkillEvent OnCooldownStarted;
 	FSkillEvent OnCooldownEnded;

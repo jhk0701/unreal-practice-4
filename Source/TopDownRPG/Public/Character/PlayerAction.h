@@ -34,9 +34,11 @@ public:
 	virtual void InvokeAttack() override;
 	virtual void InvokeSkill(uint32 InIndex) override;
 	virtual void InvokeLaunch() override;
-
 	virtual bool TryUseResource(const TMap<EStatus, int32>& InRequirement) override;
-	
+
 	void InputAttack(const FInputActionValue& InputValue);
-	void InputSkill(const FInputActionValue& InputValue);
+	void InputSkillButtonDown(const FInputActionValue& InputValue);
+	void InputSkillButtonUp(const FInputActionValue& InputValue);
+
+	void CompleteSkill(uint32 InIndex);
 };

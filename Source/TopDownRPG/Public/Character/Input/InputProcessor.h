@@ -38,6 +38,7 @@ public:
 
 	virtual bool CheckIsEnable(TFunction<bool()> InPredicate) { return InPredicate(); };
 	virtual void Process() {};
+	virtual void Complete() {};
 
 protected:
 	bool bIsInInterval = false;
@@ -108,9 +109,7 @@ protected:
 	virtual void Pressing() {};
 };
 
-/// <summary>
-/// 계속 누르고 있다가 특정 지점에서 떼면 스킬 발동
-/// </summary>
+// 계속 누르고 있다가 특정 지점에서 떼면 스킬 발동
 UCLASS()
 class TOPDOWNRPG_API UInputCharging : public UInputHolding
 {
@@ -124,9 +123,8 @@ protected:
 };
 
 
-/// <summary>
-/// 스킬 시전 동안 계속 누르기
-/// </summary>
+
+// 스킬 시전 동안 계속 누르기
 UCLASS()
 class TOPDOWNRPG_API UInputCasting : public UInputHolding
 {
