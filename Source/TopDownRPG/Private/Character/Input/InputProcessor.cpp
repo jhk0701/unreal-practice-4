@@ -33,10 +33,15 @@ void UInputNormal::Process()
 
 	SetInterval();
 
+	OnInputProcessed.ExecuteIfBound(GetContext());
+}
+
+FSkillInputContext UInputNormal::GetContext()
+{
 	FSkillInputContext Context;
 	Context.bProcessIsCompleted = true;
 
-	OnInputProcessed.ExecuteIfBound(Context);
+	return Context;
 }
 
 #pragma endregion
@@ -64,13 +69,8 @@ void UInputCombo::Process()
 
 	SetInterval();
 
-	// 입력 처리
-	FSkillInputContext Context;
-	Context.Count = ComboCount++; // 콤보 입력 횟수 증가
-	Context.bProcessIsCompleted = true;
-
 	// 입력 이벤트 발행
-	OnInputProcessed.ExecuteIfBound(Context);
+	OnInputProcessed.ExecuteIfBound(GetContext());
 
 	// 초기화 타이머
 	FTimerManager& Timer = GetWorld()->GetTimerManager();
@@ -86,13 +86,22 @@ void UInputCombo::Process()
 		false);
 }
 
+FSkillInputContext UInputCombo::GetContext()
+{
+	FSkillInputContext Context;
+	Context.Count = ComboCount++; // 콤보 입력 횟수 증가
+	Context.bProcessIsCompleted = true;
+
+	return Context;
+}
+
 #pragma endregion
 
 
 #pragma region Holding
 
 UInputHolding::UInputHolding()
-	: TargetTime(8.0f), 
+	: HoldingTime(8.0f),
 	ElapsedTime(.0f), 
 	Procedure(EInputProcedure::Ready)
 {}
@@ -110,11 +119,7 @@ void UInputHolding::Process()
 	SetInterval();
 	StartHoldTimer(.0f);
 
-	FSkillInputContext Context;
-	Context.bProcessIsCompleted = true;
-	Context.Percent = .0f;
-
-	OnInputProcessed.ExecuteIfBound(Context);
+	OnInputProcessed.ExecuteIfBound(GetContext());
 }
 
 void UInputHolding::Complete()
@@ -127,11 +132,7 @@ void UInputHolding::Complete()
 	if (TimerManager.IsTimerActive(HoldTimer))
 		TimerManager.ClearTimer(HoldTimer);
 
-	FSkillInputContext Context;
-	Context.bProcessIsCompleted = true;
-	Context.Percent = ElapsedTime / TargetTime * 100.0f;
-
-	OnInputCompleted.ExecuteIfBound(Context);
+	OnInputCompleted.ExecuteIfBound(GetContext());
 
 	Procedure = EInputProcedure::Ready;
 }
@@ -139,8 +140,6 @@ void UInputHolding::Complete()
 void UInputHolding::StartHoldTimer(float InElapsedTime)
 {
 	ElapsedTime = InElapsedTime;
-
-	PRINT_LOG(TEXT("Holding... %f"), ElapsedTime);
 
 	auto& TimerManager = GetWorld()->GetTimerManager();
 	
@@ -151,7 +150,7 @@ void UInputHolding::StartHoldTimer(float InElapsedTime)
 		HoldTimer, 
 		[&]()
 		{
-			if (ElapsedTime + .1f > TargetTime)
+			if (ElapsedTime + .1f > HoldingTime)
 				Complete();
 			else
 				StartHoldTimer(ElapsedTime + .1f);
@@ -160,8 +159,56 @@ void UInputHolding::StartHoldTimer(float InElapsedTime)
 		false);
 }
 
+FSkillInputContext UInputHolding::GetContext()
+{
+	FSkillInputContext Context;
+	Context.bProcessIsCompleted = true;
+	Context.bPlayAttackLast = false;
+	Context.Percent = ElapsedTime / HoldingTime * 100.0f;
+
+	return Context;
+}
+
 #pragma endregion
 
+
+#pragma region Casting
+
+FSkillInputContext UInputCasting::GetContext()
+{
+	FSkillInputContext Context;
+	Context.bProcessIsCompleted = true;
+	Context.bPlayAttackLast = true;
+	Context.Percent = ElapsedTime / HoldingTime * 100.0f;
+
+	return Context;
+}
+
+#pragma endregion
+
+
+#pragma region Charging
+
+UInputCharging::UInputCharging()
+	: TargetTime(8.0f),
+	Allowance(5.0f)
+{
+}
+
+FSkillInputContext UInputCharging::GetContext()
+{
+	FSkillInputContext Context;
+	Context.bProcessIsCompleted = true;
+	Context.bPlayAttackLast = true;
+	Context.Percent = ElapsedTime / HoldingTime * 100.0f;
+
+	float TargetPer = ElapsedTime / TargetTime * 100.0f - 100.0f;
+	Context.bChargeComplete = abs(TargetPer) < Allowance;
+
+	return Context;
+}
+
+#pragma endregion
 
 
 UInputProcessor* FInputProcessorFactory::GetInstance(ESkillInput InType, UObject* InOwner)

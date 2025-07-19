@@ -16,6 +16,9 @@ struct TOPDOWNRPG_API FSkillInputContext
 
 public:
 	bool bProcessIsCompleted;
+	bool bPlayAttackLast;
+	bool bChargeComplete;
+
 	int32 Count;
 	float Percent;
 	FVector Position;
@@ -48,6 +51,8 @@ protected:
 
 	void SetInterval();
 	inline void ClearInterval() { bIsInInterval = false; };
+
+	virtual FSkillInputContext GetContext() { FSkillInputContext Context; return Context; };
 };
 
 /// <summary>
@@ -60,6 +65,9 @@ class TOPDOWNRPG_API UInputNormal : public UInputProcessor
 
 public:
 	void Process() override;
+
+protected:
+	virtual FSkillInputContext GetContext() override;
 };
 
 /// <summary>
@@ -74,6 +82,9 @@ public:
 	UInputCombo();
 	virtual bool CheckIsEnable(TFunction<bool()> InPredicate) override;
 	virtual void Process() override;
+
+protected:
+	virtual FSkillInputContext GetContext() override;
 
 private:
 	int32 ComboCount = 0;
@@ -101,11 +112,23 @@ protected:
 	EInputProcedure Procedure;
 
 	// 홀딩 시간 세기
-	float TargetTime = .0f;
+	float HoldingTime = .0f;
 	float ElapsedTime = .0f;
 	FTimerHandle HoldTimer;
-
 	void StartHoldTimer(float InElapsedTime);
+
+	virtual FSkillInputContext GetContext() override;
+
+};
+
+// 스킬 시전 동안 계속 누르기
+UCLASS()
+class TOPDOWNRPG_API UInputCasting : public UInputHolding
+{
+	GENERATED_BODY()
+
+protected:
+	FSkillInputContext GetContext() override;
 };
 
 // 계속 누르고 있다가 특정 지점에서 떼면 스킬 발동
@@ -114,16 +137,17 @@ class TOPDOWNRPG_API UInputCharging : public UInputHolding
 {
 	GENERATED_BODY()
 
+public:
+	UInputCharging();
+
+protected:
+	FSkillInputContext GetContext() override;
+
+private:
+	float TargetTime = .0f;
+	float Allowance = 10.0f;
 };
 
-
-// 스킬 시전 동안 계속 누르기
-UCLASS()
-class TOPDOWNRPG_API UInputCasting : public UInputHolding
-{
-	GENERATED_BODY()
-
-};
 
 /// <summary>
 /// 시전 시, 영역을 표시기가 보이고 해당 영역을 클릭하면 발동

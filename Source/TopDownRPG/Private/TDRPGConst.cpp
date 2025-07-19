@@ -24,4 +24,7 @@ const FString FTDRPGConst::GAME_DATA_SLOT = FString(TEXT("GameDataSlot"));
 
 const FString FTDRPGConst::EMPTY_ID = FString(TEXT("0000"));
 
+//MONTAGE_FORMAT_HIT
+const FString FTDRPGConst::MONTAGE_FORMAT_HIT = FString(TEXT("Hit_{0}"));
 const FString FTDRPGConst::MONTAGE_FORMAT_ATTACK = FString(TEXT("Attack_{0}"));
+const FString FTDRPGConst::MONTAGE_ATTACK_LAST = FString(TEXT("Attack_Last"));

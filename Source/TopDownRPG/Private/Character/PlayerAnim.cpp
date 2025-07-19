@@ -39,7 +39,16 @@ void UPlayerAnim::PlayAttackLast()
 		return;
 
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
-		Player->PlayAnimMontage(AttackMontage, 1.0f, FName(FString::Format(*FTDRPGConst::MONTAGE_FORMAT_ATTACK, { TEXT("Last") })));
+		Player->PlayAnimMontage(AttackMontage, 1.0f, FName(FTDRPGConst::MONTAGE_ATTACK_LAST));
+}
+
+void UPlayerAnim::StopAttack()
+{
+	if (!AttackMontage)
+		return;
+
+	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
+		Player->StopAnimMontage(AttackMontage);
 }
 
 void UPlayerAnim::PlayHit()
@@ -52,7 +61,7 @@ void UPlayerAnim::PlayHit()
 		int Cnt = HitMontage->GetNumSections();
 		int Idx = FMath::RandRange(0, Cnt - 1);
 
-		Player->PlayAnimMontage(HitMontage, 1.0f, FName(FString::Printf(TEXT("Hit_%d"), Idx)));
+		Player->PlayAnimMontage(HitMontage, 1.0f, FName(FString::Format(*FTDRPGConst::MONTAGE_FORMAT_HIT, { Idx })));
 	}
 }
 

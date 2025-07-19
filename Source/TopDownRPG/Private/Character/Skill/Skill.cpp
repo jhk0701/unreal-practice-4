@@ -78,8 +78,6 @@ void UActiveSkill::Initialize(const FString& InID, UGameDataManager* InDB, AActo
 // 스킬 입력처리 완료 콜백
 void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
 {
-	PRINT_LOG(TEXT("Skill Input Processed"));
-
 	if (InContext.bProcessIsCompleted)
 		Activate(InContext);
 }
@@ -116,12 +114,11 @@ void UActiveSkill::Activate(const FSkillInputContext& InContext)
 // 스킬 입력처리 종료/완료 콜백
 void UActiveSkill::OnInputCompleted(const FSkillInputContext& InContext)
 {
-	PRINT_LOG(TEXT("Skill Input Complete"));
-
 	if (InContext.bProcessIsCompleted)
 		Complete(InContext);
 }
 
+// 액티브 스킬 종료
 void UActiveSkill::Complete(const FSkillInputContext& InContext)
 {
 	// 애니메이션 처리
@@ -133,7 +130,10 @@ void UActiveSkill::Complete(const FSkillInputContext& InContext)
 	else
 		return;
 
-	AnimInst->PlayAttackLast();
+	if (InContext.bPlayAttackLast)
+		AnimInst->PlayAttackLast();
+	else
+		AnimInst->StopAttack();
 }
 
 

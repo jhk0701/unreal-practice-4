@@ -42,6 +42,11 @@ void UCharacterAnimBase::PlayAttack(UAnimMontage* InMontage, const FString& InFm
 	Montage_Play(AttackMontage);
 }
 
+void UCharacterAnimBase::StopAttack()
+{
+	if (AttackMontage)
+		Montage_Stop(1.0f, AttackMontage);
+}
 
 void UCharacterAnimBase::PlayHit()
 {

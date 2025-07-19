@@ -30,6 +30,8 @@ public:
     static const FString EMPTY_ID;
 
     // animation section
+    static const FString MONTAGE_FORMAT_HIT;
     static const FString MONTAGE_FORMAT_ATTACK;
+    static const FString MONTAGE_ATTACK_LAST;
 };
 

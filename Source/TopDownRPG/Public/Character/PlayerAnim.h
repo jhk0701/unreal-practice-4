@@ -21,6 +21,7 @@ protected:
 public:
 	virtual void PlayAttack(UAnimMontage* InMontage, const FString& InFmt) override;
 	virtual void PlayAttackLast() override;
+	virtual void StopAttack() override;
 	virtual void PlayHit() override;
 
 protected:
