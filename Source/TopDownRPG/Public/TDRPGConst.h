@@ -28,5 +28,8 @@ public:
 
     // item
     static const FString EMPTY_ID;
+
+    // animation section
+    static const FString MONTAGE_FORMAT_ATTACK;
 };
 

@@ -71,11 +71,18 @@ void UActiveSkill::Initialize(const FString& InID, UGameDataManager* InDB, AActo
 	// 입력 처리 설정
 	Input = FInputProcessorFactory::GetInstance(Data.InputType, InOwner->GetWorld());
 	
-	// Input->OnInputStarted.BindUObject(this, );
 	Input->OnInputProcessed.BindUObject(this, &UActiveSkill::OnInputProcessed);
-	// Input->OnInputCompleted.BindUObject(this, );
+	Input->OnInputCompleted.BindUObject(this, &UActiveSkill::OnInputCompleted);
 }
 
+// 스킬 입력처리 완료 콜백
+void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
+{
+	PRINT_LOG(TEXT("Skill Input Processed"));
+
+	if (InContext.bProcessIsCompleted)
+		Activate(InContext);
+}
 
 /// 액티브 스킬 발동
 void UActiveSkill::Activate(const FSkillInputContext& InContext)
@@ -98,9 +105,39 @@ void UActiveSkill::Activate(const FSkillInputContext& InContext)
 	AnimInst->OnHitStarted.AddUObject(this, &UActiveSkill::InvokeSweep);
 
 	// 애니메이션 실행
-	AnimInst->PlayAttack(Motion.Get(), InContext.Count);
+	// Motion.Get()->getsect
+	auto* Montage = Motion.Get();
+
+	int Cnt = Montage->GetNumSections();
+	Cnt = Cnt == 0 ? 1 : Cnt;
+	AnimInst->PlayAttack(Montage, FString::Format(*FTDRPGConst::MONTAGE_FORMAT_ATTACK, { InContext.Count % Cnt }));
 }
 
+// 스킬 입력처리 종료/완료 콜백
+void UActiveSkill::OnInputCompleted(const FSkillInputContext& InContext)
+{
+	PRINT_LOG(TEXT("Skill Input Complete"));
+
+	if (InContext.bProcessIsCompleted)
+		Complete(InContext);
+}
+
+void UActiveSkill::Complete(const FSkillInputContext& InContext)
+{
+	// 애니메이션 처리
+	UCharacterAnimBase* AnimInst;
+	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(Owner))
+		AnimInst = Player->GetAnim();
+	else if (ATDRPGEnemy* Enemy = Cast<ATDRPGEnemy>(Owner))
+		AnimInst = Enemy->GetAnim();
+	else
+		return;
+
+	// AnimInst->PlayAttack(Motion.Get(), InContext.Count, L"");
+}
+
+
+// 외부에서 스킬 입력 시작
 void UActiveSkill::InvokeSkill()
 {
 	// 스킬 자원 소모
@@ -142,17 +179,12 @@ void UActiveSkill::InvokeSkill()
 	OnCooldownStarted.Broadcast();
 }
 
+// 외부에서 스킬 입력 종료
 void UActiveSkill::CompleteSkill()
 {
 	Input->Complete();
 }
 
-
-void UActiveSkill::OnInputProcessed(const FSkillInputContext& InContext)
-{
-	if (InContext.bProcessIsCompleted)
-		Activate(InContext);
-}
 
 void UActiveSkill::ShowEffect()
 {
@@ -231,7 +263,6 @@ void UActiveSkill::AdjustDamage(const TArray<FHitResult>& InHits)
 
 	}
 }
-
 
 #pragma endregion
 

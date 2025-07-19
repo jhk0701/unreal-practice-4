@@ -55,6 +55,9 @@ class TOPDOWNRPG_API UActiveSkill : public USkill
 	GENERATED_BODY()
 
 public:
+	FSkillEvent OnCooldownStarted;
+	FSkillEvent OnCooldownEnded;
+
 	/// 스킬 객체 초기화
 	void Initialize(const FString& InID, UGameDataManager* InDB, AActor* InOwner) override;
 	
@@ -62,8 +65,7 @@ public:
 	void InvokeSkill();
 	void CompleteSkill();
 
-	FSkillEvent OnCooldownStarted;
-	FSkillEvent OnCooldownEnded;
+	void Complete(const FSkillInputContext& InContext);
 
 protected:
 	UPROPERTY()
@@ -75,12 +77,13 @@ protected:
 
 	virtual void Activate(const FSkillInputContext& InContext) override;
 
-	/// 키 입력에 처리 시 호출 콜백
-	virtual void OnInputProcessed(const FSkillInputContext& InContext);
-
 	virtual void ShowEffect();
 	virtual void InvokeSweep();
 	virtual void AdjustDamage(const TArray<FHitResult>& InHits);
+
+	/// 키 입력에 처리 시 호출 콜백
+	virtual void OnInputProcessed(const FSkillInputContext& InContext);
+	virtual void OnInputCompleted(const FSkillInputContext& InContext);
 };
 
 UCLASS()

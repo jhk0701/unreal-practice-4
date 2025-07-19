@@ -79,20 +79,28 @@ void UPlayerAction::InvokeAttack()
 
 void UPlayerAction::InputSkillButtonDown(const FInputActionValue& InputValue)
 {
+	if (CurSkillKey >= 0)
+		return;
+
 	if (Player->CheckPlayerIsDead())
 		return;
 
-	uint32 Value = (uint32)InputValue.Get<float>() - 1;
-	InvokeSkill(Value);
+	CurSkillKey = InputValue.Get<float>() - 1;
+
+	InvokeSkill((uint32)CurSkillKey);
 }
 
 void UPlayerAction::InputSkillButtonUp(const FInputActionValue& InputValue)
 {
+	if (CurSkillKey < 0)
+		return;
+
 	if (Player->CheckPlayerIsDead())
 		return;
 
-	uint32 Value = (uint32)InputValue.Get<float>() - 1;
-	CompleteSkill(Value);
+	CompleteSkill((uint32)CurSkillKey);
+
+	CurSkillKey = -1;
 }
 
 
@@ -106,9 +114,7 @@ void UPlayerAction::InvokeSkill(uint32 InIndex)
 		return;
 
 	if (UActiveSkill* Skill = Cast<UActiveSkill>(SkillMap[ID]))
-	{
 		Skill->InvokeSkill();
-	}
 }
 
 void UPlayerAction::CompleteSkill(uint32 InIndex)

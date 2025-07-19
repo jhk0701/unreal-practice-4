@@ -23,3 +23,5 @@ const FName FTDRPGConst::CONFIG_SKILL = FName(TEXT("SkillConfig"));
 const FString FTDRPGConst::GAME_DATA_SLOT = FString(TEXT("GameDataSlot"));
 
 const FString FTDRPGConst::EMPTY_ID = FString(TEXT("0000"));
+
+const FString FTDRPGConst::MONTAGE_FORMAT_ATTACK = FString(TEXT("Attack_{0}"));

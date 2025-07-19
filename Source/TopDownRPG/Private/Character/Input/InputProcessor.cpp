@@ -20,6 +20,7 @@ void UInputProcessor::SetInterval()
 		false);
 
 }
+
 #pragma endregion
 
 
@@ -91,116 +92,76 @@ void UInputCombo::Process()
 #pragma region Holding
 
 UInputHolding::UInputHolding()
-	: CurrentProcess(EInputProcedure::Ready),
-	TargetTime(2.0f),
-	ElapsedTime(0.0f)
+	: TargetTime(8.0f), 
+	ElapsedTime(.0f), 
+	Procedure(EInputProcedure::Ready)
 {}
 
 void UInputHolding::Process()
 {
-	if (CurrentProcess == EInputProcedure::InProgress)
+	if (bIsInInterval)
 		return;
 
-	if (CurrentProcess == EInputProcedure::Ready)
-		Start();
+	if (Procedure != EInputProcedure::Ready)
+		return;
+
+	Procedure = EInputProcedure::InProgress;
+
+	SetInterval();
+	StartHoldTimer(.0f);
+
+	FSkillInputContext Context;
+	Context.bProcessIsCompleted = true;
+	Context.Percent = .0f;
+
+	OnInputProcessed.ExecuteIfBound(Context);
 }
 
 void UInputHolding::Complete()
 {
-	// 입력 종료 이벤트 호출
-	Release();
-}
+	if (Procedure != EInputProcedure::InProgress)
+		return;
 
-void UInputHolding::Start()
-{
-	CurrentProcess = EInputProcedure::InProgress;
-	ElapsedTime = 0.0f;
+	auto& TimerManager = GetWorld()->GetTimerManager();
 
-	FSkillInputContext Context;
-	Context.bProcessIsCompleted = false;
-	Context.Percent = 0.0f;
-	OnInputStarted.ExecuteIfBound(Context);
-
-	auto& Timer = GetWorld()->GetTimerManager();
-	if (Timer.IsTimerActive(ProcessTimer))
-		Timer.ClearTimer(ProcessTimer);
-
-	Timer.SetTimer(
-		ProcessTimer,
-		FTimerDelegate::CreateUObject(this, &UInputHolding::Pressing),
-		0.1f,
-		true);
-}
-
-void UInputHolding::Release()
-{
-	CurrentProcess = EInputProcedure::Ready;
+	if (TimerManager.IsTimerActive(HoldTimer))
+		TimerManager.ClearTimer(HoldTimer);
 
 	FSkillInputContext Context;
 	Context.bProcessIsCompleted = true;
 	Context.Percent = ElapsedTime / TargetTime * 100.0f;
+
 	OnInputCompleted.ExecuteIfBound(Context);
 
-	auto& Timer = GetWorld()->GetTimerManager();
+	Procedure = EInputProcedure::Ready;
+}
 
-	if (Timer.IsTimerActive(ProcessTimer))
-		Timer.ClearTimer(ProcessTimer);
+void UInputHolding::StartHoldTimer(float InElapsedTime)
+{
+	ElapsedTime = InElapsedTime;
+
+	PRINT_LOG(TEXT("Holding... %f"), ElapsedTime);
+
+	auto& TimerManager = GetWorld()->GetTimerManager();
+	
+	if (TimerManager.IsTimerActive(HoldTimer))
+		TimerManager.ClearTimer(HoldTimer);
+
+	TimerManager.SetTimer(
+		HoldTimer, 
+		[&]()
+		{
+			if (ElapsedTime + .1f > TargetTime)
+				Complete();
+			else
+				StartHoldTimer(ElapsedTime + .1f);
+		}, 
+		0.1f, 
+		false);
 }
 
 #pragma endregion
 
-#pragma region Charging
-
-void UInputCharging::Complete()
-{
-	Release();
-}
-
-void UInputCharging::Release()
-{
-	// 입력 완료 처리
-	FSkillInputContext Context;
-	Context.Percent = ElapsedTime / TargetTime * 100.f;
-	Context.bProcessIsCompleted = true;
-
-	// 입력 이벤트 발행
-	OnInputProcessed.ExecuteIfBound(Context);
-
-	Super::Release();
-}
-
-void UInputCharging::Pressing()
-{
-	ElapsedTime += 0.1f;
-
-	if (ElapsedTime >= TargetTime)
-		Release();
-}
-
-#pragma endregion
-
-
-#pragma region Casting
-
-void UInputCasting::Pressing()
-{
-	ElapsedTime += 0.1f;
-
-	if (ElapsedTime >= TargetTime)
-	{
-		// 입력 완료 처리
-		FSkillInputContext Context;
-		Context.Percent = ElapsedTime / TargetTime * 100.f;
-		Context.bProcessIsCompleted = true;
-
-		// 입력 이벤트 발행
-		OnInputProcessed.ExecuteIfBound(Context);
-
-		Release();
-	}
-}
-
-#pragma endregion
 
 
 UInputProcessor* FInputProcessorFactory::GetInstance(ESkillInput InType, UObject* InOwner)
@@ -211,10 +172,12 @@ UInputProcessor* FInputProcessorFactory::GetInstance(ESkillInput InType, UObject
 		return NewObject<UInputNormal>(InOwner, UInputNormal::StaticClass());
 	case ESkillInput::Combo:
 		return NewObject<UInputCombo>(InOwner, UInputCombo::StaticClass());
-	case ESkillInput::Casting:
-		return NewObject<UInputCasting>(InOwner, UInputCasting::StaticClass());
+	case ESkillInput::Holding:
+		return NewObject<UInputHolding>(InOwner, UInputHolding::StaticClass());
 	case ESkillInput::Charging:
 		return NewObject<UInputCharging>(InOwner, UInputCharging::StaticClass());
+	case ESkillInput::Casting:
+		return NewObject<UInputCasting>(InOwner, UInputCasting::StaticClass());
 	case ESkillInput::Area:
 		return NewObject<UInputArea>(InOwner, UInputArea::StaticClass());
 	default:

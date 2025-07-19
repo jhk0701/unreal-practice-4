@@ -50,7 +50,7 @@ void UEnemyAction::InvokeAttack()
 	CurCooldown = AttackCooldown;
 
 	PRINT_LOG(TEXT("Enemy Attack!"));
-	Enemy->AnimInst->PlayAttack(0);
+	// Enemy->AnimInst->PlayAttack(,0, L"");
 }
 
 void UEnemyAction::InvokeSkill(uint32 InIndex)

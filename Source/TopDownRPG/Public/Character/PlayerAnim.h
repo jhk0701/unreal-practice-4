@@ -19,7 +19,7 @@ protected:
 	int32 CurAttackIdx;
 
 public:
-	virtual void PlayAttack(UAnimMontage* InMontage, int32 Idx = 0) override;
+	virtual void PlayAttack(UAnimMontage* InMontage, const FString& InFmt) override;
 	virtual void PlayHit() override;
 
 protected:

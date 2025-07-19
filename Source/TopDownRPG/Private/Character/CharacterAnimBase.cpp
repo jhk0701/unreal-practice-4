@@ -34,8 +34,7 @@ void UCharacterAnimBase::SetIsDead(const APawn* Pawn)
 	bIsDead = false;
 }
 
-
-void UCharacterAnimBase::PlayAttack(UAnimMontage* InMontage, int32 Idx)
+void UCharacterAnimBase::PlayAttack(UAnimMontage* InMontage, const FString& InFmt)
 {
 	if (AttackMontage != InMontage)
 		AttackMontage = InMontage;

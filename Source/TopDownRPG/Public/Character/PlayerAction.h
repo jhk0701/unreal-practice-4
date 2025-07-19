@@ -25,6 +25,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Owner")
 	TObjectPtr<ATDRPGPlayer> Player;
 
+	int32 CurSkillKey = -1;
+
 public:
 	UPlayerAction();
 	virtual void InitializeComponent() override;

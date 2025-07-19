@@ -33,14 +33,14 @@ public:
 	TObjectPtr<UAnimMontage> AttackMontage;
 
 public:
-	virtual void PlayAttack(UAnimMontage* InMontage, int32 Idx = 0);
-	virtual bool IsAttackPlaying() const { return Montage_IsPlaying(AttackMontage); };
-
-	virtual void PlayHit();
-
 	FAnimNotify OnHitStarted;
 	FAnimNotify OnHitEnded;
 	FAnimNotify OnLaunchInvoked;
+
+	virtual void PlayAttack(UAnimMontage* InMontage, const FString& InFmt);
+	virtual bool IsAttackPlaying() const { return Montage_IsPlaying(AttackMontage); };
+
+	virtual void PlayHit();
 
 protected:
 	virtual void NativeInitializeAnimation() override;

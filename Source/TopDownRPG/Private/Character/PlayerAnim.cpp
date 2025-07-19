@@ -15,8 +15,11 @@ void UPlayerAnim::SetIsDead(const APawn* Pawn)
 	}
 }
 
-void UPlayerAnim::PlayAttack(UAnimMontage* InMontage, int32 Idx)
+void UPlayerAnim::PlayAttack(UAnimMontage* InMontage, const FString& InFmt)
 {
+	if (!InMontage)
+		return;
+
 	if (AttackMontage != InMontage)
 		AttackMontage = InMontage;
 
@@ -24,11 +27,8 @@ void UPlayerAnim::PlayAttack(UAnimMontage* InMontage, int32 Idx)
 		return;
 
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
-	{
-		int Cnt = AttackMontage->GetNumSections();
-		Cnt = Cnt == 0 ? 1 : Cnt;
-		Player->PlayAnimMontage(AttackMontage, 1.0f, FName(FString::Printf(TEXT("Attack_%d"), Idx % Cnt)));
-	}
+		Player->PlayAnimMontage(AttackMontage, 1.0f, FName(InFmt));
+
 }
 
 void UPlayerAnim::PlayHit()
