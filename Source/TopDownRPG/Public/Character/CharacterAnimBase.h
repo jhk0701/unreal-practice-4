@@ -38,8 +38,9 @@ public:
 	FAnimNotify OnLaunchInvoked;
 
 	virtual void PlayAttack(UAnimMontage* InMontage, const FString& InFmt);
+	virtual void PlayAttackLast() {};
 	virtual bool IsAttackPlaying() const { return Montage_IsPlaying(AttackMontage); };
-
+	
 	virtual void PlayHit();
 
 protected:

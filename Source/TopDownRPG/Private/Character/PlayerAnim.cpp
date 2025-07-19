@@ -6,6 +6,8 @@
 #include "Character/PlayerAction.h"
 #include "Character/CharacterData.h"
 
+#include "TDRPGConst.h"
+
 
 void UPlayerAnim::SetIsDead(const APawn* Pawn)
 {
@@ -29,6 +31,15 @@ void UPlayerAnim::PlayAttack(UAnimMontage* InMontage, const FString& InFmt)
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
 		Player->PlayAnimMontage(AttackMontage, 1.0f, FName(InFmt));
 
+}
+
+void UPlayerAnim::PlayAttackLast()
+{
+	if (!AttackMontage)
+		return;
+
+	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
+		Player->PlayAnimMontage(AttackMontage, 1.0f, FName(FString::Format(*FTDRPGConst::MONTAGE_FORMAT_ATTACK, { TEXT("Last") })));
 }
 
 void UPlayerAnim::PlayHit()

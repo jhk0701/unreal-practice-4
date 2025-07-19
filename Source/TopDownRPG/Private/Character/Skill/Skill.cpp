@@ -133,7 +133,7 @@ void UActiveSkill::Complete(const FSkillInputContext& InContext)
 	else
 		return;
 
-	// AnimInst->PlayAttack(Motion.Get(), InContext.Count, L"");
+	AnimInst->PlayAttackLast();
 }
 
 
