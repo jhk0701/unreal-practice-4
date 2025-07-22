@@ -157,7 +157,9 @@ void UPlayerManager::InitQuickSlot()
 		if (RegisteredIndex >= 0)
 		{
 			IQuickSlotHandler* QuickSlotHandler = Cast<IQuickSlotHandler>(Inventory->GetItem(RegisteredIndex));
-			check(QuickSlotHandler);
+			if (!QuickSlotHandler)
+				return;
+			// check(QuickSlotHandler);
 			QuickSlot->InitSlot(i, QuickSlotHandler);
 		}
 	}

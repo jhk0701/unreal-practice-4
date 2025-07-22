@@ -4,18 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
+#include "Core/TDRPGHUD.h"
 #include "UI/TDRPGUserWidget.h"
+
 #include "TDRPGConst.h"
 #include <Templates/EnableIf.h>
 #include <Engine/AssetManager.h>
 #include <Engine/StreamableManager.h>
 #include "UIManager.generated.h"
 
-class UUIConfig;
-class ATDRPGHUD;
 class UTDRPGUWCanvas;
-
-enum class EUILayer :uint8;
 
 DECLARE_DELEGATE_OneParam(FOnLoadCompleted, UTDRPGUserWidget*);
 
@@ -29,49 +27,20 @@ class TOPDOWNRPG_API UUIManager : public UGameInstanceSubsystem
 
 protected:
 	UPROPERTY()
-	TMap<EUILayer, UTDRPGUWCanvas*> Layer;
-
-	UPROPERTY()
-	TMap<FString, UTDRPGUserWidget*> UIMap;
-
-	UPROPERTY()
 	TObjectPtr<ATDRPGHUD> CurrentHUD;
 
-	UPROPERTY();
-	TSubclassOf<UTDRPGUWCanvas> CanvasFactory;
-
-
 public:
-	UUIManager();
+	UUIManager() {};
 	inline void SetHUD(ATDRPGHUD* InHUD) { CurrentHUD = InHUD; }
 	inline ATDRPGHUD* GetHUD() { return CurrentHUD; };
 
-	inline void ClearUIMap() { UIMap.Empty(); };
-
-	void InitCanvas();
-	void InitUIConfig(UUIConfig* InConfig);
-
 	template<typename T>
 	inline TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, T*>::type
-	GetUI() 
+	GetUI()
 	{
-		FString Name = FString::Printf(TEXT("WBP_%s_C"), *GetNameFromType<T>().ToString());
-
-		if (UIMap.Contains(Name))
-			return Cast<T>(UIMap[Name]);
-
-		return nullptr;
+		return CurrentHUD->GetUI<T>();
 	}
 
-	template<typename T>
-	inline TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, FName>::type
-	GetNameFromType()
-	{
-		UClass* Type = T::StaticClass();
-		check(Type); // 방어용
-
-		return Type->GetFName();
-	}
 
 	// 템플릿으로 작성
 	// 상속해서 만든 UserWidget에서 파생한 UI만 호출할 수 있도록 사용
@@ -83,6 +52,7 @@ public:
 		TIsDerivedFrom<baseType, parentType>::Value
 			* baseType이 parentType의 자식클래스라면 true
 	*/
+	/*
 	template<typename T>
 	inline typename TEnableIf<TIsDerivedFrom<T, UTDRPGUserWidget>::Value, void>::type
 	CreateUI(FOnLoadCompleted& OnCompleted)
@@ -125,5 +95,5 @@ public:
 
 		CreateUI<T>(OnCompleted);
 	};
-
+	*/
 };

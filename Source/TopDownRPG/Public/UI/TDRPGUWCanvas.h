@@ -16,7 +16,7 @@ UCLASS()
 class TOPDOWNRPG_API UTDRPGUWCanvas : public UTDRPGUserWidget
 {
 	GENERATED_BODY()
-
+	
 protected:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UCanvasPanel> Canvas;
@@ -24,4 +24,6 @@ protected:
 public:
 	UCanvasPanelSlot* AddToCanvas(UWidget* InChild);
 	void SetSort(uint8 InSort);
+
+	virtual void BeginDestroy() override;
 };
