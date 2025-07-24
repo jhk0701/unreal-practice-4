@@ -33,7 +33,6 @@ void ATDRPGHUD::InitHUD()
 	if (!GameInst)
 		return;
 
-	PRINT_LOG(TEXT("Init HUD"));
 	InitCanvas();
 
 	UUIManager* UIManager = GameInst->GetSubsystem<UUIManager>();
@@ -52,20 +51,11 @@ void ATDRPGHUD::InitCanvas()
 		EUILayer Type = (EUILayer)i;
 
 		if (!Layer.Contains(Type))
-		{
-			PRINT_LOG(TEXT("Add Layer"));
 			Layer.Add(Type, CreateCanvas());
-		}
 		else if (Layer[Type] == nullptr)
-		{
-			PRINT_LOG(TEXT("Replace Layer"));
 			Layer[Type] = CreateCanvas();
-		}
 		else
-		{
-			PRINT_LOG(TEXT("Try Add Viewport Layer"));
 			Layer[Type]->AddToViewport();
-		}
 	}
 }
 

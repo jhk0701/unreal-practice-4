@@ -15,6 +15,12 @@ USkillSet::USkillSet()
 		Map.Add((ESkillInputKey)i, FTDRPGConst::EMPTY_ID);
 }
 
+void USkillSet::InitSet(ESkillInputKey InKey, FString& InID)
+{
+	Map[InKey] = InID;
+	OnSlotUpdated.Broadcast(InKey);
+}
+
 void USkillSet::Register(ESkillInputKey InKey, UActiveSkill* InSkill)
 {
 	Map[InKey] = InSkill->GetID();

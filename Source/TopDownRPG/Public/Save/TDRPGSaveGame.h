@@ -3,10 +3,61 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "TDRPGConst.h"
 #include "GameFramework/SaveGame.h"
-#include "Save/InventorySaveData.h"
-#include "Save/EquipmentSaveData.h"
 #include "TDRPGSaveGame.generated.h"
+
+
+USTRUCT(BlueprintType)
+struct TOPDOWNRPG_API FEquipmentSaveData
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+	FString EquipmentID;
+
+	UPROPERTY()
+	int32 EquipType;
+
+	FEquipmentSaveData() : EquipmentID(FTDRPGConst::EMPTY_ID), EquipType(-1)
+	{}
+};
+
+USTRUCT(BlueprintType)
+struct TOPDOWNRPG_API FInventorySaveData
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+	FString ItemID;
+
+	UPROPERTY()
+	int32 ItemType;
+
+	UPROPERTY()
+	int32 Quantity;
+
+	FInventorySaveData() : ItemID(FTDRPGConst::EMPTY_ID), ItemType(-1), Quantity(0)
+	{}
+};
+
+USTRUCT(BlueprintType)
+struct TOPDOWNRPG_API FSkillSetSaveData
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+	FString SkillID;
+
+	UPROPERTY()
+	int32 InputKey;
+
+	FSkillSetSaveData() : SkillID(FTDRPGConst::EMPTY_ID), InputKey(-1)
+	{}
+};
 
 
 UCLASS()
@@ -50,7 +101,7 @@ public:
 	UPROPERTY()
 	TArray<int32> QuickSlot;
 
-	// 스킬슬롯 정보
-	// UPROPERTY()
-	// TArray<FString> SkillSlot;
+	// 스킬셋 정보
+	UPROPERTY()
+	TArray<FSkillSetSaveData> SkillSet;
 };

@@ -58,6 +58,7 @@ void UPlayerManager::SetPlayerData(UTDRPGSaveGame* InPlayerData)
 	InitInventory();
 	InitEquipment();
 	InitQuickSlot();
+	InitSkillSet();
 }
 
 FName& UPlayerManager::GetPlayerName() const
@@ -113,7 +114,7 @@ void UPlayerManager::InitInventory()
 	int32 Cnt = PlayerData->Inventory.Num();
 	for (int32 i = 0; i < Cnt; ++i) 
 	{
-		auto& ItemData = PlayerData->Inventory[i];
+		FInventorySaveData& ItemData = PlayerData->Inventory[i];
 
 		if (ItemData.ItemID == FTDRPGConst::EMPTY_ID)
 			continue;
@@ -130,7 +131,7 @@ void UPlayerManager::InitEquipment()
 	int32 Cnt = PlayerData->Equipment.Num();
 	for (int32 i = 0; i < Cnt; ++i) 
 	{
-		auto& EquipData = PlayerData->Equipment[i];
+		FEquipmentSaveData& EquipData = PlayerData->Equipment[i];
 		
 		if (EquipData.EquipmentID == FTDRPGConst::EMPTY_ID)
 			continue;
@@ -167,6 +168,15 @@ void UPlayerManager::InitQuickSlot()
 
 void UPlayerManager::InitSkillSet()
 {
+	int Cnt = PlayerData->SkillSet.Num();
+	for (int32 i = 0; i < Cnt; i++)
+	{
+		FSkillSetSaveData& Data = PlayerData->SkillSet[i];
+		if (Data.SkillID == FTDRPGConst::EMPTY_ID)
+			continue;
+
+		SkillSet->InitSet((ESkillInputKey)Data.InputKey, Data.SkillID);
+	}
 }
 
 

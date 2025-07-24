@@ -18,6 +18,7 @@
 #include "Player/Inventory.h"
 #include "Player/Equipment.h"
 #include "Player/QuickSlot.h"
+#include "Player/SkillSet.h"
 
 #include <Kismet/GameplayStatics.h>
 
@@ -69,6 +70,7 @@ void UPlayerDataManager::CreateData(const FString& InPlayerName, const FString& 
 	Data->Inventory.Init(FInventorySaveData(), UInventory::MAX_SIZE);
 	Data->Equipment.Init(FEquipmentSaveData(), (int32)EEquipType::COUNT);
 	Data->QuickSlot.Init(-1, UQuickSlot::MAX_SIZE);
+	Data->SkillSet.Init(FSkillSetSaveData(), (int32)ESkillInputKey::COUNT);
 
 	GetGameInstance()->GetSubsystem<UPlayerManager>()->SetPlayerData(Data);
 
@@ -92,6 +94,7 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 	Data->Inventory.Init(FInventorySaveData(), UInventory::MAX_SIZE);
 	Data->Equipment.Init(FEquipmentSaveData(), (int32)EEquipType::COUNT);
 	Data->QuickSlot.Init(-1, UQuickSlot::MAX_SIZE);
+	Data->SkillSet.Init(FSkillSetSaveData(), (int32)ESkillInputKey::COUNT);
 
 	// Inventory
 	int32 Cnt = InPlayer->Inventory->MAX_SIZE;
@@ -132,6 +135,14 @@ void UPlayerDataManager::SaveData(const UPlayerManager* InPlayer)
 			Data->QuickSlot[i] = InPlayer->QuickSlot->GetSlot(i)->GetIndex();
 		else
 			Data->QuickSlot[i] = -1;
+	}
+
+	// SkillSet
+	Cnt = (int32)ESkillInputKey::COUNT;
+	for (int32 i = 0; i < Cnt; i++)
+	{
+		Data->SkillSet[i].InputKey = i;
+		Data->SkillSet[i].SkillID = InPlayer->SkillSet->GetSkill((ESkillInputKey)i);
 	}
 
 	// Save

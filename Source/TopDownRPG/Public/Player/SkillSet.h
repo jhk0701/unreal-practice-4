@@ -33,6 +33,8 @@ private:
 
 public:
 	USkillSet();
+	
+	void InitSet(ESkillInputKey InKey, FString& InID);
 
 	inline FString& GetSkill(ESkillInputKey InKey) { return Map[InKey]; };
 	void Register(ESkillInputKey InKey, UActiveSkill* InSkill);
