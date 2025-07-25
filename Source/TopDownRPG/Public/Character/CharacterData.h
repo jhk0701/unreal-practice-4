@@ -42,6 +42,10 @@ public:
 	
 	UPROPERTY(VisibleAnywhere)
 	bool bIsDead = false;
+
+	UPROPERTY(EditAnywhere, Category = "Status|Recover")
+	float RecoverInteral = 5.0f;
+	float RecoverSec = .0f;
 	
 	FOnStatusEmpty OnCharacterDead;
 
@@ -76,5 +80,7 @@ private:
 	void ApplyData(uint32 InLv, FCharacterDataRow& InData);
 	void ApplyEquipment(UEquipment* InEquipment);
 	void UpdateEquipment(EEquipType InType);
+	
 	void BuffUpdate(float DeltaTime);
+	void RecoverMana();
 };

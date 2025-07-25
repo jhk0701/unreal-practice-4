@@ -21,6 +21,8 @@
 UCharacterData::UCharacterData()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+
+	RecoverSec = .0f;
 }
 
 void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -28,6 +30,14 @@ void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	BuffUpdate(DeltaTime);
+
+	RecoverSec += DeltaTime;
+	if (RecoverSec > RecoverInteral)
+	{
+		RecoverMana();
+
+		RecoverSec = .0f;
+	}
 }
 
 void UCharacterData::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -158,6 +168,12 @@ void UCharacterData::BuffUpdate(float DeltaTime)
 	}
 }
 
+void UCharacterData::RecoverMana()
+{
+	uint32 Int = BaseAbility[EAbility::Int] + EquipmentAbility[EAbility::Int];
+	Stat[EStatus::Mp]->Add(5 + Int / 10);
+}
+
 
 void UCharacterData::CheckIsDead(uint32 Max, uint32 Current)
 {
@@ -230,7 +246,7 @@ float UCharacterData::GetSpeed(float InBaseSpeed)
 
 float UCharacterData::GetCritical()
 {
-	return 0.0f;
+	return 1.0f;
 }
 
 void UCharacterData::AddBuff(FString& InItemID, FFunctionContext InContext)
