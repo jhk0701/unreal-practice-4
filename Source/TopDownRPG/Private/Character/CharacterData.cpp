@@ -27,22 +27,7 @@ void UCharacterData::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// 기한 만료된 버프 해제
-	while (!BuffReleaseQueue.IsEmpty())
-	{
-		FString Key;
-		BuffReleaseQueue.Dequeue(Key);
-		BuffFunc.Remove(Key);
-	}
-
-	for (auto& Pair : BuffFunc)
-	{
-		// 버프 기한 체크
-		Pair.Value.Duration -= DeltaTime;
-
-		if (Pair.Value.Duration < 0)
-			BuffReleaseQueue.Enqueue(Pair.Key); // 다음 틱에 버프 해제
-	}
+	BuffUpdate(DeltaTime);
 }
 
 void UCharacterData::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -153,6 +138,26 @@ void UCharacterData::UpdateEquipment(EEquipType InType)
 	}
 }
 
+void UCharacterData::BuffUpdate(float DeltaTime)
+{
+	// 기한 만료된 버프 해제
+	while (!BuffReleaseQueue.IsEmpty())
+	{
+		FString Key;
+		BuffReleaseQueue.Dequeue(Key);
+		BuffFunc.Remove(Key);
+	}
+
+	for (auto& Pair : BuffFunc)
+	{
+		// 버프 기한 체크
+		Pair.Value.Duration -= DeltaTime;
+
+		if (Pair.Value.Duration < 0)
+			BuffReleaseQueue.Enqueue(Pair.Key); // 다음 틱에 버프 해제
+	}
+}
+
 
 void UCharacterData::CheckIsDead(uint32 Max, uint32 Current)
 {
@@ -205,6 +210,27 @@ uint32 UCharacterData::GetDefensePower()
 		Result += Equipment->GetAddictiveDefense();
 
 	return Result;
+}
+
+float UCharacterData::GetSpeed(float InBaseSpeed)
+{
+	float Result = InBaseSpeed;
+	uint32 AdjustVal = 3;
+
+	uint32 Dex = BaseAbility[EAbility::Dex];
+	
+	if (Equipment)
+		Dex += EquipmentAbility[EAbility::Dex];
+
+	float AdjustPer = (Dex / AdjustVal) / 100.0f;
+	Result *= (1.0f + AdjustPer);
+
+	return Result;
+}
+
+float UCharacterData::GetCritical()
+{
+	return 0.0f;
 }
 
 void UCharacterData::AddBuff(FString& InItemID, FFunctionContext InContext)

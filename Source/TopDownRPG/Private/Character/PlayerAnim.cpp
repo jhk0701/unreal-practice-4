@@ -29,7 +29,10 @@ void UPlayerAnim::PlayAttack(UAnimMontage* InMontage, const FString& InFmt)
 		return;
 
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
-		Player->PlayAnimMontage(AttackMontage, 1.0f, FName(InFmt));
+	{
+		float Spd = Player->DataComp->GetSpeed(1.0f);
+		Player->PlayAnimMontage(AttackMontage, Spd, FName(InFmt));
+	}
 
 }
 
@@ -39,7 +42,10 @@ void UPlayerAnim::PlayAttackLast()
 		return;
 
 	if (ATDRPGPlayer* Player = Cast<ATDRPGPlayer>(TryGetPawnOwner()))
-		Player->PlayAnimMontage(AttackMontage, 1.0f, FName(FTDRPGConst::MONTAGE_ATTACK_LAST));
+	{
+		float Spd = Player->DataComp->GetSpeed(1.0f);
+		Player->PlayAnimMontage(AttackMontage, Spd, FName(FTDRPGConst::MONTAGE_ATTACK_LAST));
+	}
 }
 
 void UPlayerAnim::StopAttack()

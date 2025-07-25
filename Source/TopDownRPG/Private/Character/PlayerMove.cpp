@@ -1,5 +1,6 @@
 #include "Character/PlayerMove.h"
 #include "Character/TDRPGPlayer.h"
+#include "Character/CharacterData.h"
 #include "Core/TDRPGPlayerController.h"
 
 #include <EnhancedInputComponent.h>
@@ -72,7 +73,7 @@ void UPlayerMove::Move(float DeltaTime)
 		return;
 	}
 
-	FVector Input = DeltaTime * Speed * Dir.GetSafeNormal();
+	FVector Input = DeltaTime * GetSpeed() * Dir.GetSafeNormal();
 	CharMove->AddInputVector(Input);
 }
 
@@ -94,6 +95,11 @@ void UPlayerMove::LaunchForward(uint32 InVelocity)
 {
 	StopMove();
 	CharMove->Launch(Player->GetActorForwardVector() * InVelocity);
+}
+
+float UPlayerMove::GetSpeed()
+{
+	return Player->DataComp->GetSpeed(Speed);
 }
 
 

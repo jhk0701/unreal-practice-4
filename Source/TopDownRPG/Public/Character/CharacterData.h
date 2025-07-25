@@ -67,6 +67,8 @@ public:
 
 	uint32 GetAttackPower(uint32 InBaseDamage);
 	uint32 GetDefensePower();
+	float GetSpeed(float InBaseSpeed);
+	float GetCritical();
 
 	void AddBuff(FString& InItemID, FFunctionContext InContext);
 
@@ -74,5 +76,5 @@ private:
 	void ApplyData(uint32 InLv, FCharacterDataRow& InData);
 	void ApplyEquipment(UEquipment* InEquipment);
 	void UpdateEquipment(EEquipType InType);
-
+	void BuffUpdate(float DeltaTime);
 };

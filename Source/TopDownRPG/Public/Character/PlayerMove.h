@@ -16,12 +16,12 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = OwnerComp)
 	TObjectPtr<UCharacterMovementComponent> CharMove;
 
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement)
 	bool bIsWalking = false;
 
+	// 기본 이동 속도
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
-	float Speed = 100.0f;	// TODO : 스탯 반영하기
+	float Speed = 100.0f;	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Movement)
 	float ToleranceToDestination = 10.f;
@@ -46,4 +46,7 @@ public:
 	void InputDodge(const FInputActionValue& InputValue);
 	void Dodge();
 	void LaunchForward(uint32 InVelocity);
+
+private:
+	float GetSpeed();
 };
